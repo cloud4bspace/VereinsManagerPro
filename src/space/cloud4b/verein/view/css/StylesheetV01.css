@@ -1,0 +1,485 @@
+.root {
+    -fx-font: 14px Verdana;
+}
+
+
+#kreisI {
+
+    -fx-fill: #959595;
+}
+
+#circleLabelII {
+    -fx-background-radius: 50;
+    -fx-background-color: #F3D250;
+    -fx-text-fill: #000000;
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+}
+
+#circleLabelI {
+    -fx-background-radius: 50;
+    -fx-background-color: #F78888;
+    -fx-text-fill: #000000;
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+}
+
+/* hover Hauptmenu-Ueberschriften
+   funktioniert nicht gut mit dem linken Menu TODO */
+.menu:hover {
+   -fx-background-color: #ffffff;
+}
+
+#leftMenubar .menu:hover {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+
+}
+#leftMenubar .menu:hover .label {
+    -fx-text-fill: black;
+
+}
+
+.menu-bar:focused {
+    -fx-background-color: #ffffff;
+}
+.menu-bar .label:hover {
+
+}
+
+.menu-item:focused {
+    -fx-background-color: #ffffff;
+}
+.menu-item {
+
+}
+
+.hyperlink {
+    -fx-background-color: black;
+    -fx-background-radius: 5px;
+    -fx-background-insets: 5;
+    -fx-text-fill: white;
+    -fx-label-padding: 5;
+}
+#tabelleCellLabel {
+    -fx-text-fill: black;
+    /*-fx-alignment: right;*/
+}
+#tabelleCellLabelBold {
+    -fx-text-fill: black;
+    -fx-alignment: right;
+    -fx-font-weight: 900;
+}
+.context-menu {
+    -fx-background-color: #ffffff;
+    -fx-border-insets: 5;
+    /*   -fx-border-style: solid;
+       -fx-border-radius: 50px;*/
+}
+
+#mitgliederMenu .menu-item {
+    -fx-background-color: #F78888;
+}
+
+#termineMenu .menu-item {
+    -fx-background-color: #F3D250;
+}
+
+#kontrolleMenu .menu-item {
+    -fx-background-color: #90CCF4;
+}
+
+#auswertungenMenu .menu-item {
+    -fx-background-color: #8FAD88;
+}
+.context-menu .menu-item .label {
+    -fx-text-fill: #292929;
+    -fx-font-size: 1em;
+    -fx-padding: 5px;
+}
+.context-menu .menu-item:hover  {
+    -fx-background-color: #ffffff;
+}
+
+.context-menu .menu-item:hover .label {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: black;
+    -fx-background-radius: 5px;
+}
+
+.menu-item .label {
+    /*-fx-background-color: #ff2727;*/
+    -fx-border-style: none;
+    -fx-border-radius: 5px;
+}
+
+.menu-bar {
+
+}
+#vMenuBarLeftContainer {
+    -fx-background-color: #ECECEC;
+}
+
+#mBarMitglieder {
+    -fx-background-color: #F78888;
+}
+
+#mBarTermine {
+    -fx-background-color: #F3D250;
+}
+
+#mBar03 {
+    -fx-background-color: #90CCF4;
+}
+
+#mBar04 {
+    -fx-background-color: #8FAD88;
+}
+
+#mBar05 {
+    -fx-background-color: #ECECEC;
+}
+
+#vMenuBarLeftContainer .menu-bar {
+    -fx-fit-to-width: true;
+}
+
+#homeButton {
+    -fx-font-family: "Andale Mono";
+    -fx-padding: 5;
+    -fx-font-size: 14px;
+    -fx-background-color: #000000;
+    -fx-fit-to-width: true;
+    -fx-alignment: left;
+    -fx-text-fill: rgba(255, 255, 255, 1);
+}
+
+#homeButton .label:hover {
+    -fx-background-color: white;
+}
+
+.menu-bar .label {
+   /* -fx-text-fill: rgba(201, 201, 201, 0.75);*/
+    -fx-text-fill: black;
+}
+
+.password-field {
+    -fx-font-size: 1em;
+}
+#hMenuBarTop {
+    -fx-background-color: #ffffff;
+}
+
+#hMenuBarTop .label {
+    -fx-font-size: 10px;
+    -fx-font-family: "Verdana UI Light";
+    -fx-text-fill: #000000;
+    -fx-background-color: #ffffff;
+    -fx-alignment: center;
+    -fx-label-padding: 3px;
+}
+
+
+#hMenuBarTop .label:hover {
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+
+}
+
+#hMenuBarTop .menu-item .label {
+
+    -fx-padding: 5;
+    -fx-font-size: 10px;
+    -fx-font-family: "Verdana UI Light";
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #000000;
+    -fx-pref-width: 100px;
+    -fx-alignment: center;
+}
+#hMenuBarTop .menu-item:hover .label {
+
+    -fx-padding: 3;
+    -fx-font-size: 10px;
+    -fx-font-family: "Verdana UI Light";
+    -fx-text-fill: #000000;
+    -fx-background-color: #ffffff;
+    -fx-pref-width: 100px;
+    -fx-alignment: center;
+}
+
+
+.split-pane {
+    /*-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #ffffff, rgba(177, 155, 129, 0.43));*/
+    -fx-background-color: #ECECEC;
+}
+.split-pane *.split-pane-divider {
+    -fx-padding: 0;
+    -fx-opacity: 0.1;
+    visibility: false;
+
+}
+
+#leftPane {
+    -fx-background-color: #ECECEC;
+}
+
+
+.label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Verdana UI Semibold";
+    -fx-text-fill: #716f6c;
+}
+
+#titleLabel {
+    -fx-font-family: "Andale Mono";
+    -fx-label-padding: 10;
+    -fx-text-fill: #000000;
+    -fx-font-size: 1.5em;
+    -fx-font-weight: bold;
+}
+
+#infoLabel {
+    -fx-font-family: "Andale Mono";
+    -fx-label-padding: 10;
+    -fx-text-fill: #000000;
+    -fx-font-size: 1.5em;
+    -fx-font-weight: bold;
+}
+
+#titleLeftLabel {
+    -fx-font-family: "Andale Mono";
+    -fx-label-padding: 10;
+    -fx-text-fill: #708ca6;
+    -fx-font-size: 1em;
+    -fx-font-weight: 100;
+}
+
+#letzteAenderungLabel {
+    -fx-text-fill: #708ca6;
+    -fx-font-size: 0.8em;
+}
+.tool-bar {
+    -fx-alignment: center-right;
+    -fx-background-color: #ECECEC;
+}
+
+#dateLabel {
+    -fx-font-family: "Andale Mono";
+    -fx-label-padding: 10;
+    -fx-text-fill: #000000;
+    -fx-font-size: 1em;
+    -fx-font-weight: 100;
+}
+
+#loginTitleLabel {
+    -fx-font-family: "Andale Mono";
+    -fx-label-padding: 10;
+    -fx-font-size: 2em;
+    -fx-font-weight: 100;
+}
+
+#loginVbox01 {
+    -fx-background-color: #F78888;
+}
+
+/* Labels auf der Login-Seite */
+#loginVbox01 .label {
+    -fx-text-fill: #000000;
+    -fx-font-weight: normal;
+}
+
+#sessionLabel {
+    -fx-font-family: "Andale Mono";
+    -fx-label-padding: 10;
+    -fx-text-fill: #000000;
+    -fx-font-size: 1em;
+    -fx-font-weight: 100;
+}
+
+.table-view {
+    -fx-font-size: 0.9em;
+    -fx-base: #000000;
+    -fx-control-inner-background: #ffffff;
+    -fx-background-color: #FFFFFF;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view .column-header {
+    -fx-size: 20;
+
+}
+.table-view .column-header .label {
+    -fx-font-size: 9pt;
+    -fx-font-family: "Verdana UI Light";
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+#anwesenheitsAnteilSpalte {
+    -fx-alignment: center-right;
+}
+
+#anzTermineSpalte {
+    -fx-alignment: center-right;
+}
+
+#rangSpalte {
+    -fx-alignment: center-right;
+
+}
+#anzAnwesenheiten {
+    -fx-alignment: center-right;
+
+}
+#mitgliedSpalte {
+
+}
+.label {
+    -fx-font-family: "Andale Mono";
+    -fx-label-padding: 0;
+    -fx-text-fill: #708ca6;
+    -fx-font-size: 1em;
+    -fx-font-weight: 100;
+}
+
+.text-field {
+    -fx-background-radius: 0;
+    -fx-background-color: #ECECEC;
+    -fx-text-fill: black;
+
+}
+
+.text-field:focused{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.text-area {
+    -fx-border: none;
+    -fx-background-radius: 0;
+    text-area-background: #ECECEC;
+    -fx-text-fill: white;
+
+}
+
+.text-area:focused {
+    -fx-border: none;
+    -fx-background-radius: 0;
+    text-area-background: #ffffff;
+    -fx-text-fill: black;
+}
+
+.text-area .content {
+    -fx-background-color: text-area-background ;
+}
+
+#meldungAusgabeText {
+    -fx-border: none;
+    -fx-background-radius: 0;
+    text-area-background: #ECECEC;
+    -fx-text-fill: #708ca6;
+    -fx-font-size: 0.8em;
+
+}
+
+#meldungAusgabeText .content {
+    -fx-background-color: text-area-background ;
+}
+.combo-box {
+    -fx-background-radius: 0;
+    -fx-background-color: #ECECEC;
+    -fx-text-fill: #000000;
+}
+
+.date-picker {
+    -fx-border-radius: 0;
+}
+.combo-box .list-view .list-cell { /* Elemente der Combobox*/
+    -fx-text-fill: #000000;
+
+}
+.combo-box .list-cell { /* ausgewähltes Elemente der Combobox*/
+    -fx-text-fill: #000000;
+}
+
+.tab-pane {
+    -fx-background-color: #ffffff;
+}
+
+#mitgliederTabPane .tab {
+    -fx-background-color: #ECECEC;
+}
+
+#mitgliederTabPane .tab:selected {
+    -fx-background-color: #F78888;
+}
+
+#mitgliederTabPane .tab-header-background {
+    -fx-background-color: #F78888;
+}
+
+#terminTabPane .tab {
+    -fx-background-color: #ECECEC;
+}
+
+#terminTabPane .tab:selected {
+    -fx-background-color: #F3D250;
+}
+
+#terminTabPane .tab-header-background {
+    -fx-background-color: #F3D250;
+}
+
+.tab-pane .tab-header-background {
+    -fx-background-color: #000000;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #292929;
+    -fx-background-radius: 0;
+
+}
+
+
+.tab-pane .tab-label {
+    -fx-text-fill: #000000;
+    -fx-font-size: 1em;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #000000;
+
+}
+
+.button {
+    -fx-border-width: 3;
+    -fx-font-family: "Verdana UI Light";
+    -fx-background-color: #ECECEC;
+    -fx-border-color: #FFFFFF;
+    -fx-text-fill: #000000;
+}
+.button:hover {
+    -fx-border-color: #000000;
+    -fx-text-fill: #000000;
+}
+.check-box {
+
+
+
+}
+.slider .thumb {
+    -fx-background-color: black;
+    -fx-background-radius:50px;
+    -fx-border-color: white;
+    -fx-border-width: 3px;
+    -fx-border-radius: 50px;
+    -fx-pref-height: 10;
+}
+
+.slider .track {
+    -fx-background-color: black;
+}
+
