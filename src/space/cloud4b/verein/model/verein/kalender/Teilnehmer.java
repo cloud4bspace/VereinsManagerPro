@@ -25,10 +25,17 @@ public class Teilnehmer {
     }
     public ObjectProperty<StatusElement> getAnmeldungProperty() { return new SimpleObjectProperty<StatusElement>(this.anmeldeStatus); }
 
+    public String getAnmeldungText() {
+        return this.anmeldungText;
+    }
+
+    public void setAnmeldungText(String anmeldungText) {
+        this.anmeldungText = anmeldungText;
+    }
+
     public void setTeilnahmeStatus(StatusElement teilnahmeStatus){
         this.teilnahmeStatus = teilnahmeStatus;
     }
-
     public ObjectProperty<StatusElement> getTeilnahmeProperty() { return new SimpleObjectProperty<StatusElement>(this.teilnahmeStatus); }
     public int getAnmeldungWert() {
         if(this.anmeldeStatus != null) {
@@ -36,5 +43,13 @@ public class Teilnehmer {
         } else {
             return 0;
         }
+    }
+
+    public String getTeilnahmeText() {
+        return this.teilnahmeText;
+    }
+
+    public void setTeilnahmeText(String teilnahmeText) {
+        this.teilnahmeText = teilnahmeText;
     }
 }

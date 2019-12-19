@@ -3,6 +3,9 @@ package space.cloud4b.verein.view.mitglieder;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -14,6 +17,7 @@ import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.services.DatabaseOperation;
+import space.cloud4b.verein.services.DatabaseReader;
 import space.cloud4b.verein.services.Observer;
 
 import java.io.File;
@@ -58,6 +62,8 @@ public class MitgliedViewController implements Observer {
     @FXML
     public ComboBox<StatusElement> comboBoxKategorieII = new ComboBox<StatusElement>();
     @FXML
+    private TextField filterField;
+    @FXML
     private TableView<Mitglied> mitgliedTabelle;
     @FXML
     private TableColumn<Mitglied, Number> idSpalte;
@@ -65,6 +71,8 @@ public class MitgliedViewController implements Observer {
     private TableColumn<Mitglied, String> vornameSpalte;
     @FXML
     private TableColumn<Mitglied, String> nachnameSpalte;
+    @FXML
+    private TableColumn<Mitglied, String> ortSpalte;
     @FXML
     private Label idLabel;
     @FXML
@@ -108,6 +116,8 @@ public class MitgliedViewController implements Observer {
     @FXML
     private Button nextMitgliedButton;
 
+    private ObservableList<Mitglied> masterData = FXCollections.observableArrayList();
+
     // Standardkonstruktor
     public MitgliedViewController(){
 
@@ -122,12 +132,55 @@ public class MitgliedViewController implements Observer {
         // Bei Änderung der ausgewählten Zeile werden die Mitgliederdetails im Centerpane angezeigt.
         mitgliedTabelle.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> setMitglied(newValue));
+
+        masterData = FXCollections.observableArrayList(DatabaseReader.getMitgliederAsArrayList());
+        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+        FilteredList<Mitglied> filteredData = new FilteredList<>(masterData, p -> true);
+        // 2. Set the filter Predicate whenever the filter changes.
+        //  filterField.setPromptText("Nachname Vorname");
+
+        filterField.getStyleClass().add("search-field");
+        filterField.setPromptText("Nachname Vorname");
+
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(mitglied -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+/*
+                if (mitglied.getVorname().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (mitglied.getNachName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }*/
+                if (mitglied.getKurzbezeichnung().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false; // Does not match.
+            });
+        });
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<Mitglied> sortedData = new SortedList<>(filteredData);
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(mitgliedTabelle.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        mitgliedTabelle.setItems(sortedData);
+
         idSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getIdProperty());
         vornameSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getVornameProperty());
         nachnameSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getNachnameProperty());
+        ortSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getOrtProperty()
+        );
+
 
         // ComboBox-Elemente mit den dazugehörigen Auswahlmöglichkeiten fülle
         Status anrede = new Status(1);
@@ -328,10 +381,11 @@ public class MitgliedViewController implements Observer {
         mainApp.getAdressController().Attach(this);
 
         // die benötigten Listen mit Daten füllen
-        mitgliedTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController().getMitgliederListe()));
+        //  mitgliedTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController().getMitgliederListe()));
         mitgliedTabelle.getSelectionModel().selectFirst();
         mitgliedArrayList = new ArrayList<>(mainApp.getAdressController().getMitgliederListe());
         aktuellesMitglied = mitgliedArrayList.get(0);
+
     }
 
     /**

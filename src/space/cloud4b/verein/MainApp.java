@@ -47,7 +47,7 @@ public class MainApp extends Application {
     }
     @Override
     public void start(Stage primaryStage) {
-        //  DatabaseOperation.saveUserCredentials("bernhard.kaempf@gmail.com","1234");
+
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle(Einstellung.getVereinsName());
         this.primaryStage.getIcons().add(new Image("file:ressources/images/address_book_32.png"));

@@ -141,7 +141,7 @@ public abstract class DatabaseReader {
             int i = 0;
             while(teilnehmerListe.size() > i){
                 int teilId = teilnehmerListe.get(i).getMitglied().getId();
-                query = "SELECT `KontrolleWert` AS AnmeldeStatus FROM `terminkontrolle` " +
+                query = "SELECT `KontrolleWert` AS AnmeldeStatus, KontrolleBemerkungen FROM `terminkontrolle` " +
                         "WHERE `KontrolleTerminId` = " + terminId + " " +
                         "AND `KontrolleMitgliedId` = " + teilId +
                         " AND `KontrolleArt`='Anmeldung'";
@@ -149,6 +149,7 @@ public abstract class DatabaseReader {
                 while (rs.next()) {
                    // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
                     teilnehmerListe.get(i).setAnmeldeStatus(anmeldung.getStatusElemente().get(rs.getInt("AnmeldeStatus")));
+                    teilnehmerListe.get(i).setAnmeldungText(rs.getString("KontrolleBemerkungen"));
                 }
                 i++;
 
@@ -157,7 +158,7 @@ public abstract class DatabaseReader {
             i = 0;
             while(teilnehmerListe.size() > i){
                 int teilId = teilnehmerListe.get(i).getMitglied().getId();
-                query = "SELECT `KontrolleWert` AS TeilnahmeStatus FROM `terminkontrolle` " +
+                query = "SELECT `KontrolleWert` AS TeilnahmeStatus, KontrolleBemerkungen FROM `terminkontrolle` " +
                         "WHERE `KontrolleTerminId` = " + terminId + " " +
                         "AND `KontrolleMitgliedId` = " + teilId +
                         " AND `KontrolleArt`='Anwesenheit'";
@@ -165,13 +166,14 @@ public abstract class DatabaseReader {
                 while (rs.next()) {
                     // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
                     teilnehmerListe.get(i).setTeilnahmeStatus(teilnahme.getStatusElemente().get(rs.getInt("TeilnahmeStatus")));
+                    teilnehmerListe.get(i).setTeilnahmeText(rs.getString("KontrolleBemerkungen"));
                 }
                 i++;
 
             }
             return teilnehmerListe;
         } catch (SQLException e) {
-            System.out.println("Anzahl Termine konnte nicht ermittelt werden ("+ e + ")");
+            System.out.println("Teilnehmerliste konnte nicht ermittelt werden (" + e + ")");
             return teilnehmerListe;
         }
     }

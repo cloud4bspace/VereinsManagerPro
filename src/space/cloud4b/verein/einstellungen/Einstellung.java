@@ -21,6 +21,34 @@ public abstract class Einstellung {
         return null;
     }
 
+    public static String getdbPW() {
+        try {
+            // Load Settings
+            Properties loadProps = new Properties();
+            loadProps.loadFromXML(new FileInputStream("../VereinsManager/src/space/cloud4b/verein/einstellungen/Systemeinstellungen.xml"));
+            String propValue = loadProps.getProperty("mysqlPW");
+            return propValue;
+        } catch (Exception e) {
+            System.out.println("dbPW konnte nicht ermittelt werden.");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getdbUser() {
+        try {
+            // Load Settings
+            Properties loadProps = new Properties();
+            loadProps.loadFromXML(new FileInputStream("../VereinsManager/src/space/cloud4b/verein/einstellungen/Systemeinstellungen.xml"));
+            String propValue = loadProps.getProperty("dbUser");
+            return propValue;
+        } catch (Exception e) {
+            System.out.println("dbPW konnte nicht ermittelt werden.");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static String getVereinsName() {
         try {
             // Load Settings

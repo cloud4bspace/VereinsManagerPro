@@ -84,6 +84,7 @@ public class TerminViewController implements Observer {
     private Stage dialogStage;
     private MainApp mainApp;
     private ArrayList<Termin> terminListe;
+    private ArrayList<Teilnehmer> teilnehmerListe;
     private Termin termin = null;
 
     public void setMainApp(MainApp mainApp) {
@@ -240,7 +241,8 @@ public class TerminViewController implements Observer {
     }
 
     public void showTeilnehmerListe(Termin termin) {
-        teilnehmerTabelle.setItems(FXCollections.observableArrayList(DatabaseReader.getTeilnehmer(termin)));
+        this.teilnehmerListe = DatabaseReader.getTeilnehmer(termin);
+        teilnehmerTabelle.setItems(FXCollections.observableArrayList(teilnehmerListe));
         idSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getMitglied().getIdProperty());
         mitgliedSpalte.setCellValueFactory(
@@ -328,7 +330,7 @@ public class TerminViewController implements Observer {
      */
     public void handleExportTeilnehmerToExcel() {
         try {
-            ExcelWriter.exportTeilnehmerToExcel(termin, mainApp.getCurrentUser());
+            ExcelWriter.exportTeilnehmerToExcel(termin, mainApp.getCurrentUser(), teilnehmerListe);
         } catch (IOException e) {
             mainApp.getMainFrameController().setInfo("Export ist fehlgeschlagen", "NOK", true);
         }

@@ -3,5 +3,6 @@
 <properties>
     <comment/>
     <entry key="mysqlPW">524680_Ab</entry>
+    <entry key="dbUser">web116</entry>
     <entry key="dbURL">jdbc:mysql://144.hosttech.eu:3306/usr_web116_5?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC</entry>
 </properties>

@@ -2,7 +2,16 @@
     -fx-font: 14px Verdana;
 }
 
+.search-field {
 
+    -fx-padding: 10;
+    -fx-background-image: url('https://img.icons8.com/metro/26/000000/search.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right 10 center;
+    -fx-border-color: #f78888;
+
+    -fx-font-size: 0.6em;
+}
 #kreisI {
 
     -fx-fill: #959595;
@@ -410,11 +419,11 @@
 }
 
 #mitgliederTabPane .tab {
-    -fx-background-color: #ECECEC;
+    -fx-background-color: #F78888;
 }
 
 #mitgliederTabPane .tab:selected {
-    -fx-background-color: #F78888;
+    -fx-background-color: #ECECEC;
 }
 
 #mitgliederTabPane .tab-header-background {
@@ -422,11 +431,11 @@
 }
 
 #terminTabPane .tab {
-    -fx-background-color: #ECECEC;
+    -fx-background-color: #F3D250;
 }
 
 #terminTabPane .tab:selected {
-    -fx-background-color: #F3D250;
+    -fx-background-color: #ECECEC;
 }
 
 #terminTabPane .tab-header-background {

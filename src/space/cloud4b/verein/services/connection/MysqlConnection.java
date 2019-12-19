@@ -17,8 +17,10 @@ public class MysqlConnection {
             //System.out.println("dbURL: " + dbURL);
             /*dbURL = "jdbc:mysql://144.hosttech.eu:3306/usr_web116_1?useUnicode=true&"
                     + "useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";*/
-            user = "web116";
-            pw = "524680_Ab";
+            // user = "web116";
+            user = Einstellung.getdbUser();
+            // pw = "524680_Ab";
+            pw = Einstellung.getdbPW();
             try {
                 conn = DriverManager.getConnection(dbURL, user, pw);
             } catch (SQLException e) {
