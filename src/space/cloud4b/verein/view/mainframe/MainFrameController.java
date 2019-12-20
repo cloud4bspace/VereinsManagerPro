@@ -183,6 +183,11 @@ public class MainFrameController implements Observer {
         }
     }
 
+    // Top-Menu
+    /**
+     * Opens Einstellungen-Dialog
+     */
+
     /**
      * Opens an about dialog.
      */
@@ -196,12 +201,7 @@ public class MainFrameController implements Observer {
         alert.showAndWait();
     }
 
-    @FXML
-    private void handleRefresh() {
-        System.out.println("Restarting app!");
-        mainApp.getPrimaryStage().close();
-        Platform.runLater(() -> mainApp.start(new Stage()));
-    }
+
 
     /**
      * Oeffnet ein Browserfenster mit der Hilfe
@@ -248,32 +248,28 @@ public class MainFrameController implements Observer {
     }
 
     /**
-     * Oeffnet ein Browserfenster mit der Terminmatrix
+     * Closes the application.
      */
     @FXML
-    private void handleDoodle() {
-        Stage stage = new Stage();
-        stage.setTitle("Doodle");
-        Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Doodle/doodle.php"), 750, 500, Color.web("#666970"));
-        stage.setScene(scene);
-        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
-        stage.show();
+    private void handleBeenden() {
+        System.exit(0);
     }
 
-    /**
-     * Oeffnet ein Browserfenster mit der Präsenzkontrolle
-     */
+
+    // Linker Menu-/Navigationsbereich
     @FXML
-    private void handleKontrolle() {
-        Stage stage = new Stage();
-        stage.setTitle("Präsenzkontrolle");
-        Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Kontrolle/kontrolluebersicht.php"), 750, 500, Color.web("#666970"));
-        stage.setScene(scene);
-        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
-        stage.show();
+    private void handleRefresh() {
+        System.out.println("Restarting app!");
+        mainApp.getPrimaryStage().close();
+        Platform.runLater(() -> mainApp.start(new Stage()));
     }
+
+    /* Menupunkte unter Mitglieder
+     * Pos#01: handleMitgliederbereich() --> Mitgliederbereich öffnen
+     * Pos#02: handleExportMitglieder() --> Export nach Excel
+     * Pos#03: handleShowBirthdayStatistics --> Diagramm Geburtstagsstatistik
+     * Pos#04: handleShowKatIStatistics --> Kuchendiagramm Mitgliederkategarie I
+     */
 
     /**
      * Oeffnet das Fenster des Mitgliederbereichs
@@ -307,6 +303,13 @@ public class MainFrameController implements Observer {
         mainApp.showMemberKatIStatistics();
     }
 
+
+    /* Menupunkte unter Termine
+     * Pos#01: handleTerminbereich() --> Mitgliederbereich öffnen
+     * handleDoodle() --> Anwesenheits-Matrix öffnen
+     * handleKontrolle() --> Kontrollmatrix öffnen
+     */
+
     /**
      * Oeffnet das Fenster des Terminbereichs
      */
@@ -314,13 +317,43 @@ public class MainFrameController implements Observer {
     private void handleTerminbereich() {
         mainApp.showTerminEditDialog();
     }
+
     /**
-     * Closes the application.
+     * Oeffnet die Kalenderübersicht
      */
     @FXML
-    private void handleBeenden() {
-        System.exit(0);
+    private void handelKalenderansicht() {
+        mainApp.showTerminOverview();
     }
+
+    /**
+     * Oeffnet ein Browserfenster mit der Terminmatrix
+     */
+    @FXML
+    private void handleDoodle() {
+        Stage stage = new Stage();
+        stage.setTitle("Doodle");
+        Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Doodle/doodle.php"), 750, 500, Color.web("#666970"));
+        stage.setScene(scene);
+        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
+        //TODO Path to stylesheet not correct...
+        stage.show();
+    }
+
+    /**
+     * Oeffnet ein Browserfenster mit der Präsenzkontrolle
+     */
+    @FXML
+    private void handleKontrolle() {
+        Stage stage = new Stage();
+        stage.setTitle("Präsenzkontrolle");
+        Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Kontrolle/kontrolluebersicht.php"), 750, 500, Color.web("#666970"));
+        stage.setScene(scene);
+        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
+        //TODO Path to stylesheet not correct...
+        stage.show();
+    }
+
 
     public void setInfo(String infoText, String infoTyp) {
         this.meldungAusgabeText.setText(infoText);

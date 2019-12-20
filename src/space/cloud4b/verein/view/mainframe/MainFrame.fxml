@@ -78,6 +78,7 @@
                 <Menu fx:id="termineMenu" mnemonicParsing="false" text="Termine">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#handleTerminbereich" text="Termine verwalten" />
+                      <MenuItem mnemonicParsing="false" onAction="#handelKalenderansicht" text="Monatsansicht"/>
                         <MenuItem mnemonicParsing="false" onAction="#handleDoodle" text="Doodle" />
                   </items>
                 </Menu>

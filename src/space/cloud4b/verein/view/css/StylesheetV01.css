@@ -159,7 +159,7 @@
     -fx-font-size: 14px;
     -fx-background-color: #000000;
     -fx-fit-to-width: true;
-    -fx-alignment: left;
+
     -fx-text-fill: rgba(255, 255, 255, 1);
 }
 
@@ -180,7 +180,7 @@
 }
 
 #hMenuBarTop .label {
-    -fx-font-size: 10px;
+    -fx-font-size: 12px;
     -fx-font-family: "Verdana UI Light";
     -fx-text-fill: #000000;
     -fx-background-color: #ffffff;
@@ -490,5 +490,14 @@
 
 .slider .track {
     -fx-background-color: black;
+}
+
+/* Kalender View */
+#topRowVBox {
+    -fx-background-color: #F3D250;
+}
+
+#topRowVBox .label {
+    -fx-font-size: 2em;
 }
 

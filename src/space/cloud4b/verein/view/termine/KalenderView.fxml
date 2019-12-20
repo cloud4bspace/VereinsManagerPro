@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="800.0"
+            stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8"
+            fx:controller="space.cloud4b.verein.view.termine.KalenderViewController">
+    <children>
+        <BorderPane layoutX="70.0" layoutY="146.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <center>
+                <GridPane gridLinesVisible="true" hgap="2.0" vgap="2.0" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="60.0" prefWidth="60.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="20.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Label fx:id="weekRow1Label" prefHeight="15.0" prefWidth="50.0" text="Wo 01" wrapText="true"
+                               GridPane.rowIndex="1">
+                            <GridPane.margin>
+                                <Insets left="5.0" right="5.0"/>
+                            </GridPane.margin>
+                        </Label>
+                        <Label fx:id="weekRow2Label" prefHeight="15.0" prefWidth="43.0" text="Wo 01"
+                               GridPane.rowIndex="2"/>
+                        <Label fx:id="weekRow3Label" prefHeight="15.0" prefWidth="43.0" text="Wo 01"
+                               GridPane.rowIndex="3"/>
+                        <Label fx:id="weekRow4Label" prefHeight="15.0" prefWidth="43.0" text="Wo 01"
+                               GridPane.rowIndex="4"/>
+                        <Label fx:id="weekRow5Label" prefHeight="15.0" prefWidth="43.0" text="Wo 01"
+                               GridPane.rowIndex="5"/>
+                        <Label fx:id="weegRow6Label" prefHeight="15.0" prefWidth="43.0" text="Wo 01"
+                               GridPane.rowIndex="6"/>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="43.0" text="Mo"
+                               GridPane.columnIndex="1"/>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="43.0" text="Di"
+                               GridPane.columnIndex="2"/>
+                        <Label alignment="CENTER" prefHeight="15.0" prefWidth="43.0" text="Mi"
+                               GridPane.columnIndex="3"/>
+                        <Label alignment="CENTER" prefHeight="15.0" prefWidth="43.0" text="Do"
+                               GridPane.columnIndex="4"/>
+                        <Label alignment="CENTER" prefHeight="15.0" prefWidth="43.0" text="Fr"
+                               GridPane.columnIndex="5"/>
+                        <Label alignment="CENTER" prefHeight="15.0" prefWidth="43.0" text="Sa"
+                               GridPane.columnIndex="6"/>
+                        <Label alignment="CENTER" prefHeight="15.0" prefWidth="43.0" text="So"
+                               GridPane.columnIndex="7"/>
+                        <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <children>
+                                <Label fx:id="day01Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0"
+                                       prefWidth="1000.0" text="Label" textAlignment="CENTER"/>
+                                <ListView fx:id="day01ListView" prefHeight="200.0" prefWidth="200.0"
+                                          GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                            </children>
+                        </VBox>
+                        <VBox GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                              GridPane.valignment="CENTER">
+                            <children>
+                                <Label fx:id="day02Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0"
+                                       prefWidth="1000.0" text="Label"/>
+                                <ListView fx:id="day02ListView" prefHeight="200.0" prefWidth="200.0"
+                                          GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                            </children>
+                        </VBox>
+                        <VBox GridPane.columnIndex="3" GridPane.rowIndex="1">
+                            <children>
+                                <Label fx:id="day03Label" alignment="CENTER" contentDisplay="TOP" prefWidth="1000.0"
+                                       text="Label" textAlignment="CENTER"/>
+                                <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3"
+                                          GridPane.rowIndex="1"/>
+                            </children>
+                        </VBox>
+                        <VBox GridPane.columnIndex="4" GridPane.rowIndex="1">
+                            <children>
+                                <Label fx:id="day04Label" alignment="CENTER" contentDisplay="TOP" prefWidth="1000.0"
+                                       text="Label" textAlignment="CENTER"/>
+                                <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3"
+                                          GridPane.rowIndex="1"/>
+                            </children>
+                        </VBox>
+                        <VBox GridPane.columnIndex="5" GridPane.rowIndex="1">
+                            <children>
+                                <Label fx:id="day05Label" alignment="CENTER" contentDisplay="TOP" prefWidth="1000.0"
+                                       text="Label" textAlignment="CENTER"/>
+                                <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3"
+                                          GridPane.rowIndex="1"/>
+                            </children>
+                        </VBox>
+                        <VBox GridPane.columnIndex="6" GridPane.rowIndex="1">
+                            <children>
+                                <Label fx:id="day06Label" alignment="CENTER" contentDisplay="TOP" prefWidth="1000.0"
+                                       text="Label" textAlignment="CENTER"/>
+                                <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3"
+                                          GridPane.rowIndex="1"/>
+                            </children>
+                        </VBox>
+                        <VBox GridPane.columnIndex="7" GridPane.rowIndex="1">
+                            <children>
+                                <Label fx:id="day07Label" alignment="CENTER" contentDisplay="TOP" prefWidth="1000.0"
+                                       text="Label" textAlignment="CENTER"/>
+                                <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3"
+                                          GridPane.rowIndex="1"/>
+                            </children>
+                        </VBox>
+                    </children>
+                </GridPane>
+            </center>
+            <top>
+                <VBox fx:id="topRowVBox" prefWidth="800.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label fx:id="topRowLabel" text="Label">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER_RIGHT" prefWidth="800.0">
+                            <children>
+                                <Button mnemonicParsing="false" text="Button">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </HBox.margin>
+                                </Button>
+                                <Button mnemonicParsing="false" text="Button">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </HBox.margin>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </top>
+        </BorderPane>
+    </children>
+</AnchorPane>
