@@ -69,15 +69,28 @@ public class LoginViewController {
            wird true zurückgegeben
         */
         if (DatabaseReader.checkUserCredentials(userNameFeld.getText(), pwFeld.getText())) {
+            // im Dialog wird der nächste Schritt angezeigt
+
+
+
             // die Mitglieder-Id wird aus der Datenbank ermittelt
             int mitgliedId = DatabaseReader.getMitgliedId(userNameFeld.getText());
+
             // der Klasse MainApp wird ein neuer User übergeben
             mainApp.setUser(new User(mitgliedId, DatabaseReader.getUserNameVorname(mitgliedId),
                     DatabaseReader.getMitgliederKategorie(mitgliedId), DatabaseReader.getVorstandsStatus(mitgliedId)));
-            feedbackLabel.setText("Applikation wird geladen...");
+
+
             // der Zähler für die Anzahl Zugriffe wird beim User hochgezählt
             DatabaseOperation.incrementLoginCounter(mitgliedId);
+
+
+            feedbackLabel.setText("Applikation wird geladen...");
+
+
+            // das Fenster wird geschlossen und im Hintergrund der neue Dialog geladen
             dialogStage.close();
+
             mainApp.start(dialogStage);
 
         } else {

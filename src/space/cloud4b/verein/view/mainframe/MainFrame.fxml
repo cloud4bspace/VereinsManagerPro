@@ -125,6 +125,7 @@
                  </VBox.margin>
             </MenuBar>
             <TextArea fx:id="meldungAusgabeText" editable="false" prefHeight="189.0" prefWidth="127.0" wrapText="true" />
+             <ListView fx:id="meldungAusgabeListView" prefHeight="200.0" prefWidth="200.0"/>
          </children>
          <BorderPane.margin>
             <Insets />

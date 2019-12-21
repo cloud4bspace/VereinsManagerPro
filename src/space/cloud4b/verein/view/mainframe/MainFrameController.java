@@ -16,6 +16,7 @@ import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.controller.AdressController;
 import space.cloud4b.verein.controller.KalenderController;
 import space.cloud4b.verein.einstellungen.Einstellung;
+import space.cloud4b.verein.model.verein.meldung.Meldung;
 import space.cloud4b.verein.services.Observer;
 import space.cloud4b.verein.services.output.ExcelWriter;
 import space.cloud4b.verein.view.browser.Browser;
@@ -61,6 +62,8 @@ public class MainFrameController implements Observer {
     @FXML
     private TextArea meldungAusgabeText;
     @FXML
+    private ListView<Meldung> meldungAusgabeListView;
+    @FXML
     private Label circleLabelI;
     @FXML
     private Label circleLabelII;
@@ -101,6 +104,9 @@ public class MainFrameController implements Observer {
         circleLabelII.setContentDisplay(ContentDisplay.CENTER);
 
         infoLabel.setText(mainApp.getCurrentUser().toString());
+        meldungAusgabeText.setWrapText(true);
+        setMeldungInListView("Herzlich willkommen\n"
+                + mainApp.getCurrentUser().getUserName() + "!", "INFO");
     }
 
     /**
@@ -173,14 +179,34 @@ public class MainFrameController implements Observer {
         iconTxt.setFill(Color.GRAY);
         this.dateLabel.setGraphic(iconTxt);
 
-        meldungAusgabeText.setWrapText(true);
-        meldungAusgabeText.setText("Herzlich willkommen\n" + System.getProperty("user.name"));
         try {
             FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");
             Image image = new Image(inputStream);
             clubLogoImage.setImage(image);
         } catch (FileNotFoundException e) {
         }
+
+        meldungAusgabeListView.setCellFactory(param -> new ListCell<Meldung>() {
+            protected void updateItem(Meldung item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getMeldungOutputString());
+                    switch (item.getMeldungType()) {
+                        case "OK":
+                            setStyle("-fx-background-color: #badcb3;");
+                            break;
+                        case "NOK":
+                            setStyle("-fx-background-color: #ffdada;");
+                            break;
+                        default:
+                            setStyle("-fx-background-color: #ffffff;");
+                            break;
+                    }
+                }
+            }
+        });
     }
 
     // Top-Menu
@@ -354,7 +380,9 @@ public class MainFrameController implements Observer {
         stage.show();
     }
 
-
+    public void setMeldungInListView(String meldungText, String meldungTyp) {
+        meldungAusgabeListView.getItems().add(0, new Meldung(meldungText, meldungTyp));
+    }
     public void setInfo(String infoText, String infoTyp) {
         this.meldungAusgabeText.setText(infoText);
         switch (infoTyp) {

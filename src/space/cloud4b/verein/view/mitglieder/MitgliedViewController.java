@@ -198,7 +198,8 @@ public class MitgliedViewController implements Observer {
 
         } else {
             // mainFrameController.setInfo("Blättern nicht möglich..", "NOK", true);
-            mainApp.getMainFrameController().setInfo("Blättern nicht möglich..", "NOK", true);
+            // TODO löschen  mainApp.getMainFrameController().setInfo("Blättern nicht möglich..", "NOK", true);
+            mainApp.getMainFrameController().setMeldungInListView("Blättern nicht möglich..", "NOK");
         }
     }
 

@@ -31,11 +31,9 @@ public class User {
         return string;
     }
 
-    /**
-     * diese Informationen des Users werden in der MYSQL-DB gespeichert (wer hat die letzte Änderung vorgenommen)
-     *
-     * @return
-     */
+    public String getUserName() {
+        return this.userName;
+    }
     public String getUserTxt() {
         return userId + "-" + userName + "-" + userKat;
     }

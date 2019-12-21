@@ -120,7 +120,14 @@ public class Termin {
         return "letzte Änderung: " + trackChangeTimestamp + " (" + trackChangeUsr + ")";
     }
 
-
+    // Kalender Output
+    public String getKalenderText() {
+        if (this.zeitText != null) {
+            return this.terminText + "\n" + this.zeitText;
+        } else {
+            return this.terminText;
+        }
+    }
 
     public String toString() {
         String string = getDateAsNiceString().getValue() + " " + this.terminText;

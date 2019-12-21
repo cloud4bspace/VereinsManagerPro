@@ -305,6 +305,34 @@
     -fx-font-weight: 100;
 }
 
+.list-view {
+    -fx-font-size: 0.6em;
+}
+
+.list-view .scroll-bar:vertical {
+    -fx-scale-x: 0;
+    -fx-pref-width: 0;
+}
+
+.list-view .scroll-bar:horizontal {
+    -fx-scale-x: 0;
+    -fx-pref-height: 0;
+}
+
+.list-cell {
+    -fx-wrap-text: true;
+    -fx-padding: 2;
+    -fx-background-color: rgba(243, 210, 80, 0.42);
+}
+
+
+#meldungAusgabeListView {
+    -fx-font-size: 0.8em;
+}
+
+#meldungAusgabeListView .list-cell {
+    -fx-background-color: #FFFFFF;
+}
 .table-view {
     -fx-font-size: 0.9em;
     -fx-base: #000000;
@@ -492,6 +520,13 @@
     -fx-background-color: black;
 }
 
+#kalenderLabel {
+    -fx-text-fill: #7e7b7d;
+    -fx-pref-width: 300;
+
+    -fx-alignment: center;
+    -fx-font-size: 0.8em;
+}
 /* Kalender View */
 #topRowVBox {
     -fx-background-color: #F3D250;

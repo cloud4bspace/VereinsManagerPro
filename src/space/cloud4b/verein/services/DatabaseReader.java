@@ -37,7 +37,7 @@ public abstract class DatabaseReader {
                 return rs.getInt("AnzahlMitglieder");
             }
         } catch (SQLException e) {
-            System.out.println("Anzahl Mitglieder konnte nicht ermittelt werden ("+ e + ")");
+            e.printStackTrace();
 
         }
         return 0;
@@ -55,7 +55,7 @@ public abstract class DatabaseReader {
                 return rs.getInt("Anzahl");
             }
         } catch (SQLException e) {
-            System.out.println("Anzahl Rückmeldungen konnte nicht ermittelt werden ("+ e + ")");
+            e.printStackTrace();
 
         }
         return 0;
@@ -74,7 +74,7 @@ public abstract class DatabaseReader {
                 return rs.getInt("Anzahl");
             }
         } catch (SQLException e) {
-            System.out.println("Anzahl Anmeldungen konnte nicht ermittelt werden ("+ e + ")");
+            e.printStackTrace();
 
         }
         return 0;
@@ -93,7 +93,7 @@ public abstract class DatabaseReader {
                 return rs.getInt("Anzahl");
             }
         } catch (SQLException e) {
-            System.out.println("Anzahl Vielleicht-Anmeldungen konnte nicht ermittelt werden ("+ e + ")");
+            e.printStackTrace();
 
         }
         return 0;
@@ -112,7 +112,7 @@ public abstract class DatabaseReader {
                 return rs.getInt("Anzahl");
             }
         } catch (SQLException e) {
-            System.out.println("Anzahl Vielleicht-Anmeldungen konnte nicht ermittelt werden ("+ e + ")");
+            e.printStackTrace();
 
         }
         return 0;
@@ -173,7 +173,7 @@ public abstract class DatabaseReader {
             }
             return teilnehmerListe;
         } catch (SQLException e) {
-            System.out.println("Teilnehmerliste konnte nicht ermittelt werden (" + e + ")");
+            e.printStackTrace();
             return teilnehmerListe;
         }
     }
@@ -193,7 +193,7 @@ public abstract class DatabaseReader {
                 return rs.getInt("KontaktId");
             }
         } catch (SQLException e) {
-            System.out.println("KontaktId konnte nicht ermittelt werden (" + e + ")");
+            e.printStackTrace();
         }
         return 0;
     }
@@ -215,7 +215,7 @@ public abstract class DatabaseReader {
             }
             return userKat;
         } catch (SQLException e) {
-            System.out.println("Status konnte nicht ermittelt werden (" + e + ")");
+            e.printStackTrace();
         }
         return userKat;
     }
@@ -234,7 +234,7 @@ public abstract class DatabaseReader {
                 return rs.getBoolean("KontaktIstVorstandsmitglied");
             }
         } catch (SQLException e) {
-            System.out.println("Status konnte nicht ermittelt werden (" + e + ")");
+            e.printStackTrace();
         }
         return false;
     }
@@ -250,7 +250,7 @@ public abstract class DatabaseReader {
              Statement st = conn.createStatement()) {
             String query = "SELECT * FROM kontakt WHERE KontaktId=" + kontaktId;
             ResultSet rs = st.executeQuery(query);
-            System.out.println(rs.toString());
+
             while (rs.next()) {
                 userTxt = rs.getString("KontaktNachname");
                 userTxt += " " + rs.getString("KontaktVorname");
@@ -258,7 +258,7 @@ public abstract class DatabaseReader {
             return userTxt;
 
         } catch (SQLException e) {
-            System.out.println("KontaktId konnte nicht ermittelt werden (" + e + ")");
+            e.printStackTrace();
         }
         return userTxt;
     }
@@ -273,7 +273,7 @@ public abstract class DatabaseReader {
              Statement st = conn.createStatement()) {
             String query = "SELECT COUNT(*) AS Treffer FROM benutzer WHERE KontaktId = '" + mitgliedId + "' AND BenutzerSperrcode = 0";
             ResultSet rs = st.executeQuery(query);
-            System.out.println(rs.toString());
+
             while (rs.next()) {
                 if (rs.getInt("Treffer") == 1) {
                     return true;
@@ -283,7 +283,7 @@ public abstract class DatabaseReader {
             }
 
         } catch (SQLException e) {
-            System.out.println("KontaktId konnte nicht ermittelt werden (" + e + ")");
+            e.printStackTrace();
         }
         return false;
     }
@@ -298,7 +298,7 @@ public abstract class DatabaseReader {
             String query = "SELECT COUNT(*) Treffer FROM benutzer WHERE BenutzerName = '" + eMail + "' AND BenutzerPW=" +
                     "'" + DigestUtils.sha1Hex(String.valueOf(pw)) + "' AND BenutzerSperrcode=0";
             ResultSet rs = st.executeQuery(query);
-            System.out.println(rs.toString());
+
             while (rs.next()) {
                 if (rs.getInt("Treffer") == 1) {
                     return true;
@@ -307,7 +307,7 @@ public abstract class DatabaseReader {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("KontaktId konnte nicht ermittelt werden (" + e + ")");
+            e.printStackTrace();
             return false;
         }
         return false;
@@ -326,7 +326,7 @@ public abstract class DatabaseReader {
                 return rs.getInt("AnzahlTermine");
             }
         } catch (SQLException e) {
-            System.out.println("Anzahl Termine konnte nicht ermittelt werden ("+ e + ")");
+            e.printStackTrace();
 
         }
         return 0;
@@ -346,7 +346,7 @@ public abstract class DatabaseReader {
                 return Timestamp.valueOf(rs.getString("LetzteAenderung"));
             }
         } catch (SQLException e) {
-            System.out.println("letzte Änderung konnte nicht ermittelt werden ("+ e + ")");
+            e.printStackTrace();
 
         }
         return null;
@@ -406,11 +406,11 @@ public abstract class DatabaseReader {
                     ((Mitglied) mitglied).setKategorieIIStatus(kategorieIIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieB")));
                     ((Mitglied) mitglied).setIstVorstandsmitglied(rs.getBoolean("KontaktIstVorstandsmitglied"));
                 }
-                System.out.println("Objekt wurde vervollständigt: " + mitglied.toString() + "/" + mitglied.getClass());
+
             }
 
         } catch (SQLException e) {
-            System.out.println("SQL-Connection steht für DatenLieferung nicht zur Verfügung");
+            e.printStackTrace();
 
         }
 
@@ -452,7 +452,7 @@ public abstract class DatabaseReader {
                 }  else {
                     kontakt = new Kontakt(kontaktId, kontaktNachname, kontaktVorname);
                 }
-                System.out.println("Objekt wurde angelegt: " + kontakt.toString() + "/" + kontakt.getClass());
+
 
                 /**
                  * Instanzvariabeln der neuen Objekte werden vervollständigt
@@ -501,7 +501,7 @@ public abstract class DatabaseReader {
                     ((Mitglied) kontakt).setKategorieIIStatus(kategorieIIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieB")));
                     ((Mitglied) kontakt).setIstVorstandsmitglied(rs.getBoolean("KontaktIstVorstandsmitglied"));
                 }
-                System.out.println("Objekt wurde vervollständigt: " + kontakt.toString() + "/" + kontakt.getClass());
+
 
                 /**
                  * Kontakt wird zur Liste hinzugefügt
@@ -515,7 +515,7 @@ public abstract class DatabaseReader {
             }
 
         } catch (SQLException e) {
-            System.out.println("SQL-Connection steht für DatenLieferung nicht zur Verfügung");
+            e.printStackTrace();
 
         }
 
@@ -536,13 +536,13 @@ public abstract class DatabaseReader {
             );
             ResultSet result = st.executeQuery(query);
             while (result.next()) {
-                System.out.println(result.getString("StatusLong"));
+
                 pieChartData.add(new PieChart.Data(result.getString("StatusLong"), result.getInt("MembersCount")));
 
             }
             return pieChartData;
         } catch (SQLException e) {
-            System.out.print(e);
+            e.printStackTrace();
 
         }
         return null;
@@ -554,7 +554,7 @@ public abstract class DatabaseReader {
         ArrayList<Termin> terminListe = DatabaseReader.getTermineAsArrayList();
 
         Iterator<Mitglied> i = mitgliederListe.iterator();
-        System.out.println("Mitglieder werden durchlaufen");
+
         while (i.hasNext()) {
             String query;
             int anzTermineAktuellesJahr = 0;
@@ -562,13 +562,13 @@ public abstract class DatabaseReader {
             double anwesenheitenAnteil = 0; //Anteil in Prozent
             // Fokus 1 = dieses Jahr
             Mitglied mitglied = i.next();
-            // System.out.println(i.next());
+
 
 
             try (Connection conn = new MysqlConnection().getConnection(); Connection conn2 = new MysqlConnection().getConnection(); Statement st = conn.createStatement(); Statement st2 = conn2.createStatement()) {
                 query = "SELECT COUNT(*) AS anzahlTermine FROM `termin` WHERE YEAR(TerminDatum) " +
                         "= YEAR(CURRENT_DATE) AND `TerminDatum` >= '" + mitglied.getEintrittsDatumAsISOString() + "'";
-                // System.out.println(query);
+
 
                 ResultSet rs = st.executeQuery(query);
                 while (rs.next()) {
@@ -581,7 +581,7 @@ public abstract class DatabaseReader {
                         "= `KontrolleTerminId`WHERE `KontrolleMitgliedId`=" + mitglied.getId() +
                         " AND `KontrolleArt`='Anwesenheit' " +
                         "AND KontrolleWert = 1 AND YEAR(termin.TerminDatum) = YEAR(CURRENT_DATE)";
-                // System.out.println(query);
+
 
                 ResultSet rs2 = st2.executeQuery(query);
                 while (rs2.next()) {
@@ -595,7 +595,7 @@ public abstract class DatabaseReader {
 
 
             } catch (SQLException e) {
-                System.out.println("..da hat etwas nicht funktioniert");
+                e.printStackTrace();
             }
         }
 
@@ -659,7 +659,7 @@ public abstract class DatabaseReader {
             }
 
         } catch (SQLException e) {
-            System.out.println("Termine konnten nicht erzeugt werden");
+            e.printStackTrace();
 
         }
         return terminListe;
@@ -715,7 +715,7 @@ public abstract class DatabaseReader {
 
 
         } catch (SQLException e) {
-            System.out.println("nächste Geburtstage konnten nicht ermittelt werden");
+            e.printStackTrace();
         }
 
         //Liste sortieren nach Datum...
@@ -743,7 +743,7 @@ public abstract class DatabaseReader {
                 status.setStatusSymbol(rs.getString("StatusSymbol"));
             }
         } catch (SQLException e) {
-            System.out.println("Status-Informationen konnten nicht ermittelt werden");
+            e.printStackTrace();
         }
     }
 
@@ -773,7 +773,7 @@ public abstract class DatabaseReader {
                         rs.getString("StatusElementNameLong"), rs.getString("StatusElementNameShort"), rs.getString("StatusElementUnicodeChar")));
             }
         } catch (SQLException e) {
-            System.out.println("Status konnte nicht erzeugt werden");
+            e.printStackTrace();
         }
         return statusHashMap;
     }
@@ -808,12 +808,11 @@ public abstract class DatabaseReader {
 
                 terminListe.add(termin);
 
-                System.out.println("Termine erstellt");
 
             }
 
         } catch (SQLException e) {
-            System.out.println("Termine konnten nicht erzeugt werden");
+            e.printStackTrace();
 
         }
         return terminListe;
@@ -868,11 +867,11 @@ public abstract class DatabaseReader {
                 }
 
                 terminListe.add(termin);
-                System.out.println("Termine erstellt");
+
             }
 
         } catch (SQLException e) {
-            System.out.println("Termine konnten nicht erzeugt werden");
+            e.printStackTrace();
         }
         return terminListe;
     }
@@ -919,7 +918,7 @@ public abstract class DatabaseReader {
                 // alter in diesem Jahr
                 int anzahlJahre = jahr - eintrittsJahr;
                 eintrittsDatum = jahr + eintrittsDatum.substring(4,10);
-                System.out.println("JubdiesesJahr: " + eintrittsDatum);
+
 
                 LocalDate eintrittsDatumLD = Date.valueOf(eintrittsDatum).toLocalDate();
                 // Wenn der nächste Geburtstag grösser ist als heute
@@ -935,7 +934,7 @@ public abstract class DatabaseReader {
 
 
         } catch(SQLException e){
-            System.out.println("nächste Geburtstage konnten nicht ermittelt werden");
+            e.printStackTrace();
         }
 
         //Liste sortieren nach Datum...
@@ -953,9 +952,65 @@ public abstract class DatabaseReader {
                 return rs.getInt("KontaktId");
             }
         } catch (SQLException e) {
-            System.out.println("Mitglieder-Id konnte nicht ermittelt werden (" + e + ")");
+            e.printStackTrace();
         }
         return 0;
     }
 
+    public static ArrayList<Termin> getTermineFromLocalDate(LocalDate datum) {
+        Status kategorieIStatus = new Status(2);
+        Status kategorieIIStatus = new Status(4);
+        ArrayList<Termin> terminListe = new ArrayList<>();
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * from usr_web116_5.termin WHERE TerminDatum ='" + datum + "' ORDER BY TerminDatum ASC";
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                Termin termin;
+                LocalDateTime terminZeit = null;
+                LocalDateTime terminZeitBis = null;
+                int terminId = rs.getInt("TerminId");
+                LocalDate terminDatum = Date.valueOf(rs.getString("TerminDatum")).toLocalDate();
+
+                String terminText = rs.getString("TerminText");
+
+                /**
+                 * Objekte werden erzeugt und der Terminliste hinzugefügt
+                 */
+                termin = new Termin(terminId, terminDatum, terminText);
+                if (rs.getString("TerminZeit") != null) {
+                    terminZeit = LocalDateTime.of(terminDatum, Time.valueOf(rs.getString("TerminZeit")).toLocalTime());
+                    termin.setZeit(terminZeit);
+                }
+                if (rs.getString("TerminZeitBis") != null) {
+                    terminZeitBis = LocalDateTime.of(terminDatum, Time.valueOf(rs.getString("TerminZeitBis")).toLocalTime());
+                    termin.setZeitBis(terminZeitBis);
+                }
+                if (rs.getString("TerminOrt") != null) {
+                    termin.setOrt(rs.getString("TerminOrt"));
+                }
+                if (rs.getString("TerminDetails") != null) {
+                    termin.setDetails(rs.getString("TerminDetails"));
+                }
+                if (rs.getInt("TerminTeilnehmerKatA") >= 0) {
+                    termin.setTeilnehmerKatI(kategorieIStatus.getStatusElemente().get(rs.getInt("TerminTeilnehmerKatA")));
+                }
+                if (rs.getInt("TerminTeilnehmerKatB") >= 0) {
+                    termin.setTeilnehmerKatII(kategorieIIStatus.getStatusElemente().get(rs.getInt("TerminTeilnehmerKatB")));
+                }
+                if (rs.getString("TerminTrackChangeUsr") != null) {
+                    termin.setTrackChangeUsr(rs.getString("TerminTrackChangeUsr"));
+                }
+                if (rs.getString("TerminTrackChangeTimestamp") != null) {
+                    termin.setTrackChangeTimestamp(rs.getTimestamp("TerminTrackChangeTimestamp"));
+                }
+
+                terminListe.add(termin);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return terminListe;
+    }
 }
