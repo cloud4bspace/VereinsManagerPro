@@ -389,9 +389,53 @@
 
 }
 
-.text-field:focused{
+.text-field:focused {
     -fx-background-color: white;
     -fx-text-fill: black;
+}
+
+#taskGridPane {
+
+    -fx-vgap: 5;
+    -fx-hgap: 5;
+    -fx-text-fill: #000000;
+    -fx-padding: 10;
+    -fx-border-style: solid inside;
+    -fx-border-width: 5px;
+    -fx-border-insets: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #90CCF4;
+    -fx-background-color: #90CCF4;
+    -fx-background-radius: 5px;
+}
+
+#taskGridPane #taskDetails {
+    -fx-text-fill: #000000;
+    -fx-font-weight: normal;
+    -fx-font-size: 0.8em;
+}
+
+#taskCell {
+    -fx-padding: 5;
+}
+
+#taskTitel {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: #000000;
+}
+
+#taskId {
+    -fx-padding: 5;
+    -fx-background-radius: 100;
+    -fx-background-color: #F3D250;
+    -fx-min-height: 20;
+}
+
+#overDue {
+    -fx-font-size: 1.2em;
+    -fx-background-color: #F78888;
+    -fx-text-fill: #FFFFFF;
 }
 
 .text-area {
@@ -423,21 +467,43 @@
 }
 
 #meldungAusgabeText .content {
-    -fx-background-color: text-area-background ;
+    -fx-background-color: text-area-background;
 }
+
 .combo-box {
     -fx-background-radius: 0;
     -fx-background-color: #ECECEC;
     -fx-text-fill: #000000;
 }
 
+.combo-box .list-cell {
+
+    -fx-background-color: #ECECEC;
+    -fx-text-fill: #000000;
+    -fx-padding: 5 10 5 10;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #ECECEC;
+    -fx-text-fill: #000000;
+    -fx-padding: 5;
+    -fx-font-size: 1em;
+}
+
+.combo-box-popup {
+    -fx-background-color: #ECECEC;;
+}
+
+
 .date-picker {
     -fx-border-radius: 0;
 }
+
 .combo-box .list-view .list-cell { /* Elemente der Combobox*/
     -fx-text-fill: #000000;
 
 }
+
 .combo-box .list-cell { /* ausgewähltes Elemente der Combobox*/
     -fx-text-fill: #000000;
 }

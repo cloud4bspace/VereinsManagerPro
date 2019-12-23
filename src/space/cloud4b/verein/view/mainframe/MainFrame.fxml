@@ -67,6 +67,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleShowBirthdayStatistics" text="Geburtstags-Statistik" />
                         <MenuItem mnemonicParsing="false" onAction="#handleShowKatIStatistics" text="Auswertung Kat I" />
                         <MenuItem mnemonicParsing="false" onAction="#handleExportMitglieder" text="nach Excel exportieren.." />
+                         <MenuItem mnemonicParsing="false" onAction="#handleCreatePDF" text="PDF erstellen"/>
                      </items></Menu>
               </menus>
                <VBox.margin>
@@ -80,6 +81,7 @@
                     <MenuItem mnemonicParsing="false" onAction="#handleTerminbereich" text="Termine verwalten" />
                       <MenuItem mnemonicParsing="false" onAction="#handelKalenderansicht" text="Monatsansicht"/>
                         <MenuItem mnemonicParsing="false" onAction="#handleDoodle" text="Doodle" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleKontrolle" text="Präsenzkontrolle"/>
                   </items>
                 </Menu>
               </menus>
@@ -88,13 +90,13 @@
                  </VBox.margin>
             </MenuBar>
              <MenuBar id="mBar03">
-              <menus>
-                <Menu fx:id="kontrolleMenu" mnemonicParsing="false" text="Kontrollen">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#handleKontrolle" text="Präsenzkontrolle" />
-                  </items>
-                </Menu>
-              </menus>
+                 <menus>
+                     <Menu fx:id="kontrolleMenu" mnemonicParsing="false" text="Tasks">
+                         <items>
+                             <MenuItem mnemonicParsing="false" onAction="#handleTaskList" text="Unspecified Action"/>
+                         </items>
+                     </Menu>
+                 </menus>
                  <VBox.margin>
                      <Insets top="10.0"/>
                  </VBox.margin>

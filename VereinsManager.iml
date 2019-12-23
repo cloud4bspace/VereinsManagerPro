@@ -29,5 +29,9 @@
     <orderEntry type="library" name="jaxb-impl-2.3.2" level="project" />
     <orderEntry type="library" name="junit-4.12" level="project" />
     <orderEntry type="library" name="log4j-1.2.17" level="project" />
+    <orderEntry type="library" name="Maven: com.itextpdf:kernel:7.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.itextpdf:layout:7.0.0" level="project" />
+    <orderEntry type="library" name="JavaFXApp" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.7.18" level="project" />
   </component>
 </module>

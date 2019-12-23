@@ -13,6 +13,7 @@ import space.cloud4b.verein.model.verein.kalender.Termin;
 import space.cloud4b.verein.model.verein.kontrolle.rangliste.Position;
 import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.model.verein.status.StatusElement;
+import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.services.connection.MysqlConnection;
 
 import java.sql.Date;
@@ -116,6 +117,25 @@ public abstract class DatabaseReader {
 
         }
         return 0;
+    }
+
+    /**
+     * Verantwortliche ermitteln für einen Task
+     */
+    public static ArrayList<Integer> getVerantwortlicheId(Task task) {
+        ArrayList<Integer> verantwortliche = new ArrayList<>();
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM taskZuordnung WHERE TaskId=" + task.getTaskId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                verantwortliche.add(rs.getInt("KontaktId"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return verantwortliche;
+
     }
 
     /**
@@ -1012,5 +1032,40 @@ public abstract class DatabaseReader {
             e.printStackTrace();
         }
         return terminListe;
+    }
+
+    public static ArrayList<Task> getTaskList() {
+        ArrayList<Task> taskListe = new ArrayList<>();
+        Status prioStatus = new Status(7);
+        Status statusStatus = new Status(8);
+
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * from usr_web116_5.task ORDER BY TaskTerminBis ASC";
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                int terminId = rs.getInt("TaskId");
+
+
+                /**
+                 * Objekte werden erzeugt und der Taskliste hinzugefügt
+                 */
+                Task task = new Task(rs.getInt("TaskId"),
+                        rs.getString("TaskBezeichnung"),
+                        rs.getString("TaskDetails"),
+                        null,
+                        rs.getDate("TaskTerminBis").toLocalDate());
+                System.out.println("Task: " + task);
+
+                task.setPrioStatus(prioStatus.getStatusElemente().get(rs.getInt("TaskPrio")));
+                task.setStatusStatus(statusStatus.getStatusElemente().get(rs.getInt("TaskStatus")));
+                taskListe.add(task);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return taskListe;
     }
 }

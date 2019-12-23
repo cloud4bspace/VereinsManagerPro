@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8"
+            fx:controller="space.cloud4b.verein.view.tasks.TaskListViewController">
+   <children>
+      <ScrollPane fx:id="scrollPane" prefViewportHeight="100.0" prefViewportWidth="600.0" AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+   </children>
+</AnchorPane>

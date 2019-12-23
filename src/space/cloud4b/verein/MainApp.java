@@ -24,6 +24,7 @@ import space.cloud4b.verein.view.login.SignupViewController;
 import space.cloud4b.verein.view.mainframe.MainFrameController;
 import space.cloud4b.verein.view.mitglieder.MitgliedNeuViewController;
 import space.cloud4b.verein.view.mitglieder.MitgliedViewController;
+import space.cloud4b.verein.view.tasks.TaskListViewController;
 import space.cloud4b.verein.view.termine.KalenderViewController;
 import space.cloud4b.verein.view.termine.TerminNeuViewController;
 import space.cloud4b.verein.view.termine.TerminViewController;
@@ -217,6 +218,7 @@ public class MainApp extends Application {
         return kalenderController;
     }
 
+
     /**
      * Zeigt den Termin-Bereich in der Mitte des Hauptfensters
      * wenn der TerminViewController erzeugt wird, übergebe ich ihm auch den
@@ -406,6 +408,29 @@ public class MainApp extends Application {
             controller.setStage(dialogStage);
             dialogStage.show();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showTaskOverview() {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/tasks/TaskListView.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Taskliste");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the persons into the controller.
+            TaskListViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setStage(dialogStage);
+            dialogStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

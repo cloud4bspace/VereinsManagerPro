@@ -128,10 +128,10 @@ public class MainFrameController implements Observer {
         termineMenu.setGraphic(iconTxt);
         termineMenu.setText("Termine");
 
-        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.CHECK, "14px");
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.TASKS, "14px");
         iconTxt.setFill(Color.GRAY);
         kontrolleMenu.setGraphic(iconTxt);
-        kontrolleMenu.setText("Kontrollen");
+        kontrolleMenu.setText("Tasks");
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.LINE_CHART, "14px");
         iconTxt.setFill(Color.GRAY);
@@ -329,6 +329,10 @@ public class MainFrameController implements Observer {
         mainApp.showMemberKatIStatistics();
     }
 
+    @FXML
+    private void handleCreatePDF() {
+        //halloWelt pdf = new halloWelt();
+    }
 
     /* Menupunkte unter Termine
      * Pos#01: handleTerminbereich() --> Mitgliederbereich öffnen
@@ -380,9 +384,15 @@ public class MainFrameController implements Observer {
         stage.show();
     }
 
+    @FXML
+    private void handleTaskList() {
+        mainApp.showTaskOverview();
+    }
+
     public void setMeldungInListView(String meldungText, String meldungTyp) {
         meldungAusgabeListView.getItems().add(0, new Meldung(meldungText, meldungTyp));
     }
+
     public void setInfo(String infoText, String infoTyp) {
         this.meldungAusgabeText.setText(infoText);
         switch (infoTyp) {

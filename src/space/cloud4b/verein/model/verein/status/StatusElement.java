@@ -1,7 +1,5 @@
 package space.cloud4b.verein.model.verein.status;
 
-import java.util.HashMap;
-
 public class StatusElement {
 
     private int statusElementId;
@@ -17,7 +15,6 @@ public class StatusElement {
         this.statusElementTextLang = statusElementTextLang;
         this.statusElementTextKurz = statusElementTextKurz;
         this.statusElementSymbol = statusElementSymbol;
-        System.out.println("Statuselement " + statusId + " wird erstellt");
     }
 
     public int getStatusElementKey(){

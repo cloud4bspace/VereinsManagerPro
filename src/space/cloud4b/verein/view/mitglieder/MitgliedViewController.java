@@ -193,8 +193,13 @@ public class MitgliedViewController implements Observer {
 
     public void handleGetNextMitglied() {
         int i = mitgliedArrayList.indexOf(aktuellesMitglied) + 1;
+
         if (i < mitgliedArrayList.size()) {
-            setMitglied(mitgliedArrayList.get(i));
+            mitgliedTabelle.scrollTo(i);
+
+            mitgliedTabelle.getSelectionModel().select(i);
+            mitgliedTabelle.getFocusModel().focus(i);
+            setMitglied(mitgliedArrayList.get(mitgliedTabelle.getSelectionModel().getFocusedIndex()));
 
         } else {
             // mainFrameController.setInfo("Blättern nicht möglich..", "NOK", true);
