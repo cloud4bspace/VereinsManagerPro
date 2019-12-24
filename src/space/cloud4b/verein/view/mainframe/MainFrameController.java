@@ -19,6 +19,7 @@ import space.cloud4b.verein.einstellungen.Einstellung;
 import space.cloud4b.verein.model.verein.meldung.Meldung;
 import space.cloud4b.verein.services.Observer;
 import space.cloud4b.verein.services.output.ExcelWriter;
+import space.cloud4b.verein.services.output.PdfWriterV02;
 import space.cloud4b.verein.view.browser.Browser;
 
 import java.io.FileInputStream;
@@ -331,7 +332,12 @@ public class MainFrameController implements Observer {
 
     @FXML
     private void handleCreatePDF() {
-        //halloWelt pdf = new halloWelt();
+        // PdfOutput.mitgliederListePdf(mainApp.getAdressController().getMitgliederListe());
+        try {
+            PdfWriterV02.writePdf(mainApp.getCurrentUser(), mainApp.getAdressController().getMitgliederListe());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /* Menupunkte unter Termine

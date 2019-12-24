@@ -17,15 +17,19 @@ public class StatusElement {
         this.statusElementSymbol = statusElementSymbol;
     }
 
-    public int getStatusElementKey(){
+    public int getStatusElementKey() {
         return statusElementKey;
     }
+
     public String toString() {
-        if(!statusElementSymbol.isEmpty()) {
-            return  statusElementTextLang + " (" +statusElementSymbol + ")";
+        if (!statusElementSymbol.isEmpty()) {
+            return statusElementTextLang + " (" + statusElementSymbol + ")";
         } else {
             return this.statusElementTextLang;
         }
+    }
 
+    public String getStatusElementTextLang() {
+        return statusElementTextLang;
     }
 }

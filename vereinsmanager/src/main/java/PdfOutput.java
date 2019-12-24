@@ -9,13 +9,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-public class halloWelt {
+public class PdfOutput {
     public static final String DEST = "ressources/files/pdf/einPdf.pdf";
 
     public static void main(String[] args) throws FileNotFoundException {
         File file = new File(DEST);
         file.getParentFile().mkdirs();
-        new halloWelt().createPdf(DEST);
+        new PdfOutput().createPdf(DEST);
     }
 
     public void createPdf(String destination) throws FileNotFoundException {
