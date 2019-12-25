@@ -16,8 +16,10 @@ import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.controller.AdressController;
 import space.cloud4b.verein.controller.KalenderController;
 import space.cloud4b.verein.einstellungen.Einstellung;
+import space.cloud4b.verein.model.verein.meldung.Meldung;
 import space.cloud4b.verein.services.Observer;
 import space.cloud4b.verein.services.output.ExcelWriter;
+import space.cloud4b.verein.services.output.PdfWriterV02;
 import space.cloud4b.verein.view.browser.Browser;
 
 import java.io.FileInputStream;
@@ -32,6 +34,7 @@ public class MainFrameController implements Observer {
 
     int anzMitglieder = 0;
     int anzTermine = 0;
+    int anzTasks = 0;
 
     // Reference to the main application
     private MainApp mainApp;
@@ -61,9 +64,13 @@ public class MainFrameController implements Observer {
     @FXML
     private TextArea meldungAusgabeText;
     @FXML
+    private ListView<Meldung> meldungAusgabeListView;
+    @FXML
     private Label circleLabelI;
     @FXML
     private Label circleLabelII;
+    @FXML
+    private Label circleLabelIII;
     @FXML
     private Button homeButton;
     @FXML
@@ -100,7 +107,14 @@ public class MainFrameController implements Observer {
         circleLabelII.setText(this.anzTermine + " Termine");
         circleLabelII.setContentDisplay(ContentDisplay.CENTER);
 
+        this.anzTasks = mainApp.getTaskController().getanzahlTasks();
+        circleLabelIII.setText(this.anzTasks + " Tasks");
+        circleLabelIII.setContentDisplay(ContentDisplay.CENTER);
+
         infoLabel.setText(mainApp.getCurrentUser().toString());
+        meldungAusgabeText.setWrapText(true);
+        setMeldungInListView("Herzlich willkommen\n"
+                + mainApp.getCurrentUser().getUserName() + "!", "INFO");
     }
 
     /**
@@ -122,10 +136,10 @@ public class MainFrameController implements Observer {
         termineMenu.setGraphic(iconTxt);
         termineMenu.setText("Termine");
 
-        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.CHECK, "14px");
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.TASKS, "14px");
         iconTxt.setFill(Color.GRAY);
         kontrolleMenu.setGraphic(iconTxt);
-        kontrolleMenu.setText("Kontrollen");
+        kontrolleMenu.setText("Tasks");
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.LINE_CHART, "14px");
         iconTxt.setFill(Color.GRAY);
@@ -144,7 +158,7 @@ public class MainFrameController implements Observer {
         homeButton.setText("Home");
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.USER, "20px");
-        iconTxt.setFill(javafx.scene.paint.Color.WHITE);
+        iconTxt.setFill(javafx.scene.paint.Color.BLACK);
         infoLabel.setGraphic(iconTxt);
         infoLabel.setText(System.getProperty("user.name"));
 
@@ -173,16 +187,44 @@ public class MainFrameController implements Observer {
         iconTxt.setFill(Color.GRAY);
         this.dateLabel.setGraphic(iconTxt);
 
-        meldungAusgabeText.setWrapText(true);
-        meldungAusgabeText.setText("Herzlich willkommen\n" + System.getProperty("user.name"));
         try {
             FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");
             Image image = new Image(inputStream);
             clubLogoImage.setImage(image);
         } catch (FileNotFoundException e) {
         }
+
+        meldungAusgabeListView.setCellFactory(param -> new ListCell<Meldung>() {
+            protected void updateItem(Meldung item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getMeldungOutputString());
+                    switch (item.getMeldungType()) {
+                        case "OK":
+                            setStyle("-fx-background-color: #badcb3;");
+                            break;
+                        case "NOK":
+                            setStyle("-fx-background-color: #ffdada;");
+                            break;
+                        default:
+                            setStyle("-fx-background-color: #ffffff;");
+                            break;
+                    }
+                }
+            }
+        });
     }
 
+    // Top-Menu
+    /**
+     * Opens Einstellungen-Dialog
+     */
+    @FXML
+    private void handleEinstellungen() {
+        mainApp.showEinstellungenView();
+    }
     /**
      * Opens an about dialog.
      */
@@ -191,17 +233,11 @@ public class MainFrameController implements Observer {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Vereins-App");
         alert.setHeaderText("über..");
-        //System.getProperty("user.name");
-        alert.setContentText(System.getProperty("user.name") + "\nWebsite: https://cloud4b.space");
+        alert.setContentText("Serge Kaulitz & Bernhard Kämpf\nWebsite: https://cloud4b.space");
         alert.showAndWait();
     }
 
-    @FXML
-    private void handleRefresh() {
-        System.out.println("Restarting app!");
-        mainApp.getPrimaryStage().close();
-        Platform.runLater(() -> mainApp.start(new Stage()));
-    }
+
 
     /**
      * Oeffnet ein Browserfenster mit der Hilfe
@@ -216,7 +252,6 @@ public class MainFrameController implements Observer {
         scene.getStylesheets().add("../css/BrowserToolbar.css");
         //TODO Path to stylesheet not correct...
         stage.show();
-
     }
 
     /**
@@ -248,32 +283,28 @@ public class MainFrameController implements Observer {
     }
 
     /**
-     * Oeffnet ein Browserfenster mit der Terminmatrix
+     * Closes the application.
      */
     @FXML
-    private void handleDoodle() {
-        Stage stage = new Stage();
-        stage.setTitle("Doodle");
-        Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Doodle/doodle.php"), 750, 500, Color.web("#666970"));
-        stage.setScene(scene);
-        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
-        stage.show();
+    private void handleBeenden() {
+        System.exit(0);
     }
 
-    /**
-     * Oeffnet ein Browserfenster mit der Präsenzkontrolle
-     */
+
+    // Linker Menu-/Navigationsbereich
     @FXML
-    private void handleKontrolle() {
-        Stage stage = new Stage();
-        stage.setTitle("Präsenzkontrolle");
-        Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Kontrolle/kontrolluebersicht.php"), 750, 500, Color.web("#666970"));
-        stage.setScene(scene);
-        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
-        stage.show();
+    private void handleRefresh() {
+        System.out.println("Restarting app!");
+        mainApp.getPrimaryStage().close();
+        Platform.runLater(() -> mainApp.start(new Stage()));
     }
+
+    /* Menupunkte unter Mitglieder
+     * Pos#01: handleMitgliederbereich() --> Mitgliederbereich öffnen
+     * Pos#02: handleExportMitglieder() --> Export nach Excel
+     * Pos#03: handleShowBirthdayStatistics --> Diagramm Geburtstagsstatistik
+     * Pos#04: handleShowKatIStatistics --> Kuchendiagramm Mitgliederkategarie I
+     */
 
     /**
      * Oeffnet das Fenster des Mitgliederbereichs
@@ -307,6 +338,22 @@ public class MainFrameController implements Observer {
         mainApp.showMemberKatIStatistics();
     }
 
+    @FXML
+    private void handleCreatePDF() {
+        // PdfOutput.mitgliederListePdf(mainApp.getAdressController().getMitgliederListe());
+        try {
+            PdfWriterV02.writePdf(mainApp.getCurrentUser(), mainApp.getAdressController().getMitgliederListe());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* Menupunkte unter Termine
+     * Pos#01: handleTerminbereich() --> Mitgliederbereich öffnen
+     * handleDoodle() --> Anwesenheits-Matrix öffnen
+     * handleKontrolle() --> Kontrollmatrix öffnen
+     */
+
     /**
      * Oeffnet das Fenster des Terminbereichs
      */
@@ -314,12 +361,50 @@ public class MainFrameController implements Observer {
     private void handleTerminbereich() {
         mainApp.showTerminEditDialog();
     }
+
     /**
-     * Closes the application.
+     * Oeffnet die Kalenderübersicht
      */
     @FXML
-    private void handleBeenden() {
-        System.exit(0);
+    private void handelKalenderansicht() {
+        mainApp.showTerminOverview();
+    }
+
+    /**
+     * Oeffnet ein Browserfenster mit der Terminmatrix
+     */
+    @FXML
+    private void handleDoodle() {
+        Stage stage = new Stage();
+        stage.setTitle("Doodle");
+        Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Doodle/doodle.php"), 750, 500, Color.web("#666970"));
+        stage.setScene(scene);
+        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
+        //TODO Path to stylesheet not correct...
+        stage.show();
+    }
+
+    /**
+     * Oeffnet ein Browserfenster mit der Präsenzkontrolle
+     */
+    @FXML
+    private void handleKontrolle() {
+        Stage stage = new Stage();
+        stage.setTitle("Präsenzkontrolle");
+        Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Kontrolle/kontrolluebersicht.php"), 750, 500, Color.web("#666970"));
+        stage.setScene(scene);
+        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
+        //TODO Path to stylesheet not correct...
+        stage.show();
+    }
+
+    @FXML
+    private void handleTaskList() {
+        mainApp.showTaskOverview();
+    }
+
+    public void setMeldungInListView(String meldungText, String meldungTyp) {
+        meldungAusgabeListView.getItems().add(0, new Meldung(meldungText, meldungTyp));
     }
 
     public void setInfo(String infoText, String infoTyp) {
@@ -342,7 +427,8 @@ public class MainFrameController implements Observer {
 
     public void setInfo(String infoText, String infoTyp, boolean add) {
         if(add == true){
-            this.meldungAusgabeText.setText("*** " +LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " ***\n" + infoText + "\n\n" + this.meldungAusgabeText.getText());
+            this.meldungAusgabeText.setText("*** " +LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+                    + " ***\n" + infoText + "\n\n" + this.meldungAusgabeText.getText());
        // this.meldungAusgabeText.appendText("\n" + LocalTime.now() + " - " + infoText);
        // this.meldungAusgabeText.insertText(LocalTime.now() + " - " + infoText);
         } else {

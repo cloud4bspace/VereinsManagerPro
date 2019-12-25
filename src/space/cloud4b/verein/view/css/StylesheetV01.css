@@ -2,12 +2,27 @@
     -fx-font: 14px Verdana;
 }
 
+.search-field {
 
+    -fx-padding: 10;
+    -fx-background-image: url('https://img.icons8.com/metro/26/000000/search.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right 10 center;
+    -fx-border-color: #f78888;
+
+    -fx-font-size: 0.6em;
+}
 #kreisI {
 
     -fx-fill: #959595;
 }
-
+#circleLabelIII {
+    -fx-background-radius: 50;
+    -fx-background-color: #90CCF4;
+    -fx-text-fill: #000000;
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+}
 #circleLabelII {
     -fx-background-radius: 50;
     -fx-background-color: #F3D250;
@@ -150,7 +165,7 @@
     -fx-font-size: 14px;
     -fx-background-color: #000000;
     -fx-fit-to-width: true;
-    -fx-alignment: left;
+
     -fx-text-fill: rgba(255, 255, 255, 1);
 }
 
@@ -171,7 +186,7 @@
 }
 
 #hMenuBarTop .label {
-    -fx-font-size: 10px;
+    -fx-font-size: 12px;
     -fx-font-family: "Verdana UI Light";
     -fx-text-fill: #000000;
     -fx-background-color: #ffffff;
@@ -288,6 +303,15 @@
     -fx-font-weight: normal;
 }
 
+#einstellungenVbox01 {
+    -fx-background-color:  #F3D250;
+}
+
+#einstellungenVbox01 .label {
+    -fx-text-fill: #000000;
+    -fx-font-weight: normal;
+}
+
 #sessionLabel {
     -fx-font-family: "Andale Mono";
     -fx-label-padding: 10;
@@ -296,6 +320,34 @@
     -fx-font-weight: 100;
 }
 
+.list-view {
+    -fx-font-size: 0.6em;
+}
+
+.list-view .scroll-bar:vertical {
+    -fx-scale-x: 0;
+    -fx-pref-width: 0;
+}
+
+.list-view .scroll-bar:horizontal {
+    -fx-scale-x: 0;
+    -fx-pref-height: 0;
+}
+
+.list-cell {
+    -fx-wrap-text: true;
+    -fx-padding: 2;
+    -fx-background-color: rgba(243, 210, 80, 0.42);
+}
+
+
+#meldungAusgabeListView {
+    -fx-font-size: 0.8em;
+}
+
+#meldungAusgabeListView .list-cell {
+    -fx-background-color: #FFFFFF;
+}
 .table-view {
     -fx-font-size: 0.9em;
     -fx-base: #000000;
@@ -352,9 +404,53 @@
 
 }
 
-.text-field:focused{
+.text-field:focused {
     -fx-background-color: white;
     -fx-text-fill: black;
+}
+
+#taskGridPane {
+
+    -fx-vgap: 5;
+    -fx-hgap: 5;
+    -fx-text-fill: #000000;
+    -fx-padding: 10;
+    -fx-border-style: solid inside;
+    -fx-border-width: 5px;
+    -fx-border-insets: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #90CCF4;
+    -fx-background-color: #90CCF4;
+    -fx-background-radius: 5px;
+}
+
+#taskGridPane #taskDetails {
+    -fx-text-fill: #000000;
+    -fx-font-weight: normal;
+    -fx-font-size: 0.8em;
+}
+
+#taskCell {
+    -fx-padding: 5;
+}
+
+#taskTitel {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: #000000;
+}
+
+#taskId {
+    -fx-padding: 5;
+    -fx-background-radius: 100;
+    -fx-background-color: #F3D250;
+    -fx-min-height: 20;
+}
+
+#overDue {
+    -fx-font-size: 1.2em;
+    -fx-background-color: #F78888;
+    -fx-text-fill: #FFFFFF;
 }
 
 .text-area {
@@ -386,21 +482,43 @@
 }
 
 #meldungAusgabeText .content {
-    -fx-background-color: text-area-background ;
+    -fx-background-color: text-area-background;
 }
+
 .combo-box {
     -fx-background-radius: 0;
     -fx-background-color: #ECECEC;
     -fx-text-fill: #000000;
 }
 
+.combo-box .list-cell {
+
+    -fx-background-color: #ECECEC;
+    -fx-text-fill: #000000;
+    -fx-padding: 5 10 5 10;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #ECECEC;
+    -fx-text-fill: #000000;
+    -fx-padding: 5;
+    -fx-font-size: 1em;
+}
+
+.combo-box-popup {
+    -fx-background-color: #ECECEC;;
+}
+
+
 .date-picker {
     -fx-border-radius: 0;
 }
+
 .combo-box .list-view .list-cell { /* Elemente der Combobox*/
     -fx-text-fill: #000000;
 
 }
+
 .combo-box .list-cell { /* ausgewähltes Elemente der Combobox*/
     -fx-text-fill: #000000;
 }
@@ -410,11 +528,11 @@
 }
 
 #mitgliederTabPane .tab {
-    -fx-background-color: #ECECEC;
+    -fx-background-color: #F78888;
 }
 
 #mitgliederTabPane .tab:selected {
-    -fx-background-color: #F78888;
+    -fx-background-color: #ECECEC;
 }
 
 #mitgliederTabPane .tab-header-background {
@@ -422,11 +540,11 @@
 }
 
 #terminTabPane .tab {
-    -fx-background-color: #ECECEC;
+    -fx-background-color: #F3D250;
 }
 
 #terminTabPane .tab:selected {
-    -fx-background-color: #F3D250;
+    -fx-background-color: #ECECEC;
 }
 
 #terminTabPane .tab-header-background {
@@ -481,5 +599,26 @@
 
 .slider .track {
     -fx-background-color: black;
+}
+
+#kalenderLabel {
+    -fx-text-fill: #7e7b7d;
+    -fx-pref-width: 300;
+
+    -fx-alignment: center;
+    -fx-font-size: 0.8em;
+}
+
+#titelLabel {
+    -fx-text-fill: #90CCF4;
+    -fx-font-size: 2em;
+}
+/* Kalender View */
+#topRowVBox {
+    -fx-background-color: #F3D250;
+}
+
+#topRowVBox .label {
+    -fx-font-size: 2em;
 }
 

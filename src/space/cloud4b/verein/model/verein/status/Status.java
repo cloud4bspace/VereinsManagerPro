@@ -14,7 +14,6 @@ public class Status {
     private HashMap<Integer, StatusElement> statusElemente;
 
     public Status(int statusId) {
-        System.out.println("Status " + statusId + " wird erstellt");
         this.statusId = statusId;
         DatabaseReader.statusInfosSetzen(this);
         statusElemente = new HashMap<>(DatabaseReader.statusHashMapLaden(statusId));

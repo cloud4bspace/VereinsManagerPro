@@ -10,6 +10,7 @@ import space.cloud4b.verein.services.Subject;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class MainController implements Subject {
 
@@ -57,6 +58,17 @@ public class MainController implements Subject {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Excel File", "*.xlsx"));
         File file = fileChooser.showSaveDialog(stage);
         return file;
+    }
+
+    /**
+     * Methode extrahiert aus dem übergebenen Filenamen die Erweiterung (Extension)
+     * und gibt diese als String zurück
+     * @param filename
+     * @return
+     */
+    public Optional<String> getExtensionByStringHandling(String filename) {
+        return Optional.ofNullable(filename).filter(f -> f.contains(".")).map(f
+                -> f.substring(filename.lastIndexOf(".") + 1));
     }
     @Override
     public void Attach(Observer o) {

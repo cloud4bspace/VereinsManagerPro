@@ -1,7 +1,8 @@
-package space.cloud4b.verein.services;
+package space.cloud4b.verein.services.output;
 
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.kalender.Termin;
+import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.connection.MysqlConnection;
 
 import java.io.BufferedWriter;
@@ -13,7 +14,7 @@ import java.util.Date;
 
 public abstract class LogWriter {
 
-    public static void writeMitgliedUpdateLog(Mitglied mitglied) {
+    public static void writeMitgliedUpdateLog(Mitglied mitglied, User currentUser) {
         try (FileWriter fw = new FileWriter("ressources/files/logfiles/logfile.txt", true);
                 BufferedWriter bw = new BufferedWriter(fw);
                 PrintWriter out = new PrintWriter(bw)) {
@@ -22,7 +23,8 @@ public abstract class LogWriter {
             out.print(new Timestamp(new Date().getTime()));
             out.print(" | Contact #" + mitglied.getId() + " UPDATE");
             out.println(" *****");
-            out.print(System.getProperty("user.name") + " | ");
+            out.print(currentUser.getUserTxt() + " | ");
+            out.print(currentUser.getSessionId() + " | ");
             out.print(System.getProperty("user.home") + " | ");
             out.print(System.getProperty("os.name") + " | ");
             out.print(System.getProperty("user.timezone") + " | ");

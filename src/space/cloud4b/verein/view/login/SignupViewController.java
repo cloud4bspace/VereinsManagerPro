@@ -5,10 +5,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.services.DatabaseOperation;
 import space.cloud4b.verein.services.DatabaseReader;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class SignupViewController {
     private MainApp mainApp;
@@ -26,6 +31,8 @@ public class SignupViewController {
     private Button saveButton;
     @FXML
     private Button gotoLoginButton;
+    @FXML
+    private ImageView clubLogoImage;
 
 
 
@@ -44,7 +51,13 @@ public class SignupViewController {
     @FXML
     private void initialize() {
         saveButton.setVisible(true);
-        gotoLoginButton.setVisible(false);
+        gotoLoginButton.setVisible(true);
+        try {
+            FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");
+            Image image = new Image(inputStream);
+            clubLogoImage.setImage(image);
+        } catch (FileNotFoundException e) {
+        }
     }
 
     public void handleGotoLogin() {
@@ -55,7 +68,7 @@ public class SignupViewController {
     public void handleSignIn() {
         if (pwFeld.getText().length() < 8 || !pwFeld.getText().equals(pwCheckFeld.getText())) {
             feedbackLabel.setText("Passwörter nicht identisch oder zu kurz (mind. 8 Zeichen)");
-            feedbackLabel.setStyle("-fx-text-fill: red;");
+            feedbackLabel.setStyle("-fx-text-fill: white;");
         } else {
             if (DatabaseReader.isMitgliedEmail(userNameFeld.getText()) > 0) {
                 // es handelt sich um eine E-Mail eines Users
@@ -68,7 +81,7 @@ public class SignupViewController {
                     gotoLoginButton.setVisible(true);
                 } else {
                     feedbackLabel.setText("Es existiert bereits ein User mit dieser E-Mail-Adresse");
-                    feedbackLabel.setStyle("-fx-text-fill: red;");
+                    feedbackLabel.setStyle("-fx-text-fill: white;");
 
                 }
 

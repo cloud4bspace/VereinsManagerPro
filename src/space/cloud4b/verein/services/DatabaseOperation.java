@@ -5,6 +5,7 @@ import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.kalender.Termin;
 import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.connection.MysqlConnection;
+import space.cloud4b.verein.services.output.LogWriter;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -109,7 +110,7 @@ public abstract class DatabaseOperation {
      * @param mitglied das geänderte und zu aktualisierende Mitlied
      */
     public static void updateMitglied(Mitglied mitglied, User currentUser) {
-        LogWriter.writeMitgliedUpdateLog(mitglied);
+        LogWriter.writeMitgliedUpdateLog(mitglied, currentUser);
         MysqlConnection conn = new MysqlConnection();
         boolean istMitglied = false;
 

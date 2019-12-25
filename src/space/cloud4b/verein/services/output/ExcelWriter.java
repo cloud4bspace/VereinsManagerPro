@@ -8,6 +8,7 @@ import javafx.stage.Window;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
@@ -21,9 +22,7 @@ import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.DatabaseReader;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -42,7 +41,7 @@ public abstract class ExcelWriter extends Application {
         File file = chooseFile("Mitgliederliste");
         System.out.println(file.getName());
 
-        String[] columns = {"Name", "Vorname", "Anrede", "Adresse", "Adresszusatz",
+        String[] columns = {"Bild", "Name", "Vorname", "Anrede", "Adresse", "Adresszusatz",
                 "PLZ", "Ort", "E-Mail", "Telefon", "Geburtsdatum", "Kat I", "Kat II", "Eintrittsdatum", "Vorstandsmitglied"};
         List<Mitglied> mitgliedList = new ArrayList<>(DatabaseReader.getMitgliederAsArrayList());
 
@@ -74,45 +73,124 @@ public abstract class ExcelWriter extends Application {
         // Create Cell Style for formatting Date
         CellStyle dateCellStyle = workbook.createCellStyle();
         dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd.MM.yyyy"));
+        dateCellStyle.setVerticalAlignment(VerticalAlignment.TOP);
         // Create Other rows and cells with employees data
         int rowNum = 1;
+        CellStyle cellStyle1 = workbook.createCellStyle();
+        cellStyle1.setVerticalAlignment(VerticalAlignment.TOP);
         for(Mitglied mitglied: mitgliedList) {
-            Row row = sheet.createRow(rowNum++);
+            Row row = sheet.createRow(rowNum);
+            row.setHeightInPoints(62);
+            try {
+                InputStream inputStream = new FileInputStream("ressources/images/profilbilder/ProfilBild_" +
+                        mitglied.getId() + ".png");
+                byte[] imageBytes = IOUtils.toByteArray(inputStream);
+                int pictureureIdx = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
+                inputStream.close();
+                CreationHelper helper = workbook.getCreationHelper();
+                Drawing drawing = sheet.createDrawingPatriarch();
+                ClientAnchor anchor = helper.createClientAnchor();
+                anchor.setCol1(0); //Column B
+                anchor.setRow1(rowNum); //Row 3
+                anchor.setCol2(1); //Column C
+                anchor.setRow2(rowNum + 1); //Row 4
+                anchor.setAnchorType(ClientAnchor.AnchorType.MOVE_AND_RESIZE);
+                //Creates a picture
+                Picture pict = drawing.createPicture(anchor, pictureureIdx);
+            } catch (FileNotFoundException e) {
+                try {
+                    InputStream inputStream = new FileInputStream("ressources/images/profilbilder/ProfilBild_" +
+                            mitglied.getId() + ".jpg");
+                    byte[] imageBytes = IOUtils.toByteArray(inputStream);
+                    int pictureureIdx = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
+                    inputStream.close();
+                    CreationHelper helper = workbook.getCreationHelper();
+                    Drawing drawing = sheet.createDrawingPatriarch();
+                    ClientAnchor anchor = helper.createClientAnchor();
+                    anchor.setCol1(0); //Column B
+                    anchor.setRow1(rowNum); //Row 3
+                    anchor.setCol2(1); //Column C
+                    anchor.setRow2(rowNum + 1); //Row 4
+                    anchor.setAnchorType(ClientAnchor.AnchorType.MOVE_AND_RESIZE);
+                    //Creates a picture
+                    Picture pict = drawing.createPicture(anchor, pictureureIdx);
+                } catch (FileNotFoundException e1) {
+                    InputStream inputStream = new FileInputStream("ressources/images/profilbilder/Dummy.png");
+                    byte[] imageBytes = IOUtils.toByteArray(inputStream);
+                    int pictureureIdx = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
+                    inputStream.close();
+                    CreationHelper helper = workbook.getCreationHelper();
+                    Drawing drawing = sheet.createDrawingPatriarch();
+                    ClientAnchor anchor = helper.createClientAnchor();
+                    anchor.setCol1(0); //Column B
+                    anchor.setRow1(rowNum); //Row 3
+                    anchor.setCol2(1); //Column C
+                    anchor.setRow2(rowNum + 1); //Row 4
+                    anchor.setAnchorType(ClientAnchor.AnchorType.MOVE_AND_RESIZE);
+                    //Creates a picture
+                    Picture pict = drawing.createPicture(anchor, pictureureIdx);
+                }
+            }
 
-            row.createCell(0)
-                    .setCellValue(mitglied.getNachName());
-            row.createCell(1)
-                    .setCellValue(mitglied.getVorname());
-            row.createCell(2)
-                    .setCellValue(mitglied.getAnredeElement().toString());
-            row.createCell(3)
-                    .setCellValue(mitglied.getAdresse());
-            row.createCell(4)
-                    .setCellValue(mitglied.getAdresszusatz());
-            row.createCell(5)
-                    .setCellValue(mitglied.getPlz());
-            row.createCell(6)
-                    .setCellValue(mitglied.getOrt());
-            row.createCell(7)
-                    .setCellValue(mitglied.getEmail());
-            row.createCell(8)
-                    .setCellValue(mitglied.getTelefon());
-            Cell dateOfBirthCell = row.createCell(9);
+            Cell c01 = row.createCell(1);
+            c01.setCellValue(mitglied.getNachName());
+            c01.setCellStyle(cellStyle1);
+
+            Cell c02 = row.createCell(2);
+            c02.setCellValue(mitglied.getVorname());
+            c02.setCellStyle(cellStyle1);
+
+            Cell c03 = row.createCell(3);
+            c03.setCellValue(mitglied.getAnredeElement().toString());
+            c03.setCellStyle(cellStyle1);
+
+            Cell c04 = row.createCell(4);
+            c04.setCellValue(mitglied.getAdresse());
+            c04.setCellStyle(cellStyle1);
+
+            Cell c05 = row.createCell(5);
+            c05.setCellValue(mitglied.getAdresszusatz());
+            c05.setCellStyle(cellStyle1);
+
+            Cell c06 = row.createCell(6);
+            c06.setCellValue(mitglied.getPlz());
+            c06.setCellStyle(cellStyle1);
+
+            Cell c07 = row.createCell(7);
+            c06.setCellValue(mitglied.getOrt());
+            c07.setCellStyle(cellStyle1);
+
+            Cell c08 = row.createCell(8);
+            c08.setCellValue(mitglied.getEmail());
+            c08.setCellStyle(cellStyle1);
+
+            Cell c09 = row.createCell(9);
+            c09.setCellValue(mitglied.getTelefon());
+            c09.setCellStyle(cellStyle1);
+
+            Cell dateOfBirthCell = row.createCell(10);
             if(mitglied.getGeburtsdatum()!=null) {
                 dateOfBirthCell.setCellValue(mitglied.getGeburtsdatum().toString());
             } else {
                 dateOfBirthCell.setCellValue("na");
             }
             dateOfBirthCell.setCellStyle(dateCellStyle);
-            row.createCell(10)
-                    .setCellValue(mitglied.getKategorieIElement().toString());
-            row.createCell(11)
-                    .setCellValue(mitglied.getKategorieIIElement().toString());
-            Cell dateOfEntry = row.createCell(12);
+
+            Cell c11 = row.createCell(11);
+            c11.setCellValue(mitglied.getKategorieIElement().toString());
+            c11.setCellStyle(cellStyle1);
+
+            Cell c12 = row.createCell(12);
+            c12.setCellValue(mitglied.getKategorieIIElement().toString());
+            c12.setCellStyle(cellStyle1);
+
+            Cell dateOfEntry = row.createCell(13);
             dateOfEntry.setCellValue(mitglied.getEintrittsdatum().toString());
             dateOfEntry.setCellStyle(dateCellStyle);
-            row.createCell(13)
+            row.createCell(14)
                     .setCellValue(mitglied.getIstVorstandsmitglied().getValue().toString());
+
+            rowNum++;
         }
 
         // Resize all columns to fit the content size
@@ -135,13 +213,12 @@ public abstract class ExcelWriter extends Application {
      *
      * @throws IOException
      */
-    public static void exportTeilnehmerToExcel(Termin termin, User currentUser) throws IOException {
+    public static void exportTeilnehmerToExcel(Termin termin, User currentUser, ArrayList<Teilnehmer> teilnehmerList) throws IOException {
         File file = chooseFile("Teilnehmerliste");
         int rowNumber = 0;
         System.out.println(file.getName());
 
-        String[] columns = {"MitgliedId", "Mitglied", "Kategorie", "E-Mail", "Anmeldestatus"};
-        List<Teilnehmer> teilnehmerList = new ArrayList<>(DatabaseReader.getTeilnehmer(termin));
+        String[] columns = {"Mitglied", "Kategorie", "E-Mail", "Anmeldestatus", "Bemerkungen"};
 
         Workbook workbook = new XSSFWorkbook();
         CreationHelper createHelper = workbook.getCreationHelper();
@@ -209,20 +286,25 @@ public abstract class ExcelWriter extends Application {
         // Create Cell Style for formatting Date
         CellStyle dateCellStyle = workbook.createCellStyle();
         dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd.MM.yyyy"));
+        dateCellStyle.setVerticalAlignment(VerticalAlignment.TOP);
         // Create Other rows and cells with employees data
         rowNumber++;
         for (Teilnehmer teilnehmer : teilnehmerList) {
             Row row = sheet.createRow(rowNumber++);
-            row.createCell(0).setCellValue("#" + teilnehmer.getMitglied().getId());
+            row.createCell(0).setCellValue("#" + teilnehmer.getMitglied().getId()
+                    + " " + teilnehmer.getMitglied().getNachName()
+                    + " " + teilnehmer.getMitglied().getVorname()
+                    + " " + teilnehmer.getMitglied().getPlz() + " " + teilnehmer.getMitglied().getOrt());
             row.createCell(1)
-                    .setCellValue(teilnehmer.getMitglied().getNachName() + " " + teilnehmer.getMitglied().getVorname());
-            row.createCell(2)
                     .setCellValue(teilnehmer.getMitglied().getKategorieIElement().toString() + " | "
                             + teilnehmer.getMitglied().getKategorieIIElement().toString());
-            row.createCell(3)
+            row.createCell(2)
                     .setCellValue(teilnehmer.getMitglied().getEmail());
-            row.createCell(4)
+            row.createCell(3)
                     .setCellValue(teilnehmer.getAnmeldungProperty().getValue().toString());
+            row.createCell(4)
+                    .setCellValue(teilnehmer.getAnmeldungText());
+
         }
 
         rowNumber++;
@@ -237,14 +319,11 @@ public abstract class ExcelWriter extends Application {
             cell.setCellStyle(style1);
 
             Cell cell1 = footerRow.createCell(1);
-            cell1.setCellFormula("COUNTIF(E:E,\"" + statusListe.get(zaehler).toString() + "\")");
+            cell1.setCellFormula("COUNTIF(D:D,\"" + statusListe.get(zaehler).toString() + "\")");
             cell1.setCellStyle(style1);
 
             zaehler++;
         }
-
-
-
 
         // Resize all columns to fit the content size
         for (int i = 0; i < columns.length; i++) {
@@ -263,8 +342,8 @@ public abstract class ExcelWriter extends Application {
 
     /**
      * öffnet einen "Save as"-Dialog
-     * @param fileName gibt den vom
-     * @return
+     * @param fileName gibt einen Filnamen vor
+     * @return gibt ein neues File mit dem vom User gewählten Namen zurück
      */
     public static File chooseFile(String fileName) {
         FileChooser fileChooser = new FileChooser();

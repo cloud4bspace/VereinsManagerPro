@@ -1,68 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefWidth="500.0" stylesheets="@../css/StylesheetV01.css"
-            xmlns="http://javafx.com/javafx/8" fx:controller="space.cloud4b.verein.view.login.LoginViewController">
+
+<AnchorPane prefWidth="500.0" stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="space.cloud4b.verein.view.login.LoginViewController">
     <children>
-        <VBox fx:id="loginVbox01" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox fx:id="loginVbox01" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <ImageView fx:id="clubLogoImage" fitHeight="129.0" fitWidth="456.0" pickOnBounds="true"
-                           preserveRatio="true">
+                <ImageView fx:id="clubLogoImage" fitHeight="129.0" fitWidth="456.0" pickOnBounds="true" preserveRatio="true">
                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="DISAPPEAR" />
+               </cursor>
                 </ImageView>
-                <Label fx:id="loginTitleLabel" text="Label" textAlignment="CENTER"/>
+                <Label fx:id="loginTitleLabel" text="Label" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin></Label>
                 <Label fx:id="feedbackLabel" text="Login erforderlich" wrapText="true">
                     <VBox.margin>
-                        <Insets left="20.0" right="20.0"/>
+                        <Insets left="20.0" right="20.0" />
                     </VBox.margin>
                 </Label>
                 <GridPane alignment="CENTER_RIGHT" hgap="5.0" vgap="5.0">
                     <children>
-                        <Label text="Benutzer (E-Mail)" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                        <Label text="Passwort" GridPane.rowIndex="2"/>
-                        <TextField fx:id="userNameFeld" text="felix.muster@gmail.com" GridPane.columnIndex="1"
-                                   GridPane.rowIndex="1"/>
-                        <PasswordField fx:id="pwFeld" text="12345678" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                        <Label text="Benutzer (E-Mail)" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Label text="Passwort" GridPane.rowIndex="2" />
+                        <TextField fx:id="userNameFeld" text="felix.muster@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <PasswordField fx:id="pwFeld" text="12345678" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="4">
                             <children>
-                                <Button mnemonicParsing="false" onAction="#handleSignInButton"
-                                        text="Ich bin neu hier..">
+                                <Button mnemonicParsing="false" onAction="#handleSignInButton" text="Ich bin neu hier..">
                                     <HBox.margin>
-                                        <Insets right="20.0"/>
+                                        <Insets right="10.0" />
                                     </HBox.margin>
                                 </Button>
-                                <Button alignment="CENTER_RIGHT" defaultButton="true" mnemonicParsing="false"
-                                        onAction="#handleLogin" styleClass="topPane" text="Login" textAlignment="RIGHT"
-                                        textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT"
-                                        GridPane.rowIndex="2"/>
+                                <Button alignment="CENTER_RIGHT" defaultButton="true" mnemonicParsing="false" onAction="#handleLogin" styleClass="topPane" text="Login" textAlignment="RIGHT" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                             </children>
                         </HBox>
                     </children>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </VBox.margin>
                 </GridPane>
             </children>
         </VBox>
     </children>
     <padding>
-        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </padding>
 </AnchorPane>
