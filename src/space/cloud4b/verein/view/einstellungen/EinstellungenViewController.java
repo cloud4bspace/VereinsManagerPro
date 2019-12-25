@@ -2,6 +2,7 @@ package space.cloud4b.verein.view.einstellungen;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -42,6 +43,8 @@ public class EinstellungenViewController {
     private PasswordField dbPasswortFeld;
     @FXML
     private VBox einstellungenVbox01;
+    @FXML
+    private Label feedbackLabel;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -69,10 +72,14 @@ public class EinstellungenViewController {
     public void handleAbbrechen() {
         dialogStage.close();
     }
+
     public void handleSpeichern() {
         if(isValid()) {
-            // TODO Methode fertigstellen
-            System.out.println("jetzt speichern");
+            Einstellung.setProperties(vereinsNameFeld.getText(), dbHostFeld.getText(), dbPortFeld.getText(),
+                    dbDatabaseFeld.getText(), dbUserFeld.getText(), dbPasswortFeld.getText());
+
+            feedbackLabel.setText("Änderungen gespeichert und wirksam nach nächstem Login");
+
         }
     }
 

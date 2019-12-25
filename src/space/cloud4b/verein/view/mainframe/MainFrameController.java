@@ -122,7 +122,7 @@ public class MainFrameController implements Observer {
      * after the fxml file has been loaded.
      */
     @FXML
-    private void initialize() {
+    public void initialize() {
         this.mainApp = mainApp;
         Text iconTxt;
 
