@@ -31,6 +31,9 @@ public class TaskListViewController {
 
     @FXML
     private ListView<Task> taskListView;
+
+    @FXML
+    private Label titelLabel;
     @FXML
     private ScrollPane scrollPane;
     private ObservableList<Task> masterData = FXCollections.observableArrayList();
@@ -47,6 +50,8 @@ public class TaskListViewController {
      */
     @FXML
     private void initialize() {
+        titelLabel.setText("Taskliste (Stand "
+                + LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)) + ")");
         /*
         taskListView.setCellFactory(param -> new ListCell<Task>() {
             protected void updateItem(Task item, boolean empty) {
@@ -124,11 +129,11 @@ public class TaskListViewController {
             vbox.getChildren().addAll(label);
             gridPane.add(vbox, 2, i);
 
-            label2 = new Label(taskList.get(i).getPrioStatus().toString());
+            label2 = new Label(taskList.get(i).getPrioStatus().getStatusElementTextLang());
             label2.setWrapText(true);
             label2.setId("taskTitel");
 
-            Label label3 = new Label(taskList.get(i).getStatusStatus().toString());
+            Label label3 = new Label(taskList.get(i).getStatusStatus().getStatusElementTextLang());
             label3.setWrapText(true);
             label3.setId("taskTitel");
 

@@ -34,6 +34,7 @@ public class MainFrameController implements Observer {
 
     int anzMitglieder = 0;
     int anzTermine = 0;
+    int anzTasks = 0;
 
     // Reference to the main application
     private MainApp mainApp;
@@ -69,6 +70,8 @@ public class MainFrameController implements Observer {
     @FXML
     private Label circleLabelII;
     @FXML
+    private Label circleLabelIII;
+    @FXML
     private Button homeButton;
     @FXML
     private Menu mitgliederMenu;
@@ -103,6 +106,10 @@ public class MainFrameController implements Observer {
         this.anzTermine = mainApp.getKalenderController().getAnzahlTermine();
         circleLabelII.setText(this.anzTermine + " Termine");
         circleLabelII.setContentDisplay(ContentDisplay.CENTER);
+
+        this.anzTasks = mainApp.getTaskController().getanzahlTasks();
+        circleLabelIII.setText(this.anzTasks + " Tasks");
+        circleLabelIII.setContentDisplay(ContentDisplay.CENTER);
 
         infoLabel.setText(mainApp.getCurrentUser().toString());
         meldungAusgabeText.setWrapText(true);
@@ -151,7 +158,7 @@ public class MainFrameController implements Observer {
         homeButton.setText("Home");
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.USER, "20px");
-        iconTxt.setFill(javafx.scene.paint.Color.WHITE);
+        iconTxt.setFill(javafx.scene.paint.Color.BLACK);
         infoLabel.setGraphic(iconTxt);
         infoLabel.setText(System.getProperty("user.name"));
 
@@ -214,7 +221,10 @@ public class MainFrameController implements Observer {
     /**
      * Opens Einstellungen-Dialog
      */
-
+    @FXML
+    private void handleEinstellungen() {
+        mainApp.showEinstellungenView();
+    }
     /**
      * Opens an about dialog.
      */
@@ -223,8 +233,7 @@ public class MainFrameController implements Observer {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Vereins-App");
         alert.setHeaderText("über..");
-        //System.getProperty("user.name");
-        alert.setContentText(System.getProperty("user.name") + "\nWebsite: https://cloud4b.space");
+        alert.setContentText("Serge Kaulitz & Bernhard Kämpf\nWebsite: https://cloud4b.space");
         alert.showAndWait();
     }
 
@@ -243,7 +252,6 @@ public class MainFrameController implements Observer {
         scene.getStylesheets().add("../css/BrowserToolbar.css");
         //TODO Path to stylesheet not correct...
         stage.show();
-
     }
 
     /**
@@ -419,7 +427,8 @@ public class MainFrameController implements Observer {
 
     public void setInfo(String infoText, String infoTyp, boolean add) {
         if(add == true){
-            this.meldungAusgabeText.setText("*** " +LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " ***\n" + infoText + "\n\n" + this.meldungAusgabeText.getText());
+            this.meldungAusgabeText.setText("*** " +LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+                    + " ***\n" + infoText + "\n\n" + this.meldungAusgabeText.getText());
        // this.meldungAusgabeText.appendText("\n" + LocalTime.now() + " - " + infoText);
        // this.meldungAusgabeText.insertText(LocalTime.now() + " - " + infoText);
         } else {

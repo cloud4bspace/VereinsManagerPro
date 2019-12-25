@@ -16,7 +16,13 @@
 
     -fx-fill: #959595;
 }
-
+#circleLabelIII {
+    -fx-background-radius: 50;
+    -fx-background-color: #90CCF4;
+    -fx-text-fill: #000000;
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+}
 #circleLabelII {
     -fx-background-radius: 50;
     -fx-background-color: #F3D250;
@@ -293,6 +299,15 @@
 
 /* Labels auf der Login-Seite */
 #loginVbox01 .label {
+    -fx-text-fill: #000000;
+    -fx-font-weight: normal;
+}
+
+#einstellungenVbox01 {
+    -fx-background-color:  #F3D250;
+}
+
+#einstellungenVbox01 .label {
     -fx-text-fill: #000000;
     -fx-font-weight: normal;
 }
@@ -592,6 +607,11 @@
 
     -fx-alignment: center;
     -fx-font-size: 0.8em;
+}
+
+#titelLabel {
+    -fx-text-fill: #90CCF4;
+    -fx-font-size: 2em;
 }
 /* Kalender View */
 #topRowVBox {

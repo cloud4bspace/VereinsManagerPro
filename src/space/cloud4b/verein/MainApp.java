@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import space.cloud4b.verein.controller.AdressController;
 import space.cloud4b.verein.controller.KalenderController;
 import space.cloud4b.verein.controller.MainController;
+import space.cloud4b.verein.controller.TaskController;
 import space.cloud4b.verein.einstellungen.Einstellung;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.user.User;
@@ -19,6 +20,7 @@ import space.cloud4b.verein.services.DatabaseReader;
 import space.cloud4b.verein.view.chart.BirthdayStatisticsController;
 import space.cloud4b.verein.view.chart.MemberStatistics01Controller;
 import space.cloud4b.verein.view.dashboard.DashBoardController;
+import space.cloud4b.verein.view.einstellungen.EinstellungenViewController;
 import space.cloud4b.verein.view.login.LoginViewController;
 import space.cloud4b.verein.view.login.SignupViewController;
 import space.cloud4b.verein.view.mainframe.MainFrameController;
@@ -40,6 +42,7 @@ public class MainApp extends Application {
     private MainController mainController;
     private KalenderController kalenderController;
     private AdressController adressController;
+    private TaskController taskController;
 
     public MainApp() {
        // DatabaseOperation.createDatabaseFromTemplate();
@@ -59,6 +62,7 @@ public class MainApp extends Application {
             this.mainController = new MainController(this);
             this.kalenderController = new KalenderController();
             this.adressController = new AdressController();
+            this.taskController = new TaskController();
 
             initMainFrame();
             showDashboard();
@@ -134,6 +138,7 @@ public class MainApp extends Application {
         }
 
     }
+
     /**
      * Initialisiert das Hauptfenster
      */
@@ -156,6 +161,35 @@ public class MainApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Initialisiert das Sign-up Fenster
+     */
+    public void showEinstellungenView() {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/einstellungen/EinstellungenView.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Einstellungen");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the persons into the controller.
+            EinstellungenViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setStage(dialogStage);
+
+            dialogStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -217,6 +251,8 @@ public class MainApp extends Application {
     public KalenderController getKalenderController() {
         return kalenderController;
     }
+
+    public TaskController getTaskController() { return taskController;}
 
 
     /**

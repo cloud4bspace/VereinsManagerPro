@@ -1068,4 +1068,21 @@ public abstract class DatabaseReader {
         }
         return taskListe;
     }
+
+    public static int readAnzahlTasks() {
+        int anzTasks = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) AS ANZTASKS from usr_web116_5.task WHERE TaskStatus < 3";
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                anzTasks = rs.getInt("ANZTASKS");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return anzTasks;
+    }
 }

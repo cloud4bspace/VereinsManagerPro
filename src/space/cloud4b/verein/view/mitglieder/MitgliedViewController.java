@@ -343,7 +343,8 @@ public class MitgliedViewController implements Observer {
      */
     public void saveNeuesProfilbild(File file) {
         // die File-Extension des übergebenen Filenamens wird extrahiert
-        Optional<String> ext = getExtensionByStringHandling(file.getName());
+        //Optional<String> ext = getExtensionByStringHandling(file.getName());
+        Optional<String> ext = mainApp.getMainController().getExtensionByStringHandling(file.getName());
         String extStr = ext.get();
         // die Pfade der Ursprungsdatei und der Zieldatei werden gelesen/generiert
         Path src = Paths.get(file.getAbsolutePath());
