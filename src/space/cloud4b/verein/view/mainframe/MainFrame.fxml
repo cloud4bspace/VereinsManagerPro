@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-
 <BorderPane fx:id="dashBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="space.cloud4b.verein.view.mainframe.MainFrameController">
    <top>
       <VBox prefHeight="88.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -92,6 +89,7 @@
                  <menus>
                      <Menu fx:id="kontrolleMenu" mnemonicParsing="false" text="Tasks">
                          <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleTask" text="Tasks"/>
                              <MenuItem mnemonicParsing="false" onAction="#handleTaskList" text="Taskliste" />
                          </items>
                      </Menu>

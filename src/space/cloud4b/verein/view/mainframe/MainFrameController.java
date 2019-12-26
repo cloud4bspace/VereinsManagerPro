@@ -151,11 +151,11 @@ public class MainFrameController implements Observer {
         exportMenu.setGraphic(iconTxt);
         exportMenu.setText("Exportieren");
 
-        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.BACKWARD,"14px");
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.HOME, "14px");
         iconTxt.setFill(Color.GRAY);
        // iconTxt.setStyle("-fx-end-margin: 20px");
         homeButton.setGraphic(iconTxt);
-        homeButton.setText("Home");
+        homeButton.setText("Dashboard");
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.USER, "20px");
         iconTxt.setFill(javafx.scene.paint.Color.BLACK);
@@ -294,9 +294,10 @@ public class MainFrameController implements Observer {
     // Linker Menu-/Navigationsbereich
     @FXML
     private void handleRefresh() {
-        System.out.println("Restarting app!");
+       /* System.out.println("Restarting app!");
         mainApp.getPrimaryStage().close();
-        Platform.runLater(() -> mainApp.start(new Stage()));
+        Platform.runLater(() -> mainApp.start(new Stage()));*/
+        mainApp.showDashboard();
     }
 
     /* Menupunkte unter Mitglieder
@@ -396,6 +397,15 @@ public class MainFrameController implements Observer {
         scene.getStylesheets().add("../view/css/BrowserToolbar.css");
         //TODO Path to stylesheet not correct...
         stage.show();
+    }
+
+    /* Menupunkte unter Tasks
+     * Pos#01: handleTerminbereich() --> Taskbereich öffnen
+     * Pos#02: handleTaskList() --> Taskliste in separatem Fenster
+     */
+    @FXML
+    private void handleTask() {
+        mainApp.showTask();
     }
 
     @FXML

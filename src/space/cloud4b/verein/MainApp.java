@@ -27,6 +27,7 @@ import space.cloud4b.verein.view.mainframe.MainFrameController;
 import space.cloud4b.verein.view.mitglieder.MitgliedNeuViewController;
 import space.cloud4b.verein.view.mitglieder.MitgliedViewController;
 import space.cloud4b.verein.view.tasks.TaskListViewController;
+import space.cloud4b.verein.view.tasks.TaskViewController;
 import space.cloud4b.verein.view.termine.KalenderViewController;
 import space.cloud4b.verein.view.termine.TerminNeuViewController;
 import space.cloud4b.verein.view.termine.TerminViewController;
@@ -473,4 +474,25 @@ public class MainApp extends Application {
     }
 
 
+    public void showTask() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/tasks/TaskView.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Tasks");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            mainFrame.setCenter(page);
+            TaskViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

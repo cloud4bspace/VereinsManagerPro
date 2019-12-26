@@ -1068,7 +1068,6 @@ public abstract class DatabaseReader {
         }
         return taskListe;
     }
-
     public static int readAnzahlTasks() {
         int anzTasks = 0;
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {

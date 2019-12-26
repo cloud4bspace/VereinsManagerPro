@@ -16,6 +16,15 @@ public class Task {
     //  private ArrayList<Mitglied> verantwortliche;
     private Mitglied mitglied;
 
+    public Task(String taskTitel) {
+        this.taskTitel = taskTitel;
+    }
+
+    public Task(String taskTitel, String taskText) {
+        this.taskTitel = taskTitel;
+        this.taskText = taskText;
+    }
+
     public Task(int taskId, String taskTitel, String taskText, Mitglied mitglied) {
         this.taskId = taskId;
         this.taskStatus = null;
@@ -70,5 +79,9 @@ public class Task {
 
     public void setStatusStatus(StatusElement taskStatus) {
         this.taskStatus = taskStatus;
+    }
+
+    public String toString() {
+        return "Hallo" + this.taskTitel;
     }
 }
