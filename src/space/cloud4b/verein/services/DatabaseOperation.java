@@ -49,8 +49,8 @@ public abstract class DatabaseOperation {
     public static int saveNewMember(String nachname, String vorname, String eintrittsDatum){
 
         String query= "INSERT INTO usr_web116_5.kontakt (KontaktId, KontaktNachname, " +
-                    "KontaktVorname, KontaktEintrittsdatum, KontaktIstMitglied, KontaktTrackChangeUsr, " +
-                    "KontaktTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, '1', ?, CURRENT_TIMESTAMP)";
+                "KontaktVorname, KontaktEintrittsdatum, KontaktIstMitglied, KontaktTrackChangeUsr, " +
+                "KontaktTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, '1', ?, CURRENT_TIMESTAMP)";
         MysqlConnection conn = new MysqlConnection();
         PreparedStatement ps = null;
         try {
@@ -59,27 +59,84 @@ public abstract class DatabaseOperation {
             ps.setString(2, vorname);
             ps.setString(3, eintrittsDatum);
             ps.setString(4, System.getProperty("user.name"));
+            // TODO Username vom angemeldeten User lesen
             System.out.println("neues Mitglied hinzugefügt: " + ps.executeUpdate());
-           // System.out.println(ps.getGeneratedKeys());
+            // System.out.println(ps.getGeneratedKeys());
             ResultSet keys = null;
             keys = ps.getGeneratedKeys();
             keys.next();
             int newKey = keys.getInt(1);
             return newKey;
 
-    } catch(SQLException e) {
-        System.out.println("Fehler " + e);
+        } catch (SQLException e) {
+            System.out.println("Fehler " + e);
         }
         return 0;
     }
 
     /**
+     * neues Mitglied in der Datenbank anlegen
+     */
+    public static int saveNewTask(String bezeichnung, String details, String terminDatum, Mitglied verantwortlich, User user) {
+
+        String query = "INSERT INTO task (TaskId, TaskBezeichnung, TaskPrio, TaskStatus, TaskDetails, TaskTerminBis" +
+                ", TaskTerminId, TaskTrackChangeUser, TaskTrackChangeTimestamp) VALUES (NULL, ?, '1', '1', ?, ?, 0, ?" +
+                ", CURRENT_TIMESTAMP)";
+        MysqlConnection conn = new MysqlConnection();
+        PreparedStatement ps = null;
+        try {
+            ps = conn.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, bezeichnung);
+            ps.setString(2, details);
+            ps.setString(3, terminDatum);
+            ps.setString(4, user.getUserName());
+            System.out.println("neues Mitglied hinzugefügt: " + ps.executeUpdate());
+            // System.out.println(ps.getGeneratedKeys());
+            ResultSet keys = null;
+            keys = ps.getGeneratedKeys();
+            keys.next();
+            int newKey = keys.getInt(1);
+            System.out.println("KEy: " + newKey + "/" + verantwortlich.getKurzbezeichnung());
+
+            addVerantwortlichen(newKey, verantwortlich.getId(), user);
+            return newKey;
+
+        } catch (SQLException e) {
+            System.out.println("Fehler " + e);
+        }
+        return 0;
+    }
+
+    /**
+     * speichert zu einem neuen Task das verantwortliche Mitglied
+     */
+    public static void addVerantwortlichen(int taskId, int mitgliedId, User user) {
+        String query = "INSERT INTO taskZuordnung (ZuordnungId, TaskId, KontaktId, ZuordnungTrackChangeUsr, " +
+                "ZuordnungTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP)";
+
+        MysqlConnection conn = new MysqlConnection();
+        PreparedStatement ps = null;
+        try {
+            ps = conn.getConnection().prepareStatement(query);
+            ps.setInt(1, taskId);
+            ps.setInt(2, mitgliedId);
+            ps.setString(3, user.getUserName());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Fehler " + e);
+        }
+
+    }
+
+
+    /**
      * Mitglied in den Datenbanken löschen
      */
     public static void deleteMitglied(Mitglied mitglied) {
-        try(Connection conn = new MysqlConnection().getConnection();
-            Statement st = conn.createStatement()) {
-            String query= "DELETE FROM kontakt WHERE KontaktId=" + mitglied.getId();
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "DELETE FROM kontakt WHERE KontaktId=" + mitglied.getId();
             st.execute(query);
 
 

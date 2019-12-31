@@ -27,6 +27,7 @@ import space.cloud4b.verein.view.mainframe.MainFrameController;
 import space.cloud4b.verein.view.mitglieder.MitgliedNeuViewController;
 import space.cloud4b.verein.view.mitglieder.MitgliedViewController;
 import space.cloud4b.verein.view.tasks.TaskListViewController;
+import space.cloud4b.verein.view.tasks.TaskNeuViewController;
 import space.cloud4b.verein.view.tasks.TaskViewController;
 import space.cloud4b.verein.view.termine.KalenderViewController;
 import space.cloud4b.verein.view.termine.TerminNeuViewController;
@@ -392,6 +393,36 @@ public class MainApp extends Application {
 
             // Set the persons into the controller.
             TerminNeuViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setStage(dialogStage);
+            // controller.setPersonData(contactData);
+            //controller.setPersonData(verein.getAdressBuch().getMitgliederListe());
+
+            dialogStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Öffnet einen Dialog zum Erfassen eines neuen Tasks
+     */
+    public void showTaskErfassen() {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/tasks/TaskNeuView.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Task erfassen");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the persons into the controller.
+            TaskNeuViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setStage(dialogStage);
             // controller.setPersonData(contactData);

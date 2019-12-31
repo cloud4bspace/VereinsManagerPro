@@ -1084,4 +1084,32 @@ public abstract class DatabaseReader {
         }
         return anzTasks;
     }
+
+    public static String getVerantwortlicheAsString(int taskId) {
+        String verantwortliche = null;
+        int count = 1;
+
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM `taskZuordnung` LEFT JOIN kontakt " +
+                    "ON kontakt.KontaktId = taskZuordnung.KontaktId WHERE TaskId = " + taskId;
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                if (count > 1) {
+                    verantwortliche += "\n";
+                    verantwortliche += "⚫ " + rs.getString("KontaktNachname") + " " + rs.getString("KontaktVorname");
+                } else {
+                    verantwortliche = "⚫ " + rs.getString("KontaktNachname") + " " + rs.getString("KontaktVorname");
+                }
+
+                // verantwortliche.add(rs.getInt("KontaktId"));
+                count++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return verantwortliche;
+
+    }
+
 }
