@@ -91,6 +91,8 @@
                          <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleTask" text="Tasks"/>
                              <MenuItem mnemonicParsing="false" onAction="#handleTaskList" text="Taskliste" />
+                             <MenuItem mnemonicParsing="false" onAction="#handleShowTaskStatistics"
+                                       text="Tasks nach Status"/>
                          </items>
                      </Menu>
                  </menus>
@@ -104,6 +106,7 @@
                   <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleShowKatIStatistics" text="Mitgliederkategorien" />
                     <MenuItem mnemonicParsing="false" onAction="#handleShowBirthdayStatistics" text="Geburtstage" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleShowTaskStatistics" text="Tasks nach Status"/>
                   </items>
                 </Menu>
               </menus>
@@ -151,20 +154,22 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </Label>
-             <ImageView fx:id="clubLogoImage" disable="true" fitHeight="43.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true">
+             <Label fx:id="circleLabelII" alignment="CENTER" text="..." textAlignment="CENTER" wrapText="true">
+                 <VBox.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                 </VBox.margin>
+             </Label>
+             <Label fx:id="circleLabelIII" alignment="CENTER" text="..." textAlignment="CENTER" wrapText="true">
+                 <VBox.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                 </VBox.margin>
+             </Label>
+             <ImageView fx:id="clubLogoImage" disable="true" fitHeight="43.0" fitWidth="123.0" pickOnBounds="true"
+                        preserveRatio="true">
                  <image>
-                     <Image url="@../../../../../../ressources/images/logo/ClubLogo01.png" />
+                     <Image url="@../../../../../../ressources/images/logo/ClubLogo01.png"/>
                  </image>
              </ImageView>
-            <Label fx:id="circleLabelII" alignment="CENTER" text="..." textAlignment="CENTER" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin></Label>
-            <Label fx:id="circleLabelIII" alignment="CENTER" text="..." textAlignment="CENTER" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
-            </Label>
          </children>
       </VBox>
    </right>

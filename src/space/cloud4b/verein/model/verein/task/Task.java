@@ -1,9 +1,13 @@
 package space.cloud4b.verein.model.verein.task;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.status.StatusElement;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 public class Task {
 
@@ -12,6 +16,7 @@ public class Task {
     private StatusElement taskPrio;
     private LocalDate taskDatum;
     private String taskTitel;
+    private SimpleStringProperty taskTitelProperty;
     private String taskText;
     //  private ArrayList<Mitglied> verantwortliche;
     private Mitglied mitglied;
@@ -22,6 +27,7 @@ public class Task {
 
     public Task(String taskTitel, String taskText) {
         this.taskTitel = taskTitel;
+        this.taskTitelProperty = new SimpleStringProperty(taskTitel);
         this.taskText = taskText;
     }
 
@@ -31,6 +37,7 @@ public class Task {
         this.taskPrio = null;
         this.taskDatum = LocalDate.now().plusMonths(1);
         this.taskTitel = taskTitel;
+        this.taskTitelProperty = new SimpleStringProperty(taskTitel);
         this.taskText = taskText;
         this.mitglied = mitglied;
     }
@@ -41,6 +48,7 @@ public class Task {
         this.taskPrio = null;
         this.taskDatum = taskDatum;
         this.taskTitel = taskTitel;
+        this.taskTitelProperty = new SimpleStringProperty(taskTitel);
         this.taskText = taskText;
         this.mitglied = mitglied;
     }
@@ -82,6 +90,16 @@ public class Task {
     }
 
     public String toString() {
-        return "Hallo" + this.taskTitel;
+        return this.taskTitel + ": " + taskPrio.getStatusElementTextLang() + " (" + taskDatum.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)) + ")";
+    }
+
+    public void setTitel(String titel) {
+        this.taskTitel = titel;
+        this.taskTitelProperty = new SimpleStringProperty(titel);
+        System.out.println("Task Titel-Update");
+    }
+
+    public ObservableValue<String> getTaskTitelProperty() {
+        return this.taskTitelProperty;
     }
 }

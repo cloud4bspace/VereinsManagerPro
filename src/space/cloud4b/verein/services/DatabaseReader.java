@@ -398,7 +398,7 @@ public abstract class DatabaseReader {
 
                 String kontaktGeburtsdatumString = rs.getString("KontaktGeburtsdatum");
                 String kontaktAustrittsdatumString = rs.getString("KontaktAustrittsdatum");
-                LocalDate kontaktGeburtsdatum = null;
+                LocalDate kontaktGeburtsdatum;
                 LocalDate kontaktAustrittsdatum = null;
                 if (kontaktGeburtsdatumString != null && kontaktGeburtsdatumString != "0000-00-00" && !kontaktGeburtsdatumString.isEmpty()) {
                     kontaktGeburtsdatum = Date.valueOf(kontaktGeburtsdatumString).toLocalDate();
@@ -421,10 +421,10 @@ public abstract class DatabaseReader {
                         kontaktEintrittsdatum = Date.valueOf(kontaktEintrittsdatumString).toLocalDate();
                     }
 
-                    ((Mitglied) mitglied).setEintrittsDatum(kontaktEintrittsdatum);
-                    ((Mitglied) mitglied).setKategorieIStatus(kategorieIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieA")));
-                    ((Mitglied) mitglied).setKategorieIIStatus(kategorieIIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieB")));
-                    ((Mitglied) mitglied).setIstVorstandsmitglied(rs.getBoolean("KontaktIstVorstandsmitglied"));
+                    mitglied.setEintrittsDatum(kontaktEintrittsdatum);
+                    mitglied.setKategorieIStatus(kategorieIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieA")));
+                    mitglied.setKategorieIIStatus(kategorieIIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieB")));
+                    mitglied.setIstVorstandsmitglied(rs.getBoolean("KontaktIstVorstandsmitglied"));
                 }
 
             }
@@ -463,20 +463,14 @@ public abstract class DatabaseReader {
                 }*/
 
 
-
-                /**
-                 * Objekte werden erzeugt
-                 */
-                if(rs.getBoolean("KontaktIstMitglied") ) {
+                // Objekte werden erzeugt
+                if (rs.getBoolean("KontaktIstMitglied")) {
                     kontakt = new Mitglied(kontaktId, kontaktNachname, kontaktVorname);
-                }  else {
+                } else {
                     kontakt = new Kontakt(kontaktId, kontaktNachname, kontaktVorname);
                 }
 
-
-                /**
-                 * Instanzvariabeln der neuen Objekte werden vervollständigt
-                 */
+                // Instanzvariabeln der neuen Objekte werden vervollständigt
                 kontakt.setAdresse(rs.getString("KontaktAdresse"));
                 kontakt.setAdresszusatz(rs.getString("KontaktAdresszusatz"));
 
@@ -568,6 +562,32 @@ public abstract class DatabaseReader {
         return null;
     }
 
+    /**
+     *
+     */
+    public static ObservableList<PieChart.Data> getDataForTaskPieChart01() {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+            String query = (
+                    "SELECT COUNT(*) AS TasksCount, statusElement.StatusElementNameLong AS StatusLong, statusElement.StatusElementNameShort AS StatusShort FROM task LEFT JOIN statusElement ON statusElement.StatusElementKey = task.TaskStatus WHERE statusElement.StatusId=8 GROUP BY statusElement.StatusElementKey"
+            );
+            ResultSet result = st.executeQuery(query);
+            while (result.next()) {
+
+                pieChartData.add(new PieChart.Data(result.getString("StatusLong"), result.getInt("TasksCount")));
+
+            }
+            return pieChartData;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
     public static ArrayList<Position> fuelleRangliste(MainController mainController) {
         ArrayList<Position> rangliste = new ArrayList<>();
         ArrayList<Mitglied> mitgliederListe = DatabaseReader.getMitgliederAsArrayList();
@@ -579,7 +599,7 @@ public abstract class DatabaseReader {
             String query;
             int anzTermineAktuellesJahr = 0;
             int anzAnwesenheiten = 0;
-            double anwesenheitenAnteil = 0; //Anteil in Prozent
+            double anwesenheitenAnteil; //Anteil in Prozent
             // Fokus 1 = dieses Jahr
             Mitglied mitglied = i.next();
 
@@ -654,7 +674,7 @@ public abstract class DatabaseReader {
 
             while (rs.next()) {
                 Termin termin;
-                LocalDateTime terminZeit = null;
+                LocalDateTime terminZeit;
                 LocalDateTime terminZeitBis = null;
                 int terminId = rs.getInt("TerminId");
                 LocalDate terminDatum = Date.valueOf(rs.getString("TerminDatum")).toLocalDate();
@@ -994,9 +1014,8 @@ public abstract class DatabaseReader {
 
                 String terminText = rs.getString("TerminText");
 
-                /**
-                 * Objekte werden erzeugt und der Terminliste hinzugefügt
-                 */
+
+                // Objekte werden erzeugt und der Terminliste hinzugefügt
                 termin = new Termin(terminId, terminDatum, terminText);
                 if (rs.getString("TerminZeit") != null) {
                     terminZeit = LocalDateTime.of(terminDatum, Time.valueOf(rs.getString("TerminZeit")).toLocalTime());
@@ -1055,7 +1074,6 @@ public abstract class DatabaseReader {
                         rs.getString("TaskDetails"),
                         null,
                         rs.getDate("TaskTerminBis").toLocalDate());
-                System.out.println("Task: " + task);
 
                 task.setPrioStatus(prioStatus.getStatusElemente().get(rs.getInt("TaskPrio")));
                 task.setStatusStatus(statusStatus.getStatusElemente().get(rs.getInt("TaskStatus")));

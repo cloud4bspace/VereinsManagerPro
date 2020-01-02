@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.controller.AdressController;
 import space.cloud4b.verein.controller.KalenderController;
+import space.cloud4b.verein.controller.TaskController;
 import space.cloud4b.verein.einstellungen.Einstellung;
 import space.cloud4b.verein.model.verein.meldung.Meldung;
 import space.cloud4b.verein.services.Observer;
@@ -94,8 +95,12 @@ public class MainFrameController implements Observer {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+
+        // in die Obersverlisten eintragen der relevanten Controller
         mainApp.getAdressController().Attach(this);
         mainApp.getKalenderController().Attach(this);
+        mainApp.getTaskController().Attach(this);
+
         this.titleLabel.setText(Einstellung.getVereinsName()); // bei Initialize geht es nicht...
         this.dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
         this.sessionLabel.setText("Session#" + mainApp.getCurrentUser().getSessionId());
@@ -123,7 +128,7 @@ public class MainFrameController implements Observer {
      */
     @FXML
     public void initialize() {
-        this.mainApp = mainApp;
+
         Text iconTxt;
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.GROUP, "14px");
@@ -225,6 +230,7 @@ public class MainFrameController implements Observer {
     private void handleEinstellungen() {
         mainApp.showEinstellungenView();
     }
+
     /**
      * Opens an about dialog.
      */
@@ -237,8 +243,6 @@ public class MainFrameController implements Observer {
         alert.showAndWait();
     }
 
-
-
     /**
      * Oeffnet ein Browserfenster mit der Hilfe
      */
@@ -249,8 +253,6 @@ public class MainFrameController implements Observer {
         stage.setTitle("Web View");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Hilfe/help.html"), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
-        scene.getStylesheets().add("../css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
         stage.show();
     }
 
@@ -263,8 +265,6 @@ public class MainFrameController implements Observer {
         stage.setTitle("JavaDoc");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Hilfe/JavaDoc/"), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
-        scene.getStylesheets().add("../css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
         stage.show();
     }
 
@@ -277,8 +277,6 @@ public class MainFrameController implements Observer {
         stage.setTitle("JavaDoc");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Hilfe/bookmarks.html"), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
-        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
         stage.show();
     }
 
@@ -337,6 +335,14 @@ public class MainFrameController implements Observer {
     @FXML
     private void handleShowKatIStatistics() {
         mainApp.showMemberKatIStatistics();
+    }
+
+    /**
+     * Öffnet die Task-Statistik
+     */
+    @FXML
+    private void handleShowTaskStatistics() {
+        mainApp.showTaskStatistics();
     }
 
     @FXML
@@ -486,6 +492,18 @@ public class MainFrameController implements Observer {
                 @Override
                 public void run() {
                     circleLabelII.setText(anzTermine + " Termine (ab heute)");
+                }
+            });
+        }
+
+        // wenn die Benachrichtigung vom TaskController kommt
+        if (o instanceof TaskController) {
+            anzTasks = mainApp.getTaskController().getAnzahlTasks();
+            Platform.runLater(new Runnable() {
+                // Anzahl Tasks im UI aktualisieren
+                @Override
+                public void run() {
+                    circleLabelIII.setText(anzTasks + "\npendente Tasks");
                 }
             });
         }

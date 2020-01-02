@@ -17,7 +17,6 @@ import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.services.DatabaseOperation;
-import space.cloud4b.verein.services.DatabaseReader;
 import space.cloud4b.verein.services.Observer;
 
 import java.io.File;
@@ -133,53 +132,6 @@ public class MitgliedViewController implements Observer {
         mitgliedTabelle.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> setMitglied(newValue));
 
-        masterData = FXCollections.observableArrayList(DatabaseReader.getMitgliederAsArrayList());
-        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-        FilteredList<Mitglied> filteredData = new FilteredList<>(masterData, p -> true);
-        // 2. Set the filter Predicate whenever the filter changes.
-        //  filterField.setPromptText("Nachname Vorname");
-
-        filterField.getStyleClass().add("search-field");
-        filterField.setPromptText("Nachname Vorname");
-
-        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(mitglied -> {
-                // If filter text is empty, display all persons.
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                // Compare first name and last name of every person with filter text.
-                String lowerCaseFilter = newValue.toLowerCase();
-/*
-                if (mitglied.getVorname().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches first name.
-                } else if (mitglied.getNachName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches last name.
-                }*/
-                if (mitglied.getKurzbezeichnung().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false; // Does not match.
-            });
-        });
-        // 3. Wrap the FilteredList in a SortedList.
-        SortedList<Mitglied> sortedData = new SortedList<>(filteredData);
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        sortedData.comparatorProperty().bind(mitgliedTabelle.comparatorProperty());
-
-        // 5. Add sorted (and filtered) data to the table.
-        mitgliedTabelle.setItems(sortedData);
-
-        idSpalte.setCellValueFactory(
-                cellData -> cellData.getValue().getIdProperty());
-        vornameSpalte.setCellValueFactory(
-                cellData -> cellData.getValue().getVornameProperty());
-        nachnameSpalte.setCellValueFactory(
-                cellData -> cellData.getValue().getNachnameProperty());
-        ortSpalte.setCellValueFactory(
-                cellData -> cellData.getValue().getOrtProperty()
-        );
 
 
         // ComboBox-Elemente mit den dazugehörigen Auswahlmöglichkeiten fülle
@@ -392,7 +344,58 @@ public class MitgliedViewController implements Observer {
         mitgliedTabelle.getSelectionModel().selectFirst();
         mitgliedArrayList = new ArrayList<>(mainApp.getAdressController().getMitgliederListe());
         aktuellesMitglied = mitgliedArrayList.get(0);
+        //masterData = FXCollections.observableArrayList(DatabaseReader.getMitgliederAsArrayList());
+        masterData = FXCollections.observableArrayList(mainApp.getAdressController().getMitgliederListe());
+        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+        FilteredList<Mitglied> filteredData = new FilteredList<>(masterData, p -> true);
+        // 2. Set the filter Predicate whenever the filter changes.
+        //  filterField.setPromptText("Nachname Vorname");
 
+        filterField.getStyleClass().add("search-field");
+        filterField.setPromptText("Nachname Vorname");
+
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(mitglied -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+/*
+                if (mitglied.getVorname().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (mitglied.getNachName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }*/
+                if (mitglied.getKurzbezeichnung().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false; // Does not match.
+            });
+        });
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<Mitglied> sortedData = new SortedList<>(filteredData);
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(mitgliedTabelle.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        mitgliedTabelle.setItems(sortedData);
+
+        idSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getIdProperty());
+        vornameSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getVornameProperty());
+        nachnameSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getNachnameProperty());
+        ortSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getOrtProperty()
+        );
+
+        //  setMitglied(null);
+        mitgliedTabelle.getSelectionModel().selectFirst();
+        mitgliedTabelle.getFocusModel().focus(0);
     }
 
     /**
@@ -539,7 +542,7 @@ public class MitgliedViewController implements Observer {
                     mitgliedTabelle.setItems(FXCollections.observableArrayList(((AdressController) o).getMitgliederListe()));
                    // mitgliedTabelle.setItems((FXCollections.observableArrayList(((mainApp.getAdressController().getMitgliederListe())))));
                     // mitgliedTabelle.getSelectionModel().select(aktuellesMitglied);
-                    mitgliedArrayList = mainApp.getAdressController().getMitgliederListe();
+                    mitgliedArrayList = ac.getMitgliederListe();
                     // TODO im AdressController soll die Mitgliederliste aktualisiert werden und dann hier übergeben..
                 }
             });

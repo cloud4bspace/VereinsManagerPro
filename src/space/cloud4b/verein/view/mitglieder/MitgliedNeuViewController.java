@@ -1,5 +1,6 @@
 package space.cloud4b.verein.view.mitglieder;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -11,6 +12,7 @@ import space.cloud4b.verein.services.DatabaseOperation;
 public class MitgliedNeuViewController {
     MainApp mainApp;
     Stage dialogStage;
+    int neueId = 0;
     @FXML
     private TextField nachnameFeld;
     @FXML
@@ -27,18 +29,30 @@ public class MitgliedNeuViewController {
     }
 
     public void handleSpeichern() throws InterruptedException {
-        int neueId = 0;
+
         Mitglied neuesMitglied = null;
         System.out.println("Nachname: " + nachnameFeld.getText());
         System.out.println("Vorname: " + vornameFeld.getText());
         System.out.println("Eintritt: " + eintrittsDatumPicker.getValue());
-        if(isValid()){
+        if (isValid()) {
             this.dialogStage.close();
             neueId = DatabaseOperation.saveNewMember(nachnameFeld.getText(), vornameFeld.getText(), eintrittsDatumPicker.getValue().toString());
-           // neuesMitglied = new Mitglied(neueId, nachnameFeld.getText(), vornameFeld.getText(), eintrittsDatumPicker.getValue().toString());
+            // neuesMitglied = new Mitglied(neueId, nachnameFeld.getText(), vornameFeld.getText(), eintrittsDatumPicker.getValue().toString());
         }
 
-       // mainApp.getMitgliedViewController().setMitglied(neueId);
+        Platform.runLater(new Runnable() { // TODO
+            @Override
+            public void run() {
+                try {
+                    mainApp.getMitgliedViewController().setMitglied(neueId);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
     }
 
     private boolean isValid(){

@@ -5,11 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.GridPane;
 import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.controller.AdressController;
 import space.cloud4b.verein.controller.KalenderController;
-import space.cloud4b.verein.controller.MainController;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.kalender.Jubilaeum;
 import space.cloud4b.verein.model.verein.kalender.Termin;
@@ -18,16 +16,10 @@ import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.services.Observer;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class DashBoardController implements Observer {
 
     private MainApp mainApp;
-    private GridPane gridPane;
-    private ArrayList<Observer> observerList;
-    MainController mainController;
-    AdressController adressController;
-    KalenderController kalenderController;
 
     @FXML
     private TableView<Mitglied> mitgliederTabelle;
@@ -81,17 +73,12 @@ public class DashBoardController implements Observer {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-//        this.mainController = new MainController(mainApp);
-        //this.adressController = new AdressController();
         mainApp.getAdressController().Attach(this);
-        //this.adressController.Attach(this);
-        // this.kalenderController = new KalenderController();
         mainApp.getKalenderController().Attach(this);
-        //this.kalenderController.Attach(this);
-        // Add observable list data to the table
+
+        // Add observable list data to the tables
         mitgliederTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController().getMitgliederListe()));
         termineTabelle.setItems(FXCollections.observableArrayList(mainApp.getKalenderController().getNaechsteTerminListe()));
-        // jubilaeumTabelle.setItems(this.mainApp.getVerein().getKalender().getJubilaeumsListe());
         jubilaeumTabelle.setItems(FXCollections.observableArrayList(mainApp.getKalenderController().getJubilaeumsListe()));
         ranglisteTabelle.setItems(mainApp.getMainController().getRangliste().getRanglistenListe());
     }

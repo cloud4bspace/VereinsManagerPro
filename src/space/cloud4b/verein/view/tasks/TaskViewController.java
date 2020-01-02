@@ -1,21 +1,26 @@
 package space.cloud4b.verein.view.tasks;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import space.cloud4b.verein.MainApp;
+import space.cloud4b.verein.controller.TaskController;
 import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.services.DatabaseReader;
+import space.cloud4b.verein.services.Observer;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +28,7 @@ import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-public class TaskViewController {
+public class TaskViewController implements Observer {
 
     private MainApp mainApp;
     private Stage stage;
@@ -53,7 +58,11 @@ public class TaskViewController {
 
     public void initialize() {
         titelLabel.setText("Taskliste");
+        taskTreeTableView.setEditable(true);
         taskTreeTableView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
+        taskTreeTableView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> openTask(newValue.getValue()));
+
         idSpalte = new TreeTableColumn<>("Id#");
         prioSpalte = new TreeTableColumn<>("Prio");
         titelSpalte = new TreeTableColumn<>("Titel");
@@ -69,6 +78,14 @@ public class TaskViewController {
         terminSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("termin"));
         detailsSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("details"));
         verantwortlicheSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("verantwortliche"));
+
+        titelSpalte.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn());
+        titelSpalte.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<Task, String>>() {
+            public void handle(TreeTableColumn.CellEditEvent<Task, String> event) {
+                TreeItem<Task> currentEditingTask = taskTreeTableView.getTreeItem(event.getTreeTablePosition().getRow());
+                currentEditingTask.getValue().setTitel(event.getNewValue());
+            }
+        });
 
         ArrayList<Task> taskArrayList = DatabaseReader.getTaskList();
         taskTreeTableView.getColumns().setAll(titelSpalte, terminSpalte, tageBisTerminSpalte, prioSpalte, detailsSpalte, verantwortlicheSpalte, idSpalte);
@@ -212,6 +229,12 @@ public class TaskViewController {
         }*/
     }
 
+    public void openTask(Task task) {
+        if (task.getPrioStatus() != null) {
+            System.out.println("ausgewählt: " + task);
+        }
+    }
+
     /**
      * Wird aufgerufen, wenn der User den Button "Task hinzufügen" betätigt
      */
@@ -222,9 +245,30 @@ public class TaskViewController {
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+        mainApp.getTaskController().Attach(this);
     }
 
     public void setStage(Stage dialogStage) {
         this.stage = dialogStage;
+    }
+
+    @Override
+    public void update(Object o) {
+        System.out.println("TaskViewController hat Update-Meldung erhalten von " + o);
+        if (o instanceof TaskController) {
+            TaskController tc = (TaskController) o;
+            Platform.runLater(new Runnable() { // TODO
+                @Override
+                public void run() {
+                    initialize();
+                  /*  mitgliedTabelle.setItems(FXCollections.observableArrayList(((AdressController) o).getMitgliederListe()));
+                    // mitgliedTabelle.setItems((FXCollections.observableArrayList(((mainApp.getAdressController().getMitgliederListe())))));
+                    // mitgliedTabelle.getSelectionModel().select(aktuellesMitglied);
+                    mitgliedArrayList = mainApp.getAdressController().getMitgliederListe();*/
+                    // TODO im AdressController soll die Mitgliederliste aktualisiert werden und dann hier übergeben..
+                }
+            });
+
+        }
     }
 }

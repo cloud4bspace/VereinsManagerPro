@@ -19,6 +19,7 @@ import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.DatabaseReader;
 import space.cloud4b.verein.view.chart.BirthdayStatisticsController;
 import space.cloud4b.verein.view.chart.MemberStatistics01Controller;
+import space.cloud4b.verein.view.chart.TaskStatistics01Controller;
 import space.cloud4b.verein.view.dashboard.DashBoardController;
 import space.cloud4b.verein.view.einstellungen.EinstellungenViewController;
 import space.cloud4b.verein.view.login.LoginViewController;
@@ -525,5 +526,30 @@ public class MainApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void showTaskStatistics() {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/chart/TaskStatistics01.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Auswertung Tasks nach Status");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the persons into the controller.
+            TaskStatistics01Controller controller = loader.getController();
+            //   controller.setPersonData(verein.getAdressBuch().getMitgliederListe());
+
+            dialogStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
