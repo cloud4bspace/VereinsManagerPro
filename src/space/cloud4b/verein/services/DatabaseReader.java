@@ -139,21 +139,94 @@ public abstract class DatabaseReader {
     }
 
     /**
-     * ermittelt die Teilnehmerliste zu einem Termin
+     * Ermittelt die Teilnehmer zu einem bestimmten Termin
+     *
+     * @param termin
+     * @param mitgliederListe
+     * @return Teilnehmer als ArrayList
      */
-    public static ArrayList<Teilnehmer> getTeilnehmer(Termin termin) {
+    public static ArrayList<Teilnehmer> getTeilnehmer(Termin termin, ArrayList<Mitglied> mitgliederListe) {
         ArrayList<Teilnehmer> teilnehmerListe = new ArrayList<>();
         Status anmeldung = new Status(5);
         Status teilnahme = new Status(6);
         int terminId = termin.getTerminId();
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
-            String query = "SELECT kontakt.KontaktId, kontakt.KontaktNachname, kontakt.KontaktVorname FROM terminkontrolle LEFT JOIN kontakt ON kontakt.KontaktId = KontrolleMitgliedId WHERE KontrolleArt = 'Anmeldung' AND KontrolleTerminId = " + terminId + " GROUP BY KontrolleMitgliedId";
+            String query = "SELECT kontakt.KontaktId, kontakt.KontaktNachname, kontakt.KontaktVorname " +
+                    "FROM terminkontrolle LEFT JOIN kontakt ON kontakt.KontaktId = KontrolleMitgliedId " +
+                    "WHERE KontrolleArt = 'Anmeldung' AND KontrolleTerminId = " + terminId +
+                    " GROUP BY KontrolleMitgliedId";
             //KontrolleArt = 'Anmeldung' TODO: Einschränkung evtl. weglassen...
 
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                Mitglied mitglied = new Mitglied(rs.getInt("KontaktId"), rs.getString("KontaktNachname"), rs.getString("KontaktVorname"));
+                for (int i = 0; i < mitgliederListe.size(); i++) {
+                    if (rs.getInt("KontaktId") == mitgliederListe.get(i).getId()) {
+                        teilnehmerListe.add(new Teilnehmer(mitgliederListe.get(i)));
+                    }
+                    ;
+                }
+            }
+            int i = 0;
+            while (teilnehmerListe.size() > i) {
+                int teilId = teilnehmerListe.get(i).getMitglied().getId();
+                query = "SELECT `KontrolleWert` AS AnmeldeStatus, KontrolleBemerkungen FROM `terminkontrolle` " +
+                        "WHERE `KontrolleTerminId` = " + terminId + " " +
+                        "AND `KontrolleMitgliedId` = " + teilId +
+                        " AND `KontrolleArt`='Anmeldung'";
+                rs = st.executeQuery(query);
+                while (rs.next()) {
+                    // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
+                    teilnehmerListe.get(i).setAnmeldeStatus(anmeldung.getStatusElemente().get(rs.getInt("AnmeldeStatus")));
+                    teilnehmerListe.get(i).setAnmeldungText(rs.getString("KontrolleBemerkungen"));
+                }
+                i++;
+
+            }
+            // Infos zum Teilnahmestatus hinzufügen
+            i = 0;
+            while (teilnehmerListe.size() > i) {
+                int teilId = teilnehmerListe.get(i).getMitglied().getId();
+                query = "SELECT `KontrolleWert` AS TeilnahmeStatus, KontrolleBemerkungen FROM `terminkontrolle` " +
+                        "WHERE `KontrolleTerminId` = " + terminId + " " +
+                        "AND `KontrolleMitgliedId` = " + teilId +
+                        " AND `KontrolleArt`='Anwesenheit'";
+                rs = st.executeQuery(query);
+                while (rs.next()) {
+                    // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
+                    teilnehmerListe.get(i).setTeilnahmeStatus(teilnahme.getStatusElemente().get(rs.getInt("TeilnahmeStatus")));
+                    teilnehmerListe.get(i).setTeilnahmeText(rs.getString("KontrolleBemerkungen"));
+                }
+                i++;
+
+            }
+            return teilnehmerListe;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return teilnehmerListe;
+        }
+    }
+    /**
+     * ermittelt die Teilnehmerliste zu einem Termin
+     */
+    public static ArrayList<Teilnehmer> getTeilnehmer(Termin termin) {
+        //TODO extrem langsam hier...
+        ArrayList<Teilnehmer> teilnehmerListe = new ArrayList<>();
+        Status anmeldung = new Status(5);
+        Status teilnahme = new Status(6);
+        int terminId = termin.getTerminId();
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT kontakt.KontaktId, kontakt.KontaktNachname, kontakt.KontaktVorname " +
+                    "FROM terminkontrolle LEFT JOIN kontakt ON kontakt.KontaktId = KontrolleMitgliedId " +
+                    "WHERE KontrolleArt = 'Anmeldung' AND KontrolleTerminId = " + terminId +
+                    " GROUP BY KontrolleMitgliedId";
+            //KontrolleArt = 'Anmeldung' TODO: Einschränkung evtl. weglassen...
+
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Mitglied mitglied = new Mitglied(rs.getInt("KontaktId"),
+                        rs.getString("KontaktNachname"), rs.getString("KontaktVorname"));
                 DatabaseReader.completeMitglied(mitglied);
                 teilnehmerListe.add(
                         new Teilnehmer(mitglied));
@@ -167,7 +240,7 @@ public abstract class DatabaseReader {
                         " AND `KontrolleArt`='Anmeldung'";
                 rs = st.executeQuery(query);
                 while (rs.next()) {
-                   // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
+                    // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
                     teilnehmerListe.get(i).setAnmeldeStatus(anmeldung.getStatusElemente().get(rs.getInt("AnmeldeStatus")));
                     teilnehmerListe.get(i).setAnmeldungText(rs.getString("KontrolleBemerkungen"));
                 }

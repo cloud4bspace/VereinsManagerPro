@@ -98,6 +98,7 @@ public class AdressController implements Subject {
             }
         };
         Thread thread = new Thread(observeMitglieder);
+        thread.setName("AdressObserver");
         thread.setDaemon(true);
         thread.start();
     }

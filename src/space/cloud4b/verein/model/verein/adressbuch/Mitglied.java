@@ -10,6 +10,14 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Die Klass Mitglied erweitert die Klasse Kontakt und beinhaltet mitgliederspezifische
+ * Daten (Eintritts-/Austrittsdatum usw.).
+ * Mitglieder bilden die Basis für Adress- bzw. Mitgliederliste.
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-17
+ */
 public class Mitglied extends  Kontakt {
 
     private LocalDate eintrittsDatum;
@@ -19,17 +27,15 @@ public class Mitglied extends  Kontakt {
     private boolean istVorstandsmitglied;
 
     public Mitglied(int kontaktId, String nachName, String vorName) {
-
         super(kontaktId, nachName, vorName);
-        System.out.println("Konstruktor Mitglied");
     }
-    public Mitglied(int kontaktId, String nachName, String vorName, String eintrittsDatum) {
 
+    public Mitglied(int kontaktId, String nachName, String vorName, String eintrittsDatum) {
         super(kontaktId, nachName, vorName);
         this.eintrittsDatum = Date.valueOf(eintrittsDatum).toLocalDate();
-        System.out.println("Konstruktor Mitglied");
     }
 
+    // Eintrittsdatum
     public void setEintrittsDatum(LocalDate eintrittsDatum) {
         this.eintrittsDatum = eintrittsDatum;
     }
@@ -43,30 +49,38 @@ public class Mitglied extends  Kontakt {
         return this.eintrittsDatum;
     }
 
+    // Kurzbezeichnung
     public String getKurzbezeichnung() {
-        return super.getKurzbezeichnung();
-        //TODO evtl. erweitern mit Mitglied-Typ
+        return super.getKurzbezeichnung() + " | " + kategorieIStatus.getStatusElementTextLang();
+
     }
 
     // Kategorie I
     public ObjectProperty<StatusElement> getKategorieIElementProperty() { return new SimpleObjectProperty<StatusElement>(kategorieIStatus); }
+
     public void setKategorieIStatus(StatusElement kategorieIStatus) {this.kategorieIStatus = kategorieIStatus; }
+
     public StatusElement getKategorieIElement() {
         return kategorieIStatus;
     }
+
     public ObjectProperty<StatusElement> getKategorieIProperty() { return new SimpleObjectProperty<StatusElement>(this.kategorieIStatus); }
 
     // Kategorie II
     public ObjectProperty<StatusElement> getKategorieIIElementProperty() { return new SimpleObjectProperty<StatusElement>(kategorieIIStatus); }
+
     public void setKategorieIIStatus(StatusElement kategorieIIStatus) {this.kategorieIIStatus = kategorieIIStatus; }
+
     public StatusElement getKategorieIIElement() {
         return kategorieIIStatus;
     }
+
     public ObjectProperty<StatusElement> getKategorieIIProperty() { return new SimpleObjectProperty<StatusElement>(this.kategorieIIStatus); }
 
     // Vorstandsmitglied
     public void setIstVorstandsmitglied(boolean istVorstandsmitglied) {
         this.istVorstandsmitglied = istVorstandsmitglied;
     }
+
     public BooleanProperty getIstVorstandsmitglied() { return new SimpleBooleanProperty(istVorstandsmitglied);}
 }

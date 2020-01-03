@@ -38,18 +38,31 @@ public class Kontakt {
         this.kontaktId = kontaktId;
         this.nachName = nachName;
         this.vorName = vorName;
-        System.out.println("Konstruktor Kontakt");
     }
 
     public String toString() {
-        return "#" + kontaktId + ": " + nachName + " " + vorName + " | " + adresse + " | " + plz + " " + ort + " (" + geburtsdatum + ")";
+        return "#" + kontaktId + ": " + nachName + " " + vorName + " | " + plz + " " + ort;
     }
 
+    // Kurzbezeichnung
+
+    /**
+     * Gibt die Kurzbezeichnung des Kontakts zurück
+     *
+     * @return Kurzbezeichnung des Kontakts
+     */
     public String getKurzbezeichnung() {
         return this.nachName + " " + this.vorName;
     }
 
-    public SimpleStringProperty getKurzbezeichnungProperty() { return new SimpleStringProperty(nachName + " " + vorName); }
+    /**
+     * Gibt die Kurzbezeichnung des Kontakts als SimpleStringProperty zurück
+     *
+     * @return Kurzbezeichnung des Kontakts als SimpleStringProperty zurück
+     */
+    public SimpleStringProperty getKurzbezeichnungProperty() {
+        return new SimpleStringProperty(nachName + " " + vorName);
+    }
 
     // id
     public IntegerProperty getIdProperty() {
@@ -61,7 +74,7 @@ public class Kontakt {
     }
 
     // Anrede
-    public ObjectProperty<StatusElement> getAnredeElementProperty() { return new SimpleObjectProperty<StatusElement>(anredeStatus); }
+    //  public ObjectProperty<StatusElement> getAnredeElementProperty() { return new SimpleObjectProperty<StatusElement>(anredeStatus); }
 
     public void setAnredeStatus(StatusElement anredeStatus) {this.anredeStatus = anredeStatus; }
 
@@ -105,28 +118,45 @@ public class Kontakt {
     public int getPlz() { return this.plz; }
 
     // Ort
-    public void setOrt(String ort) { this.ort = ort;}
+    public void setOrt(String ort) { this.ort = ort;
+    }
 
-    public String getOrt() { return this.ort;}
+    public String getOrt() {
+        return this.ort;
+    }
 
-    public StringProperty getOrtProperty() { return new SimpleStringProperty(ort);}
+    public StringProperty getOrtProperty() {
+        return new SimpleStringProperty(ort);
+    }
 
     // Bemerkungen
-    public void setBemerkungen(String bemerkungen) { this.bemerkungen = bemerkungen; }
+    public void setBemerkungen(String bemerkungen) {
+        this.bemerkungen = bemerkungen;
+    }
 
-    public String getBemerkungen() { return this.bemerkungen; }
+    public String getBemerkungen() {
+        return this.bemerkungen;
+    }
 
-    public StringProperty getBemerkungenProperty() { return new SimpleStringProperty(bemerkungen);}
+    //  public StringProperty getBemerkungenProperty() { return new SimpleStringProperty(bemerkungen);}
+    // TODO delete unnötige Methode
 
     // Mobile
-    public void setMobile(String mobile) { this.mobile = mobile; }
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
-    public String getMobile() { return this.mobile; }
+    public String getMobile() {
+        return this.mobile;
+    }
 
-    public StringProperty getMobileProperty() { return new SimpleStringProperty(mobile);}
+    public StringProperty getMobileProperty() {
+        return new SimpleStringProperty(mobile);
+    }
 
     // Telefon
-    public void setTelefon(String telefon) { this.telefon = telefon; }
+    public void setTelefon(String telefon) {
+        this.telefon = telefon; }
 
     public String getTelefon() { return this.telefon; }
 

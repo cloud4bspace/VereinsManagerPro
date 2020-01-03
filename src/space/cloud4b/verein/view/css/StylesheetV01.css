@@ -90,7 +90,7 @@
 }
 #tabelleCellLabelBold {
     -fx-text-fill: black;
-    -fx-alignment: right;
+    -fx-alignment: center-right;
     -fx-font-weight: 900;
 }
 .context-menu {

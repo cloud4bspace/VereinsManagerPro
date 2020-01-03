@@ -61,7 +61,7 @@ public abstract class DatabaseOperation {
             ps.setString(4, System.getProperty("user.name"));
             // TODO Username vom angemeldeten User lesen
             System.out.println("neues Mitglied hinzugefügt: " + ps.executeUpdate());
-            // System.out.println(ps.getGeneratedKeys());
+            System.out.println(ps.getGeneratedKeys());
             ResultSet keys = null;
             keys = ps.getGeneratedKeys();
             keys.next();

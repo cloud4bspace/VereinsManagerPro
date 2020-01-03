@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -35,6 +37,7 @@ import space.cloud4b.verein.view.termine.TerminNeuViewController;
 import space.cloud4b.verein.view.termine.TerminViewController;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class MainApp extends Application {
     private User currentUser = null;
@@ -237,6 +240,7 @@ public class MainApp extends Application {
             mainFrame.setCenter(page);
             MitgliedViewController controller = loader.getController();
             controller.setMainApp(this);
+            controller.setStage(dialogStage);
 
 
 
@@ -550,6 +554,17 @@ public class MainApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    /**
+     * Zeigt eine Warnmeldung an mit dem übergebenen String
+     */
+    public void showAlert(String meldung, Stage dialogStage) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.initOwner(dialogStage);
+        alert.setTitle("Eingaben sind ungültig");
+        alert.setHeaderText("Folgende Fehler bei der Dateneingabe müssen bereinigt werden:");
+        alert.setContentText(meldung);
+        Optional<ButtonType> result = alert.showAndWait();
     }
 }

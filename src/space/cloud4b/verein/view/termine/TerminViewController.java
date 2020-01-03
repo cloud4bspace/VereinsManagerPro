@@ -30,6 +30,14 @@ import java.util.ArrayList;
 
 public class TerminViewController implements Observer {
 
+    // allgemeine Instanzvariabeln
+    private Stage dialogStage;
+    private MainApp mainApp;
+    private ArrayList<Termin> terminListe;
+    private ArrayList<Teilnehmer> teilnehmerListe;
+    private Termin termin = null;
+
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private ComboBox<Termin> terminAuswahlComboBox = new ComboBox<>();
     @FXML
@@ -81,32 +89,6 @@ public class TerminViewController implements Observer {
     @FXML
     private Label anzMitgliederLabel = new Label();
 
-    private Stage dialogStage;
-    private MainApp mainApp;
-    private ArrayList<Termin> terminListe;
-    private ArrayList<Teilnehmer> teilnehmerListe;
-    private Termin termin = null;
-
-    public void setMainApp(MainApp mainApp) {
-        this.mainApp = mainApp;
-        mainApp.getKalenderController().Attach(this);
-    }
-
-    private int getIndexClosestToNow(ArrayList<Termin> terminLIste){
-        int indexClosestToNow = -1;
-        int i = 0;
-        while (indexClosestToNow < 0 && this.terminListe.size() > i) {
-            // wenn heute, dann dieses, sonst das nächste after
-            if(terminListe.get(i).getDatum().isEqual(LocalDate.now())){
-                indexClosestToNow = i;
-            }
-            if(terminListe.get(i).getDatum().isAfter(LocalDate.now())) {
-                indexClosestToNow = i;
-            }
-            i++;
-        }
-        return indexClosestToNow;
-    }
     /**
      * Initialisierung der controller class
      */
@@ -176,7 +158,8 @@ public class TerminViewController implements Observer {
         minutenBisFeld.textProperty()
                 .bindBidirectional(minutenBisSlider.valueProperty(), new NumberStringConverter());
         setTermin(terminListe.get(getIndexClosestToNow(terminListe)));
-        showTeilnehmerListe(terminListe.get(getIndexClosestToNow(terminListe)));
+        // showTeilnehmerListe(terminListe.get(getIndexClosestToNow(terminListe)));
+        //TODO showTeilnehmerListe --> extrem langsam..
 
         // Teilnehmerkategorien
         Status kategorieI = new Status(2);
@@ -184,6 +167,33 @@ public class TerminViewController implements Observer {
         comboBoxKategorieI.getItems().addAll(kategorieI.getElementsAsArrayList());
         comboBoxKategorieII.getItems().addAll(kategorieII.getElementsAsArrayList());
 
+    }
+
+    /**
+     * Setzt die Referenz zur MainApp
+     *
+     * @param mainApp
+     */
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+        mainApp.getKalenderController().Attach(this);
+        showTeilnehmerListe(terminListe.get(getIndexClosestToNow(terminListe)));
+    }
+
+    private int getIndexClosestToNow(ArrayList<Termin> terminLIste) {
+        int indexClosestToNow = -1;
+        int i = 0;
+        while (indexClosestToNow < 0 && this.terminListe.size() > i) {
+            // wenn heute, dann dieses, sonst das nächste after
+            if (terminListe.get(i).getDatum().isEqual(LocalDate.now())) {
+                indexClosestToNow = i;
+            }
+            if (terminListe.get(i).getDatum().isAfter(LocalDate.now())) {
+                indexClosestToNow = i;
+            }
+            i++;
+        }
+        return indexClosestToNow;
     }
 
     // Hyperlink zum Doodle-Formular
@@ -241,7 +251,9 @@ public class TerminViewController implements Observer {
     }
 
     public void showTeilnehmerListe(Termin termin) {
-        this.teilnehmerListe = DatabaseReader.getTeilnehmer(termin);
+        //  this.teilnehmerListe = DatabaseReader.getTeilnehmer(termin);
+        //TODO: die Mitgliederliste mit übergeben..
+        this.teilnehmerListe = DatabaseReader.getTeilnehmer(termin, mainApp.getAdressController().getMitgliederListe());
         teilnehmerTabelle.setItems(FXCollections.observableArrayList(teilnehmerListe));
         idSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getMitglied().getIdProperty());
@@ -249,7 +261,7 @@ public class TerminViewController implements Observer {
                 cellData -> cellData.getValue().getMitglied().getKurzbezeichnungProperty());
         anmeldeStatusSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getAnmeldungProperty());
-       teilnehmerTabelle.setRowFactory(row -> new TableRow<Teilnehmer>() {
+        teilnehmerTabelle.setRowFactory(row -> new TableRow<Teilnehmer>() {
             @Override
             public void updateItem(Teilnehmer item, boolean empty) {
                 super.updateItem(item, empty);
@@ -365,21 +377,25 @@ public class TerminViewController implements Observer {
     @Override
     public void update(Object o) {
         System.out.println("TerminController Update-Meldung erhalten von " + o);
-        if (o instanceof KalenderController) {
+
             KalenderController kc = (KalenderController) o;
             Platform.runLater(new Runnable() { // TODO
                 @Override
                 public void run() {
-                    mainApp.getKalenderController().setTerminliste(DatabaseReader.getTermineAsArrayList());
-                    terminAuswahlComboBox.getItems().removeAll(terminListe);
+                    // initialize();
+                    // setMainApp(mainApp);
+                    // mainApp.getKalenderController().setTerminliste(DatabaseReader.getTermineAsArrayList());
+                    // terminAuswahlComboBox.getItems().removeAll(terminListe);
                     terminListe = mainApp.getKalenderController().getTermineAsArrayList();
                     terminAuswahlComboBox.getItems().addAll(terminListe);
-                    terminAuswahlComboBox.getSelectionModel().select(getIndexClosestToNow(terminListe));
-                    teilnehmerTabelle.setItems(FXCollections.observableArrayList(DatabaseReader.getTeilnehmer(termin)));
+                    terminAuswahlComboBox.getSelectionModel().select(termin);
+                    teilnehmerTabelle.setItems(FXCollections.observableArrayList(DatabaseReader.getTeilnehmer(termin,
+                            mainApp.getAdressController().getMitgliederListe())));
+
                 }
             });
 
-        }
+
     }
 
 }
