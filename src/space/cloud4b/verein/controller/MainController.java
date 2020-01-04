@@ -63,6 +63,7 @@ public class MainController implements Subject {
     /**
      * Methode extrahiert aus dem übergebenen Filenamen die Erweiterung (Extension)
      * und gibt diese als String zurück
+     *
      * @param filename
      * @return
      */
@@ -70,16 +71,28 @@ public class MainController implements Subject {
         return Optional.ofNullable(filename).filter(f -> f.contains(".")).map(f
                 -> f.substring(filename.lastIndexOf(".") + 1));
     }
+
+
+    /**
+     * Methode fügt das übergebene Objekt zur Observer-Liste hinzu
+     */
     @Override
     public void Attach(Observer o) {
 
     }
 
+    /**
+     * Methode löscht das übergebene Objekt aus der Observer-Liste
+     */
     @Override
     public void Dettach(Observer o) {
 
     }
 
+    /**
+     * Methode durchläuft die in der Observerliste eingetragenen Klassen und ruft dort die
+     * update-Methode auf.
+     */
     @Override
     public void Notify() {
 

@@ -45,7 +45,6 @@ public class MitgliedNeuViewController {
 
     /**
      * Setzt die Referenz zur MainApp
-     *
      * @param mainApp
      */
     public void setMainApp(MainApp mainApp) {
@@ -54,7 +53,6 @@ public class MitgliedNeuViewController {
 
     /**
      * Setzt die Referenz zum aktuellen Stage
-     *
      * @param dialogStage die Stage-Referenz des UI
      */
     public void setStage(Stage dialogStage) {

@@ -87,24 +87,31 @@ public class TaskController implements Subject {
         thread.start();
     }
 
-
+    /**
+     * Methode fügt das übergebene Objekt zur Observer-Liste hinzu
+     */
     @Override
     public void Attach(Observer o) {
         observerList.add(o);
     }
 
+    /**
+     * Methode löscht das übergebene Objekt aus der Observer-Liste
+     */
     @Override
     public void Dettach(Observer o) {
         observerList.remove(o);
     }
 
+    /**
+     * Methode durchläuft die in der Observerliste eingetragenen Klassen und ruft dort die
+     * update-Methode auf.
+     */
     @Override
     public void Notify() {
-        for(int i = 0; i <observerList.size(); i++)
-        {
+        for (int i = 0; i < observerList.size(); i++) {
             observerList.get(i).update(this);
         }
-
     }
 
     public int getanzahlTasks() {

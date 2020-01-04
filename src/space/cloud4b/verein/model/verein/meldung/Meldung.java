@@ -4,6 +4,14 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Objekte der Klasse Meldung dienen dazu, dem User auf dem UI-MainFrame.xmls
+ * Rückmeldungen auszugeben. Entsprechende Meldungen werden im UI in einer ListView im
+ * linken Fensterbereich dargestellt.
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-01-03
+ */
 public class Meldung {
 
     private String meldungText;
@@ -20,6 +28,12 @@ public class Meldung {
         return this.meldungType;
     }
 
+    /**
+     * Gibt für die Ausgabe der Meldung in der ListView des UI-MainFrame.xmls
+     * den Inhalt der Meldung als formatierten String zurück (inkl. Timestamp)
+     *
+     * @return Inhalt der Meldung als formatierter String (inkl. Timestamp)
+     */
     public String getMeldungOutputString() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         System.out.println("Meldung: " + this.meldungTimestamp + " " + meldungText);

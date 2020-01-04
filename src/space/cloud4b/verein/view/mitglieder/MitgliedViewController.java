@@ -118,8 +118,7 @@ public class MitgliedViewController implements Observer {
     private Button nextMitgliedButton;
 
     // Standardkonstruktor (wird nicht benötigt)
-    public MitgliedViewController(){
-
+    public MitgliedViewController() {
     }
 
     /**
@@ -164,6 +163,10 @@ public class MitgliedViewController implements Observer {
 
         mitgliedTabelle.getSelectionModel().selectFirst();
         mitgliedTabelle.getFocusModel().focus(0);
+    }
+
+    public void setStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
     }
 
     public void handleGetNextMitglied() {
@@ -554,7 +557,4 @@ public class MitgliedViewController implements Observer {
     }
 
 
-    public void setStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
-    }
 }

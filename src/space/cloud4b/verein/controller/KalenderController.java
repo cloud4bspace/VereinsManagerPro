@@ -11,10 +11,21 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class KalenderController implements Subject  {
+/**
+ * Die Klasse KalenderController stellt den fxml-Controllern die benötigten Listen und Daten zur
+ * Verfügung, wie z.B. die Termin- oder Teilnehmerliste.
+ * Zudem überwacht die Klasse die zugrundeliegenden MYSQL-Tabelle und gibt Änderungen, Ergänzungen und
+ * Löschungen an die in der Observer-Liste (observerList) eingetragenen fxml-Controllern weiter.
+ * Dazu implementiert die Klasse das Subject-Interface
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-17
+ * @see space.cloud4b.verein.services.Subject
+ */
+public class KalenderController implements Subject {
 
-    int anzahlTermine = 0;
-    int anzahlMeldungen = 0;
+    int anzahlTermine;
+    int anzahlMeldungen;
     private Timestamp timestamp = null; // Zeitstempel der letzten Änderung im der Mitglieder-Datenbank
     private ArrayList<Observer> observerList;
     private ArrayList<Termin> terminListe;
@@ -72,7 +83,7 @@ public class KalenderController implements Subject  {
      * Observer werden benachrichtigt.
      */
     public void updateListen() {
-         Notify();
+        Notify();
     }
 
     /**
@@ -84,9 +95,11 @@ public class KalenderController implements Subject  {
         System.out.println("Aenderungen bei den Mitgliedern mit neuem Zeitstempel (" + neuerZeitstempel + ") festgestellt");
         Notify();
     }
+
     public void setTerminliste(ArrayList<Termin> terminListe) {
         this.terminListe = terminListe;
     }
+
     private void startKalenderObserver() {
         Runnable observerKalender = () -> {
             int zaehler = 0;
@@ -155,20 +168,29 @@ public class KalenderController implements Subject  {
         thread.start();
     }
 
+    /**
+     * Methode fügt das übergebene Objekt zur Observer-Liste hinzu
+     */
     @Override
     public void Attach(Observer o) {
         observerList.add(o);
     }
 
+    /**
+     * Methode löscht das übergebene Objekt aus der Observer-Liste
+     */
     @Override
     public void Dettach(Observer o) {
         observerList.remove(o);
     }
 
+    /**
+     * Methode durchläuft die in der Observerliste eingetragenen Klassen und ruft dort die
+     * update-Methode auf.
+     */
     @Override
     public void Notify() {
-        for(int i = 0; i <observerList.size(); i++)
-        {
+        for (int i = 0; i < observerList.size(); i++) {
             observerList.get(i).update(this);
         }
 
