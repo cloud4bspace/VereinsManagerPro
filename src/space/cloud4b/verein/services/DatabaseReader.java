@@ -426,8 +426,9 @@ public abstract class DatabaseReader {
     }
 
     /**
-     * Zählt die Anzahl Termine im laufenden Jahr
-     * @return
+     * Ermittelt den Zeitstempel der letzen Änderung in der Tabelle termin
+     *
+     * @return Timestamp der letzten Änderung
      */
     public static Timestamp readLetzteAenderung() {
         try (Connection conn = new MysqlConnection().getConnection();
@@ -440,7 +441,27 @@ public abstract class DatabaseReader {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return null;
+    }
 
+    /**
+     * Ermittelt den Zeitstempel der letzen Änderung in der Tabelle terminkontrolle
+     *
+     * @return Timestamp der letzten Änderung
+     */
+    public static Timestamp readLetzteAnmeldungAenderung() {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT MAX(KontrolleZeitstempel) AS LetzteAenderung " +
+                    "FROM `terminkontrolle` WHERE KontrolleArt = 'Anmeldung'";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                //System.out.println("letzte Aenderung: " + rs.getString("LetzteAenderung"));
+                return Timestamp.valueOf(rs.getString("LetzteAenderung"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -1132,12 +1153,15 @@ public abstract class DatabaseReader {
         Status statusStatus = new Status(8);
 
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
-            String query = "SELECT * from usr_web116_5.task ORDER BY TaskTerminBis ASC";
+            String query = "SELECT * from usr_web116_5.task LEFT JOIN kontakt ON kontakt.KontaktId = task.TaskMitgliedId ORDER BY TaskTerminBis ASC";
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
                 int terminId = rs.getInt("TaskId");
 
+                Mitglied mitglied = new Mitglied(rs.getInt("KontaktId"),
+                        rs.getString("KontaktNachname"), rs.getString("KontaktVorname"));
+                DatabaseReader.completeMitglied(mitglied);
 
                 /**
                  * Objekte werden erzeugt und der Taskliste hinzugefügt
@@ -1145,7 +1169,7 @@ public abstract class DatabaseReader {
                 Task task = new Task(rs.getInt("TaskId"),
                         rs.getString("TaskBezeichnung"),
                         rs.getString("TaskDetails"),
-                        null,
+                        mitglied,
                         rs.getDate("TaskTerminBis").toLocalDate());
 
                 task.setPrioStatus(prioStatus.getStatusElemente().get(rs.getInt("TaskPrio")));
@@ -1175,32 +1199,4 @@ public abstract class DatabaseReader {
         }
         return anzTasks;
     }
-
-    public static String getVerantwortlicheAsString(int taskId) {
-        String verantwortliche = null;
-        int count = 1;
-
-        try (Connection conn = new MysqlConnection().getConnection();
-             Statement st = conn.createStatement()) {
-            String query = "SELECT * FROM `taskZuordnung` LEFT JOIN kontakt " +
-                    "ON kontakt.KontaktId = taskZuordnung.KontaktId WHERE TaskId = " + taskId;
-            ResultSet rs = st.executeQuery(query);
-            while (rs.next()) {
-                if (count > 1) {
-                    verantwortliche += "\n";
-                    verantwortliche += "⚫ " + rs.getString("KontaktNachname") + " " + rs.getString("KontaktVorname");
-                } else {
-                    verantwortliche = "⚫ " + rs.getString("KontaktNachname") + " " + rs.getString("KontaktVorname");
-                }
-
-                // verantwortliche.add(rs.getInt("KontaktId"));
-                count++;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return verantwortliche;
-
-    }
-
 }

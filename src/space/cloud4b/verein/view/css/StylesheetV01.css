@@ -351,10 +351,13 @@
 
 #meldungAusgabeListView {
     -fx-font-size: 0.8em;
+    -fx-background-color: #ECECEC;
+    -fx-wrap-text: true;
 }
 
 #meldungAusgabeListView .list-cell {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: #ECECEC;
+    -fx-wrap-text: true;
 }
 .table-view {
     -fx-font-size: 0.9em;

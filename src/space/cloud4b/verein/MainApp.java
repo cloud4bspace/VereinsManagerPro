@@ -17,6 +17,7 @@ import space.cloud4b.verein.controller.MainController;
 import space.cloud4b.verein.controller.TaskController;
 import space.cloud4b.verein.einstellungen.Einstellung;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
+import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.DatabaseReader;
 import space.cloud4b.verein.view.chart.BirthdayStatisticsController;
@@ -29,6 +30,7 @@ import space.cloud4b.verein.view.login.SignupViewController;
 import space.cloud4b.verein.view.mainframe.MainFrameController;
 import space.cloud4b.verein.view.mitglieder.MitgliedNeuViewController;
 import space.cloud4b.verein.view.mitglieder.MitgliedViewController;
+import space.cloud4b.verein.view.tasks.TaskEditViewController;
 import space.cloud4b.verein.view.tasks.TaskListViewController;
 import space.cloud4b.verein.view.tasks.TaskNeuViewController;
 import space.cloud4b.verein.view.tasks.TaskViewController;
@@ -429,6 +431,37 @@ public class MainApp extends Application {
             // Set the persons into the controller.
             TaskNeuViewController controller = loader.getController();
             controller.setMainApp(this);
+            controller.setStage(dialogStage);
+            // controller.setPersonData(contactData);
+            //controller.setPersonData(verein.getAdressBuch().getMitgliederListe());
+
+            dialogStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Öffnet einen Dialog zum Erfassen eines neuen Tasks
+     */
+    public void showTaskEdit(Task task) {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/tasks/TaskEditView.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Task ändern");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the persons into the controller.
+            TaskEditViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setTask(task);
             controller.setStage(dialogStage);
             // controller.setPersonData(contactData);
             //controller.setPersonData(verein.getAdressBuch().getMitgliederListe());

@@ -75,12 +75,12 @@ public abstract class DatabaseOperation {
     }
 
     /**
-     * neues Mitglied in der Datenbank anlegen
+     * neuen Task in der Datenbank anlegen
      */
     public static int saveNewTask(String bezeichnung, String details, String terminDatum, Mitglied verantwortlich, User user) {
 
         String query = "INSERT INTO task (TaskId, TaskBezeichnung, TaskPrio, TaskStatus, TaskDetails, TaskTerminBis" +
-                ", TaskTerminId, TaskTrackChangeUser, TaskTrackChangeTimestamp) VALUES (NULL, ?, '1', '1', ?, ?, 0, ?" +
+                ", TaskMitgliedId, TaskTrackChangeUser, TaskTrackChangeTimestamp) VALUES (NULL, ?, '1', '1', ?, ?, ?, ?" +
                 ", CURRENT_TIMESTAMP)";
         MysqlConnection conn = new MysqlConnection();
         PreparedStatement ps = null;
@@ -89,7 +89,8 @@ public abstract class DatabaseOperation {
             ps.setString(1, bezeichnung);
             ps.setString(2, details);
             ps.setString(3, terminDatum);
-            ps.setString(4, user.getUserName());
+            ps.setInt(4, verantwortlich.getId());
+            ps.setString(5, user.getUserName());
             System.out.println("neues Mitglied hinzugefügt: " + ps.executeUpdate());
             // System.out.println(ps.getGeneratedKeys());
             ResultSet keys = null;
@@ -98,7 +99,7 @@ public abstract class DatabaseOperation {
             int newKey = keys.getInt(1);
             System.out.println("KEy: " + newKey + "/" + verantwortlich.getKurzbezeichnung());
 
-            addVerantwortlichen(newKey, verantwortlich.getId(), user);
+            // addVerantwortlichen(newKey, verantwortlich.getId(), user);
             return newKey;
 
         } catch (SQLException e) {
@@ -107,27 +108,6 @@ public abstract class DatabaseOperation {
         return 0;
     }
 
-    /**
-     * speichert zu einem neuen Task das verantwortliche Mitglied
-     */
-    public static void addVerantwortlichen(int taskId, int mitgliedId, User user) {
-        String query = "INSERT INTO taskZuordnung (ZuordnungId, TaskId, KontaktId, ZuordnungTrackChangeUsr, " +
-                "ZuordnungTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP)";
-
-        MysqlConnection conn = new MysqlConnection();
-        PreparedStatement ps = null;
-        try {
-            ps = conn.getConnection().prepareStatement(query);
-            ps.setInt(1, taskId);
-            ps.setInt(2, mitgliedId);
-            ps.setString(3, user.getUserName());
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println("Fehler " + e);
-        }
-
-    }
 
 
     /**
@@ -139,22 +119,43 @@ public abstract class DatabaseOperation {
             String query = "DELETE FROM kontakt WHERE KontaktId=" + mitglied.getId();
             st.execute(query);
 
-
             query = "DELETE FROM `terminkontrolle` WHERE `KontrolleMitgliedId` = " + mitglied.getId();
             st.execute(query);
-
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Mitglied konnte nicht gelöscht werden (" + e + ")");
         }
+    }
+
+    /**
+     * Löscht einen Termin in der Datenbank
+     *
+     * @param termin
+     */
+    public static void deleteTermin(Termin termin) {
+        if (termin != null) {
+            try (Connection conn = new MysqlConnection().getConnection();
+                 // Termin in der Tabelle termin löschen
+                 Statement st = conn.createStatement()) {
+                String query = "DELETE FROM termin WHERE TerminId=" + termin.getTerminId();
+                st.execute(query);
+
+                // alle Anmeldungen und Teilnahmen in der Tabelle terminkontrolle löschen
+                query = "DELETE FROM `terminkontrolle` WHERE `KontrolleTerminId` = " + termin.getTerminId();
+                st.execute(query);
+            } catch (SQLException e) {
+                System.out.println("Termin konnte nicht gelöscht werden (" + e + ")");
+            }
+        }
+
     }
 
     /**
      * Prüft aufgrund des Austrittsdatums den aktuellen Mitgliederstatus
      */
     public static void checkMitgliederStatus() {
-        try(Connection conn = new MysqlConnection().getConnection();
-            Statement st = conn.createStatement()) {
-            String query= "UPDATE usr_web116_5.kontakt SET `KontaktIstMitglied` = 0 WHERE KontaktAustrittsdatum < CURRENT_DATE AND KontaktAustrittsdatum NOT LIKE '0000-00-00'";
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "UPDATE usr_web116_5.kontakt SET `KontaktIstMitglied` = 0 WHERE KontaktAustrittsdatum < CURRENT_DATE AND KontaktAustrittsdatum NOT LIKE '0000-00-00'";
             st.executeUpdate(query);
 
         } catch(SQLException e) {
@@ -372,4 +373,6 @@ public abstract class DatabaseOperation {
             System.out.println("Mitglied konnte nicht gelöscht werden (" + e + ")");
         }
     }
+
+
 }

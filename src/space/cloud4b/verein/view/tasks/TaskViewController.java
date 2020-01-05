@@ -1,6 +1,7 @@
 package space.cloud4b.verein.view.tasks;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -18,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.controller.TaskController;
+import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.services.DatabaseReader;
 import space.cloud4b.verein.services.Observer;
@@ -50,7 +52,7 @@ public class TaskViewController implements Observer {
     @FXML
     private TreeTableColumn<Task, String> detailsSpalte;
     @FXML
-    private TreeTableColumn<Task, String> verantwortlicheSpalte;
+    private TreeTableColumn<Task, Mitglied> verantwortlicheSpalte;
 
     public TaskViewController() {
         // Konstruktor wird nicht benötigt
@@ -62,6 +64,7 @@ public class TaskViewController implements Observer {
         taskTreeTableView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
         taskTreeTableView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> openTask(newValue.getValue()));
+
 
         idSpalte = new TreeTableColumn<>("Id#");
         prioSpalte = new TreeTableColumn<>("Prio");
@@ -186,10 +189,10 @@ public class TaskViewController implements Observer {
             }
         });
 
-        verantwortlicheSpalte.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Task, String>, ObservableValue<String>>() {
+        verantwortlicheSpalte.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Task, Mitglied>, ObservableValue<Mitglied>>() {
             @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Task, String> param) {
-                return new SimpleStringProperty(DatabaseReader.getVerantwortlicheAsString(param.getValue().getValue().getTaskId()));
+            public ObservableValue<Mitglied> call(TreeTableColumn.CellDataFeatures<Task, Mitglied> param) {
+                return new SimpleObjectProperty(param.getValue().getValue().getVerantwortlichesMitglied());
             }
         });
         idSpalte.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Task, String>, ObservableValue<String>>() {
@@ -231,7 +234,8 @@ public class TaskViewController implements Observer {
 
     public void openTask(Task task) {
         if (task.getPrioStatus() != null) {
-            System.out.println("ausgewählt: " + task);
+            // mainApp.getMainFrameController().setMeldungInListView(task.getOutputText(),"OK");
+            mainApp.showTaskEdit(task);
         }
     }
 

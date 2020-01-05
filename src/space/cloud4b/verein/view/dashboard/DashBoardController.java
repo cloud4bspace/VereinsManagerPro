@@ -3,6 +3,7 @@ package space.cloud4b.verein.view.dashboard;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import space.cloud4b.verein.MainApp;
@@ -54,6 +55,8 @@ public class DashBoardController implements Observer {
 
     @FXML
     private TableView<Position> ranglisteTabelle;
+    @FXML
+    private Label anwesenheitenLabel;
     @FXML
     private TableColumn<Position, Number> rangSpalte;
     @FXML
@@ -120,6 +123,7 @@ public class DashBoardController implements Observer {
                 cellData -> cellData.getValue().getDateAsNiceString());
 
         // Rangliste initialisieren
+        anwesenheitenLabel.setText("Rangliste der Anwesenheiten (Jahr " + LocalDate.now().getYear() + ")");
         rangSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getRangProperty());
         mitgliedSpalte.setCellValueFactory(

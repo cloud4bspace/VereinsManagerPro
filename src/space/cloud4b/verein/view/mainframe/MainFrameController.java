@@ -27,7 +27,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
@@ -62,8 +61,6 @@ public class MainFrameController implements Observer {
     private Label sessionLabel;
     @FXML
     private VBox vMenuBarLeftContainer;
-    @FXML
-    private TextArea meldungAusgabeText;
     @FXML
     private ListView<Meldung> meldungAusgabeListView;
     @FXML
@@ -117,7 +114,7 @@ public class MainFrameController implements Observer {
         circleLabelIII.setContentDisplay(ContentDisplay.CENTER);
 
         infoLabel.setText(mainApp.getCurrentUser().toString());
-        meldungAusgabeText.setWrapText(true);
+
         setMeldungInListView("Herzlich willkommen\n"
                 + mainApp.getCurrentUser().getUserName() + "!", "INFO");
     }
@@ -205,16 +202,17 @@ public class MainFrameController implements Observer {
                 if (empty || item == null) {
                     setText(null);
                 } else {
+                    setWrapText(true);
                     setText(item.getMeldungOutputString());
                     switch (item.getMeldungType()) {
                         case "OK":
-                            setStyle("-fx-background-color: #badcb3;");
+                            setStyle("-fx-text-fill: #3a7e46;");
                             break;
                         case "NOK":
-                            setStyle("-fx-background-color: #ffdada;");
+                            setStyle("-fx-text-fill: #e06666;");
                             break;
                         default:
-                            setStyle("-fx-background-color: #ffffff;");
+                            setStyle("-fx-text-fill: #000000;");
                             break;
                     }
                 }
@@ -420,49 +418,6 @@ public class MainFrameController implements Observer {
 
     public void setMeldungInListView(String meldungText, String meldungTyp) {
         meldungAusgabeListView.getItems().add(0, new Meldung(meldungText, meldungTyp));
-    }
-
-    public void setInfo(String infoText, String infoTyp) {
-        this.meldungAusgabeText.setText(infoText);
-        switch (infoTyp) {
-            case "OK":
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #4FA67B");
-                break;
-            case "NOK":
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #FF5F67");
-                break;
-            case "Info":
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #708ca6");
-                break;
-            default:
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #708ca6");
-                break;
-        }
-    }
-
-    public void setInfo(String infoText, String infoTyp, boolean add) {
-        if(add == true){
-            this.meldungAusgabeText.setText("*** " +LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-                    + " ***\n" + infoText + "\n\n" + this.meldungAusgabeText.getText());
-       // this.meldungAusgabeText.appendText("\n" + LocalTime.now() + " - " + infoText);
-       // this.meldungAusgabeText.insertText(LocalTime.now() + " - " + infoText);
-        } else {
-            this.meldungAusgabeText.setText(infoText);
-        }
-        switch (infoTyp) {
-            case "OK":
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #4FA67B");
-                break;
-            case "NOK":
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #FF5F67");
-                break;
-            case "Info":
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #708ca6");
-                break;
-            default:
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #708ca6");
-                break;
-        }
     }
 
     /**

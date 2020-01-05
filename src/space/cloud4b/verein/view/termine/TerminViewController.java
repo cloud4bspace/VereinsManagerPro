@@ -27,6 +27,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class TerminViewController implements Observer {
 
@@ -204,22 +205,35 @@ public class TerminViewController implements Observer {
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Doodle/doodleTermin.php" +
                 "?TerminId=" + termin.getTerminId()), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
-        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
         stage.show();
     }
     public void terminAuswahlComboBoxAction() {
         setTermin(terminAuswahlComboBox.getValue());
         showTeilnehmerListe(terminAuswahlComboBox.getValue());
     }
-    public void setTermin(Termin termin){
-        this.termin = termin;
+    public void setTermin(Termin termin) {
+
+        // wenn kein gültiger Termin übergeben wird
+        if (termin == null) {
+            if (this.termin != null) {
+                // den letzten ausgewählten Termin übernehmen
+                termin = this.termin;
+            } else {
+                // den Termin auswählen, der am nächsten am heutigen Datum liegt
+                termin = terminListe.get(getIndexClosestToNow(terminListe));
+                this.termin = termin;
+            }
+        } else {
+            this.termin = termin;
+        }
+
+        terminAuswahlComboBox.getSelectionModel().select(termin);
         letzteAenderungLabel.setText(termin.getLetzteAenderung());
         terminDatumPicker.setValue(termin.getDatum());
         terminText.setText(termin.getTextProperty().getValue());
         terminOrt.setText(termin.getOrtProperty().getValue());
         terminDetails.setText(termin.getDetailsProperty().getValue());
-        if(termin.getTerminZeitVon() != null) {
+        if (termin.getTerminZeitVon() != null) {
             stundenVonFeld.setText(Integer.toString(termin.getTerminZeitVon().getHour()));
             minutenVonFeld.setText(Integer.toString(termin.getTerminZeitVon().getMinute()));
         } else {
@@ -286,6 +300,25 @@ public class TerminViewController implements Observer {
     }
 
     /**
+     * Termin löschen
+     */
+    public void handleLoeschen() {
+        // Warnmeldung anzeigen und Löschung bestätigen lassen
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(dialogStage);
+        alert.setTitle("Löschen bestätigen");
+        alert.setHeaderText("Willst Du den Termin wirklich löschen?");
+        alert.setContentText("Löschen von\n\n" + termin + "\n\nmit OK bestätigen oder abbrechen");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            DatabaseOperation.deleteTermin(this.termin);
+            this.termin = null;
+            setTermin(null);
+        }
+    }
+
+    /**
      * Den aktuellen Termin neu laden, wenn der Reset-Button betätigt wird.
      */
     public void handleResetButton() {
@@ -333,7 +366,9 @@ public class TerminViewController implements Observer {
             terminAuswahlComboBox.getItems().addAll(mainApp.getKalenderController().getTermineAsArrayList());
             //terminAuswahlComboBox.getSelectionModel().clearAndSelect(termin);
             terminAuswahlComboBox.getSelectionModel().select(termin);
-            mainApp.getMainFrameController().setInfo("Änderungen gespeichert", "OK", true);
+            // mainApp.getMainFrameController().setInfo("Änderungen gespeichert", "OK", true);
+
+            mainApp.getMainFrameController().setMeldungInListView("Änderungen gespeichert", "OK");
         }
     }
 
@@ -344,7 +379,9 @@ public class TerminViewController implements Observer {
         try {
             ExcelWriter.exportTeilnehmerToExcel(termin, mainApp.getCurrentUser(), teilnehmerListe);
         } catch (IOException e) {
-            mainApp.getMainFrameController().setInfo("Export ist fehlgeschlagen", "NOK", true);
+            // mainApp.getMainFrameController().setInfo("Export ist fehlgeschlagen", "NOK", true);
+            mainApp.getMainFrameController().setMeldungInListView("Export ist fehlgeschlagen"
+                    , "NOK");
         }
 
     }
@@ -368,7 +405,8 @@ public class TerminViewController implements Observer {
         }
 
         if(!isValid && errorMeldung.length()>0) {
-            mainApp.getMainFrameController().setInfo(errorMeldung, "NOK", true);
+            // mainApp.getMainFrameController().setInfo(errorMeldung, "NOK", true);
+            mainApp.getMainFrameController().setMeldungInListView(errorMeldung, "NOK");
         }
         return isValid;
     }
@@ -385,12 +423,18 @@ public class TerminViewController implements Observer {
                     // initialize();
                     // setMainApp(mainApp);
                     // mainApp.getKalenderController().setTerminliste(DatabaseReader.getTermineAsArrayList());
-                    // terminAuswahlComboBox.getItems().removeAll(terminListe);
+                    // terminAuswahlComboBox.getItems().removeAll(((KalenderController) o).getTermineAsArrayList());
+                    terminAuswahlComboBox.getItems().remove(0, terminListe.size());
+                    //terminAuswahlComboBox = new ComboBox<>();
                     terminListe = mainApp.getKalenderController().getTermineAsArrayList();
                     terminAuswahlComboBox.getItems().addAll(terminListe);
                     terminAuswahlComboBox.getSelectionModel().select(termin);
                     teilnehmerTabelle.setItems(FXCollections.observableArrayList(DatabaseReader.getTeilnehmer(termin,
                             mainApp.getAdressController().getMitgliederListe())));
+                    if (termin != null) {
+                        setTermin(termin);
+                    }
+                    // Termin ist nicht mehr dasselbe Objekt.. deshalb muss ich mit der ID arbeiten
 
                 }
             });

@@ -52,7 +52,6 @@ public class AdressController implements Subject {
      */
     public void updateAnzahlMitglieder(int anzahlMitglieder) {
         this.anzahlMitglieder = anzahlMitglieder;
-        Notify();
     }
 
     /**
@@ -63,7 +62,6 @@ public class AdressController implements Subject {
     public void updateListen() {
         this.mitgliederListe = DatabaseReader.getMitgliederAsArrayList();
         this.jubilaeumsListe = DatabaseReader.getJubilaeenAsArrayList();
-        Notify();
     }
 
     /**
@@ -75,7 +73,6 @@ public class AdressController implements Subject {
      */
     public void updateLetzeAenderung(Timestamp neuerZeitstempel) {
         this.timestamp = neuerZeitstempel;
-        Notify();
     }
 
     /**
@@ -114,20 +111,24 @@ public class AdressController implements Subject {
      */
     private void startAdressObserver() {
         Runnable observeMitglieder = () -> {
-            int zaehler = 0;
             while (true) {
+                boolean update = false;
                 // hat sich die Anzahl der Einträge in der Tabelle Kontakt verändert?
                 if (DatabaseReader.readAnzahlMitglieder() != anzahlMitglieder) {
                     updateAnzahlMitglieder(DatabaseReader.readAnzahlMitglieder());
-                    updateListen();
+                    update = true;
                 }
                 // hat sich der Zeitstempel der letzten Äenderung verändert?
-                if(this.timestamp == null) {
+                if (this.timestamp == null) {
                     updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
-                    updateListen();
-                } else if (DatabaseReader.readLetzteAenderung().after(this.timestamp)){
+                    update = true;
+                } else if (DatabaseReader.readLetzteAenderung().after(this.timestamp)) {
                     updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
+                    update = true;
+                }
+                if (update) {
                     updateListen();
+                    Notify();
                 }
                 try {
                     Thread.sleep(2000);
@@ -164,8 +165,8 @@ public class AdressController implements Subject {
      */
     @Override
     public void Notify() {
-        for (int i = 0; i < observerList.size(); i++) {
-            observerList.get(i).update(this);
+        for (Observer observer : observerList) {
+            observer.update(this);
         }
     }
 }

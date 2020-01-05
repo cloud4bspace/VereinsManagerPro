@@ -19,7 +19,7 @@ public class Task {
     private SimpleStringProperty taskTitelProperty;
     private String taskText;
     //  private ArrayList<Mitglied> verantwortliche;
-    private Mitglied mitglied;
+    private Mitglied verantwortlichesMitglied;
 
     public Task(String taskTitel) {
         this.taskTitel = taskTitel;
@@ -39,7 +39,7 @@ public class Task {
         this.taskTitel = taskTitel;
         this.taskTitelProperty = new SimpleStringProperty(taskTitel);
         this.taskText = taskText;
-        this.mitglied = mitglied;
+        this.verantwortlichesMitglied = mitglied;
     }
 
     public Task(int taskId, String taskTitel, String taskText, Mitglied mitglied, LocalDate taskDatum) {
@@ -50,7 +50,7 @@ public class Task {
         this.taskTitel = taskTitel;
         this.taskTitelProperty = new SimpleStringProperty(taskTitel);
         this.taskText = taskText;
-        this.mitglied = mitglied;
+        this.verantwortlichesMitglied = mitglied;
     }
 
     public String getOutputText() {
@@ -101,5 +101,14 @@ public class Task {
 
     public ObservableValue<String> getTaskTitelProperty() {
         return this.taskTitelProperty;
+    }
+
+
+    public void setVerantwortliches(Mitglied mitglied) {
+        this.verantwortlichesMitglied = mitglied;
+    }
+
+    public Mitglied getVerantwortlichesMitglied() {
+        return this.verantwortlichesMitglied;
     }
 }

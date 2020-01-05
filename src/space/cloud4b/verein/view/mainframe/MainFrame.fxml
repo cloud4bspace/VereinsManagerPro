@@ -51,17 +51,21 @@
       </VBox>
    </top>
    <left>
-      <VBox fx:id="vMenuBarLeftContainer" prefHeight="293.0" prefWidth="154.0" BorderPane.alignment="CENTER">
-         <children>
-            <MenuBar />
-            <Button fx:id="homeButton" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="27.0" prefWidth="163.0" text="Dashboard" />
-             <MenuBar id="mBarMitglieder" fx:id="mBarMitglieder">
-              <menus>
-                <Menu fx:id="mitgliederMenu" mnemonicParsing="false" text="Mitglieder">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleMitgliederbereich" text="Mitgliederbereich öffnen" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleShowBirthdayStatistics" text="Geburtstags-Statistik" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleShowKatIStatistics" text="Auswertung Kat I" />
+      <VBox fx:id="vMenuBarLeftContainer" prefHeight="445.0" prefWidth="183.0" BorderPane.alignment="CENTER">
+          <children>
+              <MenuBar/>
+              <Button fx:id="homeButton" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="30.0"
+                      prefWidth="189.0" text="Dashboard"/>
+              <MenuBar id="mBarMitglieder" fx:id="mBarMitglieder">
+                  <menus>
+                      <Menu fx:id="mitgliederMenu" mnemonicParsing="false" text="Mitglieder">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#handleMitgliederbereich"
+                                        text="Mitgliederbereich öffnen"/>
+                              <MenuItem mnemonicParsing="false" onAction="#handleShowBirthdayStatistics"
+                                        text="Geburtstags-Statistik"/>
+                              <MenuItem mnemonicParsing="false" onAction="#handleShowKatIStatistics"
+                                        text="Auswertung Kat I"/>
                         <MenuItem mnemonicParsing="false" onAction="#handleExportMitglieder" text="nach Excel exportieren.." />
                          <MenuItem mnemonicParsing="false" onAction="#handleCreatePDF" text="PDF erstellen" />
                      </items></Menu>
@@ -89,7 +93,7 @@
                  <menus>
                      <Menu fx:id="kontrolleMenu" mnemonicParsing="false" text="Tasks">
                          <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleTask" text="Tasks"/>
+                             <MenuItem mnemonicParsing="false" onAction="#handleTask" text="Tasks"/>
                              <MenuItem mnemonicParsing="false" onAction="#handleTaskList" text="Taskliste" />
                              <MenuItem mnemonicParsing="false" onAction="#handleShowTaskStatistics"
                                        text="Tasks nach Status"/>
@@ -116,35 +120,49 @@
             </MenuBar>
              <MenuBar id="mBar05">
               <menus>
-                <Menu fx:id="exportMenu" mnemonicParsing="false" text="Export">
-                  <items>
-                    <MenuItem fx:id="mitgliederExcelMenuItem" mnemonicParsing="false" onAction="#handleExportMitglieder" text="Mitgliederliste (Excel)" />
-                  </items>
-                </Menu>
+                  <Menu fx:id="exportMenu" mnemonicParsing="false" text="Export">
+                      <items>
+                          <MenuItem fx:id="mitgliederExcelMenuItem" mnemonicParsing="false"
+                                    onAction="#handleExportMitglieder" text="Mitgliederliste (Excel)"/>
+                      </items>
+                  </Menu>
               </menus>
                  <VBox.margin>
-                     <Insets top="10.0" />
+                     <Insets top="10.0"/>
                  </VBox.margin>
-            </MenuBar>
-            <TextArea fx:id="meldungAusgabeText" editable="false" prefHeight="189.0" prefWidth="127.0" wrapText="true" />
-             <ListView fx:id="meldungAusgabeListView" prefHeight="200.0" prefWidth="200.0" />
-         </children>
+             </MenuBar>
+              <Label text="Meldungen">
+                  <VBox.margin>
+                      <Insets left="10.0" top="20.0"/>
+                  </VBox.margin>
+              </Label>
+              <ListView fx:id="meldungAusgabeListView" cacheShape="false" centerShape="false"
+                        nodeOrientation="LEFT_TO_RIGHT" scaleShape="false">
+                  <VBox.margin>
+                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                  </VBox.margin>
+                  <padding>
+                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                  </padding>
+              </ListView>
+          </children>
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
       </VBox>
    </left>
    <bottom>
-      <ToolBar maxHeight="30.0" prefHeight="30.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-         <items>
-             <HBox>
-                 <children>
-                     <Label fx:id="sessionLabel" text="Label" />
-                     <Label fx:id="dateLabel" text="Label" />
-                 </children>
-             </HBox>
-         </items>
-      </ToolBar>
+       <ToolBar maxHeight="30.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="800.0"
+                BorderPane.alignment="TOP_LEFT">
+           <items>
+               <HBox alignment="CENTER_LEFT">
+                   <children>
+                       <Label fx:id="sessionLabel" text="Label"/>
+                       <Label fx:id="dateLabel" text="Label"/>
+                   </children>
+               </HBox>
+           </items>
+       </ToolBar>
    </bottom>
    <right>
        <VBox fx:id="leftPane" prefHeight="465.0" prefWidth="120.0" BorderPane.alignment="CENTER">

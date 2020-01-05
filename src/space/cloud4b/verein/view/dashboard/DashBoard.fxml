@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <AnchorPane stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="space.cloud4b.verein.view.dashboard.DashBoardController">
    <children>
       <GridPane focusTraversable="true" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../css/StylesheetV01.css" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -35,7 +30,7 @@
             </VBox>
             <VBox prefHeight="99.0" prefWidth="300.0" GridPane.columnIndex="1">
                <children>
-                  <Label text="Anwesenheitsrangliste" />
+                  <Label fx:id="anwesenheitenLabel" text="Anwesenheitsrangliste"/>
                   <TableView fx:id="ranglisteTabelle">
                     <columns>
                       <TableColumn fx:id="rangSpalte" prefWidth="75.0" text="Rang" />

@@ -225,7 +225,9 @@ public class MitgliedViewController implements Observer {
                 // wenn nicht OK gedrückt wird ist die Methode zu verlassen
                 return;
             } else {
-                mainApp.getMainFrameController().setInfo("Reset durchgeführt", "OK", true);
+                // mainApp.getMainFrameController().setInfo("Reset durchgeführt", "OK", true);
+                mainApp.getMainFrameController().setMeldungInListView("Reset durchgeführt"
+                        , "OK");
             }
         }
 
@@ -234,7 +236,7 @@ public class MitgliedViewController implements Observer {
         if(mitglied == null){
             mitglied = aktuellesMitglied;
         }
-        mainApp.getMainFrameController().setInfo("Mitglied #" + mitglied.getId() + " geladen", "OK", true);
+        // mainApp.getMainFrameController().setInfo("Mitglied #" + mitglied.getId() + " geladen", "OK", true);
         // die Felder des ausgewählten Mitglieds mit Daten füllen
         this.aktuellesMitglied = mitglied;
         idLabel.setText(("Details zu Mitglied #" + mitglied.getId()));
@@ -454,7 +456,9 @@ public class MitgliedViewController implements Observer {
     public void onValueChanged() {
         if(!unsavedChanges) {
             unsavedChanges = true;
-            mainApp.getMainFrameController().setInfo("Änderungen wurden noch nicht gespeichert!", "INFO", true);
+            //mainApp.getMainFrameController().setInfo("Änderungen wurden noch nicht gespeichert!", "INFO", true);
+            // mainApp.getMainFrameController().setMeldungInListView("Änderungen wurden noch nicht gespeichert"
+            //         , "INFO");
         }
     }
 
@@ -491,7 +495,8 @@ public class MitgliedViewController implements Observer {
             // die Änderungen werden an die Datenbank weitergegeben
             DatabaseOperation.updateMitglied(aktuellesMitglied, mainApp.getCurrentUser());
             // Eine Bestätigung wird im Infofeld ausgegeben
-            mainApp.getMainFrameController().setInfo("Änderungen gespeichert!", "OK", true);
+            //mainApp.getMainFrameController().setInfo("Änderungen gespeichert!", "OK", true);
+            mainApp.getMainFrameController().setMeldungInListView("Änderungen gespeichert", "OK");
             //   mitgliedArrayList = new ArrayList<>(mainApp.getAdressController().getMitgliederListe());
 
             unsavedChanges = false;
@@ -531,7 +536,8 @@ public class MitgliedViewController implements Observer {
             }
         }
         if(!isValid && errorMeldung.length()>0) {
-            mainApp.getMainFrameController().setInfo(errorMeldung, "NOK", true);
+            // mainApp.getMainFrameController().setInfo(errorMeldung, "NOK", true);
+            mainApp.getMainFrameController().setMeldungInListView(errorMeldung, "NOK");
         }
         return isValid;
     }

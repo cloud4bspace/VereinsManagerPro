@@ -26,20 +26,18 @@ public class KalenderController implements Subject {
 
     int anzahlTermine;
     int anzahlMeldungen;
-    private Timestamp timestamp = null; // Zeitstempel der letzten Änderung im der Mitglieder-Datenbank
+    private Timestamp timestamp = null; // Zeitstempel der letzten Änderung im der Termin-Tabelle
+    private Timestamp timestampAnmeldungen; // Zeitstempel der letzten Änderung im der Anmeldungen-Tabelle
     private ArrayList<Observer> observerList;
     private ArrayList<Termin> terminListe;
     private ArrayList<Termin> kommendeTermineListe = new ArrayList<>();
     private ArrayList<Jubilaeum> jubilaeumsListe;
-    // TODO die Anmeldeliste sollte konsequenterweise auch hier geführt werden..
+    // TODO die Anmeldeliste sollte auch irgendwo zentral geführt werden? oder bei den Terminen?
 
     public KalenderController() {
-        System.out.println("KalenderController erzeugt");
         observerList = new ArrayList<>();
         jubilaeumsListe = DatabaseReader.jubilaenLaden();
-        terminListe = DatabaseReader.getTermineAsArrayList();
-        kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-        startKalenderObserver(); //TODO hier noch zu fürh
+        startKalenderObserver();
         startAnmeldungenObserver();
     }
 
@@ -58,7 +56,6 @@ public class KalenderController implements Subject {
      */
     public void updateAnzahlMeldungen(int anzahlMeldungen) {
         this.anzahlMeldungen = anzahlMeldungen;
-        Notify();
     }
 
     public int getAnzahlTermine() {
@@ -82,18 +79,30 @@ public class KalenderController implements Subject {
      * die Listen (ArrayList) werden nach einer Änderung in der Datenbank aktualisiert und die
      * Observer werden benachrichtigt.
      */
-    public void updateListen() {
-        Notify();
+    public void updateTerminListen() {
+        this.terminListe = DatabaseReader.getTermineAsArrayList();
+        this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
+        //Notify ist nötig, wenn Aenderungen Zeitstempel zu update geführt haben.
     }
 
     /**
      * aktualisiert den Zeitstempel für die letzte Änderung in der Termin-Tabelle der Datenbank
+     *
      * @param neuerZeitstempel
      */
-    public void updateLetzeAenderung(Timestamp neuerZeitstempel){
+    public void updateLetzeTerminAenderung(Timestamp neuerZeitstempel) {
         this.timestamp = neuerZeitstempel;
-        System.out.println("Aenderungen bei den Mitgliedern mit neuem Zeitstempel (" + neuerZeitstempel + ") festgestellt");
-        Notify();
+        System.out.println("Aenderungen bei den Terminen mit neuem Zeitstempel (" + neuerZeitstempel + ") festgestellt");
+    }
+
+    /**
+     * aktualisiert den Zeitstempel für die letzte Änderung in der Termin-Tabelle der Datenbank
+     *
+     * @param neuerZeitstempel
+     */
+    public void updateLetzeAnmeldungAenderung(Timestamp neuerZeitstempel) {
+        this.timestampAnmeldungen = neuerZeitstempel;
+        System.out.println("Aenderungen bei den Anmeldungen mit neuem Zeitstempel (" + neuerZeitstempel + ") festgestellt");
     }
 
     public void setTerminliste(ArrayList<Termin> terminListe) {
@@ -104,23 +113,22 @@ public class KalenderController implements Subject {
         Runnable observerKalender = () -> {
             int zaehler = 0;
             while (true) {
-                if(DatabaseReader.readAnzahlTermine() != anzahlTermine) {
+                boolean update = false;
+                if (DatabaseReader.readAnzahlTermine() != anzahlTermine) {
                     updateAnzahlTermine(DatabaseReader.readAnzahlTermine());
-                    this.terminListe = DatabaseReader.getTermineAsArrayList();
-                    this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-                    updateListen();
+                    update = true;
                 }
                 // hat sich der Zeitstempel der letzten Äenderung verändert?
-                else if(this.timestamp == null) {
-                    updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
-                    this.terminListe = DatabaseReader.getTermineAsArrayList();
-                    this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-                    updateListen();
-                } else if (DatabaseReader.readLetzteAenderung().after(this.timestamp)){
-                    this.terminListe = DatabaseReader.getTermineAsArrayList();
-                    this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-                    updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
-                    updateListen();
+                else if (this.timestamp == null) {
+                    updateLetzeTerminAenderung(DatabaseReader.readLetzteAenderung());
+                    update = true;
+                } else if (DatabaseReader.readLetzteAenderung().after(this.timestamp)) {
+                    updateLetzeTerminAenderung(DatabaseReader.readLetzteAenderung());
+                    update = true;
+                }
+                if (update) {
+                    updateTerminListen();
+                    Notify();
                 }
                 try {
                     Thread.sleep(2000);
@@ -130,6 +138,7 @@ public class KalenderController implements Subject {
             }
         };
         Thread thread = new Thread(observerKalender);
+        thread.setName("TerminObserver");
         thread.setDaemon(true);
         thread.start();
     }
@@ -138,24 +147,22 @@ public class KalenderController implements Subject {
         Runnable observerAnmeldungen = () -> {
             int zaehler = 0;
             while (true) {
-                if(DatabaseReader.getAnzMeldungen() != anzahlMeldungen) {
+                boolean update = false;
+                if (DatabaseReader.getAnzMeldungen() != anzahlMeldungen) {
                     updateAnzahlMeldungen(DatabaseReader.getAnzMeldungen());
-                    updateListen();
+                    update = true;
                 }
                 // hat sich der Zeitstempel der letzten Äenderung verändert?
-                // TODO muss man noch implementieren
-                /*
-                else if(this.timestamp == null) {
-                    updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
-                    this.terminListe = DatabaseReader.getTermineAsArrayList();
-                    this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-                    updateListen();
-                } else if (DatabaseReader.readLetzteAenderung().after(this.timestamp)){
-                    this.terminListe = DatabaseReader.getTermineAsArrayList();
-                    this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-                    updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
-                    updateListen();
-                }*/
+                else if (this.timestampAnmeldungen == null) {
+                    updateLetzeAnmeldungAenderung(DatabaseReader.readLetzteAnmeldungAenderung());
+                    update = true;
+                } else if (DatabaseReader.readLetzteAnmeldungAenderung().after(this.timestampAnmeldungen)) {
+                    updateLetzeAnmeldungAenderung(DatabaseReader.readLetzteAnmeldungAenderung());
+                    update = true;
+                }
+                if (update) {
+                    Notify();
+                }
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
@@ -164,6 +171,7 @@ public class KalenderController implements Subject {
             }
         };
         Thread thread = new Thread(observerAnmeldungen);
+        thread.setName("AnmeldungenObserver");
         thread.setDaemon(true);
         thread.start();
     }
