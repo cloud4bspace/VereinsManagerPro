@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -21,7 +20,6 @@ import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.controller.TaskController;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.task.Task;
-import space.cloud4b.verein.services.DatabaseReader;
 import space.cloud4b.verein.services.Observer;
 
 import java.time.LocalDate;
@@ -65,7 +63,6 @@ public class TaskViewController implements Observer {
         taskTreeTableView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> openTask(newValue.getValue()));
 
-
         idSpalte = new TreeTableColumn<>("Id#");
         prioSpalte = new TreeTableColumn<>("Prio");
         titelSpalte = new TreeTableColumn<>("Titel");
@@ -83,21 +80,18 @@ public class TaskViewController implements Observer {
         verantwortlicheSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("verantwortliche"));
 
         titelSpalte.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn());
-        titelSpalte.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<Task, String>>() {
-            public void handle(TreeTableColumn.CellEditEvent<Task, String> event) {
-                TreeItem<Task> currentEditingTask = taskTreeTableView.getTreeItem(event.getTreeTablePosition().getRow());
-                currentEditingTask.getValue().setTitel(event.getNewValue());
-            }
-        });
 
-        ArrayList<Task> taskArrayList = DatabaseReader.getTaskList();
-        taskTreeTableView.getColumns().setAll(titelSpalte, terminSpalte, tageBisTerminSpalte, prioSpalte, detailsSpalte, verantwortlicheSpalte, idSpalte);
+    }
+
+    public void setupTreeView() {
+        ArrayList<Task> taskArrayList = mainApp.getTaskController().getTasksAsArrayList();
+        taskTreeTableView.getColumns().setAll(titelSpalte, terminSpalte, tageBisTerminSpalte, prioSpalte,
+                detailsSpalte, verantwortlicheSpalte, idSpalte);
 
         ArrayList<TreeItem<Task>> pendenteTreeItems = new ArrayList<>();
         ArrayList<TreeItem<Task>> ueberfaelligeTreeItems = new ArrayList<>();
         ArrayList<TreeItem<Task>> inArbeitTreeItems = new ArrayList<>();
         ArrayList<TreeItem<Task>> erledigteTreeItems = new ArrayList<>();
-        ArrayList<TreeItem<Task>> weitereTreeItems = new ArrayList<>();
         for (Task task : taskArrayList) {
             if (task.getStatusStatus().getStatusElementKey() == 1) {
                 if (task.getTaskDatum().isBefore(LocalDate.now())) {
@@ -114,8 +108,6 @@ public class TaskViewController implements Observer {
                 // inArbeitTreeItems.add(new TreeItem<Task>(task));
             } else if (task.getStatusStatus().getStatusElementKey() == 3) {
                 erledigteTreeItems.add(new TreeItem<Task>(task));
-            } else {
-                weitereTreeItems.add(new TreeItem<Task>(task));
             }
 
 
@@ -131,8 +123,6 @@ public class TaskViewController implements Observer {
         Node erledigtGraphic = new Circle(10, Color.rgb(143, 173, 136));
         TreeItem<Task> erledigt = new TreeItem<>(new Task("erledigt"), erledigtGraphic);
 
-
-        TreeItem<Task> weitere = new TreeItem<>(new Task("weitere (Status unklar)"));
         Node rootGraphic = new Circle(10, Color.rgb(144, 204, 244));
         TreeItem<Task> root = new TreeItem<>(new Task("Tasks"), rootGraphic);
 
@@ -142,13 +132,11 @@ public class TaskViewController implements Observer {
         pendent.setExpanded(true);
         inArbeit.getChildren().setAll(inArbeitTreeItems);
         inArbeit.setExpanded(true);
-        weitere.getChildren().setAll(weitereTreeItems);
-        weitere.setExpanded(true);
         erledigt.getChildren().setAll(erledigteTreeItems);
         erledigt.setExpanded(false);
 
 
-        root.getChildren().setAll(ueberfaellig, pendent, inArbeit, weitere, erledigt);
+        root.getChildren().setAll(ueberfaellig, pendent, inArbeit, erledigt);
         titelSpalte.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Task, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Task, String> param) {
@@ -180,7 +168,11 @@ public class TaskViewController implements Observer {
                 if (param.getValue().getValue().getTaskDatum() != null) {
                     long daysBetween = ChronoUnit.DAYS.between(LocalDate.now(), param.getValue().getValue().getTaskDatum());
                     // tageBisTerminSpalte.setStyle("-fx-background-color: red;");
-                    return new SimpleStringProperty(Long.toString(daysBetween));
+                    if (param.getValue().getValue().getStatusStatus().getStatusElementKey() == 3) {
+                        return new SimpleStringProperty("**");
+                    } else {
+                        return new SimpleStringProperty(Long.toString(daysBetween));
+                    }
 
                     // return new SimpleStringProperty(Integer.toString(param.getValue().getValue().getTaskDatum().compareTo(LocalDate.now())));
                 } else {
@@ -231,10 +223,8 @@ public class TaskViewController implements Observer {
             taskTreeItemArrayList.add(new TreeItem<Task>(task));
         }*/
     }
-
     public void openTask(Task task) {
         if (task.getPrioStatus() != null) {
-            // mainApp.getMainFrameController().setMeldungInListView(task.getOutputText(),"OK");
             mainApp.showTaskEdit(task);
         }
     }
@@ -249,6 +239,7 @@ public class TaskViewController implements Observer {
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+        setupTreeView();
         mainApp.getTaskController().Attach(this);
     }
 
@@ -261,15 +252,11 @@ public class TaskViewController implements Observer {
         System.out.println("TaskViewController hat Update-Meldung erhalten von " + o);
         if (o instanceof TaskController) {
             TaskController tc = (TaskController) o;
-            Platform.runLater(new Runnable() { // TODO
+            Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    initialize();
-                  /*  mitgliedTabelle.setItems(FXCollections.observableArrayList(((AdressController) o).getMitgliederListe()));
-                    // mitgliedTabelle.setItems((FXCollections.observableArrayList(((mainApp.getAdressController().getMitgliederListe())))));
-                    // mitgliedTabelle.getSelectionModel().select(aktuellesMitglied);
-                    mitgliedArrayList = mainApp.getAdressController().getMitgliederListe();*/
-                    // TODO im AdressController soll die Mitgliederliste aktualisiert werden und dann hier übergeben..
+                    setupTreeView();
+                    System.out.println(this + ": update...");
                 }
             });
 

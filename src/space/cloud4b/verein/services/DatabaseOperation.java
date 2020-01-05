@@ -3,6 +3,7 @@ package space.cloud4b.verein.services;
 import org.apache.commons.codec.digest.DigestUtils;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.kalender.Termin;
+import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.connection.MysqlConnection;
 import space.cloud4b.verein.services.output.LogWriter;
@@ -150,6 +151,24 @@ public abstract class DatabaseOperation {
     }
 
     /**
+     * Löscht eine Task in der Datenbank
+     *
+     * @param task die übergebene Task
+     */
+    public static void deleteTask(Task task) {
+        if (task != null) {
+            try (Connection conn = new MysqlConnection().getConnection();
+                 // Task in der Tabelle termin löschen
+                 Statement st = conn.createStatement()) {
+                String query = "DELETE FROM task WHERE TaskId=" + task.getTaskId();
+                st.execute(query);
+            } catch (SQLException e) {
+                System.out.println("Task konnte nicht gelöscht werden (" + e + ")");
+            }
+        }
+    }
+
+    /**
      * Prüft aufgrund des Austrittsdatums den aktuellen Mitgliederstatus
      */
     public static void checkMitgliederStatus() {
@@ -238,9 +257,10 @@ public abstract class DatabaseOperation {
 
     /**
      * Das Übergebene Objekt vom Typ Termin wird in der Termin-Tabelle aktualisiert
+     *
      * @param termin der geänderte Termin
      */
-    public static void updateTermin(Termin termin) {
+    public static void updateTermin(Termin termin, User user) {
         LogWriter.writeTerminUpdateLog(termin);
         MysqlConnection conn = new MysqlConnection();
 
@@ -278,7 +298,7 @@ public abstract class DatabaseOperation {
             }
             preparedStmt.setInt(7, termin.getKatIElement().getStatusElementKey());
             preparedStmt.setInt(8, termin.getKatIIElement().getStatusElementKey());
-            preparedStmt.setString(9, System.getProperty("user.name"));
+            preparedStmt.setString(9, user.getUserTxt());
             preparedStmt.setInt(10, termin.getTerminId());
             // execute the java preparedstatement
             System.out.println("Rückmeldung preparedStmt: " + preparedStmt.executeUpdate());
@@ -289,6 +309,41 @@ public abstract class DatabaseOperation {
 
     }
 
+    public static void updateTask(Task task, User currentUser) {
+        //TODO:  LogWriter.writeTaskUpdateLog(task);
+        MysqlConnection conn = new MysqlConnection();
+
+        // create the java mysql update preparedstatement
+        String query = "UPDATE usr_web116_5.task SET TaskBezeichnung = ?,"
+                + " TaskPrio = ?,"
+                + " TaskStatus = ?,"
+                + " TaskDetails = ?,"
+                + " TaskTerminBis = ?,"
+                + " TaskMitgliedId = ?,"
+                + " TaskTrackChangeUser = ?,"
+                + " TaskTrackChangeTimestamp = CURRENT_TIMESTAMP"
+                + " WHERE TaskId = ?";
+        //einzelne Änderungen abfragen und dann Wert alt und neu, User und Timestamp in logdatei schreiben
+        PreparedStatement preparedStmt = null;
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            preparedStmt = conn.getConnection().prepareStatement(query);
+            preparedStmt.setString(1, task.getTaskTitel());
+            preparedStmt.setInt(2, task.getPrioStatus().getStatusElementKey());
+            preparedStmt.setInt(3, task.getStatusStatus().getStatusElementKey());
+            preparedStmt.setString(4, task.getTaskText());
+            preparedStmt.setString(5, task.getTaskDatum().toString());
+            preparedStmt.setInt(6, task.getVerantwortlichesMitglied().getId());
+            preparedStmt.setString(7, currentUser.getUserTxt());
+            preparedStmt.setInt(8, task.getTaskId());
+            // execute the java preparedstatement
+            System.out.println("Rückmeldung preparedStmt (updateTask): " + preparedStmt.executeUpdate());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Save new User credentials
@@ -373,6 +428,7 @@ public abstract class DatabaseOperation {
             System.out.println("Mitglied konnte nicht gelöscht werden (" + e + ")");
         }
     }
+
 
 
 }

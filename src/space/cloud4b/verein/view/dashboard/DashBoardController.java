@@ -17,6 +17,8 @@ import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.services.Observer;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 public class DashBoardController implements Observer {
 
@@ -24,6 +26,8 @@ public class DashBoardController implements Observer {
 
     @FXML
     private TableView<Mitglied> mitgliederTabelle;
+    @FXML
+    private Label mitgliederLabel;
     @FXML
     private TableColumn<Mitglied, Number> idSpalte;
     @FXML
@@ -38,6 +42,8 @@ public class DashBoardController implements Observer {
     @FXML
     private TableView<Termin> termineTabelle;
     @FXML
+    private Label terminLabel;
+    @FXML
     private TableColumn<Termin, String> terminDatumSpalte;
     @FXML
     private TableColumn<Termin, String> terminZeitSpalte;
@@ -47,7 +53,7 @@ public class DashBoardController implements Observer {
     @FXML
     private TableView<Jubilaeum> jubilaeumTabelle;
     @FXML
-    private TableColumn<Jubilaeum, LocalDate> jubilaeumDatumSpalte;
+    private Label jubilaeumLabel;
     @FXML
     private TableColumn<Jubilaeum, String> jubilaeumDatumStringSpalte;
     @FXML
@@ -93,6 +99,8 @@ public class DashBoardController implements Observer {
     @FXML
     private void initialize() {
         // Mitgliederliste initialisieren
+        mitgliederLabel.setText("Mitglieder (Stand "
+                + LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)) + ")");
         idSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getIdProperty());
         vorNameSpalte.setCellValueFactory(

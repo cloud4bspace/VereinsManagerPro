@@ -428,12 +428,38 @@
 #mitgliedSpalte {
 
 }
+
 .label {
     -fx-font-family: "Andale Mono";
     -fx-label-padding: 0;
     -fx-text-fill: #708ca6;
     -fx-font-size: 1em;
     -fx-font-weight: 100;
+}
+
+#anwesenheitenLabel {
+    -fx-background-color: #8FAD88;
+    -fx-text-fill: #000000;
+    -fx-padding: 5px;
+}
+
+#mitgliederLabel {
+    -fx-background-color: #F78888;
+    -fx-text-fill: #000000;
+    -fx-padding: 5px;
+}
+
+#terminLabel {
+    -fx-background-color: #F3D250;
+    -fx-text-fill: #000000;
+    -fx-padding: 5px;
+}
+
+#jubilaeumLabel {
+    -fx-background-color: #F3D250;
+    -fx-text-fill: #000000;
+    -fx-padding: 5px;
+
 }
 
 .text-field {
@@ -496,7 +522,7 @@
     -fx-border: none;
     -fx-background-radius: 0;
     text-area-background: #ECECEC;
-    -fx-text-fill: white;
+    -fx-text-fill: #000000;
 
 }
 
@@ -667,9 +693,18 @@
     -fx-text-fill: #90CCF4;
     -fx-font-size: 2em;
 }
+
 /* Kalender View */
 #topRowVBox {
     -fx-background-color: #F3D250;
+}
+
+#taskEditVBox {
+    -fx-background-color: #90CCF4;
+}
+
+#taskEditVBox .label {
+    -fx-text-fill: #000000;
 }
 
 #topRowVBox .label {

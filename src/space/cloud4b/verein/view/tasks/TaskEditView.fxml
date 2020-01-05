@@ -1,51 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefWidth="400.0" stylesheets="@../css/StylesheetV01.css"
             xmlns="http://javafx.com/javafx/8" fx:controller="space.cloud4b.verein.view.tasks.TaskEditViewController">
     <children>
-        <GridPane hgap="5.0" layoutX="151.0" layoutY="155.0" vgap="5.0" AnchorPane.bottomAnchor="0.0"
-                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="30.0" minHeight="90.0" prefHeight="90.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            </rowConstraints>
+        <VBox fx:id="taskEditVBox" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+              AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
-                <Label text="Bezeichnung"/>
-                <Label text="Details" GridPane.rowIndex="1"/>
-                <Label text="Termin" GridPane.rowIndex="2"/>
-                <TextField fx:id="bezeichnunglFeld" GridPane.columnIndex="1"/>
-                <DatePicker fx:id="terminDatumPicker" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <HBox GridPane.columnIndex="1" GridPane.rowIndex="5">
+                <Label fx:id="titelLabel" text="Task bearbeiten">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                    </VBox.margin>
+                </Label>
+                <GridPane hgap="5.0" layoutX="151.0" layoutY="155.0" vgap="5.0" AnchorPane.bottomAnchor="0.0"
+                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="130.0" prefWidth="130.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="300.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="30.0" minHeight="90.0" prefHeight="90.0" valignment="TOP"
+                                        vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleAbbrechen" text="abbrechen"
-                                GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                        <Label text="Bezeichnung"/>
+                        <Label text="Details" GridPane.rowIndex="1"/>
+                        <Label text="Termin" GridPane.rowIndex="2"/>
+                        <TextField fx:id="bezeichnunglFeld" GridPane.columnIndex="1"/>
+                        <DatePicker fx:id="terminDatumPicker" prefHeight="27.0" prefWidth="365.0"
+                                    GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                        <Label layoutX="20.0" layoutY="63.0" text="Verantwortlich" GridPane.rowIndex="3"/>
+                        <ComboBox fx:id="verantwortlichComBox" prefHeight="27.0" prefWidth="397.0"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                        <TextArea fx:id="detailsTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
+                                  GridPane.rowIndex="1"/>
+                        <Label text="Priorität" GridPane.rowIndex="4"/>
+                        <Label text="Status" GridPane.rowIndex="5"/>
+                        <ComboBox fx:id="prioComBox" prefHeight="27.0" prefWidth="380.0" GridPane.columnIndex="1"
+                                  GridPane.rowIndex="4"/>
+                        <ComboBox fx:id="statusComBox" prefHeight="27.0" prefWidth="370.0" GridPane.columnIndex="1"
+                                  GridPane.rowIndex="5"/>
+                    </children>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                    </padding>
+                </GridPane>
+                <HBox alignment="TOP_RIGHT">
+                    <children>
                         <Button mnemonicParsing="false" onAction="#handleSpeichern" text="speichern">
+                            <HBox.margin>
+                                <Insets left="10.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Button layoutX="149.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleReset"
+                                text="reset">
+                            <HBox.margin>
+                                <Insets left="10.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleAbbrechen" text="abbrechen"
+                                GridPane.columnIndex="1" GridPane.rowIndex="3">
+                            <HBox.margin>
+                                <Insets left="10.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Button layoutX="227.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDelete"
+                                text="Task löschen">
                             <HBox.margin>
                                 <Insets left="10.0"/>
                             </HBox.margin>
                         </Button>
                     </children>
                 </HBox>
-                <Label layoutX="20.0" layoutY="63.0" text="Verantwortlich" GridPane.rowIndex="3"/>
-                <ComboBox fx:id="verantwortlichComBox" prefWidth="150.0" GridPane.columnIndex="1"
-                          GridPane.rowIndex="3"/>
-                <TextArea fx:id="detailsTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-                          GridPane.rowIndex="1"/>
             </children>
             <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
             </padding>
-        </GridPane>
+        </VBox>
     </children>
 </AnchorPane>

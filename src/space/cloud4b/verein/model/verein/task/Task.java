@@ -1,7 +1,5 @@
 package space.cloud4b.verein.model.verein.task;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.status.StatusElement;
 
@@ -16,9 +14,7 @@ public class Task {
     private StatusElement taskPrio;
     private LocalDate taskDatum;
     private String taskTitel;
-    private SimpleStringProperty taskTitelProperty;
     private String taskText;
-    //  private ArrayList<Mitglied> verantwortliche;
     private Mitglied verantwortlichesMitglied;
 
     public Task(String taskTitel) {
@@ -27,7 +23,6 @@ public class Task {
 
     public Task(String taskTitel, String taskText) {
         this.taskTitel = taskTitel;
-        this.taskTitelProperty = new SimpleStringProperty(taskTitel);
         this.taskText = taskText;
     }
 
@@ -37,7 +32,6 @@ public class Task {
         this.taskPrio = null;
         this.taskDatum = LocalDate.now().plusMonths(1);
         this.taskTitel = taskTitel;
-        this.taskTitelProperty = new SimpleStringProperty(taskTitel);
         this.taskText = taskText;
         this.verantwortlichesMitglied = mitglied;
     }
@@ -48,31 +42,48 @@ public class Task {
         this.taskPrio = null;
         this.taskDatum = taskDatum;
         this.taskTitel = taskTitel;
-        this.taskTitelProperty = new SimpleStringProperty(taskTitel);
         this.taskText = taskText;
         this.verantwortlichesMitglied = mitglied;
     }
 
-    public String getOutputText() {
-        return taskTitel + "\n" + taskText + "\n" + taskDatum;
+    // Task-Id
+    public int getTaskId() {
+        return taskId;
     }
 
+    // Titel/Bezeichnung
     public String getTaskTitel() {
         return this.taskTitel;
+    }
+
+    public void setTitel(String titel) {
+        this.taskTitel = titel;
+    }
+
+    // Text/Details
+    public void setDetails(String taskText) {
+        this.taskText = taskText;
     }
 
     public String getTaskText() {
         return this.taskText;
     }
 
+    // Termin
     public LocalDate getTaskDatum() {
         return this.taskDatum;
     }
 
-    public int getTaskId() {
-        return taskId;
+    // verantwortliches Mitglied
+    public void setVerantwortliches(Mitglied mitglied) {
+        this.verantwortlichesMitglied = mitglied;
     }
 
+    public Mitglied getVerantwortlichesMitglied() {
+        return this.verantwortlichesMitglied;
+    }
+
+    // Priorität
     public StatusElement getPrioStatus() {
         return this.taskPrio;
     }
@@ -81,6 +92,7 @@ public class Task {
         this.taskPrio = taskPrio;
     }
 
+    // Status
     public StatusElement getStatusStatus() {
         return this.taskStatus;
     }
@@ -91,24 +103,5 @@ public class Task {
 
     public String toString() {
         return this.taskTitel + ": " + taskPrio.getStatusElementTextLang() + " (" + taskDatum.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)) + ")";
-    }
-
-    public void setTitel(String titel) {
-        this.taskTitel = titel;
-        this.taskTitelProperty = new SimpleStringProperty(titel);
-        System.out.println("Task Titel-Update");
-    }
-
-    public ObservableValue<String> getTaskTitelProperty() {
-        return this.taskTitelProperty;
-    }
-
-
-    public void setVerantwortliches(Mitglied mitglied) {
-        this.verantwortlichesMitglied = mitglied;
-    }
-
-    public Mitglied getVerantwortlichesMitglied() {
-        return this.verantwortlichesMitglied;
     }
 }

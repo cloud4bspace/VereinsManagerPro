@@ -361,7 +361,7 @@ public class TerminViewController implements Observer {
             termin.setTeilnehmerKatII(comboBoxKategorieII.getValue());
             termin.setTrackChangeTimestamp(Timestamp.valueOf(LocalDateTime.now()));
             termin.setTrackChangeUsr(System.getProperty("user.name"));
-            DatabaseOperation.updateTermin(termin);
+            DatabaseOperation.updateTermin(termin, mainApp.getCurrentUser());
             letzteAenderungLabel.setText(termin.getLetzteAenderung());
             terminAuswahlComboBox.getItems().addAll(mainApp.getKalenderController().getTermineAsArrayList());
             //terminAuswahlComboBox.getSelectionModel().clearAndSelect(termin);
