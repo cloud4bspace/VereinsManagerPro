@@ -102,7 +102,6 @@ public class TerminViewController implements Observer {
         terminAuswahlComboBox.getItems().addAll(terminListe);
         terminAuswahlComboBox.getSelectionModel().select(getIndexClosestToNow(terminListe));
 
-        // TODO Tooltip ergänzen
         // Zeitangabe von/am
         stundenVonSlider.setTooltip(new Tooltip("Hallo"));
         stundenVonSlider.valueProperty().addListener((obs, oldval, newVal) ->
@@ -159,8 +158,6 @@ public class TerminViewController implements Observer {
         minutenBisFeld.textProperty()
                 .bindBidirectional(minutenBisSlider.valueProperty(), new NumberStringConverter());
         setTermin(terminListe.get(getIndexClosestToNow(terminListe)));
-        // showTeilnehmerListe(terminListe.get(getIndexClosestToNow(terminListe)));
-        //TODO showTeilnehmerListe --> extrem langsam..
 
         // Teilnehmerkategorien
         Status kategorieI = new Status(2);
@@ -265,8 +262,6 @@ public class TerminViewController implements Observer {
     }
 
     public void showTeilnehmerListe(Termin termin) {
-        //  this.teilnehmerListe = DatabaseReader.getTeilnehmer(termin);
-        //TODO: die Mitgliederliste mit übergeben..
         this.teilnehmerListe = DatabaseReader.getTeilnehmer(termin, mainApp.getAdressController().getMitgliederListe());
         teilnehmerTabelle.setItems(FXCollections.observableArrayList(teilnehmerListe));
         idSpalte.setCellValueFactory(
@@ -312,7 +307,7 @@ public class TerminViewController implements Observer {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK) {
-            DatabaseOperation.deleteTermin(this.termin);
+            DatabaseOperation.deleteTermin(this.termin, mainApp.getCurrentUser());
             this.termin = null;
             setTermin(null);
         }

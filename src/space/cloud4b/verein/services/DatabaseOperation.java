@@ -44,12 +44,13 @@ public abstract class DatabaseOperation {
 
         }
     }
+
     /**
      * neues Mitglied in der Datenbank anlegen
      */
-    public static int saveNewMember(String nachname, String vorname, String eintrittsDatum){
+    public static int saveNewMember(String nachname, String vorname, String eintrittsDatum, User currentUser) {
 
-        String query= "INSERT INTO usr_web116_5.kontakt (KontaktId, KontaktNachname, " +
+        String query = "INSERT INTO usr_web116_5.kontakt (KontaktId, KontaktNachname, " +
                 "KontaktVorname, KontaktEintrittsdatum, KontaktIstMitglied, KontaktTrackChangeUsr, " +
                 "KontaktTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, '1', ?, CURRENT_TIMESTAMP)";
         MysqlConnection conn = new MysqlConnection();
@@ -59,7 +60,7 @@ public abstract class DatabaseOperation {
             ps.setString(1, nachname);
             ps.setString(2, vorname);
             ps.setString(3, eintrittsDatum);
-            ps.setString(4, System.getProperty("user.name"));
+            ps.setString(4, currentUser.getUserName());
             // TODO Username vom angemeldeten User lesen
             System.out.println("neues Mitglied hinzugefügt: " + ps.executeUpdate());
             System.out.println(ps.getGeneratedKeys());
@@ -67,6 +68,9 @@ public abstract class DatabaseOperation {
             keys = ps.getGeneratedKeys();
             keys.next();
             int newKey = keys.getInt(1);
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePostNewLog("Mitglied", newKey, currentUser, logCounter);
             return newKey;
 
         } catch (SQLException e) {
@@ -99,6 +103,9 @@ public abstract class DatabaseOperation {
             keys.next();
             int newKey = keys.getInt(1);
             System.out.println("KEy: " + newKey + "/" + verantwortlich.getKurzbezeichnung());
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePostNewLog("Task", newKey, user, logCounter);
 
             // addVerantwortlichen(newKey, verantwortlich.getId(), user);
             return newKey;
@@ -110,11 +117,16 @@ public abstract class DatabaseOperation {
     }
 
 
-
     /**
      * Mitglied in den Datenbanken löschen
      */
-    public static void deleteMitglied(Mitglied mitglied) {
+    public static void deleteMitglied(Mitglied mitglied, User currentUser) {
+
+        // Schritt 1: alte DB-Werte in Logfile schreiben
+        int logCounter = LogWriter.getLastLogCounterValue();
+        LogWriter.setNextLogCounterValue(++logCounter);
+        LogWriter.writePreDeleteLog(mitglied, currentUser, logCounter);
+
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
             String query = "DELETE FROM kontakt WHERE KontaktId=" + mitglied.getId();
@@ -122,6 +134,7 @@ public abstract class DatabaseOperation {
 
             query = "DELETE FROM `terminkontrolle` WHERE `KontrolleMitgliedId` = " + mitglied.getId();
             st.execute(query);
+
         } catch (SQLException e) {
             System.out.println("Mitglied konnte nicht gelöscht werden (" + e + ")");
         }
@@ -132,8 +145,14 @@ public abstract class DatabaseOperation {
      *
      * @param termin
      */
-    public static void deleteTermin(Termin termin) {
+    public static void deleteTermin(Termin termin, User currentUser) {
         if (termin != null) {
+
+            // Schritt 1: alte DB-Werte in Logfile schreiben
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePreDeleteLog(termin, currentUser, logCounter);
+
             try (Connection conn = new MysqlConnection().getConnection();
                  // Termin in der Tabelle termin löschen
                  Statement st = conn.createStatement()) {
@@ -155,8 +174,14 @@ public abstract class DatabaseOperation {
      *
      * @param task die übergebene Task
      */
-    public static void deleteTask(Task task) {
+    public static void deleteTask(Task task, User currentUser) {
         if (task != null) {
+
+            // Schritt 1: alte DB-Werte in Logfile schreiben
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePreDeleteLog(task, currentUser, logCounter);
+
             try (Connection conn = new MysqlConnection().getConnection();
                  // Task in der Tabelle termin löschen
                  Statement st = conn.createStatement()) {
@@ -184,10 +209,20 @@ public abstract class DatabaseOperation {
 
     /**
      * Das Übergebene Objekt vom Typ Mitglied wird in der Kontakt-Tabelle aktualisiert
+     * Zuvor werden die alten Werte aus der DB in ein Logfile geschrieben.
+     * Nach dem Update werden die neuen Werte ebenfalls in das Logfile geschrieben.
+     *
      * @param mitglied das geänderte und zu aktualisierende Mitlied
      */
     public static void updateMitglied(Mitglied mitglied, User currentUser) {
-        LogWriter.writeMitgliedUpdateLog(mitglied, currentUser);
+
+        // Schritt 1: alte DB-Werte in Logfile schreiben
+        int logCounter = LogWriter.getLastLogCounterValue();
+        LogWriter.setNextLogCounterValue(++logCounter);
+        LogWriter.writePreUpdateLog(mitglied, currentUser, logCounter);
+
+
+        // Schritt 2: Update in DB ausführen
         MysqlConnection conn = new MysqlConnection();
         boolean istMitglied = false;
 
@@ -246,8 +281,12 @@ public abstract class DatabaseOperation {
             preparedStmt.setString(19, mitglied.getEmailII());
             preparedStmt.setString(20, currentUser.toString());
             preparedStmt.setInt(21, mitglied.getId());
-            // execute the java preparedstatement
+
+            // prepared Statement ausführen
             System.out.println("Rückmeldung preparedStmt: " + preparedStmt.executeUpdate());
+
+            // Schritt 3: neue DB-Werte in Logilfe schreiben
+            LogWriter.writePostUpdateLog(mitglied, currentUser, logCounter);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -261,7 +300,12 @@ public abstract class DatabaseOperation {
      * @param termin der geänderte Termin
      */
     public static void updateTermin(Termin termin, User user) {
-        LogWriter.writeTerminUpdateLog(termin);
+        // Schritt 1: alte DB-Werte in Logfile schreiben
+        int logCounter = LogWriter.getLastLogCounterValue();
+        LogWriter.setNextLogCounterValue(++logCounter);
+        LogWriter.writePreUpdateLog(termin, user, logCounter);
+
+        // Schritt 2: DB-Tabelle aktualisieren
         MysqlConnection conn = new MysqlConnection();
 
         // create the java mysql update preparedstatement
@@ -303,6 +347,9 @@ public abstract class DatabaseOperation {
             // execute the java preparedstatement
             System.out.println("Rückmeldung preparedStmt: " + preparedStmt.executeUpdate());
 
+            // Schritt 3: neue DB-Werte in Logilfe schreiben
+            LogWriter.writePostUpdateLog(termin, user, logCounter);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -310,7 +357,13 @@ public abstract class DatabaseOperation {
     }
 
     public static void updateTask(Task task, User currentUser) {
-        //TODO:  LogWriter.writeTaskUpdateLog(task);
+
+        // Schritt 1: alte DB-Werte in Logfile schreiben
+        int logCounter = LogWriter.getLastLogCounterValue();
+        LogWriter.setNextLogCounterValue(++logCounter);
+        LogWriter.writePreUpdateLog(task, currentUser, logCounter);
+
+        // Schritt 2: DB-Tabelle aktualisieren
         MysqlConnection conn = new MysqlConnection();
 
         // create the java mysql update preparedstatement
@@ -339,6 +392,9 @@ public abstract class DatabaseOperation {
             preparedStmt.setInt(8, task.getTaskId());
             // execute the java preparedstatement
             System.out.println("Rückmeldung preparedStmt (updateTask): " + preparedStmt.executeUpdate());
+
+            // Schritt 3: neue DB-Werte in Logilfe schreiben
+            LogWriter.writePostUpdateLog(task, currentUser, logCounter);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -376,18 +432,16 @@ public abstract class DatabaseOperation {
     }
 
 
-
-
-
     /**
      * legt in der MySql-Datenbank einen neuen Termin an mit den übergebenen Werten
-     * @param terminText Bezeichnung des Termins
+     *
+     * @param terminText  Bezeichnung des Termins
      * @param terminDatum Datum des Termins
      * @return gibt die Id des neuen Datensatzes zurück
      */
-    public static int saveNewTermin(String terminText, String terminDatum) {
+    public static int saveNewTermin(String terminText, String terminDatum, User currentUser) {
 
-        String query= "INSERT INTO usr_web116_5.termin (TerminId, TerminDatum, TerminText, " +
+        String query = "INSERT INTO usr_web116_5.termin (TerminId, TerminDatum, TerminText, " +
                 "TerminTrackChangeUsr, " +
                 "TerminTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP)";
         MysqlConnection conn = new MysqlConnection();
@@ -396,13 +450,16 @@ public abstract class DatabaseOperation {
             ps = conn.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, terminDatum);
             ps.setString(2, terminText);
-            ps.setString(3, System.getProperty("user.name"));
+            ps.setString(3, currentUser.getUserName());
             System.out.println("neuer Temin hinzugefügt: " + ps.executeUpdate());
             // System.out.println(ps.getGeneratedKeys());
             ResultSet keys = null;
             keys = ps.getGeneratedKeys();
             keys.next();
             int newKey = keys.getInt(1);
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePostNewLog("Termin", newKey, currentUser, logCounter);
             return newKey;
 
         } catch(SQLException e) {

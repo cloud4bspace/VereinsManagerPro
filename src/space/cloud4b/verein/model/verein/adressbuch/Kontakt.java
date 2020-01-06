@@ -138,8 +138,6 @@ public class Kontakt {
         return this.bemerkungen;
     }
 
-    //  public StringProperty getBemerkungenProperty() { return new SimpleStringProperty(bemerkungen);}
-    // TODO delete unnötige Methode
 
     // Mobile
     public void setMobile(String mobile) {

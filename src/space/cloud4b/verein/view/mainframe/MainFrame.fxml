@@ -19,7 +19,8 @@
                      </items></Menu>
                   <Menu fx:id="infoMenu" mnemonicParsing="false" text="Vereinsmanager">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleEinstellungen" text="Einstellungen" />
+                        <MenuItem fx:id="setupMenuItem" mnemonicParsing="false" onAction="#handleEinstellungen"
+                                  text="Einstellungen"/>
                         <MenuItem fx:id="infoMenuItem" mnemonicParsing="false" onAction="#showInfo" text="Info" />
                         <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleBeenden" text="beenden" />
                      </items></Menu>
@@ -66,9 +67,11 @@
                                         text="Geburtstags-Statistik"/>
                               <MenuItem mnemonicParsing="false" onAction="#handleShowKatIStatistics"
                                         text="Auswertung Kat I"/>
-                        <MenuItem mnemonicParsing="false" onAction="#handleExportMitglieder" text="nach Excel exportieren.." />
-                         <MenuItem mnemonicParsing="false" onAction="#handleCreatePDF" text="PDF erstellen" />
-                     </items></Menu>
+                              <MenuItem mnemonicParsing="false" onAction="#handleExportMitglieder"
+                                        text="nach Excel exportieren.."/>
+                              <MenuItem mnemonicParsing="false" onAction="#handleCreatePDF" text="PDF erstellen"/>
+                          </items>
+                      </Menu>
               </menus>
                <VBox.margin>
                    <Insets top="10.0" />

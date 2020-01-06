@@ -70,7 +70,7 @@ public class MitgliedNeuViewController {
             this.dialogStage.close();
             // Die MYSQL-Tabelle wird mit einem neuen Eintrag ergänzt und gibt die ID des neuen Mitglieds zurück
             this.neueId = DatabaseOperation.saveNewMember(nachnameFeld.getText(),
-                    vornameFeld.getText(), eintrittsDatumPicker.getValue().toString());
+                    vornameFeld.getText(), eintrittsDatumPicker.getValue().toString(), mainApp.getCurrentUser());
             // mainApp.getMitgliedViewController().setMitglied(neueId);
         }
     }

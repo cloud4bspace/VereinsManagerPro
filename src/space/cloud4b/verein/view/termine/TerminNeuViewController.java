@@ -49,7 +49,8 @@ public class TerminNeuViewController {
         Termin neuerTermin = null;
         if (isValid()) {
             this.dialogStage.close();
-            neueId = DatabaseOperation.saveNewTermin(terminTextFeld.getText(), terminDatumPicker.getValue().toString());
+            neueId = DatabaseOperation.saveNewTermin(terminTextFeld.getText(), terminDatumPicker.getValue().toString()
+                    , mainApp.getCurrentUser());
             System.out.println("NeueTerminID: " + neueId);
         }
 

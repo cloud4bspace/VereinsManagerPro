@@ -54,67 +54,93 @@
                                           <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Label prefHeight="15.0" prefWidth="104.0" text="Termin Text" GridPane.rowIndex="1" />
-                                          <Label text="Ort" GridPane.rowIndex="2" />
-                                          <Label text="Teilnehmer (Kat A)" GridPane.rowIndex="5" />
-                                          <Label text="Zeit (um/von)" GridPane.rowIndex="3" />
-                                          <TextField fx:id="terminText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Label text="Termindatum" />
-                                          <Label text="Zeit (bis)" GridPane.rowIndex="4" />
-                                          <DatePicker fx:id="terminDatumPicker" showWeekNumbers="true" GridPane.columnIndex="1" />
-                                          <Label text="Teilnehmer (Kat B)" GridPane.rowIndex="6" />
-                                          <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                             <children>
-                                                <ComboBox fx:id="comboBoxKategorieII" prefWidth="150.0" />
-                                             </children>
-                                          </HBox>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                             <children>
-                                                <HBox prefHeight="44.0" prefWidth="400.0">
-                                                   <children>
-                                                      <TextField fx:id="stundenBisFeld" alignment="CENTER_RIGHT" prefWidth="40.0" />
-                                                      <Label text=":">
-                                                         <padding>
-                                                            <Insets top="5.0" />
-                                                         </padding>
-                                                      </Label>
-                                                      <TextField fx:id="minutenBisFeld" alignment="CENTER_RIGHT" prefWidth="40.0">
-                                                         <HBox.margin>
-                                                            <Insets />
-                                                         </HBox.margin>
-                                                      </TextField>
-                                                      <Slider fx:id="stundenBisSlider" blockIncrement="1.0" majorTickUnit="12.0" max="23.0" minorTickCount="1" prefHeight="44.0" prefWidth="142.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
-                                                         <HBox.margin>
-                                                            <Insets left="10.0" />
-                                                         </HBox.margin>
-                                                      </Slider>
-                                                      <Slider fx:id="minutenBisSlider" blockIncrement="5.0" majorTickUnit="15.0" max="59.0" minorTickCount="5" prefHeight="44.0" prefWidth="142.0" showTickLabels="true" showTickMarks="true" value="30.0" />
-                                                   </children>
-                                                </HBox>
-                                             </children></HBox>
-                                          <HBox prefHeight="44.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                             <children>
-                                                <TextField fx:id="stundenVonFeld" alignment="CENTER_RIGHT" prefWidth="40.0" />
-                                                <Label text=":">
-                                                   <padding>
-                                                      <Insets top="5.0" />
-                                                   </padding>
-                                                </Label>
-                                                <TextField fx:id="minutenVonFeld" alignment="CENTER_RIGHT" prefWidth="40.0">
-                                                   <HBox.margin>
-                                                      <Insets />
-                                                   </HBox.margin>
-                                                </TextField>
-                                                <Slider fx:id="stundenVonSlider" blockIncrement="1.0" majorTickUnit="12.0" max="23.0" minorTickCount="1" prefHeight="44.0" prefWidth="142.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
-                                                   <HBox.margin>
-                                                      <Insets left="10.0" />
-                                                   </HBox.margin>
-                                                </Slider>
-                                                <Slider fx:id="minutenVonSlider" blockIncrement="5.0" majorTickUnit="15.0" max="59.0" minorTickCount="5" prefHeight="44.0" prefWidth="142.0" showTickLabels="true" showTickMarks="true" value="30.0" />
-                                             </children>
-                                          </HBox>
-                                          <TextField fx:id="terminOrt" prefHeight="27.0" prefWidth="33.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <ComboBox fx:id="comboBoxKategorieI" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                           <Label prefHeight="15.0" prefWidth="104.0" text="Termin Text"
+                                                  GridPane.rowIndex="1"/>
+                                           <Label text="Ort" GridPane.rowIndex="2"/>
+                                           <Label text="Teilnehmer (Kat A)" GridPane.rowIndex="5"/>
+                                           <Label text="Zeit (um/von)" GridPane.rowIndex="3"/>
+                                           <Label text="Termindatum"/>
+                                           <Label text="Zeit (bis)" GridPane.rowIndex="4"/>
+                                           <DatePicker fx:id="terminDatumPicker" showWeekNumbers="true"
+                                                       GridPane.columnIndex="1"/>
+                                           <TextField fx:id="terminText" GridPane.columnIndex="1"
+                                                      GridPane.rowIndex="1"/>
+                                           <TextField fx:id="terminOrt" prefHeight="27.0" prefWidth="33.0"
+                                                      GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                           <HBox prefHeight="44.0" prefWidth="400.0" GridPane.columnIndex="1"
+                                                 GridPane.rowIndex="3">
+                                               <children>
+                                                   <TextField fx:id="stundenVonFeld" alignment="CENTER_RIGHT"
+                                                              prefWidth="40.0"/>
+                                                   <Label text=":">
+                                                       <padding>
+                                                           <Insets top="5.0"/>
+                                                       </padding>
+                                                   </Label>
+                                                   <TextField fx:id="minutenVonFeld" alignment="CENTER_RIGHT"
+                                                              prefWidth="40.0">
+                                                       <HBox.margin>
+                                                           <Insets/>
+                                                       </HBox.margin>
+                                                   </TextField>
+                                                   <Slider fx:id="stundenVonSlider" blockIncrement="1.0"
+                                                           majorTickUnit="12.0" max="23.0" minorTickCount="1"
+                                                           prefHeight="44.0" prefWidth="142.0" showTickLabels="true"
+                                                           showTickMarks="true" snapToTicks="true">
+                                                       <HBox.margin>
+                                                           <Insets left="10.0"/>
+                                                       </HBox.margin>
+                                                   </Slider>
+                                                   <Slider fx:id="minutenVonSlider" blockIncrement="5.0"
+                                                           majorTickUnit="15.0" max="59.0" minorTickCount="5"
+                                                           prefHeight="44.0" prefWidth="142.0" showTickLabels="true"
+                                                           showTickMarks="true" value="30.0"/>
+                                               </children>
+                                           </HBox>
+                                           <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1"
+                                                 GridPane.rowIndex="4">
+                                               <children>
+                                                   <HBox prefHeight="44.0" prefWidth="400.0">
+                                                       <children>
+                                                           <TextField fx:id="stundenBisFeld" alignment="CENTER_RIGHT"
+                                                                      prefWidth="40.0"/>
+                                                           <Label text=":">
+                                                               <padding>
+                                                                   <Insets top="5.0"/>
+                                                               </padding>
+                                                           </Label>
+                                                           <TextField fx:id="minutenBisFeld" alignment="CENTER_RIGHT"
+                                                                      prefWidth="40.0">
+                                                               <HBox.margin>
+                                                                   <Insets/>
+                                                               </HBox.margin>
+                                                           </TextField>
+                                                           <Slider fx:id="stundenBisSlider" blockIncrement="1.0"
+                                                                   majorTickUnit="12.0" max="23.0" minorTickCount="1"
+                                                                   prefHeight="44.0" prefWidth="142.0"
+                                                                   showTickLabels="true" showTickMarks="true"
+                                                                   snapToTicks="true">
+                                                               <HBox.margin>
+                                                                   <Insets left="10.0"/>
+                                                               </HBox.margin>
+                                                           </Slider>
+                                                           <Slider fx:id="minutenBisSlider" blockIncrement="5.0"
+                                                                   majorTickUnit="15.0" max="59.0" minorTickCount="5"
+                                                                   prefHeight="44.0" prefWidth="142.0"
+                                                                   showTickLabels="true" showTickMarks="true"
+                                                                   value="30.0"/>
+                                                       </children>
+                                                   </HBox>
+                                               </children>
+                                           </HBox>
+                                           <Label text="Teilnehmer (Kat B)" GridPane.rowIndex="6"/>
+                                           <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                               <children>
+                                                   <ComboBox fx:id="comboBoxKategorieII" prefWidth="150.0"/>
+                                               </children>
+                                           </HBox>
+                                           <ComboBox fx:id="comboBoxKategorieI" prefWidth="150.0"
+                                                     GridPane.columnIndex="1" GridPane.rowIndex="5"/>
                                        </children>
                                        <padding>
                                           <Insets left="10.0" right="10.0" top="10.0" />

@@ -19,7 +19,7 @@ public class TaskController implements Subject {
     public TaskController() {
         observerList = new ArrayList<>();
         taskListe = DatabaseReader.getTaskList();
-        startTasksObserver(); //TODO hier noch zu fürh
+        startTasksObserver();
     }
 
     /**

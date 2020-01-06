@@ -102,7 +102,7 @@ public class LoginViewController {
             DatabaseOperation.incrementLoginCounter(mitgliedId);
 
             // TODO: Feld wird nicht aktualisiert...
-            feedbackLabel.setText("afasfasdf");
+            feedbackLabel.setText("Login erfolgreich - Applikation wird gestartet");
             dialogStage.close();
             mainApp.start(dialogStage);
         } else {

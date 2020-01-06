@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
@@ -34,8 +33,6 @@ public class TaskViewController implements Observer {
     private Stage stage;
 
     @FXML
-    private Label titelLabel;
-    @FXML
     private TreeTableView<Task> taskTreeTableView;
     @FXML
     private TreeTableColumn<Task, String> idSpalte;
@@ -57,8 +54,7 @@ public class TaskViewController implements Observer {
     }
 
     public void initialize() {
-        titelLabel.setText("Taskliste");
-        taskTreeTableView.setEditable(true);
+        taskTreeTableView.setEditable(false);
         taskTreeTableView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
         taskTreeTableView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> openTask(newValue.getValue()));

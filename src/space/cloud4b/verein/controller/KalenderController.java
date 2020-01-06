@@ -32,7 +32,6 @@ public class KalenderController implements Subject {
     private ArrayList<Termin> terminListe;
     private ArrayList<Termin> kommendeTermineListe = new ArrayList<>();
     private ArrayList<Jubilaeum> jubilaeumsListe;
-    // TODO die Anmeldeliste sollte auch irgendwo zentral geführt werden? oder bei den Terminen?
 
     public KalenderController() {
         observerList = new ArrayList<>();

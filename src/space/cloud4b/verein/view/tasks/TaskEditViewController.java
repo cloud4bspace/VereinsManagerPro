@@ -123,17 +123,13 @@ public class TaskEditViewController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK) {
-
-
             // Löschung in der Datenbank umsetzen
-            Platform.runLater(new Runnable() { // TODO
+            Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    DatabaseOperation.deleteTask(task);
+                    DatabaseOperation.deleteTask(task, mainApp.getCurrentUser());
                 }
             });
-
-
             mainApp.getMainFrameController().setMeldungInListView("Task gelöscht", "OK");
         }
     }

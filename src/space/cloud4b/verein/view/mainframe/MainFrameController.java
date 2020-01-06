@@ -48,6 +48,8 @@ public class MainFrameController implements Observer {
     @FXML
     private MenuItem exitMenuItem;
     @FXML
+    private MenuItem setupMenuItem;
+    @FXML
     private MenuItem infoMenuItem;
     @FXML
     private MenuItem helpMenuItem;
@@ -173,6 +175,10 @@ public class MainFrameController implements Observer {
         iconTxt.setFill(Color.BLACK);
         infoMenuItem.setGraphic(iconTxt);
 
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.COGS, "15px");
+        iconTxt.setFill(Color.BLACK);
+        setupMenuItem.setGraphic(iconTxt);
+
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.QUESTION, "15px");
         iconTxt.setFill(Color.BLACK);
         helpMenuItem.setGraphic(iconTxt);
@@ -235,9 +241,10 @@ public class MainFrameController implements Observer {
     @FXML
     private void showInfo() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Vereins-App");
-        alert.setHeaderText("über..");
-        alert.setContentText("Serge Kaulitz & Bernhard Kämpf\nWebsite: https://cloud4b.space");
+        alert.setTitle("über..");
+        alert.setHeaderText("JavaFx-Applikation «VereinsManager Pro»\n\nMAS Informatik (MAS I 13)\n" +
+                "Modul 2.3 «Fallbeispiel JavaFx-Applikation»");
+        alert.setContentText("© 2019/2020 by Serge Kaulitz & Bernhard Kämpf");
         alert.showAndWait();
     }
 
@@ -248,7 +255,7 @@ public class MainFrameController implements Observer {
     private void handleHilfe() {
         System.out.println("showHilfe");
         Stage stage = new Stage();
-        stage.setTitle("Web View");
+        stage.setTitle("Online-Hilfe");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Hilfe/help.html"), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
         stage.show();
@@ -383,8 +390,6 @@ public class MainFrameController implements Observer {
         stage.setTitle("Doodle");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Doodle/doodle.php"), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
-        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
         stage.show();
     }
 
@@ -397,8 +402,6 @@ public class MainFrameController implements Observer {
         stage.setTitle("Präsenzkontrolle");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Kontrolle/kontrolluebersicht.php"), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
-        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
         stage.show();
     }
 

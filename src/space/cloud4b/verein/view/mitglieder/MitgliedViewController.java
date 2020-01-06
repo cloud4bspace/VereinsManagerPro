@@ -231,8 +231,6 @@ public class MitgliedViewController implements Observer {
             }
         }
 
-
-        //TODO wozu ist das gut?
         if(mitglied == null){
             mitglied = aktuellesMitglied;
         }
@@ -432,6 +430,7 @@ public class MitgliedViewController implements Observer {
      * Wird ausgeführt, wenn der User den Button "löschen" betätigt
      */
     public void handleLoeschenButton() {
+
         // Warnmeldung anzeigen und Löschung bestätigen lassen
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(dialogStage);
@@ -442,7 +441,7 @@ public class MitgliedViewController implements Observer {
 
         if(result.get() == ButtonType.OK) {
             // Löschung in der Datenbank umsetzen
-            DatabaseOperation.deleteMitglied(aktuellesMitglied);
+            DatabaseOperation.deleteMitglied(aktuellesMitglied, mainApp.getCurrentUser());
             // Löschung in der ArrayList umsetzen
             mitgliedTabelle.getItems().remove(mitgliedTabelle.getSelectionModel().getSelectedItem());
             // TODO: Profilbild könnte in diesem Fall auch noch gelöscht werden
@@ -552,10 +551,7 @@ public class MitgliedViewController implements Observer {
                 @Override
                 public void run() {
                     mitgliedTabelle.setItems(FXCollections.observableArrayList(((AdressController) o).getMitgliederListe()));
-                    // mitgliedTabelle.setItems((FXCollections.observableArrayList(((mainApp.getAdressController().getMitgliederListe())))));
-                    // mitgliedTabelle.getSelectionModel().select(aktuellesMitglied);
                     mitgliedArrayList = ac.getMitgliederListe();
-                    // TODO im AdressController soll die Mitgliederliste aktualisiert werden und dann hier übergeben..
                 }
             });
 

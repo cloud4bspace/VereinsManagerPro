@@ -221,7 +221,6 @@
 }
 #hMenuBarTop .menu-item:hover .label {
 
-    -fx-padding: 3;
     -fx-font-size: 10px;
     -fx-font-family: "Verdana UI Light";
     -fx-text-fill: #000000;
