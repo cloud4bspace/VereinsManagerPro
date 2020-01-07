@@ -52,6 +52,8 @@ public class MainFrameController implements Observer {
     @FXML
     private MenuItem infoMenuItem;
     @FXML
+    private MenuItem benutzerMenuItem;
+    @FXML
     private MenuItem helpMenuItem;
     @FXML
     private MenuItem linksammlungMenuItem;
@@ -175,6 +177,10 @@ public class MainFrameController implements Observer {
         iconTxt.setFill(Color.BLACK);
         infoMenuItem.setGraphic(iconTxt);
 
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.GROUP, "15px");
+        iconTxt.setFill(Color.BLACK);
+        benutzerMenuItem.setGraphic(iconTxt);
+
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.COGS, "15px");
         iconTxt.setFill(Color.BLACK);
         setupMenuItem.setGraphic(iconTxt);
@@ -227,12 +233,21 @@ public class MainFrameController implements Observer {
     }
 
     // Top-Menu
+
     /**
      * Opens Einstellungen-Dialog
      */
     @FXML
     private void handleEinstellungen() {
         mainApp.showEinstellungenView();
+    }
+
+    /**
+     * Öffnet die Benutzerliste
+     */
+    @FXML
+    private void handleBenutzer() {
+        mainApp.showBenutzerView();
     }
 
     /**

@@ -293,11 +293,12 @@
     -fx-font-weight: 100;
 }
 
-#loginTitleLabel {
+#loginTitleLabel, #benutzerTitelLabel {
     -fx-font-family: "Andale Mono";
     -fx-label-padding: 10;
     -fx-font-size: 2em;
     -fx-font-weight: 100;
+    -fx-text-fill: #000000;
 }
 
 #loginVbox01 {
@@ -358,6 +359,7 @@
     -fx-background-color: #ECECEC;
     -fx-wrap-text: true;
 }
+
 .table-view {
     -fx-font-size: 0.9em;
     -fx-base: #000000;
@@ -366,6 +368,10 @@
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
+}
+
+#gesperrt {
+    -fx-background-color: #F78888;
 }
 
 .table-view .column-header {
@@ -400,6 +406,15 @@
     -fx-opacity: 1;
 }
 
+#benutzerIdSpalte, #mitgliedIdSpalte, #anzLoginsSpalte, #sperrcodeSpalte {
+    -fx-alignment: TOP-RIGHT;
+
+}
+
+#benutzerNameSpalte {
+
+    -fx-font-weight: 900;
+}
 
 #titelSpalte .list-cell {
     -fx-font-weight: bold;

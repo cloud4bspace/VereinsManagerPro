@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/StylesheetV01.css"
+            xmlns="http://javafx.com/javafx/8"
+            fx:controller="space.cloud4b.verein.view.benutzer.BenutzerViewController">
+    <children>
+        <VBox layoutX="135.0" layoutY="24.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label fx:id="benutzerTitelLabel" minHeight="-Infinity" text="Benutzerliste">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </VBox.margin>
+                </Label>
+                <Label text="Benutzer sperren: 1. Doppelklick Sperrcode-Zelle / 2. Sperrcode eingeben / 3. abschliessen mit ENTER">
+                    <VBox.margin>
+                        <Insets left="20.0"/>
+                    </VBox.margin>
+                </Label>
+                <TableView fx:id="userTabelle" prefHeight="1000.0">
+                    <columns>
+                        <TableColumn fx:id="benutzerIdSpalte" editable="false" prefWidth="40.0" text="BenutzerID"/>
+                        <TableColumn fx:id="mitgliedIdSpalte" editable="false" prefWidth="40.0" text="MitgliedID"/>
+                        <TableColumn fx:id="benutzerNameSpalte" editable="false" prefWidth="200.0" text="Benutzername"/>
+                        <TableColumn fx:id="benutzerKatSpalte" editable="false" prefWidth="100.0" text="BenutzerKat"/>
+                        <TableColumn fx:id="benutzerPWSpalte" editable="false" prefWidth="320.0" text="Passwort"/>
+                        <TableColumn fx:id="lastLoginSpalte" editable="false" prefWidth="100.0" text="letztes Login"/>
+                        <TableColumn fx:id="anzLoginsSpalte" editable="false" prefWidth="50.0" text="#Logins"/>
+                        <TableColumn fx:id="sperrcodeSpalte" onEditCommit="#onEditChange" prefWidth="75.0"
+                                     text="Sperrcode"/>
+                    </columns>
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </VBox.margin>
+                </TableView>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

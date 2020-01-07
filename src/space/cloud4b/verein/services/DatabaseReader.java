@@ -14,6 +14,7 @@ import space.cloud4b.verein.model.verein.kontrolle.rangliste.Position;
 import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.model.verein.task.Task;
+import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.connection.MysqlConnection;
 
 import java.sql.Date;
@@ -952,7 +953,24 @@ public abstract class DatabaseReader {
         return terminListe;
     }
 
-    public static ArrayList<Termin> getTermineAsArrayList(){
+    public static ArrayList<User> getBenutzerAsArrayList() {
+        ArrayList<User> userListe = new ArrayList<>();
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * from usr_web116_5.benutzer ORDER BY BenutzerName ASC";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                userListe.add(new User(rs.getInt("BenutzerId"), rs.getInt("KontaktId"),
+                        rs.getString("BenutzerName"), rs.getString("BenutzerPw"),
+                        Date.valueOf(rs.getString("BenutzerLastlogin")).toLocalDate(),
+                        rs.getInt("BenutzerNumberLogins"), rs.getInt("BenutzerSperrcode")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userListe;
+    }
+
+    public static ArrayList<Termin> getTermineAsArrayList() {
         Status kategorieIStatus = new Status(2);
         Status kategorieIIStatus = new Status(4);
         ArrayList<Termin> terminListe = new ArrayList<>();
@@ -1020,12 +1038,13 @@ public abstract class DatabaseReader {
         // Geburtstage
         ArrayList<Jubilaeum> jubilaeumsListe = new ArrayList<>();
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
-            String query = "SELECT KontaktId, KontaktGeburtsdatum, KontaktNachname, KontaktVorname FROM usr_web116_5.kontakt WHERE KontaktIstMitglied = 1 AND KontaktGeburtsdatum IS NOT NULL AND KontaktGeburtsdatum NOT LIKE '0000-%'";
+            String query = "SELECT KontaktId, KontaktGeburtsdatum, KontaktNachname, KontaktVorname " +
+                    "FROM usr_web116_5.kontakt WHERE KontaktIstMitglied = 1 AND KontaktGeburtsdatum IS NOT NULL AND KontaktGeburtsdatum NOT LIKE '0000-%'";
 
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 String geburtsDatum = rs.getString("KontaktGeburtsdatum");
-                if(geburtsDatum != null) {
+                if (geburtsDatum != null) {
                     int geburtsJahr = Integer.parseInt(geburtsDatum.substring(0, 4));
                     // alter in diesem Jahr
                     int alter = jahr - geburtsJahr;
@@ -1198,5 +1217,69 @@ public abstract class DatabaseReader {
 
         }
         return anzTasks;
+    }
+
+    public static int readAnzahlBenutzer() {
+        int anzBenutzer = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) AS ANZUSERS from usr_web116_5.benutzer";
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                anzBenutzer = rs.getInt("ANZUSERS");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return anzBenutzer;
+    }
+
+    public static Timestamp readLetzteBenutzerAenderung() {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT MAX(BenutzerTrackChangeTimestamp) AS LetzteAenderung FROM usr_web116_5.benutzer";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                //System.out.println("letzte Aenderung: " + rs.getString("LetzteAenderung"));
+                return Timestamp.valueOf(rs.getString("LetzteAenderung"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public static String getUserKatString(int mitgliedId) {
+        String userKat = null;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT statusElement.StatusElementNameLong AS Kat " +
+                    "FROM kontakt LEFT JOIN statusElement ON kontakt.KontaktKategorieA = statusElement.StatusElementKey " +
+                    "WHERE statusElement.StatusId = 2 AND kontakt.KontaktId = " + mitgliedId;
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                userKat = rs.getString("Kat");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userKat;
+    }
+
+    public static String getMitgliedName(int mitgliedId) {
+        String mitgliedName = null;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM kontakt WHERE KontaktID = " + mitgliedId;
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                mitgliedName = rs.getString("KontaktNachname")
+                        + " " + rs.getString("KontaktVorname");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mitgliedName;
     }
 }

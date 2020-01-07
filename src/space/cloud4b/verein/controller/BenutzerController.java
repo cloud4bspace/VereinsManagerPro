@@ -1,8 +1,6 @@
 package space.cloud4b.verein.controller;
 
-import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
-import space.cloud4b.verein.model.verein.kalender.Jubilaeum;
-import space.cloud4b.verein.services.DatabaseOperation;
+import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.DatabaseReader;
 import space.cloud4b.verein.services.Observer;
 import space.cloud4b.verein.services.Subject;
@@ -11,35 +9,30 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
- * Die Klasse AdressController stellt den fxml-Controllern die benötigten Listen und Daten zur
- * Verfügung, wie z.B. die Mitglieder- oder Jubiläumsliste.
+ * Die Klasse BenutzerController stellt den fxml-Controllern die Benutzerliste zur Verfügung.
  * Zudem überwacht die Klasse die zugrundeliegenden MYSQL-Tabelle und gibt Änderungen, Ergänzungen und
  * Löschungen an die in der Observer-Liste (observerList) eingetragenen fxml-Controllern weiter.
  * Dazu implementiert die Klasse das Subject-Interface
  *
  * @author Bernhard Kämpf und Serge Kaulitz
  * @version 2019-12-17
- * @see space.cloud4b.verein.services.Subject
+ * @see Subject
  */
-public class AdressController implements Subject {
+public class BenutzerController implements Subject {
 
-    private int anzahlMitglieder;
+    private int anzahlBenutzer;
     private Timestamp timestamp = null; // Zeitstempel der letzten Änderung im der Mitglieder-Datenbank
     private ArrayList<Observer> observerList;
-    private ArrayList<Mitglied> mitgliederListe;
-    private ArrayList<Jubilaeum> jubilaeumsListe;
+    private ArrayList<User> benutzerListe;
 
-    public AdressController() {
-        // Der Mitgliederstatus in der MYSQL-Tabelle kontakt wird für jedes Element überprüft
-        DatabaseOperation.checkMitgliederStatus();
+    public BenutzerController() {
 
         // Die benötigten Listen werden instanziert
         observerList = new ArrayList<>();
-        mitgliederListe = new ArrayList<>();
-        jubilaeumsListe = new ArrayList<>();
+        benutzerListe = new ArrayList<>();
 
         // der Observer-Thread wird gestartet
-        startAdressObserver();
+        startBenutzerObserver();
     }
 
     /**
@@ -48,10 +41,10 @@ public class AdressController implements Subject {
      * Mittels Notify() werden die in der Observer-Liste eingetragenen Klassen über die Änderung
      * orientiert (Start der Methode update()) bei den Observer-Klassen
      *
-     * @param anzahlMitglieder Anzahl der Mitglieder gemäss MYSQL-Tabelle
+     * @param anzahlBenutzer Anzahl der Mitglieder gemäss MYSQL-Tabelle
      */
-    public void updateAnzahlMitglieder(int anzahlMitglieder) {
-        this.anzahlMitglieder = anzahlMitglieder;
+    public void updateAnzahlBenutzer(int anzahlBenutzer) {
+        this.anzahlBenutzer = anzahlBenutzer;
     }
 
     /**
@@ -60,70 +53,61 @@ public class AdressController implements Subject {
      * orientiert (Start der Methode update()) bei den Observer-Klassen
      */
     public void updateListen() {
-        this.mitgliederListe = DatabaseReader.getMitgliederAsArrayList();
-        this.jubilaeumsListe = DatabaseReader.getJubilaeenAsArrayList();
+        this.benutzerListe = DatabaseReader.getBenutzerAsArrayList();
     }
 
     /**
-     * aktualisiert den Zeitstempel für die letzte Änderung in der Adress-Tabelle der Datenbank.
+     * aktualisiert den Zeitstempel für die letzte Änderung in der Tabelle der Datenbank.
      * Mittels Notify() werden die in der Observer-Liste eingetragenen Klassen über die Änderung
      * orientiert (Start der Methode update()) bei den Observer-Klassen
      *
      * @param neuerZeitstempel aktueller (letzter) Zeitstempel in der MYSQL-Tabelle kontakt
      */
-    public void updateLetzeAenderung(Timestamp neuerZeitstempel) {
+    public void updateLetzeBenutzerAenderung(Timestamp neuerZeitstempel) {
         this.timestamp = neuerZeitstempel;
     }
 
     /**
-     * Methode gibt die jeweils aktuelle Anzahl der Mitglieder gem. MYSQL-Tabelle kontakt zurück
+     * Methode gibt die jeweils aktuelle Anzahl der Benutzer gem. MYSQL-Tabelle kontakt zurück
      *
      * @return aktuelle Anzahl der Mitglieder gemäss MYSQL-Tabelle
      */
-    public int getAnzahlMitglieder() {
-        return anzahlMitglieder;
+    public int getAnzahlBenutzer() {
+        return anzahlBenutzer;
     }
 
     /**
-     * Methode gibt die Mitgliederliste als ArrayList<Mitglied> zurück
+     * Methode gibt die Benutzerliste als ArrayList<User> zurück
      *
-     * @return Mitgliederliste als ArrayList
+     * @return Benutzerliste als ArrayList
      */
-    public ArrayList<Mitglied> getMitgliederListe() {
-        return this.mitgliederListe;
+    public ArrayList<User> getBenutzerListe() {
+        return this.benutzerListe;
     }
 
-    /**
-     * Methode gibt die Jubiläumsliste als ArrayList<Jubilaeum> zurück
-     *
-     * @return Jubilaeumsliste als ArrayList
-     */
-    public ArrayList<Jubilaeum> getJubilaeumsListe() {
-        return this.jubilaeumsListe;
-    }
 
     /**
-     * Methode startet den Observer-Thread "AdressObserver" und überprüft in einem ständigen
-     * Loop alle 2 Sekunden die zugrundeliegenden MYSQL-Tabellen auf folgende Änderungen:
+     * Methode startet den Observer-Thread "BenutzerObserver" und überprüft in einem ständigen
+     * Loop alle 2 Sekunden die zugrundeliegenden MYSQL-Tabelle auf folgende Änderungen:
      * - Anzahl der Datensätze hat sich geändert
      * - Der Zeitstempel der letzen Änderung bei einem Datensatz hat sich geändert
      * Festgestellte Änderungen werden in den Instanzvariabeln nachgeführt.
      */
-    private void startAdressObserver() {
-        Runnable observeMitglieder = () -> {
+    private void startBenutzerObserver() {
+        Runnable observeBenutzer = () -> {
             while (true) {
                 boolean update = false;
-                // hat sich die Anzahl der Einträge in der Tabelle Kontakt verändert?
-                if (DatabaseReader.readAnzahlMitglieder() != anzahlMitglieder) {
-                    updateAnzahlMitglieder(DatabaseReader.readAnzahlMitglieder());
+                // hat sich die Anzahl der Einträge in der Tabelle Benutzer verändert?
+                if (DatabaseReader.readAnzahlBenutzer() != anzahlBenutzer) {
+                    updateAnzahlBenutzer(DatabaseReader.readAnzahlBenutzer());
                     update = true;
                 }
                 // hat sich der Zeitstempel der letzten Äenderung verändert?
                 if (this.timestamp == null) {
-                    updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
+                    updateLetzeBenutzerAenderung(DatabaseReader.readLetzteBenutzerAenderung());
                     update = true;
-                } else if (DatabaseReader.readLetzteAenderung().after(this.timestamp)) {
-                    updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
+                } else if (DatabaseReader.readLetzteBenutzerAenderung().after(this.timestamp)) {
+                    updateLetzeBenutzerAenderung(DatabaseReader.readLetzteBenutzerAenderung());
                     update = true;
                 }
                 if (update) {
@@ -137,8 +121,8 @@ public class AdressController implements Subject {
                 }
             }
         };
-        Thread thread = new Thread(observeMitglieder);
-        thread.setName("AdressObserver");
+        Thread thread = new Thread(observeBenutzer);
+        thread.setName("BenutzerObserver");
         thread.setDaemon(true);
         thread.start();
     }

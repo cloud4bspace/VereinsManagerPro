@@ -19,12 +19,14 @@
                      </items></Menu>
                   <Menu fx:id="infoMenu" mnemonicParsing="false" text="Vereinsmanager">
                      <items>
-                        <MenuItem fx:id="setupMenuItem" mnemonicParsing="false" onAction="#handleEinstellungen"
-                                  text="Einstellungen"/>
-                        <MenuItem fx:id="infoMenuItem" mnemonicParsing="false" onAction="#showInfo" text="Info" />
-                        <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleBeenden" text="beenden" />
+                         <MenuItem fx:id="setupMenuItem" mnemonicParsing="false" onAction="#handleEinstellungen"
+                                   text="Einstellungen"/>
+                         <MenuItem fx:id="benutzerMenuItem" mnemonicParsing="false" onAction="#handleBenutzer"
+                                   text="Benutzer"/>
+                         <MenuItem fx:id="infoMenuItem" mnemonicParsing="false" onAction="#showInfo" text="Info"/>
+                         <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleBeenden"
+                                   text="beenden"/>
                      </items></Menu>
-                <Menu fx:id="exitMenu" mnemonicParsing="false" onAction="#handleBeenden" />
               </menus>
                <rotationAxis>
                   <Point3D />

@@ -414,12 +414,14 @@ public abstract class DatabaseOperation {
             boolean isUser = DatabaseReader.isUser(mitgliedId);
             MysqlConnection conn = new MysqlConnection();
             String query = "INSERT INTO benutzer (BenutzerId, KontaktId, BenutzerName, BenutzerPw," +
-                    " BenutzerLastlogin, BenutzerNumberLogins, BenutzerSperrcode) VALUES (NULL, ?, ?, ?, CURRENT_DATE, ?, '0');";
+                    " BenutzerLastlogin, BenutzerNumberLogins, BenutzerSperrcode, BenutzerTrackChangeUsr," +
+                    " BenutzerTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, CURRENT_DATE, ?, '0', ?, CURRENT_TIMESTAMP );";
             try (PreparedStatement ps = conn.getConnection().prepareStatement(query)) {
                 ps.setInt(1, mitgliedId);//KontaktID
                 ps.setString(2, eMail);
                 ps.setString(3, DigestUtils.sha1Hex(String.valueOf(pw)));
-                ps.setInt(4, 1);
+                ps.setInt(4, 0);
+                ps.setString(5, "neuer User #" + mitgliedId);
                 System.out.println("Rückmeldung preparedStmt: " + ps.executeUpdate());
             } catch (SQLException e) {
                 System.out.println("Fehler: " + e);
@@ -487,5 +489,17 @@ public abstract class DatabaseOperation {
     }
 
 
+    public static void setSperrCode(int sperrCode, User user, User currentUser) {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "UPDATE benutzer SET BenutzerSperrcode = '" + sperrCode +
+                    "',  BenutzerTrackChangeUsr = '" + currentUser.getUserName() +
+                    "', BenutzerTrackChangeTimestamp = CURRENT_TIMESTAMP " +
+                    "WHERE BenutzerId=" + user.getUserId();
+            st.execute(query);
 
+        } catch (SQLException e) {
+            System.out.println("Mitglied konnte nicht gelöscht werden (" + e + ")");
+        }
+    }
 }

@@ -1,0 +1,119 @@
+package space.cloud4b.verein.view.benutzer;
+
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
+import space.cloud4b.verein.MainApp;
+import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
+import space.cloud4b.verein.model.verein.user.User;
+import space.cloud4b.verein.services.Observer;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+public class BenutzerViewController implements Observer {
+
+    // allgemeine Instanzvariabeln
+    private MainApp mainApp;
+    private Stage dialogStage;
+    private Mitglied aktuellesMitglied = null;
+    private ArrayList<User> userArrayList;
+
+    @FXML
+    private TableView<User> userTabelle;
+    @FXML
+    private TableColumn<User, Number> benutzerIdSpalte;
+    @FXML
+    private TableColumn<User, Number> mitgliedIdSpalte;
+    @FXML
+    private TableColumn<User, String> benutzerNameSpalte;
+    @FXML
+    private TableColumn<User, LocalDate> lastLoginSpalte;
+    @FXML
+    private TableColumn<User, Number> anzLoginsSpalte;
+    @FXML
+    private TableColumn<User, Number> sperrcodeSpalte;
+    @FXML
+    private TableColumn<User, String> benutzerKatSpalte;
+    @FXML
+    private TableColumn<User, String> benutzerPWSpalte;
+
+
+    public BenutzerViewController() {
+
+    }
+
+    public void initialize() {
+        benutzerIdSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getUserIdProperty());
+        mitgliedIdSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getMitgliedIdProperty());
+        benutzerNameSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getUserNameProperty());
+        lastLoginSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getUserLastLogin());
+        anzLoginsSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getUserLoginsCountProperty());
+        sperrcodeSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getUserSperrcodeProperty());
+        sperrcodeSpalte.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        benutzerKatSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getUserKatProperty());
+        benutzerPWSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getUserPWProperty());
+    }
+
+    public void onEditChange(TableColumn.CellEditEvent<User, Number> userNumberCellEditEvent) {
+        User user = userTabelle.getSelectionModel().getSelectedItem();
+        user.setSperrCode(userNumberCellEditEvent.getNewValue(), mainApp.getCurrentUser());
+        initializeTable();
+    }
+
+    /**
+     * Is called by the main application to give a reference back to itself.
+     *
+     * @param mainApp
+     */
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+        initializeTable();
+
+        mainApp.getAdressController().Attach(this);
+    }
+
+    public void initializeTable() {
+        // Add observable list data to the tables
+        userTabelle.setItems(FXCollections.observableArrayList(mainApp.getBenutzerController().getBenutzerListe()));
+        userTabelle.setEditable(true);
+        userTabelle.setRowFactory(row -> new TableRow<User>() {
+            @Override
+            public void updateItem(User item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null) {
+                    setId("");
+                    // setStyle("");
+                } else if (item.isUserGesperrt()) {
+                    setId("gesperrt");
+                    // setStyle("-fx-background-color: #F78888;-fx-text-fill: #000000;");
+                } else {
+                    setId("");
+                    // setStyle("-fx-background-color: #FFFFFF;-fx-text-fill: #000000;");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void update(Object o) {
+
+    }
+
+    public void setStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
+}
