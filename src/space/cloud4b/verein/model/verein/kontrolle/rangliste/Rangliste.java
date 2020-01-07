@@ -18,7 +18,6 @@ public class Rangliste {
     public Rangliste(String bezeichnung, MainController mainController) {
         this.mainController = mainController;
         this.bezeichnung = bezeichnung;
-        //this.rangliste = new ArrayList<>();
         System.out.println("neue Rangliste erstellt: " + this.bezeichnung);
         this.rangliste = DatabaseReader.fuelleRangliste(this.mainController);
     }

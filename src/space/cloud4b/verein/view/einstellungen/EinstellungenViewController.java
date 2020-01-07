@@ -85,7 +85,7 @@ public class EinstellungenViewController {
     }
 
     public void handelLogoButton() {
-        File selectedFile = mainApp.getMainController().chooseImageFile();
+        File selectedFile = mainApp.getMainController().mainApp.chooseImageFile();
         if (selectedFile != null) {
             saveNeuesLogo(selectedFile);
             initialize();
@@ -102,7 +102,7 @@ public class EinstellungenViewController {
     public void saveNeuesLogo(File file) {
         // TODO Bild kann jpg oder png sein... Entweder umwandeln oder dann immer beim Auslesen des Bilds beide Varianten in Betracht ziehen..
         // die File-Extension des übergebenen Filenamens wird extrahiert
-        Optional<String> ext = mainApp.getMainController().getExtensionByStringHandling(file.getName());
+        Optional<String> ext = mainApp.getMainController().mainApp.getExtensionByStringHandling(file.getName());
         String extStr = ext.get();
         // die Pfade der Ursprungsdatei und der Zieldatei werden gelesen/generiert
         Path src = Paths.get(file.getAbsolutePath());

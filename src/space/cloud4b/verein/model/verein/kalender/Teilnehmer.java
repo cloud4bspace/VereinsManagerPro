@@ -45,10 +45,6 @@ public class Teilnehmer {
         }
     }
 
-    public String getTeilnahmeText() {
-        return this.teilnahmeText;
-    }
-
     public void setTeilnahmeText(String teilnahmeText) {
         this.teilnahmeText = teilnahmeText;
     }
