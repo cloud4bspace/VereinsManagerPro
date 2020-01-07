@@ -1,5 +1,6 @@
 package space.cloud4b.verein.view.benutzer;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -9,6 +10,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import space.cloud4b.verein.MainApp;
+import space.cloud4b.verein.controller.BenutzerController;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.Observer;
@@ -82,10 +84,11 @@ public class BenutzerViewController implements Observer {
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
         initializeTable();
-
-        mainApp.getAdressController().Attach(this);
+        mainApp.getBenutzerController().Attach(this);
     }
-
+    public void setStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
     public void initializeTable() {
         // Add observable list data to the tables
         userTabelle.setItems(FXCollections.observableArrayList(mainApp.getBenutzerController().getBenutzerListe()));
@@ -110,10 +113,16 @@ public class BenutzerViewController implements Observer {
 
     @Override
     public void update(Object o) {
-
+        if (o instanceof BenutzerController) {
+            BenutzerController bc = (BenutzerController) o;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    userTabelle.setItems(FXCollections.observableArrayList(bc.getBenutzerListe()));
+                }
+            });
+        }
     }
 
-    public void setStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
-    }
+
 }

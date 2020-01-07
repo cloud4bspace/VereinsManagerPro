@@ -29,9 +29,9 @@ public class TaskListViewController {
     private Stage dialogStage;
     private MainApp mainApp;
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private ListView<Task> taskListView;
-
     @FXML
     private Label titelLabel;
     @FXML

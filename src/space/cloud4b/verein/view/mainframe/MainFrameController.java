@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.controller.AdressController;
+import space.cloud4b.verein.controller.BenutzerController;
 import space.cloud4b.verein.controller.KalenderController;
 import space.cloud4b.verein.controller.TaskController;
 import space.cloud4b.verein.einstellungen.Einstellung;
@@ -35,10 +36,12 @@ public class MainFrameController implements Observer {
     int anzMitglieder = 0;
     int anzTermine = 0;
     int anzTasks = 0;
+    int anzUser = 0;
 
     // Reference to the main application
     private MainApp mainApp;
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private Label titleLabel;
     @FXML
@@ -74,6 +77,8 @@ public class MainFrameController implements Observer {
     @FXML
     private Label circleLabelIII;
     @FXML
+    private Label circleLabelIV;
+    @FXML
     private Button homeButton;
     @FXML
     private Menu mitgliederMenu;
@@ -101,21 +106,26 @@ public class MainFrameController implements Observer {
         mainApp.getAdressController().Attach(this);
         mainApp.getKalenderController().Attach(this);
         mainApp.getTaskController().Attach(this);
+        mainApp.getBenutzerController().Attach(this);
 
         this.titleLabel.setText(Einstellung.getVereinsName()); // bei Initialize geht es nicht...
         this.dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
         this.sessionLabel.setText("Session#" + mainApp.getCurrentUser().getSessionId());
         this.anzMitglieder = mainApp.getAdressController().getAnzahlMitglieder();
-        circleLabelI.setText(this.anzMitglieder + " Mitglieder");
+        circleLabelI.setText(this.anzMitglieder + "\nMitglieder");
         circleLabelI.setContentDisplay(ContentDisplay.CENTER);
 
         this.anzTermine = mainApp.getKalenderController().getAnzahlTermine();
-        circleLabelII.setText(this.anzTermine + " Termine");
+        circleLabelII.setText(this.anzTermine + "\nTermine");
         circleLabelII.setContentDisplay(ContentDisplay.CENTER);
 
         this.anzTasks = mainApp.getTaskController().getanzahlTasks();
-        circleLabelIII.setText(this.anzTasks + " Tasks");
+        circleLabelIII.setText(this.anzTasks + "\nTasks");
         circleLabelIII.setContentDisplay(ContentDisplay.CENTER);
+
+        this.anzUser = mainApp.getBenutzerController().getAnzahlBenutzer();
+        circleLabelIV.setText(this.anzUser + "\nUser");
+        circleLabelIV.setContentDisplay(ContentDisplay.CENTER);
 
         infoLabel.setText(mainApp.getCurrentUser().toString());
 
@@ -476,6 +486,18 @@ public class MainFrameController implements Observer {
                 @Override
                 public void run() {
                     circleLabelIII.setText(anzTasks + "\npendente Tasks");
+                }
+            });
+        }
+
+        // wenn die Benachrichtigung vom BenutzerController kommt
+        if (o instanceof BenutzerController) {
+            anzUser = mainApp.getBenutzerController().getAnzahlBenutzer();
+            Platform.runLater(new Runnable() {
+                // Anzahl Benutzer im UI aktualisieren
+                @Override
+                public void run() {
+                    circleLabelIV.setText(anzUser + "\nUser");
                 }
             });
         }

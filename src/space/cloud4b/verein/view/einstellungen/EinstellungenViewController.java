@@ -25,6 +25,7 @@ public class EinstellungenViewController {
     MainApp mainApp;
     Stage dialogStage;
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private TextField vereinsNameFeld;
     @FXML

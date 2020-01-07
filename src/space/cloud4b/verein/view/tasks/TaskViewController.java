@@ -32,6 +32,7 @@ public class TaskViewController implements Observer {
     private MainApp mainApp;
     private Stage stage;
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private TreeTableView<Task> taskTreeTableView;
     @FXML

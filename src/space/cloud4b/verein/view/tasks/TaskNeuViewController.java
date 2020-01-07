@@ -20,6 +20,8 @@ public class TaskNeuViewController {
     Stage dialogStage;
     int indexOfCurrentUser;
     ArrayList<Mitglied> mitgliedArrayList;
+
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private TextField bezeichnunglFeld;
     @FXML

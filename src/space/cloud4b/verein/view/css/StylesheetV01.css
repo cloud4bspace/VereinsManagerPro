@@ -24,6 +24,14 @@
 
     -fx-fill: #959595;
 }
+
+#circleLabelIV {
+    -fx-background-radius: 50;
+    -fx-background-color: #8FAD88;
+    -fx-text-fill: #000000;
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+}
 #circleLabelIII {
     -fx-background-radius: 50;
     -fx-background-color: #90CCF4;

@@ -24,6 +24,7 @@ public class DashBoardController implements Observer {
 
     private MainApp mainApp;
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private TableView<Mitglied> mitgliederTabelle;
     @FXML
