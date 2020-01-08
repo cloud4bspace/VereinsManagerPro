@@ -415,12 +415,8 @@ public class TerminViewController implements Observer {
             Platform.runLater(new Runnable() { // TODO
                 @Override
                 public void run() {
-                    // initialize();
-                    // setMainApp(mainApp);
-                    // mainApp.getKalenderController().setTerminliste(DatabaseReader.getTermineAsArrayList());
-                    // terminAuswahlComboBox.getItems().removeAll(((KalenderController) o).getTermineAsArrayList());
+
                     terminAuswahlComboBox.getItems().remove(0, terminListe.size());
-                    //terminAuswahlComboBox = new ComboBox<>();
                     terminListe = mainApp.getKalenderController().getTermineAsArrayList();
                     terminAuswahlComboBox.getItems().addAll(terminListe);
                     terminAuswahlComboBox.getSelectionModel().select(termin);

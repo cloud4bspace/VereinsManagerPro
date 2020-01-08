@@ -7,6 +7,7 @@ import space.cloud4b.verein.services.Subject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Die Klasse BenutzerController stellt den fxml-Controllern die Benutzerliste zur Verfügung.
@@ -106,7 +107,7 @@ public class BenutzerController implements Subject {
                 if (this.timestamp == null) {
                     updateLetzeBenutzerAenderung(DatabaseReader.readLetzteBenutzerAenderung());
                     update = true;
-                } else if (DatabaseReader.readLetzteBenutzerAenderung().after(this.timestamp)) {
+                } else if (Objects.requireNonNull(DatabaseReader.readLetzteBenutzerAenderung()).after(this.timestamp)) {
                     updateLetzeBenutzerAenderung(DatabaseReader.readLetzteBenutzerAenderung());
                     update = true;
                 }
@@ -132,6 +133,15 @@ public class BenutzerController implements Subject {
      */
     @Override
     public void Attach(Observer o) {
+
+        // überprüfen, ob ein Objekt derselben Klasse bereits vorhanden ist und ggf. löschen
+        for (int i = 0; i < observerList.size(); i++) {
+            System.out.println("O#" + i + ": " + observerList.get(i));
+            if (observerList.get(i).getClass().equals(o.getClass())) {
+                observerList.remove(i);
+            }
+        }
+        // neuen Observer hinzufügen
         observerList.add(o);
     }
 
@@ -153,5 +163,4 @@ public class BenutzerController implements Subject {
             observer.update(this);
         }
     }
-
 }

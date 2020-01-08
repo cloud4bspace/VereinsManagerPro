@@ -302,11 +302,11 @@ public class MitgliedViewController implements Observer {
     /**
      * Methode wird ausgeführt, wenn der User neben dem Profilbild den Button
      * "Bild ändern/hinzufügen" anklickt.
-     * Aus dem MainController wird der Dialog zur Auswahl einer Bilddatei aufgerufen,
+     * Aus dem MainApp wird der Dialog zur Auswahl einer Bilddatei aufgerufen,
      * welcher ein File zurückgibt.
      */
     public void handelProfilbildButton() {
-        File selectedFile = mainApp.getMainController().mainApp.chooseImageFile();
+        File selectedFile = mainApp.chooseImageFile();
         if (selectedFile != null) {
             saveNeuesProfilbild(selectedFile);
         } else {
@@ -322,7 +322,7 @@ public class MitgliedViewController implements Observer {
     public void saveNeuesProfilbild(File file) {
         // die File-Extension des übergebenen Filenamens wird extrahiert
         //Optional<String> ext = getExtensionByStringHandling(file.getName());
-        Optional<String> ext = mainApp.getMainController().mainApp.getExtensionByStringHandling(file.getName());
+        Optional<String> ext = mainApp.getExtensionByStringHandling(file.getName());
         String extStr = ext.get();
         // die Pfade der Ursprungsdatei und der Zieldatei werden gelesen/generiert
         Path src = Paths.get(file.getAbsolutePath());

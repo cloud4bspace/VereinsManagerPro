@@ -22,8 +22,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 public class EinstellungenViewController {
-    MainApp mainApp;
-    Stage dialogStage;
+    private MainApp mainApp;
+    private Stage dialogStage;
 
     // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
@@ -85,7 +85,7 @@ public class EinstellungenViewController {
     }
 
     public void handelLogoButton() {
-        File selectedFile = mainApp.getMainController().mainApp.chooseImageFile();
+        File selectedFile = mainApp.chooseImageFile();
         if (selectedFile != null) {
             saveNeuesLogo(selectedFile);
             initialize();
@@ -102,7 +102,7 @@ public class EinstellungenViewController {
     public void saveNeuesLogo(File file) {
         // TODO Bild kann jpg oder png sein... Entweder umwandeln oder dann immer beim Auslesen des Bilds beide Varianten in Betracht ziehen..
         // die File-Extension des übergebenen Filenamens wird extrahiert
-        Optional<String> ext = mainApp.getMainController().mainApp.getExtensionByStringHandling(file.getName());
+        Optional<String> ext = mainApp.getExtensionByStringHandling(file.getName());
         String extStr = ext.get();
         // die Pfade der Ursprungsdatei und der Zieldatei werden gelesen/generiert
         Path src = Paths.get(file.getAbsolutePath());

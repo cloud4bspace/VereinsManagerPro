@@ -25,6 +25,7 @@ import space.cloud4b.verein.view.chart.MemberStatistics01Controller;
 import space.cloud4b.verein.view.chart.TaskStatistics01Controller;
 import space.cloud4b.verein.view.dashboard.DashBoardController;
 import space.cloud4b.verein.view.einstellungen.EinstellungenViewController;
+import space.cloud4b.verein.view.logging.LogViewController;
 import space.cloud4b.verein.view.login.LoginViewController;
 import space.cloud4b.verein.view.login.SignupViewController;
 import space.cloud4b.verein.view.mainframe.MainFrameController;
@@ -49,7 +50,7 @@ public class MainApp extends Application {
     private BorderPane mainFrame;
     private MainFrameController mainFrameController;
     private MitgliedViewController mitgliedViewController;
-    private MainController mainController;
+    private RanglisteController ranglisteController;
     private KalenderController kalenderController;
     private AdressController adressController;
     private TaskController taskController;
@@ -70,11 +71,11 @@ public class MainApp extends Application {
         this.primaryStage.setMaximized(true);
 
         if (currentUser != null) {
-            this.mainController = new MainController(this);
             this.kalenderController = new KalenderController();
             this.adressController = new AdressController();
             this.taskController = new TaskController();
             this.benutzerController = new BenutzerController();
+            this.ranglisteController = new RanglisteController(this);
 
             initMainFrame();
             showDashboard();
@@ -275,7 +276,6 @@ public class MainApp extends Application {
      * Zeigt den Termin-Bereich in der Mitte des Hauptfensters
      * wenn der TerminViewController erzeugt wird, übergebe ich ihm auch den
      * KalenderController, weil er daraus später Daten bezieht.
-     * und ich übergebe ihm auch den MainController.
      */
     public boolean showTerminEditDialog() {
         try {
@@ -491,8 +491,14 @@ public class MainApp extends Application {
     public User getCurrentUser() {
         return currentUser;
     }
-    public MainController getMainController() { return mainController; }
-    public MainFrameController getMainFrameController() {return mainFrameController; }
+
+    public RanglisteController getRanglisteController() {
+        return ranglisteController;
+    }
+
+    public MainFrameController getMainFrameController() {
+        return mainFrameController;
+    }
 
     public void setUser(User user) {
         this.currentUser = user;
@@ -678,5 +684,30 @@ public class MainApp extends Application {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Excel File", "*.xlsx"));
         File file = fileChooser.showSaveDialog(stage);
         return file;
+    }
+
+    public void showLogFileView() {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/logging/LogView.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("LogFile-Einträge");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the persons into the controller.
+            LogViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setStage(dialogStage);
+            dialogStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

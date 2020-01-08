@@ -41,6 +41,13 @@ public class Termin {
         this.terminText = terminText;
     }
 
+    public Termin(int terminId, LocalDate terminDatum, String terminText, String terminOrt) {
+        this.terminId = terminId;
+        this.terminDatum = terminDatum;
+        this.terminText = terminText;
+        this.terminOrt = terminOrt;
+    }
+
     public String toString() {
         String string = getDateAsNiceString().getValue() + " " + this.terminText;
         if (this.terminZeit != null) {
@@ -194,4 +201,6 @@ public class Termin {
             return this.terminText;
         }
     }
+
+
 }

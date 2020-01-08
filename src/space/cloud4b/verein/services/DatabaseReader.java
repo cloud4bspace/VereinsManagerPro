@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import org.apache.commons.codec.digest.DigestUtils;
-import space.cloud4b.verein.controller.MainController;
 import space.cloud4b.verein.model.verein.adressbuch.Kontakt;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.kalender.Jubilaeum;
@@ -41,6 +40,24 @@ public abstract class DatabaseReader {
         } catch (SQLException e) {
             e.printStackTrace();
 
+        }
+        return 0;
+    }
+
+    /**
+     * ermittelt die Anzahl Einträge in der Tabelle "terminkontrolle" für die Erfassung
+     * der Anwesenheiten (Präsenzkontrolle)
+     */
+    public static int getAnzAnwesenheiten() {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle WHERE KontrolleArt = 'Anwesenheit'";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return rs.getInt("Anzahl");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return 0;
     }
@@ -467,6 +484,25 @@ public abstract class DatabaseReader {
         return null;
     }
 
+    /**
+     * Ermittelt den Zeitstempel der letzen Änderung in der Tabelle task
+     *
+     * @return Timestamp der letzten Änderung
+     */
+    public static Timestamp readLetzteAenderungTask() {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT MAX(TaskTrackChangeTimestamp) AS LetzteAenderung FROM `task`";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return Timestamp.valueOf(rs.getString("LetzteAenderung"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void completeMitglied(Mitglied mitglied) {
         Status anredeStatus = new Status(1);
         Status kategorieIStatus = new Status(2);
@@ -683,10 +719,11 @@ public abstract class DatabaseReader {
         return null;
     }
 
-    public static ArrayList<Position> fuelleRangliste(MainController mainController) {
+    public static ArrayList<Position> fuelleRangliste(ArrayList<Mitglied> mitgliederListe
+            , ArrayList<Termin> terminListe) {
         ArrayList<Position> rangliste = new ArrayList<>();
-        ArrayList<Mitglied> mitgliederListe = DatabaseReader.getMitgliederAsArrayList();
-        ArrayList<Termin> terminListe = DatabaseReader.getTermineAsArrayList();
+        // ArrayList<Mitglied> mitgliederListe = DatabaseReader.getMitgliederAsArrayList();
+        // ArrayList<Termin> terminListe = DatabaseReader.getTermineAsArrayList();
 
         Iterator<Mitglied> i = mitgliederListe.iterator();
 
@@ -724,7 +761,7 @@ public abstract class DatabaseReader {
                 }
                 anwesenheitenAnteil = (anzAnwesenheiten * 100 / anzTermineAktuellesJahr);
 
-                rangliste.add(new Position(mainController.getRangliste(), mitglied, mitglied.getKurzbezeichnung(), anzTermineAktuellesJahr, anzAnwesenheiten, anwesenheitenAnteil));
+                rangliste.add(new Position(mitglied, mitglied.getKurzbezeichnung(), anzTermineAktuellesJahr, anzAnwesenheiten, anwesenheitenAnteil));
                 // rangliste sortieren nach Anteilen...
                 //Collections.sort(rangliste, (a,b)->a.getAnwesenheitsAnteil().compareTo(b.getAnwesenheitsAnteil()));
 
@@ -800,66 +837,6 @@ public abstract class DatabaseReader {
         return terminListe;
     }
 
-    public static ArrayList<Jubilaeum> jubilaenLaden() {
-        int jahr = Year.now().getValue();
-        // Geburtstage
-        ArrayList<Jubilaeum> jubilaeumsListe = new ArrayList<>();
-        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
-            String query = "SELECT KontaktId, KontaktGeburtsdatum, KontaktNachname, KontaktVorname FROM usr_web116_5.kontakt WHERE KontaktIstMitglied = 1 AND KontaktGeburtsdatum IS NOT NULL AND KontaktGeburtsdatum NOT LIKE '0000-%'";
-
-            ResultSet rs = st.executeQuery(query);
-            while (rs.next()) {
-                String geburtsDatum = rs.getString("KontaktGeburtsdatum");
-                int geburtsJahr = Integer.parseInt(geburtsDatum.substring(0, 4));
-                // alter in diesem Jahr
-                int alter = jahr - geburtsJahr;
-                geburtsDatum = jahr + geburtsDatum.substring(4, 10);
-                LocalDate geburtsDatumLD = Date.valueOf(geburtsDatum).toLocalDate();
-                // Wenn der nächste Geburtstag grösser ist als heute
-
-                if (geburtsDatumLD.isAfter(LocalDate.now().minusDays(1))) {
-                    jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD, alter + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
-                } else {
-                    // nächster Geburtstag ist erst im nächsten Jahr
-                    jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD.plusYears(1), (alter + 1) + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
-                }
-            }
-
-            // Vereinsmitgliedschafts-Jubiläen ermittelnt
-            query = "SELECT KontaktId, KontaktEintrittsdatum, KontaktNachname, KontaktVorname FROM usr_web116_5.kontakt WHERE KontaktIstMitglied = 1 AND KontaktGeburtsdatum IS NOT NULL AND KontaktGeburtsdatum NOT LIKE '0000-%'";
-            rs = st.executeQuery(query);
-            int i = 20000;
-            while (rs.next()) {
-                String eintrittsDatum = rs.getString("KontaktEintrittsdatum");
-                int eintrittsJahr = Integer.parseInt(eintrittsDatum.substring(0, 4));
-                // alter in diesem Jahr
-                int anzahlJahre = jahr - eintrittsJahr;
-                eintrittsDatum = jahr + eintrittsDatum.substring(4, 10);
-
-                LocalDate eintrittsDatumLD = Date.valueOf(eintrittsDatum).toLocalDate();
-                // Wenn der nächste Geburtstag grösser ist als heute
-
-                if (eintrittsDatumLD.isAfter(LocalDate.now().minusDays(1))) {
-                    jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD, "Jubiläum: " + anzahlJahre + " Jahr(e) " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
-                } else {
-                    // nächster Geburtstag ist erst im nächsten Jahr
-                    jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD.plusYears(1), "Jubiläum: " + (anzahlJahre + 1) + " Jahr(e) " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
-                }
-                i++;
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        //Liste sortieren nach Datum...
-        Collections.sort(jubilaeumsListe, (a, b) -> a.getDatum().compareTo(b.getDatum()));
-        return jubilaeumsListe;
-    }
-
-
-
 
     /**
      * Ermittelt verschiedene Daten zum übergebenen Status-Objekt und
@@ -927,11 +904,12 @@ public abstract class DatabaseReader {
                 LocalDate terminDatum = Date.valueOf(rs.getString("TerminDatum")).toLocalDate();
 
                 String terminText = rs.getString("TerminText");
+                String terminOrt = rs.getString("TerminOrt");
 
                 /**
                  * Objekte werden erzeugt und der Terminliste hinzugefügt
                  */
-                termin = new Termin(terminId, terminDatum, terminText);
+                termin = new Termin(terminId, terminDatum, terminText, terminOrt);
                 if(rs.getString("TerminZeit") != null) {
                     terminZeit = LocalDateTime.of(terminDatum, Time.valueOf(rs.getString("TerminZeit")).toLocalTime());
                     termin.setZeit(terminZeit);
@@ -1050,13 +1028,18 @@ public abstract class DatabaseReader {
                     int alter = jahr - geburtsJahr;
                     geburtsDatum = jahr + geburtsDatum.substring(4, 10);
                     LocalDate geburtsDatumLD = Date.valueOf(geburtsDatum).toLocalDate();
-                    // Wenn der nächste Geburtstag grösser ist als heute
 
+                    // Wenn der nächste Geburtstag grösser ist als heute
                     if (geburtsDatumLD.isAfter(LocalDate.now().minusDays(1))) {
-                        jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD, alter + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                        if (alter % 10 == 0) {
+                            jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD, alter + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                        }
                     } else {
                         // nächster Geburtstag ist erst im nächsten Jahr
-                        jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD.plusYears(1), (alter + 1) + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                        // dafür ein Jahr älter...
+                        if ((alter + 1) % 10 == 0) {
+                            jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD.plusYears(1), (alter + 1) + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                        }
                     }
                 }
             }
@@ -1077,10 +1060,14 @@ public abstract class DatabaseReader {
                 // Wenn der nächste Geburtstag grösser ist als heute
 
                 if(eintrittsDatumLD.isAfter(LocalDate.now().minusDays(1))) {
-                    jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD, "Jubiläum: " + anzahlJahre + " Jahr(e) " + rs.getString("KontaktVorname")+ " " + rs.getString("KontaktNachname")));
+                    if (anzahlJahre % 5 == 0) {
+                        jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD, "Jubiläum: " + anzahlJahre + " Jahr(e) " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                    }
                 } else {
-                    // nächster Geburtstag ist erst im nächsten Jahr
-                    jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD.plusYears(1), "Jubiläum: " + (anzahlJahre + 1 ) + " Jahr(e) " + rs.getString("KontaktVorname")+ " " + rs.getString("KontaktNachname")));
+                    if ((anzahlJahre + 1) % 5 == 0) {
+                        // nächster Geburtstag ist erst im nächsten Jahr
+                        jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD.plusYears(1), "Jubiläum: " + (anzahlJahre + 1) + " Jahr(e) " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                    }
                 }
                 i++;
             }
@@ -1206,6 +1193,23 @@ public abstract class DatabaseReader {
         int anzTasks = 0;
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
             String query = "SELECT COUNT(*) AS ANZTASKS from usr_web116_5.task WHERE TaskStatus < 3";
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                anzTasks = rs.getInt("ANZTASKS");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return anzTasks;
+    }
+
+    public static int readTotalAnzahlTasks() {
+        int anzTasks = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) AS ANZTASKS from usr_web116_5.task";
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {

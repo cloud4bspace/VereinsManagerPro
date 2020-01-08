@@ -10,6 +10,7 @@ import space.cloud4b.verein.services.Subject;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * Die Klasse KalenderController stellt den fxml-Controllern die benötigten Listen und Daten zur
@@ -35,14 +36,15 @@ public class KalenderController implements Subject {
 
     public KalenderController() {
         observerList = new ArrayList<>();
-        jubilaeumsListe = DatabaseReader.jubilaenLaden();
+        jubilaeumsListe = DatabaseReader.getJubilaeenAsArrayList();
         startKalenderObserver();
         startAnmeldungenObserver();
     }
 
     /**
      * aktualisiert die Anzahl der Termine und benachrichtigt die Observer
-     * @param anzahlTermine
+     *
+     * @param anzahlTermine - Anzahl der Termine gem. MYSQL-Datenbank
      */
     public void updateAnzahlTermine(int anzahlTermine) {
         this.anzahlTermine = anzahlTermine;
@@ -51,7 +53,7 @@ public class KalenderController implements Subject {
 
     /**
      * aktualisiert die Anzahl der Rückmeldungen und benachrichtigt die Observer
-     * @param anzahlMeldungen
+     * @param anzahlMeldungen - Die Anzahl
      */
     public void updateAnzahlMeldungen(int anzahlMeldungen) {
         this.anzahlMeldungen = anzahlMeldungen;
@@ -81,36 +83,35 @@ public class KalenderController implements Subject {
     public void updateTerminListen() {
         this.terminListe = DatabaseReader.getTermineAsArrayList();
         this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-        //Notify ist nötig, wenn Aenderungen Zeitstempel zu update geführt haben.
     }
 
     /**
      * aktualisiert den Zeitstempel für die letzte Änderung in der Termin-Tabelle der Datenbank
      *
-     * @param neuerZeitstempel
+     * @param neuerZeitstempel Der neue (höchste) Zeitstempel aus der Termin-Tabelle
      */
     public void updateLetzeTerminAenderung(Timestamp neuerZeitstempel) {
         this.timestamp = neuerZeitstempel;
-        System.out.println("Aenderungen bei den Terminen mit neuem Zeitstempel (" + neuerZeitstempel + ") festgestellt");
     }
 
     /**
      * aktualisiert den Zeitstempel für die letzte Änderung in der Termin-Tabelle der Datenbank
      *
-     * @param neuerZeitstempel
+     * @param neuerZeitstempel - der neue (höchste) Zeitstemptel gem. MYSQL-Tabelle
      */
     public void updateLetzeAnmeldungAenderung(Timestamp neuerZeitstempel) {
         this.timestampAnmeldungen = neuerZeitstempel;
-        System.out.println("Aenderungen bei den Anmeldungen mit neuem Zeitstempel (" + neuerZeitstempel + ") festgestellt");
     }
 
-    public void setTerminliste(ArrayList<Termin> terminListe) {
-        this.terminListe = terminListe;
-    }
-
+    /**
+     * Methode startet den Observer-Thread "Kalender" und überprüft in einem ständigen
+     * Loop alle 2 Sekunden die zugrundeliegenden MYSQL-Tabelle auf folgende Änderungen:
+     * - Anzahl der Datensätze hat sich geändert
+     * - Der Zeitstempel der letzen Änderung bei einem Datensatz hat sich geändert
+     * Festgestellte Änderungen werden in den Instanzvariabeln nachgeführt.
+     */
     private void startKalenderObserver() {
         Runnable observerKalender = () -> {
-            int zaehler = 0;
             while (true) {
                 boolean update = false;
                 if (DatabaseReader.readAnzahlTermine() != anzahlTermine) {
@@ -121,7 +122,7 @@ public class KalenderController implements Subject {
                 else if (this.timestamp == null) {
                     updateLetzeTerminAenderung(DatabaseReader.readLetzteAenderung());
                     update = true;
-                } else if (DatabaseReader.readLetzteAenderung().after(this.timestamp)) {
+                } else if (Objects.requireNonNull(DatabaseReader.readLetzteAenderung()).after(this.timestamp)) {
                     updateLetzeTerminAenderung(DatabaseReader.readLetzteAenderung());
                     update = true;
                 }
@@ -132,7 +133,7 @@ public class KalenderController implements Subject {
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-
+                    e.printStackTrace();
                 }
             }
         };
@@ -142,9 +143,15 @@ public class KalenderController implements Subject {
         thread.start();
     }
 
+    /**
+     * Methode startet den Observer-Thread "Anmeldungen" und überprüft in einem ständigen
+     * Loop alle 2 Sekunden die zugrundeliegenden MYSQL-Tabelle auf folgende Änderungen:
+     * - Anzahl der Datensätze hat sich geändert
+     * - Der Zeitstempel der letzen Änderung bei einem Datensatz hat sich geändert
+     * Festgestellte Änderungen werden in den Instanzvariabeln nachgeführt.
+     */
     private void startAnmeldungenObserver() {
         Runnable observerAnmeldungen = () -> {
-            int zaehler = 0;
             while (true) {
                 boolean update = false;
                 if (DatabaseReader.getAnzMeldungen() != anzahlMeldungen) {
@@ -155,7 +162,8 @@ public class KalenderController implements Subject {
                 else if (this.timestampAnmeldungen == null) {
                     updateLetzeAnmeldungAenderung(DatabaseReader.readLetzteAnmeldungAenderung());
                     update = true;
-                } else if (DatabaseReader.readLetzteAnmeldungAenderung().after(this.timestampAnmeldungen)) {
+                } else if (Objects.requireNonNull(DatabaseReader.readLetzteAnmeldungAenderung())
+                        .after(this.timestampAnmeldungen)) {
                     updateLetzeAnmeldungAenderung(DatabaseReader.readLetzteAnmeldungAenderung());
                     update = true;
                 }
@@ -165,7 +173,7 @@ public class KalenderController implements Subject {
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-
+                    e.printStackTrace();
                 }
             }
         };
@@ -180,6 +188,14 @@ public class KalenderController implements Subject {
      */
     @Override
     public void Attach(Observer o) {
+        // überprüfen, ob ein Objekt derselben Klasse bereits vorhanden ist und ggf. löschen
+        for (int i = 0; i < observerList.size(); i++) {
+            System.out.println("O#" + i + ": " + observerList.get(i));
+            if (observerList.get(i).getClass().equals(o.getClass())) {
+                observerList.remove(i);
+            }
+        }
+        // neuen Observer hinzufügen
         observerList.add(o);
     }
 
@@ -197,8 +213,8 @@ public class KalenderController implements Subject {
      */
     @Override
     public void Notify() {
-        for (int i = 0; i < observerList.size(); i++) {
-            observerList.get(i).update(this);
+        for (Observer observer : observerList) {
+            observer.update(this);
         }
 
     }

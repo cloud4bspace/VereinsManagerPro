@@ -1,6 +1,5 @@
 package space.cloud4b.verein.view.tasks;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -126,13 +125,9 @@ public class TaskEditViewController {
 
         if (result.get() == ButtonType.OK) {
             // Löschung in der Datenbank umsetzen
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    DatabaseOperation.deleteTask(task, mainApp.getCurrentUser());
-                }
-            });
+            DatabaseOperation.deleteTask(task, mainApp.getCurrentUser());
             mainApp.getMainFrameController().setMeldungInListView("Task gelöscht", "OK");
+            dialogStage.close();
         }
     }
 

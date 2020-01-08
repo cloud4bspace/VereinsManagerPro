@@ -9,6 +9,7 @@ import space.cloud4b.verein.services.Subject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Die Klasse AdressController stellt den fxml-Controllern die benötigten Listen und Daten zur
@@ -122,7 +123,7 @@ public class AdressController implements Subject {
                 if (this.timestamp == null) {
                     updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
                     update = true;
-                } else if (DatabaseReader.readLetzteAenderung().after(this.timestamp)) {
+                } else if (Objects.requireNonNull(DatabaseReader.readLetzteAenderung()).after(this.timestamp)) {
                     updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
                     update = true;
                 }
@@ -133,7 +134,7 @@ public class AdressController implements Subject {
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-                    System.out.println("Problem mit Runnable: " + this);
+                    e.printStackTrace();
                 }
             }
         };
@@ -148,6 +149,14 @@ public class AdressController implements Subject {
      */
     @Override
     public void Attach(Observer o) {
+        // überprüfen, ob ein Objekt derselben Klasse bereits vorhanden ist und ggf. löschen
+        for (int i = 0; i < observerList.size(); i++) {
+            System.out.println("O#" + i + ": " + observerList.get(i));
+            if (observerList.get(i).getClass().equals(o.getClass())) {
+                observerList.remove(i);
+            }
+        }
+        // neuen Observer hinzufügen
         observerList.add(o);
     }
 
@@ -169,5 +178,4 @@ public class AdressController implements Subject {
             observer.update(this);
         }
     }
-
 }

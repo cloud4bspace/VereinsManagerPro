@@ -5,24 +5,20 @@ import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 
 public class Position {
 
-    private Rangliste rangliste;
     private Mitglied mitglied;
     private String mitgliedKurzbezeichnung;
     private int anzahlTermine;
     private int anzahlAnwesenheiten;
     private double anwesenheitsAnteil;
     private int rangYTD;
-    private int rangVorjahr;
 
-    public Position(Rangliste rangliste, Mitglied mitglied, String mitgliedKurzbezeichnung, int anzahlTermine, int anzahlAnwesenheiten, double anwesenheitsAnteil) {
-        this.rangliste = rangliste;
+    public Position(Mitglied mitglied, String mitgliedKurzbezeichnung, int anzahlTermine, int anzahlAnwesenheiten, double anwesenheitsAnteil) {
         this.mitglied = mitglied;
         this.mitgliedKurzbezeichnung = mitgliedKurzbezeichnung;
         this.anzahlTermine = anzahlTermine;
         this.anzahlAnwesenheiten = anzahlAnwesenheiten;
         this.anwesenheitsAnteil = anwesenheitsAnteil;
         this.rangYTD = 9999;
-        this.rangVorjahr = 9999;
         System.out.println("neue Position erstellt für " + mitglied);
 
     }

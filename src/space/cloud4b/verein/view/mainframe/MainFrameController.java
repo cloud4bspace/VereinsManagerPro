@@ -57,6 +57,8 @@ public class MainFrameController implements Observer {
     @FXML
     private MenuItem benutzerMenuItem;
     @FXML
+    private MenuItem logFileMenuItem;
+    @FXML
     private MenuItem helpMenuItem;
     @FXML
     private MenuItem linksammlungMenuItem;
@@ -107,6 +109,7 @@ public class MainFrameController implements Observer {
         mainApp.getKalenderController().Attach(this);
         mainApp.getTaskController().Attach(this);
         mainApp.getBenutzerController().Attach(this);
+        mainApp.getRanglisteController().Attach(this);
 
         this.titleLabel.setText(Einstellung.getVereinsName()); // bei Initialize geht es nicht...
         this.dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
@@ -119,7 +122,7 @@ public class MainFrameController implements Observer {
         circleLabelII.setText(this.anzTermine + "\nTermine");
         circleLabelII.setContentDisplay(ContentDisplay.CENTER);
 
-        this.anzTasks = mainApp.getTaskController().getanzahlTasks();
+        this.anzTasks = mainApp.getTaskController().getAnzahlOpenTasks();
         circleLabelIII.setText(this.anzTasks + "\nTasks");
         circleLabelIII.setContentDisplay(ContentDisplay.CENTER);
 
@@ -190,6 +193,10 @@ public class MainFrameController implements Observer {
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.GROUP, "15px");
         iconTxt.setFill(Color.BLACK);
         benutzerMenuItem.setGraphic(iconTxt);
+
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.FILE_TEXT, "15px");
+        iconTxt.setFill(Color.BLACK);
+        logFileMenuItem.setGraphic(iconTxt);
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.COGS, "15px");
         iconTxt.setFill(Color.BLACK);
@@ -296,6 +303,14 @@ public class MainFrameController implements Observer {
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Hilfe/JavaDoc/"), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
         stage.show();
+    }
+
+    /**
+     * Öffnet die View für die Darstellung der Logfile-Einträge
+     */
+    @FXML
+    private void handleShowLogFile() {
+        mainApp.showLogFileView();
     }
 
     /**
@@ -410,7 +425,7 @@ public class MainFrameController implements Observer {
      * Oeffnet ein Browserfenster mit der Terminmatrix
      */
     @FXML
-    private void handleDoodle() {
+    public void handleDoodle() {
         Stage stage = new Stage();
         stage.setTitle("Doodle");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Doodle/doodle.php"), 750, 500, Color.web("#666970"));
@@ -422,7 +437,7 @@ public class MainFrameController implements Observer {
      * Oeffnet ein Browserfenster mit der Präsenzkontrolle
      */
     @FXML
-    private void handleKontrolle() {
+    public void handleKontrolle() {
         Stage stage = new Stage();
         stage.setTitle("Präsenzkontrolle");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Kontrolle/kontrolluebersicht.php"), 750, 500, Color.web("#666970"));
@@ -480,7 +495,7 @@ public class MainFrameController implements Observer {
 
         // wenn die Benachrichtigung vom TaskController kommt
         if (o instanceof TaskController) {
-            anzTasks = mainApp.getTaskController().getAnzahlTasks();
+            anzTasks = mainApp.getTaskController().getAnzahlOpenTasks();
             Platform.runLater(new Runnable() {
                 // Anzahl Tasks im UI aktualisieren
                 @Override

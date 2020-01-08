@@ -1,7 +1,0 @@
-Diese Kontrolle müssen mainApp nicht kennen.
-die FX-Kontrolle kennen mainApp und können darüber auf die Model-Controller zugreifen.
-
-Diese Kontroller-Klassen implementieren Subject und bieten die Methode Notify()
-
-Die Observer tragen sich in eine ObserverList ein:
-observerList = new ArrayList<>();

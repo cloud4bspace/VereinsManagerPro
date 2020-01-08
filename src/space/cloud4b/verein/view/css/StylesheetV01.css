@@ -309,6 +309,10 @@
     -fx-text-fill: #000000;
 }
 
+#logViewVBox {
+    -fx-background-color: #F3D250;;
+}
+
 #loginVbox01 {
     -fx-background-color: #F78888;
 }
@@ -711,8 +715,8 @@
     -fx-font-size: 0.8em;
 }
 
-#titelLabel {
-    -fx-text-fill: #90CCF4;
+#titelLabel, #loggingTitleLabel {
+    -fx-text-fill: #000000;
     -fx-font-size: 2em;
 }
 
