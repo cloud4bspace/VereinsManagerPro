@@ -17,7 +17,6 @@ import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.services.DatabaseOperation;
-import space.cloud4b.verein.services.DatabaseReader;
 import space.cloud4b.verein.services.Observer;
 
 import java.io.File;
@@ -45,6 +44,8 @@ import java.util.Optional;
  * @author Bernhard Kämpf und Serge Kaulitz
  * @version 2019-12-17
  */
+// TODO - nach dem Erfassen eines neuen Kontakts sollte dieser angezeigt werden
+// TODO - nach dem Speichern von Änderungen funktioniert der Filter nicht mehr..
 public class MitgliedViewController implements Observer {
 
     // allgemeine Instanzvariabeln
@@ -116,11 +117,8 @@ public class MitgliedViewController implements Observer {
     @FXML
     private Button nextMitgliedButton;
 
-    private ObservableList<Mitglied> masterData = FXCollections.observableArrayList();
-
-    // Standardkonstruktor
-    public MitgliedViewController(){
-
+    // Standardkonstruktor (wird nicht benötigt)
+    public MitgliedViewController() {
     }
 
     /**
@@ -133,62 +131,42 @@ public class MitgliedViewController implements Observer {
         mitgliedTabelle.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> setMitglied(newValue));
 
-        masterData = FXCollections.observableArrayList(DatabaseReader.getMitgliederAsArrayList());
-        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-        FilteredList<Mitglied> filteredData = new FilteredList<>(masterData, p -> true);
-        // 2. Set the filter Predicate whenever the filter changes.
-        //  filterField.setPromptText("Nachname Vorname");
-
-        filterField.getStyleClass().add("search-field");
-        filterField.setPromptText("Nachname Vorname");
-
-        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(mitglied -> {
-                // If filter text is empty, display all persons.
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                // Compare first name and last name of every person with filter text.
-                String lowerCaseFilter = newValue.toLowerCase();
-/*
-                if (mitglied.getVorname().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches first name.
-                } else if (mitglied.getNachName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches last name.
-                }*/
-                if (mitglied.getKurzbezeichnung().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false; // Does not match.
-            });
-        });
-        // 3. Wrap the FilteredList in a SortedList.
-        SortedList<Mitglied> sortedData = new SortedList<>(filteredData);
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        sortedData.comparatorProperty().bind(mitgliedTabelle.comparatorProperty());
-
-        // 5. Add sorted (and filtered) data to the table.
-        mitgliedTabelle.setItems(sortedData);
-
-        idSpalte.setCellValueFactory(
-                cellData -> cellData.getValue().getIdProperty());
-        vornameSpalte.setCellValueFactory(
-                cellData -> cellData.getValue().getVornameProperty());
-        nachnameSpalte.setCellValueFactory(
-                cellData -> cellData.getValue().getNachnameProperty());
-        ortSpalte.setCellValueFactory(
-                cellData -> cellData.getValue().getOrtProperty()
-        );
-
-
-        // ComboBox-Elemente mit den dazugehörigen Auswahlmöglichkeiten fülle
+        // ComboBox-Elemente mit den dazugehörigen Auswahlmöglichkeiten füllen
         Status anrede = new Status(1);
         comboBoxAnrede.getItems().addAll(anrede.getElementsAsArrayList());
         Status kategorieI = new Status(2);
         comboBoxKategorieI.getItems().addAll(kategorieI.getElementsAsArrayList());
         Status kategorieII = new Status(4);
         comboBoxKategorieII.getItems().addAll(kategorieII.getElementsAsArrayList());
+    }
+
+    /**
+     * setzt die Referenz zur MainApp und führt weitere Schritte aus:
+     * - Eintrag in die Observerliste der zu überwachenden Controller
+     * - Die im FX-UI enthaltenen Liste mit Daten befüllen
+     *
+     * @param mainApp
+     */
+    public void setMainApp(MainApp mainApp) {
+        // setzt die Referenz zur MainApp
+        this.mainApp = mainApp;
+        // in Obseverliste des/der relevanten Controller eintragen
+        mainApp.getAdressController().Attach(this);
+
+        // die benötigten Listen mit Daten füllen
+        //  mitgliedTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController().getMitgliederListe()));
+        mitgliedTabelle.getSelectionModel().selectFirst();
+        mitgliedArrayList = new ArrayList<>(mainApp.getAdressController().getMitgliederListe());
+        aktuellesMitglied = mitgliedArrayList.get(0);
+        setSuchFilter();
+        setMitglied(aktuellesMitglied);
+
+        mitgliedTabelle.getSelectionModel().selectFirst();
+        mitgliedTabelle.getFocusModel().focus(0);
+    }
+
+    public void setStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
     }
 
     public void handleGetNextMitglied() {
@@ -247,16 +225,16 @@ public class MitgliedViewController implements Observer {
                 // wenn nicht OK gedrückt wird ist die Methode zu verlassen
                 return;
             } else {
-                mainApp.getMainFrameController().setInfo("Reset durchgeführt", "OK", true);
+                // mainApp.getMainFrameController().setInfo("Reset durchgeführt", "OK", true);
+                mainApp.getMainFrameController().setMeldungInListView("Reset durchgeführt"
+                        , "OK");
             }
         }
 
-
-        //TODO wozu ist das gut?
         if(mitglied == null){
             mitglied = aktuellesMitglied;
         }
-        mainApp.getMainFrameController().setInfo("Mitglied #" + mitglied.getId() + " geladen", "OK", true);
+        // mainApp.getMainFrameController().setInfo("Mitglied #" + mitglied.getId() + " geladen", "OK", true);
         // die Felder des ausgewählten Mitglieds mit Daten füllen
         this.aktuellesMitglied = mitglied;
         idLabel.setText(("Details zu Mitglied #" + mitglied.getId()));
@@ -324,11 +302,11 @@ public class MitgliedViewController implements Observer {
     /**
      * Methode wird ausgeführt, wenn der User neben dem Profilbild den Button
      * "Bild ändern/hinzufügen" anklickt.
-     * Aus dem MainController wird der Dialog zur Auswahl einer Bilddatei aufgerufen,
+     * Aus dem MainApp wird der Dialog zur Auswahl einer Bilddatei aufgerufen,
      * welcher ein File zurückgibt.
      */
     public void handelProfilbildButton() {
-        File selectedFile = mainApp.getMainController().chooseImageFile();
+        File selectedFile = mainApp.chooseImageFile();
         if (selectedFile != null) {
             saveNeuesProfilbild(selectedFile);
         } else {
@@ -344,7 +322,7 @@ public class MitgliedViewController implements Observer {
     public void saveNeuesProfilbild(File file) {
         // die File-Extension des übergebenen Filenamens wird extrahiert
         //Optional<String> ext = getExtensionByStringHandling(file.getName());
-        Optional<String> ext = mainApp.getMainController().getExtensionByStringHandling(file.getName());
+        Optional<String> ext = mainApp.getExtensionByStringHandling(file.getName());
         String extStr = ext.get();
         // die Pfade der Ursprungsdatei und der Zieldatei werden gelesen/generiert
         Path src = Paths.get(file.getAbsolutePath());
@@ -374,27 +352,65 @@ public class MitgliedViewController implements Observer {
                 -> f.substring(filename.lastIndexOf(".") + 1));
     }
 
+
     /**
-     * setzt die Referenz zur MainApp und führt weitere Schritte aus:
-     * - Eintrag in die Observerliste der zu überwachenden Controller
-     * - Die im FX-UI enthaltenen Liste mit Daten befüllen
-     * @param mainApp
+     * initiert den Suchfilter auf der Mitglieder-Tabelle
      */
-    public void setMainApp(MainApp mainApp) {
-        // setzt die Referenz zur MainApp
-        this.mainApp = mainApp;
-
-        // in Obseverliste des/der relevanten Controller eintragen
-        mainApp.getAdressController().Attach(this);
-
-        // die benötigten Listen mit Daten füllen
-        //  mitgliedTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController().getMitgliederListe()));
-        mitgliedTabelle.getSelectionModel().selectFirst();
+    public void setSuchFilter() {
         mitgliedArrayList = new ArrayList<>(mainApp.getAdressController().getMitgliederListe());
-        aktuellesMitglied = mitgliedArrayList.get(0);
+        mitgliedTabelle.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> setMitglied(newValue));
+        ObservableList<Mitglied> masterData = FXCollections.observableArrayList(mainApp.getAdressController().getMitgliederListe());
+        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+        FilteredList<Mitglied> filteredData = new FilteredList<>(masterData, p -> true);
+        // 2. Set the filter Predicate whenever the filter changes.
+        //  filterField.setPromptText("Nachname Vorname");
 
+        filterField.getStyleClass().add("search-field");
+        filterField.setPromptText("Nachname Vorname");
+
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(mitglied -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+/*
+                if (mitglied.getVorname().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (mitglied.getNachName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }*/
+                if (mitglied.getKurzbezeichnung().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false; // Does not match.
+            });
+        });
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<Mitglied> sortedData = new SortedList<>(filteredData);
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(mitgliedTabelle.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        mitgliedTabelle.setItems(sortedData);
+
+        idSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getIdProperty());
+        vornameSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getVornameProperty());
+        nachnameSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getNachnameProperty());
+        ortSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getOrtProperty()
+        );
+
+        // mitgliedTabelle.getSelectionModel().selectFirst();
+        // mitgliedTabelle.getFocusModel().focus(0);
     }
-
     /**
      * Wenn der User den Reset-Button betätigt, wird das aktuelle Mitglied nochmals neu geladen.
      */
@@ -414,6 +430,7 @@ public class MitgliedViewController implements Observer {
      * Wird ausgeführt, wenn der User den Button "löschen" betätigt
      */
     public void handleLoeschenButton() {
+
         // Warnmeldung anzeigen und Löschung bestätigen lassen
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(dialogStage);
@@ -424,7 +441,7 @@ public class MitgliedViewController implements Observer {
 
         if(result.get() == ButtonType.OK) {
             // Löschung in der Datenbank umsetzen
-            DatabaseOperation.deleteMitglied(aktuellesMitglied);
+            DatabaseOperation.deleteMitglied(aktuellesMitglied, mainApp.getCurrentUser());
             // Löschung in der ArrayList umsetzen
             mitgliedTabelle.getItems().remove(mitgliedTabelle.getSelectionModel().getSelectedItem());
             // TODO: Profilbild könnte in diesem Fall auch noch gelöscht werden
@@ -438,7 +455,9 @@ public class MitgliedViewController implements Observer {
     public void onValueChanged() {
         if(!unsavedChanges) {
             unsavedChanges = true;
-            mainApp.getMainFrameController().setInfo("Änderungen wurden noch nicht gespeichert!", "INFO", true);
+            //mainApp.getMainFrameController().setInfo("Änderungen wurden noch nicht gespeichert!", "INFO", true);
+            // mainApp.getMainFrameController().setMeldungInListView("Änderungen wurden noch nicht gespeichert"
+            //         , "INFO");
         }
     }
 
@@ -447,6 +466,7 @@ public class MitgliedViewController implements Observer {
      */
     public void handleSpeichernButton() throws InterruptedException {
         //TODO eigentlich nur auszuführen, wenn überhaupt Daten geändert wurden.
+        //TODO nach dem Speichern funktioniert der Filter nicht mehr
 
         // Die Gültigkeit der Daten wird überprüft. Falls die Daten gültig sind wird gespeichert.
         if (isInputValid()) {
@@ -473,21 +493,14 @@ public class MitgliedViewController implements Observer {
 
             // die Änderungen werden an die Datenbank weitergegeben
             DatabaseOperation.updateMitglied(aktuellesMitglied, mainApp.getCurrentUser());
-
             // Eine Bestätigung wird im Infofeld ausgegeben
-            mainApp.getMainFrameController().setInfo("Änderungen gespeichert!", "OK", true);
+            //mainApp.getMainFrameController().setInfo("Änderungen gespeichert!", "OK", true);
+            mainApp.getMainFrameController().setMeldungInListView("Änderungen gespeichert", "OK");
+            //   mitgliedArrayList = new ArrayList<>(mainApp.getAdressController().getMitgliederListe());
 
-            // Die betroffenen Daten werden im UI aktualisiert
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    setMitglied(aktuellesMitglied);
-                    mitgliedTabelle.requestFocus();
-                    mitgliedTabelle.getSelectionModel().select(mitgliedArrayList.indexOf(aktuellesMitglied));
-                    mitgliedTabelle.getFocusModel().focus(mitgliedArrayList.indexOf(aktuellesMitglied));
-                }
-            });
             unsavedChanges = false;
+
+            // initialize();
         }
     }
 
@@ -522,7 +535,8 @@ public class MitgliedViewController implements Observer {
             }
         }
         if(!isValid && errorMeldung.length()>0) {
-            mainApp.getMainFrameController().setInfo(errorMeldung, "NOK", true);
+            // mainApp.getMainFrameController().setInfo(errorMeldung, "NOK", true);
+            mainApp.getMainFrameController().setMeldungInListView(errorMeldung, "NOK");
         }
         return isValid;
     }
@@ -537,10 +551,7 @@ public class MitgliedViewController implements Observer {
                 @Override
                 public void run() {
                     mitgliedTabelle.setItems(FXCollections.observableArrayList(((AdressController) o).getMitgliederListe()));
-                   // mitgliedTabelle.setItems((FXCollections.observableArrayList(((mainApp.getAdressController().getMitgliederListe())))));
-                    // mitgliedTabelle.getSelectionModel().select(aktuellesMitglied);
-                    mitgliedArrayList = mainApp.getAdressController().getMitgliederListe();
-                    // TODO im AdressController soll die Mitgliederliste aktualisiert werden und dann hier übergeben..
+                    mitgliedArrayList = ac.getMitgliederListe();
                 }
             });
 

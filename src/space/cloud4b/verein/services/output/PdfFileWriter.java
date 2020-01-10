@@ -3,7 +3,8 @@ package space.cloud4b.verein.services.output;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import org.apache.poi.util.IOUtils;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.user.User;
@@ -16,7 +17,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
-public abstract class PdfWriterV02 {
+/**
+ * Die Klasse bietet Methoden zur Erstellung von PDF-Dokumenten
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-20
+ */
+public abstract class PdfFileWriter {
     public static final String DEST = "ressources/files/pdf/Mitgliederliste_" + LocalDate.now().toString() + ".pdf";
     public static Font font = new Font(Font.FontFamily.UNDEFINED, 8, Font.NORMAL);
     public static Font fontBold = new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD);
@@ -36,7 +43,9 @@ public abstract class PdfWriterV02 {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            PdfWriter writer = PdfWriter.getInstance(document, fos);
+            com.itextpdf.text.pdf.PdfWriter writer = com.itextpdf.text.pdf.PdfWriter.getInstance(document, fos);
+
+            // HeaderFooterPageEvent reagiert auf
             HeaderFooterPageEvent event = new HeaderFooterPageEvent();
             event.setHeader("Mitgliederliste ");
             event.setUser(user);
@@ -128,7 +137,8 @@ public abstract class PdfWriterV02 {
 
 
                 // Spalte 2
-                Paragraph paragraph1CellCol02 = new Paragraph(mitglied.getKurzbezeichnung(), fontBold);
+                Paragraph paragraph1CellCol02 = new Paragraph(mitglied.getNachName() + " "
+                        + mitglied.getVorname(), fontBold);
                 paragraph1CellCol02.setLeading(5);
                 Paragraph paragraph2CellCol02 = new Paragraph(mitglied.getAdresse(), font);
                 Paragraph paragraph3CellCol02 = new Paragraph(mitglied.getPlz() + " " + mitglied.getOrt(), font);
@@ -246,30 +256,4 @@ public abstract class PdfWriterV02 {
 
     }
 
-    public static void setHeader(PdfWriter writer, Document document) {
-        PdfContentByte cb = writer.getDirectContent();
-        FontSelector fs = new FontSelector();
-        Font fontTitel = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
-        fontTitel.setColor(new BaseColor(247, 136, 136));
-        fs.addFont(fontTitel);
-        Phrase header = new Phrase("this is a header", font);
-        Phrase footer = new Phrase("this is a footer)", font);
-        Paragraph titel = new Paragraph("Mitgliederliste", fontTitel);
-        titel.setSpacingAfter(20F);
-        try {
-            document.add(titel);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
-        ColumnText.showTextAligned(cb, Element.ALIGN_CENTER,
-                header,
-                (document.right() - document.left()) / 2 + document.leftMargin(),
-                document.top() + 10, 0);
-        ColumnText.showTextAligned(cb, Element.ALIGN_CENTER,
-                footer,
-                (document.right() - document.left()) / 2 + document.leftMargin(),
-                document.bottom() - 10, 0);
-
-
-    }
 }

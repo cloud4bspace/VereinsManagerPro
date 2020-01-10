@@ -303,7 +303,7 @@ public abstract class ExcelWriter extends Application {
             row.createCell(3)
                     .setCellValue(teilnehmer.getAnmeldungProperty().getValue().toString());
             row.createCell(4)
-                    .setCellValue(teilnehmer.getAnmeldungText());
+                    .setCellValue(teilnehmer.getAnmeldungTextProperty().getValue());
 
         }
 

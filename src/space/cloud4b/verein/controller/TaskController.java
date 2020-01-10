@@ -7,35 +7,52 @@ import space.cloud4b.verein.services.Subject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Objects;
 
+/**
+ * Die Klasse TaskController stellt den fxml-Controllern die benötigten Listen und Daten zur
+ * Verfügung, wie z.B. die Taskliste (ArrayList<Task>)
+ * Zudem überwacht die Klasse die zugrundeliegenden MYSQL-Tabelle und gibt Änderungen, Ergänzungen und
+ * Löschungen an die in der Observer-Liste (observerList) eingetragenen fxml-Controllern weiter.
+ * Dazu implementiert die Klasse das Subject-Interface
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2020-01-07
+ * @see space.cloud4b.verein.services.Subject
+ */
 public class TaskController implements Subject {
 
     int anzahlTasks = 0;
+    int anzahlOpenTasks = 0;
     private Timestamp timestamp = null; // Zeitstempel der letzten Änderung im der Mitglieder-Datenbank
     private ArrayList<Observer> observerList;
     private ArrayList<Task> taskListe;
 
 
     public TaskController() {
+
+        // Die benötigten Listen werden instanziert
         observerList = new ArrayList<>();
         taskListe = DatabaseReader.getTaskList();
-        startTasksObserver(); //TODO hier noch zu fürh
+
+        // der Observer-Thread wird gestartet
+        startTasksObserver();
     }
 
     /**
-     * aktualisiert die Anzahl der Termine und benachrichtigt die Observer
-     * @param anzahlTasks
+     * Gibt die Anzahl Tasks als int zurück
      */
-    public void updateAnzahlTasks(int anzahlTasks) {
-        this.anzahlTasks = anzahlTasks;
-        Notify();
+    public int getAnzahlOpenTasks() {
+        return anzahlOpenTasks;
     }
 
-
-    public int getAnzahlTasks() {
-        return anzahlTasks;
+    public void setAnzahlOpenTasks(int anzahlOpenTasks) {
+        this.anzahlOpenTasks = anzahlOpenTasks;
     }
 
+    /**
+     * Gibt eine Taskliste als ArrayList zurück
+     */
     public ArrayList<Task> getTasksAsArrayList() {
         return taskListe;
     }
@@ -45,40 +62,48 @@ public class TaskController implements Subject {
      * Observer werden benachrichtigt.
      */
     public void updateListen() {
-        Notify();
+        this.taskListe = DatabaseReader.getTaskList();
+        System.out.println("Aenderungen bei Listen umgesetzt");
     }
 
     /**
      * aktualisiert den Zeitstempel für die letzte Änderung in der Termin-Tabelle der Datenbank
-     * @param neuerZeitstempel
+     *
+     * @param neuerZeitstempel der aktuelle (höchste) Zeitstempel
      */
-    public void updateLetzeAenderung(Timestamp neuerZeitstempel){
+    public void updateLetzeAenderung(Timestamp neuerZeitstempel) {
         this.timestamp = neuerZeitstempel;
         System.out.println("Aenderungen bei den Tasks mit neuem Zeitstempel (" + neuerZeitstempel + ") festgestellt");
-        Notify();
     }
-    public void setAnzahlTasks(ArrayList<Task> taskListe) {
-        this.taskListe = taskListe;
+
+    public void setAnzahlTasks(int anzahlTasks) {
+        this.anzahlTasks = anzahlTasks;
     }
+
     private void startTasksObserver() {
         Runnable observerTask = () -> {
-            int zaehler = 0;
+            boolean update = false;
             while (true) {
-                if(DatabaseReader.readAnzahlTasks() != anzahlTasks) {
-                    updateAnzahlTasks(DatabaseReader.readAnzahlTasks());
-                    this.taskListe = DatabaseReader.getTaskList();
-                    updateListen();
+                if (DatabaseReader.readTotalAnzahlTasks() != anzahlTasks) {
+                    setAnzahlTasks(DatabaseReader.readTotalAnzahlTasks());
+                    setAnzahlOpenTasks(DatabaseReader.readAnzahlTasks());
+                    update = true;
                 }
                 // hat sich der Zeitstempel der letzten Äenderung verändert?
-              /*  else if(this.timestamp == null) {
-                    updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
-                    this.taskListe = DatabaseReader.getTaskList();
-                    updateListen();
-                }*/
+                else if (this.timestamp == null || Objects.requireNonNull(DatabaseReader.readLetzteAenderungTask())
+                        .after(this.timestamp)) {
+                    updateLetzeAenderung(DatabaseReader.readLetzteAenderungTask());
+                    update = true;
+                }
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-
+                    e.printStackTrace();
+                }
+                if (update) {
+                    update = false;
+                    updateListen();
+                    Notify();
                 }
             }
         };
@@ -87,27 +112,40 @@ public class TaskController implements Subject {
         thread.start();
     }
 
-
+    /**
+     * Methode fügt das übergebene Objekt zur Observer-Liste hinzu
+     */
     @Override
     public void Attach(Observer o) {
+        // überprüfen, ob ein Objekt derselben Klasse bereits vorhanden ist und ggf. löschen
+        for (int i = 0; i < observerList.size(); i++) {
+            System.out.println("O#" + i + ": " + observerList.get(i));
+            if (observerList.get(i).getClass().equals(o.getClass())) {
+                observerList.remove(i);
+            }
+        }
+        // neuen Observer hinzufügen
         observerList.add(o);
     }
 
+    /**
+     * Methode löscht das übergebene Objekt aus der Observer-Liste
+     */
     @Override
     public void Dettach(Observer o) {
         observerList.remove(o);
     }
 
+    /**
+     * Methode durchläuft die in der Observerliste eingetragenen Klassen und ruft dort die
+     * update-Methode auf.
+     */
     @Override
     public void Notify() {
-        for(int i = 0; i <observerList.size(); i++)
-        {
-            observerList.get(i).update(this);
+        for (Observer observer : observerList) {
+            observer.update(this);
         }
-
     }
 
-    public int getanzahlTasks() {
-        return anzahlTasks;
-    }
+
 }

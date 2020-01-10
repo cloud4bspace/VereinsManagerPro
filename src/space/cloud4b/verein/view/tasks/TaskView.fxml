@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8"
+            fx:controller="space.cloud4b.verein.view.tasks.TaskViewController">
+    <children>
+        <BorderPane layoutX="89.0" layoutY="121.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <center>
+                <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="TOP_LEFT">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#handleErfassenButton" text="Task erfassen..">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0"/>
+                            </VBox.margin>
+                        </Button>
+                        <TreeTableView fx:id="taskTreeTableView" prefHeight="1000.0" prefWidth="200.0">
+                            <columns>
+                                <TreeTableColumn fx:id="titelSpalte" minWidth="200.0" prefWidth="-1.0"/>
+                                <TreeTableColumn fx:id="idSpalte" prefWidth="75.0" style="-fx-background-color: red;"
+                                                 text="Column X"/>
+                                <TreeTableColumn fx:id="tageBisTerminSpalte" prefWidth="75.0" text="Column X"/>
+                                <TreeTableColumn fx:id="prioSpalte" prefWidth="75.0" text="Column X"/>
+                                <TreeTableColumn fx:id="terminSpalte" prefWidth="75.0" text="Column X"/>
+                                <TreeTableColumn fx:id="verantwortlicheSpalte" prefWidth="75.0" text="Column X"/>
+                                <TreeTableColumn fx:id="detailsSpalte" prefWidth="-1.0"/>
+                            </columns>
+                        </TreeTableView>
+                    </children>
+                </VBox>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

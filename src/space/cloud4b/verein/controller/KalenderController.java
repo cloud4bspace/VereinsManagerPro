@@ -10,31 +10,41 @@ import space.cloud4b.verein.services.Subject;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
-public class KalenderController implements Subject  {
+/**
+ * Die Klasse KalenderController stellt den fxml-Controllern die benötigten Listen und Daten zur
+ * Verfügung, wie z.B. die Termin- oder Teilnehmerliste.
+ * Zudem überwacht die Klasse die zugrundeliegenden MYSQL-Tabelle und gibt Änderungen, Ergänzungen und
+ * Löschungen an die in der Observer-Liste (observerList) eingetragenen fxml-Controllern weiter.
+ * Dazu implementiert die Klasse das Subject-Interface
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-17
+ * @see space.cloud4b.verein.services.Subject
+ */
+public class KalenderController implements Subject {
 
-    int anzahlTermine = 0;
-    int anzahlMeldungen = 0;
-    private Timestamp timestamp = null; // Zeitstempel der letzten Änderung im der Mitglieder-Datenbank
+    int anzahlTermine;
+    int anzahlMeldungen;
+    private Timestamp timestamp = null; // Zeitstempel der letzten Änderung im der Termin-Tabelle
+    private Timestamp timestampAnmeldungen; // Zeitstempel der letzten Änderung im der Anmeldungen-Tabelle
     private ArrayList<Observer> observerList;
     private ArrayList<Termin> terminListe;
     private ArrayList<Termin> kommendeTermineListe = new ArrayList<>();
     private ArrayList<Jubilaeum> jubilaeumsListe;
-    // TODO die Anmeldeliste sollte konsequenterweise auch hier geführt werden..
 
     public KalenderController() {
-        System.out.println("KalenderController erzeugt");
         observerList = new ArrayList<>();
-        jubilaeumsListe = DatabaseReader.jubilaenLaden();
-        terminListe = DatabaseReader.getTermineAsArrayList();
-        kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-        startKalenderObserver(); //TODO hier noch zu fürh
+        jubilaeumsListe = DatabaseReader.getJubilaeenAsArrayList();
+        startKalenderObserver();
         startAnmeldungenObserver();
     }
 
     /**
      * aktualisiert die Anzahl der Termine und benachrichtigt die Observer
-     * @param anzahlTermine
+     *
+     * @param anzahlTermine - Anzahl der Termine gem. MYSQL-Datenbank
      */
     public void updateAnzahlTermine(int anzahlTermine) {
         this.anzahlTermine = anzahlTermine;
@@ -43,11 +53,10 @@ public class KalenderController implements Subject  {
 
     /**
      * aktualisiert die Anzahl der Rückmeldungen und benachrichtigt die Observer
-     * @param anzahlMeldungen
+     * @param anzahlMeldungen - Die Anzahl
      */
     public void updateAnzahlMeldungen(int anzahlMeldungen) {
         this.anzahlMeldungen = anzahlMeldungen;
-        Notify();
     }
 
     public int getAnzahlTermine() {
@@ -71,105 +80,141 @@ public class KalenderController implements Subject  {
      * die Listen (ArrayList) werden nach einer Änderung in der Datenbank aktualisiert und die
      * Observer werden benachrichtigt.
      */
-    public void updateListen() {
-         Notify();
+    public void updateTerminListen() {
+        this.terminListe = DatabaseReader.getTermineAsArrayList();
+        this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
     }
 
     /**
      * aktualisiert den Zeitstempel für die letzte Änderung in der Termin-Tabelle der Datenbank
-     * @param neuerZeitstempel
+     *
+     * @param neuerZeitstempel Der neue (höchste) Zeitstempel aus der Termin-Tabelle
      */
-    public void updateLetzeAenderung(Timestamp neuerZeitstempel){
+    public void updateLetzeTerminAenderung(Timestamp neuerZeitstempel) {
         this.timestamp = neuerZeitstempel;
-        System.out.println("Aenderungen bei den Mitgliedern mit neuem Zeitstempel (" + neuerZeitstempel + ") festgestellt");
-        Notify();
     }
-    public void setTerminliste(ArrayList<Termin> terminListe) {
-        this.terminListe = terminListe;
+
+    /**
+     * aktualisiert den Zeitstempel für die letzte Änderung in der Termin-Tabelle der Datenbank
+     *
+     * @param neuerZeitstempel - der neue (höchste) Zeitstemptel gem. MYSQL-Tabelle
+     */
+    public void updateLetzeAnmeldungAenderung(Timestamp neuerZeitstempel) {
+        this.timestampAnmeldungen = neuerZeitstempel;
     }
+
+    /**
+     * Methode startet den Observer-Thread "Kalender" und überprüft in einem ständigen
+     * Loop alle 2 Sekunden die zugrundeliegenden MYSQL-Tabelle auf folgende Änderungen:
+     * - Anzahl der Datensätze hat sich geändert
+     * - Der Zeitstempel der letzen Änderung bei einem Datensatz hat sich geändert
+     * Festgestellte Änderungen werden in den Instanzvariabeln nachgeführt.
+     */
     private void startKalenderObserver() {
         Runnable observerKalender = () -> {
-            int zaehler = 0;
             while (true) {
-                if(DatabaseReader.readAnzahlTermine() != anzahlTermine) {
+                boolean update = false;
+                if (DatabaseReader.readAnzahlTermine() != anzahlTermine) {
                     updateAnzahlTermine(DatabaseReader.readAnzahlTermine());
-                    this.terminListe = DatabaseReader.getTermineAsArrayList();
-                    this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-                    updateListen();
+                    update = true;
                 }
                 // hat sich der Zeitstempel der letzten Äenderung verändert?
-                else if(this.timestamp == null) {
-                    updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
-                    this.terminListe = DatabaseReader.getTermineAsArrayList();
-                    this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-                    updateListen();
-                } else if (DatabaseReader.readLetzteAenderung().after(this.timestamp)){
-                    this.terminListe = DatabaseReader.getTermineAsArrayList();
-                    this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-                    updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
-                    updateListen();
+                else if (this.timestamp == null) {
+                    updateLetzeTerminAenderung(DatabaseReader.readLetzteAenderung());
+                    update = true;
+                } else if (Objects.requireNonNull(DatabaseReader.readLetzteAenderung()).after(this.timestamp)) {
+                    updateLetzeTerminAenderung(DatabaseReader.readLetzteAenderung());
+                    update = true;
+                }
+                if (update) {
+                    updateTerminListen();
+                    Notify();
                 }
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-
+                    e.printStackTrace();
                 }
             }
         };
         Thread thread = new Thread(observerKalender);
+        thread.setName("TerminObserver");
         thread.setDaemon(true);
         thread.start();
     }
 
+    /**
+     * Methode startet den Observer-Thread "Terminkontrolle" und überprüft in einem ständigen
+     * Loop alle 2 Sekunden die zugrundeliegenden MYSQL-Tabelle auf folgende Änderungen:
+     * - Anzahl der Datensätze hat sich geändert
+     * - Der Zeitstempel der letzen Änderung bei einem Datensatz hat sich geändert
+     * Festgestellte Änderungen werden in den Instanzvariabeln nachgeführt.
+     */
     private void startAnmeldungenObserver() {
         Runnable observerAnmeldungen = () -> {
-            int zaehler = 0;
             while (true) {
-                if(DatabaseReader.getAnzMeldungen() != anzahlMeldungen) {
+                boolean update = false;
+                if (DatabaseReader.getAnzMeldungen() != anzahlMeldungen) {
                     updateAnzahlMeldungen(DatabaseReader.getAnzMeldungen());
-                    updateListen();
+                    update = true;
                 }
                 // hat sich der Zeitstempel der letzten Äenderung verändert?
-                // TODO muss man noch implementieren
-                /*
-                else if(this.timestamp == null) {
-                    updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
-                    this.terminListe = DatabaseReader.getTermineAsArrayList();
-                    this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-                    updateListen();
-                } else if (DatabaseReader.readLetzteAenderung().after(this.timestamp)){
-                    this.terminListe = DatabaseReader.getTermineAsArrayList();
-                    this.kommendeTermineListe = DatabaseReader.getKommendeTermineAsArrayList();
-                    updateLetzeAenderung(DatabaseReader.readLetzteAenderung());
-                    updateListen();
-                }*/
+                else if (this.timestampAnmeldungen == null) {
+                    updateLetzeAnmeldungAenderung(DatabaseReader.readLetzteAnmeldungAenderung());
+                    update = true;
+                } else if (Objects.requireNonNull(DatabaseReader.readLetzteAnmeldungAenderung())
+                        .after(this.timestampAnmeldungen)) {
+                    updateLetzeAnmeldungAenderung(DatabaseReader.readLetzteAnmeldungAenderung());
+                    update = true;
+                }
+                if (update) {
+                    Notify();
+                }
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-
+                    e.printStackTrace();
                 }
             }
         };
         Thread thread = new Thread(observerAnmeldungen);
+        thread.setName("TerminkontrollObserver");
         thread.setDaemon(true);
         thread.start();
     }
 
+    /**
+     * Methode fügt das übergebene Objekt zur Observer-Liste hinzu
+     */
     @Override
     public void Attach(Observer o) {
+        // überprüfen, ob ein Objekt derselben Klasse bereits vorhanden ist und ggf. löschen
+        for (int i = 0; i < observerList.size(); i++) {
+            System.out.println("O#" + i + ": " + observerList.get(i));
+            if (observerList.get(i).getClass().equals(o.getClass())) {
+                observerList.remove(i);
+            }
+        }
+        // neuen Observer hinzufügen
         observerList.add(o);
     }
 
+    /**
+     * Methode löscht das übergebene Objekt aus der Observer-Liste
+     */
     @Override
     public void Dettach(Observer o) {
         observerList.remove(o);
     }
 
+    /**
+     * Methode durchläuft die in der Observerliste eingetragenen Klassen und ruft dort die
+     * update-Methode auf.
+     */
     @Override
     public void Notify() {
-        for(int i = 0; i <observerList.size(); i++)
-        {
-            observerList.get(i).update(this);
+        for (Observer observer : observerList) {
+            observer.update(this);
         }
 
     }

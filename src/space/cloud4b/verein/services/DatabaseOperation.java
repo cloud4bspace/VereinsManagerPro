@@ -3,6 +3,7 @@ package space.cloud4b.verein.services;
 import org.apache.commons.codec.digest.DigestUtils;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.kalender.Termin;
+import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.connection.MysqlConnection;
 import space.cloud4b.verein.services.output.LogWriter;
@@ -43,14 +44,15 @@ public abstract class DatabaseOperation {
 
         }
     }
+
     /**
      * neues Mitglied in der Datenbank anlegen
      */
-    public static int saveNewMember(String nachname, String vorname, String eintrittsDatum){
+    public static int saveNewMember(String nachname, String vorname, String eintrittsDatum, User currentUser) {
 
-        String query= "INSERT INTO usr_web116_5.kontakt (KontaktId, KontaktNachname, " +
-                    "KontaktVorname, KontaktEintrittsdatum, KontaktIstMitglied, KontaktTrackChangeUsr, " +
-                    "KontaktTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, '1', ?, CURRENT_TIMESTAMP)";
+        String query = "INSERT INTO usr_web116_5.kontakt (KontaktId, KontaktNachname, " +
+                "KontaktVorname, KontaktEintrittsdatum, KontaktIstMitglied, KontaktTrackChangeUsr, " +
+                "KontaktTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, '1', ?, CURRENT_TIMESTAMP)";
         MysqlConnection conn = new MysqlConnection();
         PreparedStatement ps = null;
         try {
@@ -58,36 +60,136 @@ public abstract class DatabaseOperation {
             ps.setString(1, nachname);
             ps.setString(2, vorname);
             ps.setString(3, eintrittsDatum);
-            ps.setString(4, System.getProperty("user.name"));
+            ps.setString(4, currentUser.getUserName());
+            // TODO Username vom angemeldeten User lesen
             System.out.println("neues Mitglied hinzugefügt: " + ps.executeUpdate());
-           // System.out.println(ps.getGeneratedKeys());
+            System.out.println(ps.getGeneratedKeys());
             ResultSet keys = null;
             keys = ps.getGeneratedKeys();
             keys.next();
             int newKey = keys.getInt(1);
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePostNewLog("Mitglied", newKey, currentUser, logCounter);
             return newKey;
 
-    } catch(SQLException e) {
-        System.out.println("Fehler " + e);
+        } catch (SQLException e) {
+            System.out.println("Fehler " + e);
         }
         return 0;
     }
 
     /**
+     * neuen Task in der Datenbank anlegen
+     */
+    public static int saveNewTask(String bezeichnung, String details, String terminDatum, Mitglied verantwortlich, User user) {
+
+        String query = "INSERT INTO task (TaskId, TaskBezeichnung, TaskPrio, TaskStatus, TaskDetails, TaskTerminBis" +
+                ", TaskMitgliedId, TaskTrackChangeUser, TaskTrackChangeTimestamp) VALUES (NULL, ?, '1', '1', ?, ?, ?, ?" +
+                ", CURRENT_TIMESTAMP)";
+        MysqlConnection conn = new MysqlConnection();
+        PreparedStatement ps = null;
+        try {
+            ps = conn.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, bezeichnung);
+            ps.setString(2, details);
+            ps.setString(3, terminDatum);
+            ps.setInt(4, verantwortlich.getId());
+            ps.setString(5, user.getUserName());
+            System.out.println("neues Mitglied hinzugefügt: " + ps.executeUpdate());
+            // System.out.println(ps.getGeneratedKeys());
+            ResultSet keys = null;
+            keys = ps.getGeneratedKeys();
+            keys.next();
+            int newKey = keys.getInt(1);
+            System.out.println("KEy: " + newKey + "/" + verantwortlich.getKurzbezeichnung());
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePostNewLog("Task", newKey, user, logCounter);
+
+            // addVerantwortlichen(newKey, verantwortlich.getId(), user);
+            return newKey;
+
+        } catch (SQLException e) {
+            System.out.println("Fehler " + e);
+        }
+        return 0;
+    }
+
+
+    /**
      * Mitglied in den Datenbanken löschen
      */
-    public static void deleteMitglied(Mitglied mitglied) {
-        try(Connection conn = new MysqlConnection().getConnection();
-            Statement st = conn.createStatement()) {
-            String query= "DELETE FROM kontakt WHERE KontaktId=" + mitglied.getId();
-            st.execute(query);
+    public static void deleteMitglied(Mitglied mitglied, User currentUser) {
 
+        // Schritt 1: alte DB-Werte in Logfile schreiben
+        int logCounter = LogWriter.getLastLogCounterValue();
+        LogWriter.setNextLogCounterValue(++logCounter);
+        LogWriter.writePreDeleteLog(mitglied, currentUser, logCounter);
+
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "DELETE FROM kontakt WHERE KontaktId=" + mitglied.getId();
+            st.execute(query);
 
             query = "DELETE FROM `terminkontrolle` WHERE `KontrolleMitgliedId` = " + mitglied.getId();
             st.execute(query);
 
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Mitglied konnte nicht gelöscht werden (" + e + ")");
+        }
+    }
+
+    /**
+     * Löscht einen Termin in der Datenbank
+     *
+     * @param termin
+     */
+    public static void deleteTermin(Termin termin, User currentUser) {
+        if (termin != null) {
+
+            // Schritt 1: alte DB-Werte in Logfile schreiben
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePreDeleteLog(termin, currentUser, logCounter);
+
+            try (Connection conn = new MysqlConnection().getConnection();
+                 // Termin in der Tabelle termin löschen
+                 Statement st = conn.createStatement()) {
+                String query = "DELETE FROM termin WHERE TerminId=" + termin.getTerminId();
+                st.execute(query);
+
+                // alle Anmeldungen und Teilnahmen in der Tabelle terminkontrolle löschen
+                query = "DELETE FROM `terminkontrolle` WHERE `KontrolleTerminId` = " + termin.getTerminId();
+                st.execute(query);
+            } catch (SQLException e) {
+                System.out.println("Termin konnte nicht gelöscht werden (" + e + ")");
+            }
+        }
+
+    }
+
+    /**
+     * Löscht eine Task in der Datenbank
+     *
+     * @param task die übergebene Task
+     */
+    public static void deleteTask(Task task, User currentUser) {
+        if (task != null) {
+
+            // Schritt 1: alte DB-Werte in Logfile schreiben
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePreDeleteLog(task, currentUser, logCounter);
+
+            try (Connection conn = new MysqlConnection().getConnection();
+                 // Task in der Tabelle termin löschen
+                 Statement st = conn.createStatement()) {
+                String query = "DELETE FROM task WHERE TaskId=" + task.getTaskId();
+                st.execute(query);
+            } catch (SQLException e) {
+                System.out.println("Task konnte nicht gelöscht werden (" + e + ")");
+            }
         }
     }
 
@@ -95,9 +197,9 @@ public abstract class DatabaseOperation {
      * Prüft aufgrund des Austrittsdatums den aktuellen Mitgliederstatus
      */
     public static void checkMitgliederStatus() {
-        try(Connection conn = new MysqlConnection().getConnection();
-            Statement st = conn.createStatement()) {
-            String query= "UPDATE usr_web116_5.kontakt SET `KontaktIstMitglied` = 0 WHERE KontaktAustrittsdatum < CURRENT_DATE AND KontaktAustrittsdatum NOT LIKE '0000-00-00'";
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "UPDATE usr_web116_5.kontakt SET `KontaktIstMitglied` = 0 WHERE KontaktAustrittsdatum < CURRENT_DATE AND KontaktAustrittsdatum NOT LIKE '0000-00-00'";
             st.executeUpdate(query);
 
         } catch(SQLException e) {
@@ -107,10 +209,20 @@ public abstract class DatabaseOperation {
 
     /**
      * Das Übergebene Objekt vom Typ Mitglied wird in der Kontakt-Tabelle aktualisiert
+     * Zuvor werden die alten Werte aus der DB in ein Logfile geschrieben.
+     * Nach dem Update werden die neuen Werte ebenfalls in das Logfile geschrieben.
+     *
      * @param mitglied das geänderte und zu aktualisierende Mitlied
      */
     public static void updateMitglied(Mitglied mitglied, User currentUser) {
-        LogWriter.writeMitgliedUpdateLog(mitglied, currentUser);
+
+        // Schritt 1: alte DB-Werte in Logfile schreiben
+        int logCounter = LogWriter.getLastLogCounterValue();
+        LogWriter.setNextLogCounterValue(++logCounter);
+        LogWriter.writePreUpdateLog(mitglied, currentUser, logCounter);
+
+
+        // Schritt 2: Update in DB ausführen
         MysqlConnection conn = new MysqlConnection();
         boolean istMitglied = false;
 
@@ -169,8 +281,12 @@ public abstract class DatabaseOperation {
             preparedStmt.setString(19, mitglied.getEmailII());
             preparedStmt.setString(20, currentUser.toString());
             preparedStmt.setInt(21, mitglied.getId());
-            // execute the java preparedstatement
+
+            // prepared Statement ausführen
             System.out.println("Rückmeldung preparedStmt: " + preparedStmt.executeUpdate());
+
+            // Schritt 3: neue DB-Werte in Logilfe schreiben
+            LogWriter.writePostUpdateLog(mitglied, currentUser, logCounter);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -180,10 +296,16 @@ public abstract class DatabaseOperation {
 
     /**
      * Das Übergebene Objekt vom Typ Termin wird in der Termin-Tabelle aktualisiert
+     *
      * @param termin der geänderte Termin
      */
-    public static void updateTermin(Termin termin) {
-        LogWriter.writeTerminUpdateLog(termin);
+    public static void updateTermin(Termin termin, User user) {
+        // Schritt 1: alte DB-Werte in Logfile schreiben
+        int logCounter = LogWriter.getLastLogCounterValue();
+        LogWriter.setNextLogCounterValue(++logCounter);
+        LogWriter.writePreUpdateLog(termin, user, logCounter);
+
+        // Schritt 2: DB-Tabelle aktualisieren
         MysqlConnection conn = new MysqlConnection();
 
         // create the java mysql update preparedstatement
@@ -220,10 +342,13 @@ public abstract class DatabaseOperation {
             }
             preparedStmt.setInt(7, termin.getKatIElement().getStatusElementKey());
             preparedStmt.setInt(8, termin.getKatIIElement().getStatusElementKey());
-            preparedStmt.setString(9, System.getProperty("user.name"));
+            preparedStmt.setString(9, user.getUserTxt());
             preparedStmt.setInt(10, termin.getTerminId());
             // execute the java preparedstatement
             System.out.println("Rückmeldung preparedStmt: " + preparedStmt.executeUpdate());
+
+            // Schritt 3: neue DB-Werte in Logilfe schreiben
+            LogWriter.writePostUpdateLog(termin, user, logCounter);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -231,6 +356,50 @@ public abstract class DatabaseOperation {
 
     }
 
+    public static void updateTask(Task task, User currentUser) {
+
+        // Schritt 1: alte DB-Werte in Logfile schreiben
+        int logCounter = LogWriter.getLastLogCounterValue();
+        LogWriter.setNextLogCounterValue(++logCounter);
+        LogWriter.writePreUpdateLog(task, currentUser, logCounter);
+
+        // Schritt 2: DB-Tabelle aktualisieren
+        MysqlConnection conn = new MysqlConnection();
+
+        // create the java mysql update preparedstatement
+        String query = "UPDATE usr_web116_5.task SET TaskBezeichnung = ?,"
+                + " TaskPrio = ?,"
+                + " TaskStatus = ?,"
+                + " TaskDetails = ?,"
+                + " TaskTerminBis = ?,"
+                + " TaskMitgliedId = ?,"
+                + " TaskTrackChangeUser = ?,"
+                + " TaskTrackChangeTimestamp = CURRENT_TIMESTAMP"
+                + " WHERE TaskId = ?";
+        //einzelne Änderungen abfragen und dann Wert alt und neu, User und Timestamp in logdatei schreiben
+        PreparedStatement preparedStmt = null;
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            preparedStmt = conn.getConnection().prepareStatement(query);
+            preparedStmt.setString(1, task.getTaskTitel());
+            preparedStmt.setInt(2, task.getPrioStatus().getStatusElementKey());
+            preparedStmt.setInt(3, task.getStatusStatus().getStatusElementKey());
+            preparedStmt.setString(4, task.getTaskText());
+            preparedStmt.setString(5, task.getTaskDatum().toString());
+            preparedStmt.setInt(6, task.getVerantwortlichesMitglied().getId());
+            preparedStmt.setString(7, currentUser.getUserTxt());
+            preparedStmt.setInt(8, task.getTaskId());
+            // execute the java preparedstatement
+            System.out.println("Rückmeldung preparedStmt (updateTask): " + preparedStmt.executeUpdate());
+
+            // Schritt 3: neue DB-Werte in Logilfe schreiben
+            LogWriter.writePostUpdateLog(task, currentUser, logCounter);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Save new User credentials
@@ -245,12 +414,14 @@ public abstract class DatabaseOperation {
             boolean isUser = DatabaseReader.isUser(mitgliedId);
             MysqlConnection conn = new MysqlConnection();
             String query = "INSERT INTO benutzer (BenutzerId, KontaktId, BenutzerName, BenutzerPw," +
-                    " BenutzerLastlogin, BenutzerNumberLogins, BenutzerSperrcode) VALUES (NULL, ?, ?, ?, CURRENT_DATE, ?, '0');";
+                    " BenutzerLastlogin, BenutzerNumberLogins, BenutzerSperrcode, BenutzerTrackChangeUsr," +
+                    " BenutzerTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, CURRENT_DATE, ?, '0', ?, CURRENT_TIMESTAMP );";
             try (PreparedStatement ps = conn.getConnection().prepareStatement(query)) {
                 ps.setInt(1, mitgliedId);//KontaktID
                 ps.setString(2, eMail);
                 ps.setString(3, DigestUtils.sha1Hex(String.valueOf(pw)));
-                ps.setInt(4, 1);
+                ps.setInt(4, 0);
+                ps.setString(5, "neuer User #" + mitgliedId);
                 System.out.println("Rückmeldung preparedStmt: " + ps.executeUpdate());
             } catch (SQLException e) {
                 System.out.println("Fehler: " + e);
@@ -263,18 +434,16 @@ public abstract class DatabaseOperation {
     }
 
 
-
-
-
     /**
      * legt in der MySql-Datenbank einen neuen Termin an mit den übergebenen Werten
-     * @param terminText Bezeichnung des Termins
+     *
+     * @param terminText  Bezeichnung des Termins
      * @param terminDatum Datum des Termins
      * @return gibt die Id des neuen Datensatzes zurück
      */
-    public static int saveNewTermin(String terminText, String terminDatum) {
+    public static int saveNewTermin(String terminText, String terminDatum, User currentUser) {
 
-        String query= "INSERT INTO usr_web116_5.termin (TerminId, TerminDatum, TerminText, " +
+        String query = "INSERT INTO usr_web116_5.termin (TerminId, TerminDatum, TerminText, " +
                 "TerminTrackChangeUsr, " +
                 "TerminTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP)";
         MysqlConnection conn = new MysqlConnection();
@@ -283,13 +452,16 @@ public abstract class DatabaseOperation {
             ps = conn.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, terminDatum);
             ps.setString(2, terminText);
-            ps.setString(3, System.getProperty("user.name"));
+            ps.setString(3, currentUser.getUserName());
             System.out.println("neuer Temin hinzugefügt: " + ps.executeUpdate());
             // System.out.println(ps.getGeneratedKeys());
             ResultSet keys = null;
             keys = ps.getGeneratedKeys();
             keys.next();
             int newKey = keys.getInt(1);
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePostNewLog("Termin", newKey, currentUser, logCounter);
             return newKey;
 
         } catch(SQLException e) {
@@ -309,6 +481,21 @@ public abstract class DatabaseOperation {
              Statement st = conn.createStatement()) {
             String query = "UPDATE benutzer SET BenutzerLastlogin= CURRENT_DATE(), BenutzerNumberLogins = " +
                     "BenutzerNumberLogins +1 WHERE KontaktId=" + mitgliedId;
+            st.execute(query);
+
+        } catch (SQLException e) {
+            System.out.println("Mitglied konnte nicht gelöscht werden (" + e + ")");
+        }
+    }
+
+
+    public static void setSperrCode(int sperrCode, User user, User currentUser) {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "UPDATE benutzer SET BenutzerSperrcode = '" + sperrCode +
+                    "',  BenutzerTrackChangeUsr = '" + currentUser.getUserName() +
+                    "', BenutzerTrackChangeTimestamp = CURRENT_TIMESTAMP " +
+                    "WHERE BenutzerId=" + user.getUserId();
             st.execute(query);
 
         } catch (SQLException e) {

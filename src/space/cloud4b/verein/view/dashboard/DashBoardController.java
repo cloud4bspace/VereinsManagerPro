@@ -3,13 +3,13 @@ package space.cloud4b.verein.view.dashboard;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.GridPane;
 import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.controller.AdressController;
 import space.cloud4b.verein.controller.KalenderController;
-import space.cloud4b.verein.controller.MainController;
+import space.cloud4b.verein.controller.RanglisteController;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.kalender.Jubilaeum;
 import space.cloud4b.verein.model.verein.kalender.Termin;
@@ -18,19 +18,18 @@ import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.services.Observer;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 public class DashBoardController implements Observer {
 
     private MainApp mainApp;
-    private GridPane gridPane;
-    private ArrayList<Observer> observerList;
-    MainController mainController;
-    AdressController adressController;
-    KalenderController kalenderController;
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private TableView<Mitglied> mitgliederTabelle;
+    @FXML
+    private Label mitgliederLabel;
     @FXML
     private TableColumn<Mitglied, Number> idSpalte;
     @FXML
@@ -45,16 +44,20 @@ public class DashBoardController implements Observer {
     @FXML
     private TableView<Termin> termineTabelle;
     @FXML
+    private Label terminLabel;
+    @FXML
     private TableColumn<Termin, String> terminDatumSpalte;
     @FXML
     private TableColumn<Termin, String> terminZeitSpalte;
     @FXML
     private TableColumn<Termin, String> terminTextSpalte;
+    @FXML
+    private TableColumn<Termin, String> terminWoSpalte;
 
     @FXML
     private TableView<Jubilaeum> jubilaeumTabelle;
     @FXML
-    private TableColumn<Jubilaeum, LocalDate> jubilaeumDatumSpalte;
+    private Label jubilaeumLabel;
     @FXML
     private TableColumn<Jubilaeum, String> jubilaeumDatumStringSpalte;
     @FXML
@@ -62,6 +65,8 @@ public class DashBoardController implements Observer {
 
     @FXML
     private TableView<Position> ranglisteTabelle;
+    @FXML
+    private Label anwesenheitenLabel;
     @FXML
     private TableColumn<Position, Number> rangSpalte;
     @FXML
@@ -81,19 +86,19 @@ public class DashBoardController implements Observer {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-//        this.mainController = new MainController(mainApp);
-        //this.adressController = new AdressController();
         mainApp.getAdressController().Attach(this);
-        //this.adressController.Attach(this);
-        // this.kalenderController = new KalenderController();
         mainApp.getKalenderController().Attach(this);
-        //this.kalenderController.Attach(this);
-        // Add observable list data to the table
-        mitgliederTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController().getMitgliederListe()));
-        termineTabelle.setItems(FXCollections.observableArrayList(mainApp.getKalenderController().getNaechsteTerminListe()));
-        // jubilaeumTabelle.setItems(this.mainApp.getVerein().getKalender().getJubilaeumsListe());
-        jubilaeumTabelle.setItems(FXCollections.observableArrayList(mainApp.getKalenderController().getJubilaeumsListe()));
-        ranglisteTabelle.setItems(mainApp.getMainController().getRangliste().getRanglistenListe());
+        mainApp.getRanglisteController().Attach(this);
+
+        // Add observable list data to the tables
+        mitgliederTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController()
+                .getMitgliederListe()));
+        termineTabelle.setItems(FXCollections.observableArrayList(mainApp.getKalenderController()
+                .getNaechsteTerminListe()));
+        jubilaeumTabelle.setItems(FXCollections.observableArrayList(mainApp.getKalenderController()
+                .getJubilaeumsListe()));
+        ranglisteTabelle.setItems(FXCollections.observableArrayList((mainApp.getRanglisteController()
+                .getRanglisteAsArrayList())));
     }
 
     /**
@@ -103,6 +108,8 @@ public class DashBoardController implements Observer {
     @FXML
     private void initialize() {
         // Mitgliederliste initialisieren
+        mitgliederLabel.setText("Mitglieder (Stand "
+                + LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)) + ")");
         idSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getIdProperty());
         vorNameSpalte.setCellValueFactory(
@@ -118,21 +125,24 @@ public class DashBoardController implements Observer {
         // Terminliste initialisieren
         terminDatumSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getDateAsLocalStringMedium());
-       terminZeitSpalte.setCellValueFactory(
+        terminZeitSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getZeitTextProperty());
         terminTextSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getTextProperty());
+        terminWoSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getOrtProperty());
 
 
         // Jubiläumsliste initialisieren
-      //  jubilaeumDatumSpalte.setCellValueFactory(
-           //     cellData -> cellData.getValue().getDatumProperty());
+        //  jubilaeumDatumSpalte.setCellValueFactory(
+        //     cellData -> cellData.getValue().getDatumProperty());
         jubilaeumTextSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getTextProperty());
         jubilaeumDatumStringSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getDateAsNiceString());
 
         // Rangliste initialisieren
+        anwesenheitenLabel.setText("Rangliste der Anwesenheiten (Jahr " + LocalDate.now().getYear() + ")");
         rangSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getRangProperty());
         mitgliedSpalte.setCellValueFactory(
@@ -146,6 +156,29 @@ public class DashBoardController implements Observer {
 
     }
 
+    /**
+     * Methode wird ausgeführt, wenn der User auf das Label oberhalb der Mitgliederliste clickt
+     * und öffnet den Mitgliederbereich
+     */
+    public void onClickedLabelMitglieder() {
+        mainApp.showMitgliedView(null);
+    }
+
+    /**
+     * Methode wird ausgeführt, wenn der User auf das Label oberhalb der Terminliste clickt
+     * und öffnet den Terminbereich
+     */
+    public void onClickedLabelTermine() {
+        mainApp.showTerminOverview();
+    }
+
+    /**
+     * Methode wird ausgeführt, wenn der User auf das Label oberhalb der Rangliste clickt
+     * und öffnet das Browserfenster für die Erfassung der Anwesenheiten/Präsenzkontrolle
+     */
+    public void onClickedLabelRangliste() {
+        mainApp.getMainFrameController().handleKontrolle();
+    }
 
     @Override
     public void update(Object o) {
@@ -155,7 +188,8 @@ public class DashBoardController implements Observer {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    mitgliederTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController().getMitgliederListe()));
+                    mitgliederTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController()
+                            .getMitgliederListe()));
                 }
 
                 // FXCollections.observableArrayList(mitgliederListe);
@@ -163,7 +197,8 @@ public class DashBoardController implements Observer {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    jubilaeumTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController().getJubilaeumsListe()));
+                    jubilaeumTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController()
+                            .getJubilaeumsListe()));
                 }
             });
         }
@@ -172,7 +207,19 @@ public class DashBoardController implements Observer {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    termineTabelle.setItems(FXCollections.observableArrayList(mainApp.getKalenderController().getNaechsteTerminListe()));
+                    termineTabelle.setItems(FXCollections.observableArrayList(mainApp.getKalenderController()
+                            .getNaechsteTerminListe()));
+                }
+            });
+        }
+
+        if (o instanceof RanglisteController) {
+            RanglisteController rc = (RanglisteController) o;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    ranglisteTabelle.setItems(FXCollections.observableArrayList((mainApp.getRanglisteController()
+                            .getRanglisteAsArrayList())));
                 }
             });
         }

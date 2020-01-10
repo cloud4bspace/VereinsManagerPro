@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import org.apache.commons.codec.digest.DigestUtils;
-import space.cloud4b.verein.controller.MainController;
 import space.cloud4b.verein.model.verein.adressbuch.Kontakt;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.kalender.Jubilaeum;
@@ -14,6 +13,7 @@ import space.cloud4b.verein.model.verein.kontrolle.rangliste.Position;
 import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.model.verein.task.Task;
+import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.connection.MysqlConnection;
 
 import java.sql.Date;
@@ -45,12 +45,88 @@ public abstract class DatabaseReader {
     }
 
     /**
+     * ermittelt die Anzahl Einträge in der Tabelle "terminkontrolle" für die Erfassung
+     * der Anwesenheiten (Präsenzkontrolle)
+     */
+    public static int getAnzAnwesenheiten() {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle WHERE KontrolleArt = 'Anwesenheit'";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return rs.getInt("Anzahl");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * ermittelt für einen bestimmten Termin die Anzahl der anwesenden Personen gemäss
+     * der Präsenzkontrolle (Tabelle "terminkontrolle")
+     */
+    public static int getAnzAnwesenheiten(Termin termin) {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle WHERE KontrolleArt = 'Anwesenheit' " +
+                    "AND KontrolleWert= 1 AND KontrolleTerminId=" + termin.getTerminId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return rs.getInt("Anzahl");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * ermittelt für einen bestimmten Termin die Anzahl der abwesenden (entschuldigten) Personen gemäss
+     * der Präsenzkontrolle (Tabelle "terminkontrolle")
+     */
+    public static int getAnzEntschuldigteAbwesenheiten(Termin termin) {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle WHERE KontrolleArt = 'Anwesenheit' " +
+                    "AND KontrolleWert= 2 AND KontrolleTerminId=" + termin.getTerminId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return rs.getInt("Anzahl");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * ermittelt für einen bestimmten Termin die Anzahl der abwesenden (unentschuldigten) Personen gemäss
+     * der Präsenzkontrolle (Tabelle "terminkontrolle")
+     */
+    public static int getAnzUnentschuldigteAbwesenheiten(Termin termin) {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle WHERE KontrolleArt = 'Anwesenheit' " +
+                    "AND KontrolleWert= 3 AND KontrolleTerminId=" + termin.getTerminId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return rs.getInt("Anzahl");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
      * ermittelt die anzahl Mitglieder, die sich zu einem Termin eingetragen haben (an-/abmeldung/vielleicht)
      */
     public static int getAnzMeldungen() {
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
-            String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle WHERE KontrolleArt = 'Anmeldung'";
+            //String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle WHERE KontrolleArt = 'Anmeldung'";
+            String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 return rs.getInt("Anzahl");
@@ -139,21 +215,94 @@ public abstract class DatabaseReader {
     }
 
     /**
-     * ermittelt die Teilnehmerliste zu einem Termin
+     * Ermittelt die Teilnehmer zu einem bestimmten Termin
+     *
+     * @param termin
+     * @param mitgliederListe
+     * @return Teilnehmer als ArrayList
      */
-    public static ArrayList<Teilnehmer> getTeilnehmer(Termin termin) {
+    public static ArrayList<Teilnehmer> getTeilnehmer(Termin termin, ArrayList<Mitglied> mitgliederListe) {
         ArrayList<Teilnehmer> teilnehmerListe = new ArrayList<>();
         Status anmeldung = new Status(5);
         Status teilnahme = new Status(6);
         int terminId = termin.getTerminId();
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
-            String query = "SELECT kontakt.KontaktId, kontakt.KontaktNachname, kontakt.KontaktVorname FROM terminkontrolle LEFT JOIN kontakt ON kontakt.KontaktId = KontrolleMitgliedId WHERE KontrolleArt = 'Anmeldung' AND KontrolleTerminId = " + terminId + " GROUP BY KontrolleMitgliedId";
+            String query = "SELECT kontakt.KontaktId, kontakt.KontaktNachname, kontakt.KontaktVorname " +
+                    "FROM terminkontrolle LEFT JOIN kontakt ON kontakt.KontaktId = KontrolleMitgliedId " +
+                    "WHERE KontrolleArt = 'Anmeldung' AND KontrolleTerminId = " + terminId +
+                    " GROUP BY KontrolleMitgliedId";
             //KontrolleArt = 'Anmeldung' TODO: Einschränkung evtl. weglassen...
 
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                Mitglied mitglied = new Mitglied(rs.getInt("KontaktId"), rs.getString("KontaktNachname"), rs.getString("KontaktVorname"));
+                for (int i = 0; i < mitgliederListe.size(); i++) {
+                    if (rs.getInt("KontaktId") == mitgliederListe.get(i).getId()) {
+                        teilnehmerListe.add(new Teilnehmer(mitgliederListe.get(i)));
+                    }
+                    ;
+                }
+            }
+            int i = 0;
+            while (teilnehmerListe.size() > i) {
+                int teilId = teilnehmerListe.get(i).getMitglied().getId();
+                query = "SELECT `KontrolleWert` AS AnmeldeStatus, KontrolleBemerkungen FROM `terminkontrolle` " +
+                        "WHERE `KontrolleTerminId` = " + terminId + " " +
+                        "AND `KontrolleMitgliedId` = " + teilId +
+                        " AND `KontrolleArt`='Anmeldung'";
+                rs = st.executeQuery(query);
+                while (rs.next()) {
+                    // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
+                    teilnehmerListe.get(i).setAnmeldeStatus(anmeldung.getStatusElemente().get(rs.getInt("AnmeldeStatus")));
+                    teilnehmerListe.get(i).setAnmeldungText(rs.getString("KontrolleBemerkungen"));
+                }
+                i++;
+
+            }
+            // Infos zum Teilnahmestatus hinzufügen
+            i = 0;
+            while (teilnehmerListe.size() > i) {
+                int teilId = teilnehmerListe.get(i).getMitglied().getId();
+                query = "SELECT `KontrolleWert` AS TeilnahmeStatus, KontrolleBemerkungen FROM `terminkontrolle` " +
+                        "WHERE `KontrolleTerminId` = " + terminId + " " +
+                        "AND `KontrolleMitgliedId` = " + teilId +
+                        " AND `KontrolleArt`='Anwesenheit'";
+                rs = st.executeQuery(query);
+                while (rs.next()) {
+                    // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
+                    teilnehmerListe.get(i).setTeilnahmeStatus(teilnahme.getStatusElemente().get(rs.getInt("TeilnahmeStatus")));
+                    teilnehmerListe.get(i).setTeilnahmeText(rs.getString("KontrolleBemerkungen"));
+                }
+                i++;
+
+            }
+            return teilnehmerListe;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return teilnehmerListe;
+        }
+    }
+    /**
+     * ermittelt die Teilnehmerliste zu einem Termin
+     */
+    public static ArrayList<Teilnehmer> getTeilnehmer(Termin termin) {
+        //TODO extrem langsam hier...
+        ArrayList<Teilnehmer> teilnehmerListe = new ArrayList<>();
+        Status anmeldung = new Status(5);
+        Status teilnahme = new Status(6);
+        int terminId = termin.getTerminId();
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT kontakt.KontaktId, kontakt.KontaktNachname, kontakt.KontaktVorname " +
+                    "FROM terminkontrolle LEFT JOIN kontakt ON kontakt.KontaktId = KontrolleMitgliedId " +
+                    "WHERE KontrolleArt = 'Anmeldung' AND KontrolleTerminId = " + terminId +
+                    " GROUP BY KontrolleMitgliedId";
+            //KontrolleArt = 'Anmeldung' TODO: Einschränkung evtl. weglassen...
+
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Mitglied mitglied = new Mitglied(rs.getInt("KontaktId"),
+                        rs.getString("KontaktNachname"), rs.getString("KontaktVorname"));
                 DatabaseReader.completeMitglied(mitglied);
                 teilnehmerListe.add(
                         new Teilnehmer(mitglied));
@@ -167,8 +316,9 @@ public abstract class DatabaseReader {
                         " AND `KontrolleArt`='Anmeldung'";
                 rs = st.executeQuery(query);
                 while (rs.next()) {
-                   // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
-                    teilnehmerListe.get(i).setAnmeldeStatus(anmeldung.getStatusElemente().get(rs.getInt("AnmeldeStatus")));
+                    // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
+                    teilnehmerListe.get(i).setAnmeldeStatus(anmeldung.getStatusElemente()
+                            .get(rs.getInt("AnmeldeStatus")));
                     teilnehmerListe.get(i).setAnmeldungText(rs.getString("KontrolleBemerkungen"));
                 }
                 i++;
@@ -353,8 +503,9 @@ public abstract class DatabaseReader {
     }
 
     /**
-     * Zählt die Anzahl Termine im laufenden Jahr
-     * @return
+     * Ermittelt den Zeitstempel der letzen Änderung in der Tabelle termin
+     *
+     * @return Timestamp der letzten Änderung
      */
     public static Timestamp readLetzteAenderung() {
         try (Connection conn = new MysqlConnection().getConnection();
@@ -367,7 +518,46 @@ public abstract class DatabaseReader {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return null;
+    }
 
+    /**
+     * Ermittelt den Zeitstempel der letzen Änderung in der Tabelle terminkontrolle
+     *
+     * @return Timestamp der letzten Änderung
+     */
+    public static Timestamp readLetzteAnmeldungAenderung() {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT MAX(KontrolleZeitstempel) AS LetzteAenderung " +
+                    "FROM `terminkontrolle` WHERE KontrolleArt = 'Anmeldung'";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                //System.out.println("letzte Aenderung: " + rs.getString("LetzteAenderung"));
+                return Timestamp.valueOf(rs.getString("LetzteAenderung"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Ermittelt den Zeitstempel der letzen Änderung in der Tabelle task
+     *
+     * @return Timestamp der letzten Änderung
+     */
+    public static Timestamp readLetzteAenderungTask() {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT MAX(TaskTrackChangeTimestamp) AS LetzteAenderung FROM `task`";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return Timestamp.valueOf(rs.getString("LetzteAenderung"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -398,7 +588,7 @@ public abstract class DatabaseReader {
 
                 String kontaktGeburtsdatumString = rs.getString("KontaktGeburtsdatum");
                 String kontaktAustrittsdatumString = rs.getString("KontaktAustrittsdatum");
-                LocalDate kontaktGeburtsdatum = null;
+                LocalDate kontaktGeburtsdatum;
                 LocalDate kontaktAustrittsdatum = null;
                 if (kontaktGeburtsdatumString != null && kontaktGeburtsdatumString != "0000-00-00" && !kontaktGeburtsdatumString.isEmpty()) {
                     kontaktGeburtsdatum = Date.valueOf(kontaktGeburtsdatumString).toLocalDate();
@@ -421,10 +611,10 @@ public abstract class DatabaseReader {
                         kontaktEintrittsdatum = Date.valueOf(kontaktEintrittsdatumString).toLocalDate();
                     }
 
-                    ((Mitglied) mitglied).setEintrittsDatum(kontaktEintrittsdatum);
-                    ((Mitglied) mitglied).setKategorieIStatus(kategorieIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieA")));
-                    ((Mitglied) mitglied).setKategorieIIStatus(kategorieIIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieB")));
-                    ((Mitglied) mitglied).setIstVorstandsmitglied(rs.getBoolean("KontaktIstVorstandsmitglied"));
+                    mitglied.setEintrittsDatum(kontaktEintrittsdatum);
+                    mitglied.setKategorieIStatus(kategorieIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieA")));
+                    mitglied.setKategorieIIStatus(kategorieIIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieB")));
+                    mitglied.setIstVorstandsmitglied(rs.getBoolean("KontaktIstVorstandsmitglied"));
                 }
 
             }
@@ -463,20 +653,14 @@ public abstract class DatabaseReader {
                 }*/
 
 
-
-                /**
-                 * Objekte werden erzeugt
-                 */
-                if(rs.getBoolean("KontaktIstMitglied") ) {
+                // Objekte werden erzeugt
+                if (rs.getBoolean("KontaktIstMitglied")) {
                     kontakt = new Mitglied(kontaktId, kontaktNachname, kontaktVorname);
-                }  else {
+                } else {
                     kontakt = new Kontakt(kontaktId, kontaktNachname, kontaktVorname);
                 }
 
-
-                /**
-                 * Instanzvariabeln der neuen Objekte werden vervollständigt
-                 */
+                // Instanzvariabeln der neuen Objekte werden vervollständigt
                 kontakt.setAdresse(rs.getString("KontaktAdresse"));
                 kontakt.setAdresszusatz(rs.getString("KontaktAdresszusatz"));
 
@@ -568,10 +752,37 @@ public abstract class DatabaseReader {
         return null;
     }
 
-    public static ArrayList<Position> fuelleRangliste(MainController mainController) {
+    /**
+     *
+     */
+    public static ObservableList<PieChart.Data> getDataForTaskPieChart01() {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+            String query = (
+                    "SELECT COUNT(*) AS TasksCount, statusElement.StatusElementNameLong AS StatusLong, statusElement.StatusElementNameShort AS StatusShort FROM task LEFT JOIN statusElement ON statusElement.StatusElementKey = task.TaskStatus WHERE statusElement.StatusId=8 GROUP BY statusElement.StatusElementKey"
+            );
+            ResultSet result = st.executeQuery(query);
+            while (result.next()) {
+
+                pieChartData.add(new PieChart.Data(result.getString("StatusLong"), result.getInt("TasksCount")));
+
+            }
+            return pieChartData;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
+    public static ArrayList<Position> fuelleRangliste(ArrayList<Mitglied> mitgliederListe
+            , ArrayList<Termin> terminListe) {
         ArrayList<Position> rangliste = new ArrayList<>();
-        ArrayList<Mitglied> mitgliederListe = DatabaseReader.getMitgliederAsArrayList();
-        ArrayList<Termin> terminListe = DatabaseReader.getTermineAsArrayList();
+        // ArrayList<Mitglied> mitgliederListe = DatabaseReader.getMitgliederAsArrayList();
+        // ArrayList<Termin> terminListe = DatabaseReader.getTermineAsArrayList();
 
         Iterator<Mitglied> i = mitgliederListe.iterator();
 
@@ -579,7 +790,7 @@ public abstract class DatabaseReader {
             String query;
             int anzTermineAktuellesJahr = 0;
             int anzAnwesenheiten = 0;
-            double anwesenheitenAnteil = 0; //Anteil in Prozent
+            double anwesenheitenAnteil; //Anteil in Prozent
             // Fokus 1 = dieses Jahr
             Mitglied mitglied = i.next();
 
@@ -609,7 +820,7 @@ public abstract class DatabaseReader {
                 }
                 anwesenheitenAnteil = (anzAnwesenheiten * 100 / anzTermineAktuellesJahr);
 
-                rangliste.add(new Position(mainController.getRangliste(), mitglied, mitglied.getKurzbezeichnung(), anzTermineAktuellesJahr, anzAnwesenheiten, anwesenheitenAnteil));
+                rangliste.add(new Position(mitglied, mitglied.getKurzbezeichnung(), anzTermineAktuellesJahr, anzAnwesenheiten, anwesenheitenAnteil));
                 // rangliste sortieren nach Anteilen...
                 //Collections.sort(rangliste, (a,b)->a.getAnwesenheitsAnteil().compareTo(b.getAnwesenheitsAnteil()));
 
@@ -654,7 +865,7 @@ public abstract class DatabaseReader {
 
             while (rs.next()) {
                 Termin termin;
-                LocalDateTime terminZeit = null;
+                LocalDateTime terminZeit;
                 LocalDateTime terminZeitBis = null;
                 int terminId = rs.getInt("TerminId");
                 LocalDate terminDatum = Date.valueOf(rs.getString("TerminDatum")).toLocalDate();
@@ -684,66 +895,6 @@ public abstract class DatabaseReader {
         }
         return terminListe;
     }
-
-    public static ArrayList<Jubilaeum> jubilaenLaden() {
-        int jahr = Year.now().getValue();
-        // Geburtstage
-        ArrayList<Jubilaeum> jubilaeumsListe = new ArrayList<>();
-        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
-            String query = "SELECT KontaktId, KontaktGeburtsdatum, KontaktNachname, KontaktVorname FROM usr_web116_5.kontakt WHERE KontaktIstMitglied = 1 AND KontaktGeburtsdatum IS NOT NULL AND KontaktGeburtsdatum NOT LIKE '0000-%'";
-
-            ResultSet rs = st.executeQuery(query);
-            while (rs.next()) {
-                String geburtsDatum = rs.getString("KontaktGeburtsdatum");
-                int geburtsJahr = Integer.parseInt(geburtsDatum.substring(0, 4));
-                // alter in diesem Jahr
-                int alter = jahr - geburtsJahr;
-                geburtsDatum = jahr + geburtsDatum.substring(4, 10);
-                LocalDate geburtsDatumLD = Date.valueOf(geburtsDatum).toLocalDate();
-                // Wenn der nächste Geburtstag grösser ist als heute
-
-                if (geburtsDatumLD.isAfter(LocalDate.now().minusDays(1))) {
-                    jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD, alter + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
-                } else {
-                    // nächster Geburtstag ist erst im nächsten Jahr
-                    jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD.plusYears(1), (alter + 1) + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
-                }
-            }
-
-            // Vereinsmitgliedschafts-Jubiläen ermittelnt
-            query = "SELECT KontaktId, KontaktEintrittsdatum, KontaktNachname, KontaktVorname FROM usr_web116_5.kontakt WHERE KontaktIstMitglied = 1 AND KontaktGeburtsdatum IS NOT NULL AND KontaktGeburtsdatum NOT LIKE '0000-%'";
-            rs = st.executeQuery(query);
-            int i = 20000;
-            while (rs.next()) {
-                String eintrittsDatum = rs.getString("KontaktEintrittsdatum");
-                int eintrittsJahr = Integer.parseInt(eintrittsDatum.substring(0, 4));
-                // alter in diesem Jahr
-                int anzahlJahre = jahr - eintrittsJahr;
-                eintrittsDatum = jahr + eintrittsDatum.substring(4, 10);
-
-                LocalDate eintrittsDatumLD = Date.valueOf(eintrittsDatum).toLocalDate();
-                // Wenn der nächste Geburtstag grösser ist als heute
-
-                if (eintrittsDatumLD.isAfter(LocalDate.now().minusDays(1))) {
-                    jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD, "Jubiläum: " + anzahlJahre + " Jahr(e) " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
-                } else {
-                    // nächster Geburtstag ist erst im nächsten Jahr
-                    jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD.plusYears(1), "Jubiläum: " + (anzahlJahre + 1) + " Jahr(e) " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
-                }
-                i++;
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        //Liste sortieren nach Datum...
-        Collections.sort(jubilaeumsListe, (a, b) -> a.getDatum().compareTo(b.getDatum()));
-        return jubilaeumsListe;
-    }
-
-
 
 
     /**
@@ -788,7 +939,6 @@ public abstract class DatabaseReader {
 
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-
                 statusHashMap.put(rs.getInt("StatusElementKey"), new StatusElement(rs.getInt("StatusElementKey"),
                         rs.getString("StatusElementNameLong"), rs.getString("StatusElementNameShort"), rs.getString("StatusElementUnicodeChar")));
             }
@@ -798,7 +948,48 @@ public abstract class DatabaseReader {
         return statusHashMap;
     }
 
-    public static ArrayList<Termin> getKommendeTermineAsArrayList(){
+    public static ArrayList<StatusElement> getStatusElementeAsArrayList() {
+        ArrayList<StatusElement> statusElementListe = new ArrayList<>();
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT status.StatusId AS StatusId, StatusNameLong, StatusElementId, StatusElementKey," +
+                    " StatusElementNameLong, StatusElementNameShort, StatusElementUnicodeChar FROM statusElement " +
+                    "LEFT JOIN status ON status.StatusId = statusElement.StatusId ORDER BY StatusId, StatusElementKey";
+
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                statusElementListe.add(new StatusElement(
+                        rs.getInt("StatusId"),
+                        rs.getString("StatusNameLong"),
+                        rs.getInt("StatusElementId"),
+                        rs.getInt("StatusElementKey"),
+                        rs.getString("StatusElementNameLong"),
+                        rs.getString("StatusElementNameShort"),
+                        rs.getString("StatusElementUnicodeChar")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return statusElementListe;
+    }
+
+    public static int getAnzahlStatusElemente() {
+        int anzahlStatusElemente = 0;
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) AS Anzahl FROM statusElement";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                anzahlStatusElemente = rs.getInt("Anzahl");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return anzahlStatusElemente;
+    }
+
+    public static ArrayList<Termin> getKommendeTermineAsArrayList() {
         ArrayList<Termin> terminListe = new ArrayList<>();
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
             String query = "SELECT * from usr_web116_5.termin WHERE TerminDatum >= CURRENT_DATE() ORDER BY TerminDatum ASC";
@@ -812,11 +1003,12 @@ public abstract class DatabaseReader {
                 LocalDate terminDatum = Date.valueOf(rs.getString("TerminDatum")).toLocalDate();
 
                 String terminText = rs.getString("TerminText");
+                String terminOrt = rs.getString("TerminOrt");
 
                 /**
                  * Objekte werden erzeugt und der Terminliste hinzugefügt
                  */
-                termin = new Termin(terminId, terminDatum, terminText);
+                termin = new Termin(terminId, terminDatum, terminText, terminOrt);
                 if(rs.getString("TerminZeit") != null) {
                     terminZeit = LocalDateTime.of(terminDatum, Time.valueOf(rs.getString("TerminZeit")).toLocalTime());
                     termin.setZeit(terminZeit);
@@ -838,7 +1030,24 @@ public abstract class DatabaseReader {
         return terminListe;
     }
 
-    public static ArrayList<Termin> getTermineAsArrayList(){
+    public static ArrayList<User> getBenutzerAsArrayList() {
+        ArrayList<User> userListe = new ArrayList<>();
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * from usr_web116_5.benutzer ORDER BY BenutzerName ASC";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                userListe.add(new User(rs.getInt("BenutzerId"), rs.getInt("KontaktId"),
+                        rs.getString("BenutzerName"), rs.getString("BenutzerPw"),
+                        Date.valueOf(rs.getString("BenutzerLastlogin")).toLocalDate(),
+                        rs.getInt("BenutzerNumberLogins"), rs.getInt("BenutzerSperrcode")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userListe;
+    }
+
+    public static ArrayList<Termin> getTermineAsArrayList() {
         Status kategorieIStatus = new Status(2);
         Status kategorieIIStatus = new Status(4);
         ArrayList<Termin> terminListe = new ArrayList<>();
@@ -906,24 +1115,30 @@ public abstract class DatabaseReader {
         // Geburtstage
         ArrayList<Jubilaeum> jubilaeumsListe = new ArrayList<>();
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
-            String query = "SELECT KontaktId, KontaktGeburtsdatum, KontaktNachname, KontaktVorname FROM usr_web116_5.kontakt WHERE KontaktIstMitglied = 1 AND KontaktGeburtsdatum IS NOT NULL AND KontaktGeburtsdatum NOT LIKE '0000-%'";
+            String query = "SELECT KontaktId, KontaktGeburtsdatum, KontaktNachname, KontaktVorname " +
+                    "FROM usr_web116_5.kontakt WHERE KontaktIstMitglied = 1 AND KontaktGeburtsdatum IS NOT NULL AND KontaktGeburtsdatum NOT LIKE '0000-%'";
 
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 String geburtsDatum = rs.getString("KontaktGeburtsdatum");
-                if(geburtsDatum != null) {
+                if (geburtsDatum != null) {
                     int geburtsJahr = Integer.parseInt(geburtsDatum.substring(0, 4));
                     // alter in diesem Jahr
                     int alter = jahr - geburtsJahr;
                     geburtsDatum = jahr + geburtsDatum.substring(4, 10);
                     LocalDate geburtsDatumLD = Date.valueOf(geburtsDatum).toLocalDate();
-                    // Wenn der nächste Geburtstag grösser ist als heute
 
+                    // Wenn der nächste Geburtstag grösser ist als heute
                     if (geburtsDatumLD.isAfter(LocalDate.now().minusDays(1))) {
-                        jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD, alter + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                        if (alter % 10 == 0) {
+                            jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD, alter + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                        }
                     } else {
                         // nächster Geburtstag ist erst im nächsten Jahr
-                        jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD.plusYears(1), (alter + 1) + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                        // dafür ein Jahr älter...
+                        if ((alter + 1) % 10 == 0) {
+                            jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD.plusYears(1), (alter + 1) + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                        }
                     }
                 }
             }
@@ -944,10 +1159,14 @@ public abstract class DatabaseReader {
                 // Wenn der nächste Geburtstag grösser ist als heute
 
                 if(eintrittsDatumLD.isAfter(LocalDate.now().minusDays(1))) {
-                    jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD, "Jubiläum: " + anzahlJahre + " Jahr(e) " + rs.getString("KontaktVorname")+ " " + rs.getString("KontaktNachname")));
+                    if (anzahlJahre % 5 == 0) {
+                        jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD, "Jubiläum: " + anzahlJahre + " Jahr(e) " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                    }
                 } else {
-                    // nächster Geburtstag ist erst im nächsten Jahr
-                    jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD.plusYears(1), "Jubiläum: " + (anzahlJahre + 1 ) + " Jahr(e) " + rs.getString("KontaktVorname")+ " " + rs.getString("KontaktNachname")));
+                    if ((anzahlJahre + 1) % 5 == 0) {
+                        // nächster Geburtstag ist erst im nächsten Jahr
+                        jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD.plusYears(1), "Jubiläum: " + (anzahlJahre + 1) + " Jahr(e) " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                    }
                 }
                 i++;
             }
@@ -994,9 +1213,8 @@ public abstract class DatabaseReader {
 
                 String terminText = rs.getString("TerminText");
 
-                /**
-                 * Objekte werden erzeugt und der Terminliste hinzugefügt
-                 */
+
+                // Objekte werden erzeugt und der Terminliste hinzugefügt
                 termin = new Termin(terminId, terminDatum, terminText);
                 if (rs.getString("TerminZeit") != null) {
                     terminZeit = LocalDateTime.of(terminDatum, Time.valueOf(rs.getString("TerminZeit")).toLocalTime());
@@ -1040,12 +1258,15 @@ public abstract class DatabaseReader {
         Status statusStatus = new Status(8);
 
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
-            String query = "SELECT * from usr_web116_5.task ORDER BY TaskTerminBis ASC";
+            String query = "SELECT * from usr_web116_5.task LEFT JOIN kontakt ON kontakt.KontaktId = task.TaskMitgliedId ORDER BY TaskTerminBis ASC";
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
                 int terminId = rs.getInt("TaskId");
 
+                Mitglied mitglied = new Mitglied(rs.getInt("KontaktId"),
+                        rs.getString("KontaktNachname"), rs.getString("KontaktVorname"));
+                DatabaseReader.completeMitglied(mitglied);
 
                 /**
                  * Objekte werden erzeugt und der Taskliste hinzugefügt
@@ -1053,9 +1274,8 @@ public abstract class DatabaseReader {
                 Task task = new Task(rs.getInt("TaskId"),
                         rs.getString("TaskBezeichnung"),
                         rs.getString("TaskDetails"),
-                        null,
+                        mitglied,
                         rs.getDate("TaskTerminBis").toLocalDate());
-                System.out.println("Task: " + task);
 
                 task.setPrioStatus(prioStatus.getStatusElemente().get(rs.getInt("TaskPrio")));
                 task.setStatusStatus(statusStatus.getStatusElemente().get(rs.getInt("TaskStatus")));
@@ -1068,7 +1288,6 @@ public abstract class DatabaseReader {
         }
         return taskListe;
     }
-
     public static int readAnzahlTasks() {
         int anzTasks = 0;
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
@@ -1085,4 +1304,87 @@ public abstract class DatabaseReader {
         }
         return anzTasks;
     }
+
+    public static int readTotalAnzahlTasks() {
+        int anzTasks = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) AS ANZTASKS from usr_web116_5.task";
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                anzTasks = rs.getInt("ANZTASKS");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return anzTasks;
+    }
+
+    public static int readAnzahlBenutzer() {
+        int anzBenutzer = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) AS ANZUSERS from usr_web116_5.benutzer";
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                anzBenutzer = rs.getInt("ANZUSERS");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return anzBenutzer;
+    }
+
+    public static Timestamp readLetzteBenutzerAenderung() {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT MAX(BenutzerTrackChangeTimestamp) AS LetzteAenderung FROM usr_web116_5.benutzer";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                //System.out.println("letzte Aenderung: " + rs.getString("LetzteAenderung"));
+                return Timestamp.valueOf(rs.getString("LetzteAenderung"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public static String getUserKatString(int mitgliedId) {
+        String userKat = null;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT statusElement.StatusElementNameLong AS Kat " +
+                    "FROM kontakt LEFT JOIN statusElement ON kontakt.KontaktKategorieA = statusElement.StatusElementKey " +
+                    "WHERE statusElement.StatusId = 2 AND kontakt.KontaktId = " + mitgliedId;
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                userKat = rs.getString("Kat");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userKat;
+    }
+
+    public static String getMitgliedName(int mitgliedId) {
+        String mitgliedName = null;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM kontakt WHERE KontaktID = " + mitgliedId;
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                mitgliedName = rs.getString("KontaktNachname")
+                        + " " + rs.getString("KontaktVorname");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mitgliedName;
+    }
+
+
 }

@@ -2,6 +2,7 @@ package space.cloud4b.verein.view.einstellungen;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -21,9 +22,10 @@ import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 public class EinstellungenViewController {
-    MainApp mainApp;
-    Stage dialogStage;
+    private MainApp mainApp;
+    private Stage dialogStage;
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private TextField vereinsNameFeld;
     @FXML
@@ -42,6 +44,8 @@ public class EinstellungenViewController {
     private PasswordField dbPasswortFeld;
     @FXML
     private VBox einstellungenVbox01;
+    @FXML
+    private Label feedbackLabel;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -69,15 +73,19 @@ public class EinstellungenViewController {
     public void handleAbbrechen() {
         dialogStage.close();
     }
+
     public void handleSpeichern() {
         if(isValid()) {
-            // TODO Methode fertigstellen
-            System.out.println("jetzt speichern");
+            Einstellung.setProperties(vereinsNameFeld.getText(), dbHostFeld.getText(), dbPortFeld.getText(),
+                    dbDatabaseFeld.getText(), dbUserFeld.getText(), dbPasswortFeld.getText());
+
+            feedbackLabel.setText("Änderungen gespeichert und wirksam nach nächstem Login");
+
         }
     }
 
     public void handelLogoButton() {
-        File selectedFile = mainApp.getMainController().chooseImageFile();
+        File selectedFile = mainApp.chooseImageFile();
         if (selectedFile != null) {
             saveNeuesLogo(selectedFile);
             initialize();
@@ -94,7 +102,7 @@ public class EinstellungenViewController {
     public void saveNeuesLogo(File file) {
         // TODO Bild kann jpg oder png sein... Entweder umwandeln oder dann immer beim Auslesen des Bilds beide Varianten in Betracht ziehen..
         // die File-Extension des übergebenen Filenamens wird extrahiert
-        Optional<String> ext = mainApp.getMainController().getExtensionByStringHandling(file.getName());
+        Optional<String> ext = mainApp.getExtensionByStringHandling(file.getName());
         String extStr = ext.get();
         // die Pfade der Ursprungsdatei und der Zieldatei werden gelesen/generiert
         Path src = Paths.get(file.getAbsolutePath());

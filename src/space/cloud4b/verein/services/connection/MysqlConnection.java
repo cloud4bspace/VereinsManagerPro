@@ -19,7 +19,6 @@ public class MysqlConnection {
             try {
                 conn = DriverManager.getConnection(dbURL, user, pw);
             } catch (SQLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

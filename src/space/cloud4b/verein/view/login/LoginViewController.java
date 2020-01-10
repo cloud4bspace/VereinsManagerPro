@@ -6,7 +6,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.model.verein.user.User;
@@ -16,10 +15,20 @@ import space.cloud4b.verein.services.DatabaseReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Die Klasse LoginViewController ist verknüpft mit dem JavaFX-Unserinterface LoginView.fxml
+ * Sie ermöglicht einem registrierten Benutzer/User, sich anzumelden und die Applikation zu starten.
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-01-03
+ */
 public class LoginViewController {
+
+    // allgemeine Instanzvariabeln
     private MainApp mainApp;
     private Stage dialogStage;
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private PasswordField pwFeld;
     @FXML
@@ -30,16 +39,19 @@ public class LoginViewController {
     private Label loginTitleLabel;
     @FXML
     private ImageView clubLogoImage;
-    @FXML
-    private VBox loginVbox01;
 
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
+     * Standardkonstruktor (wird nicht benötigt)
+     */
+    public LoginViewController() {
+    }
+
+    /**
+     * Initialisieirung der Controller-Klasse. Diese Methode wird automatisch aufgerufen,
+     * nachdem das fxml-File geladen wurde.
      */
     @FXML
     private void initialize() {
-        // feedbackTxt = new SimpleStringProperty("Bitte melde dich mit deinem Benutzernamen (E-Mail) und Passwort an..");
         feedbackLabel.setText("Bitte melde dich mit deinem Benutzernamen (E-Mail) und Passwort an..");
         loginTitleLabel.setText("Login VereinsManager");
         try {
@@ -47,17 +59,26 @@ public class LoginViewController {
             Image image = new Image(inputStream);
             clubLogoImage.setImage(image);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
+    /**
+     * setzt die Referenz zur MainApp
+     *
+     * @param mainApp
+     */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-
-
     }
+
+    /**
+     * Setzt die Referenz zum aktuellen Stage
+     *
+     * @param dialogStage die Stage-Referenz des UI
+     */
     public void setStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
-
     }
 
     /**
@@ -69,9 +90,6 @@ public class LoginViewController {
            wird true zurückgegeben
         */
         if (DatabaseReader.checkUserCredentials(userNameFeld.getText(), pwFeld.getText())) {
-            // im Dialog wird der nächste Schritt angezeigt
-
-
 
             // die Mitglieder-Id wird aus der Datenbank ermittelt
             int mitgliedId = DatabaseReader.getMitgliedId(userNameFeld.getText());
@@ -80,34 +98,26 @@ public class LoginViewController {
             mainApp.setUser(new User(mitgliedId, DatabaseReader.getUserNameVorname(mitgliedId),
                     DatabaseReader.getMitgliederKategorie(mitgliedId), DatabaseReader.getVorstandsStatus(mitgliedId)));
 
-
             // der Zähler für die Anzahl Zugriffe wird beim User hochgezählt
             DatabaseOperation.incrementLoginCounter(mitgliedId);
 
-
-            feedbackLabel.setText("Applikation wird geladen...");
-
-
-            // das Fenster wird geschlossen und im Hintergrund der neue Dialog geladen
+            // TODO: Feld wird nicht aktualisiert...
+            feedbackLabel.setText("Login erfolgreich - Applikation wird gestartet");
             dialogStage.close();
-
             mainApp.start(dialogStage);
-
         } else {
-            System.out.println("Login fehlgeschlagen");
             feedbackLabel.setText("Login fehlgeschlagen");
             feedbackLabel.setStyle("-fx-text-fill: red;");
         }
     }
 
-
     /**
-     * handleSignInButton()
+     * Methode wird ausgeführt, wenn der User den Button anklickt, um sich neu zu registrieren.
+     * Das aktuelle UI wird geschlossen und das UI für die Registrierung als neuer Benutzer
+     * wird angezeigt.
      */
     public void handleSignInButton() {
         dialogStage.close();
         mainApp.showSignupView();
     }
-
-
 }

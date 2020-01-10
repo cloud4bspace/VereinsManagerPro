@@ -1,3 +1,11 @@
+/*
+ red: #F78888 ->247, 136, 136
+ blue:  #90CCF4 ->144, 204, 244
+ yellow:  #F3D250 ->243, 210, 80
+ green: #8FAD88 ->143, 173, 136
+*/
+
+
 .root {
     -fx-font: 14px Verdana;
 }
@@ -15,6 +23,14 @@
 #kreisI {
 
     -fx-fill: #959595;
+}
+
+#circleLabelIV {
+    -fx-background-radius: 50;
+    -fx-background-color: #8FAD88;
+    -fx-text-fill: #000000;
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
 }
 #circleLabelIII {
     -fx-background-radius: 50;
@@ -82,7 +98,7 @@
 }
 #tabelleCellLabelBold {
     -fx-text-fill: black;
-    -fx-alignment: right;
+    -fx-alignment: center-right;
     -fx-font-weight: 900;
 }
 .context-menu {
@@ -213,7 +229,6 @@
 }
 #hMenuBarTop .menu-item:hover .label {
 
-    -fx-padding: 3;
     -fx-font-size: 10px;
     -fx-font-family: "Verdana UI Light";
     -fx-text-fill: #000000;
@@ -286,11 +301,16 @@
     -fx-font-weight: 100;
 }
 
-#loginTitleLabel {
+#loginTitleLabel, #benutzerTitelLabel {
     -fx-font-family: "Andale Mono";
     -fx-label-padding: 10;
     -fx-font-size: 2em;
     -fx-font-weight: 100;
+    -fx-text-fill: #000000;
+}
+
+#logViewVBox {
+    -fx-background-color: #F3D250;;
 }
 
 #loginVbox01 {
@@ -343,11 +363,15 @@
 
 #meldungAusgabeListView {
     -fx-font-size: 0.8em;
+    -fx-background-color: #ECECEC;
+    -fx-wrap-text: true;
 }
 
 #meldungAusgabeListView .list-cell {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: #ECECEC;
+    -fx-wrap-text: true;
 }
+
 .table-view {
     -fx-font-size: 0.9em;
     -fx-base: #000000;
@@ -358,10 +382,15 @@
     -fx-padding: 5;
 }
 
+#gesperrt {
+    -fx-background-color: #F78888;
+}
+
 .table-view .column-header {
     -fx-size: 20;
 
 }
+
 .table-view .column-header .label {
     -fx-font-size: 9pt;
     -fx-font-family: "Verdana UI Light";
@@ -369,6 +398,42 @@
     -fx-alignment: center-left;
     -fx-opacity: 1;
 }
+
+.tree-table-view {
+    -fx-font-size: 0.9em;
+    -fx-base: #000000;
+    -fx-control-inner-background: #ffffff;
+    -fx-background-color: #FFFFFF;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+
+.tree-table-view .column-header .label {
+    -fx-font-size: 9pt;
+    -fx-font-family: "Verdana UI Light";
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+#benutzerIdSpalte, #mitgliedIdSpalte, #anzLoginsSpalte, #sperrcodeSpalte {
+    -fx-alignment: TOP-RIGHT;
+
+}
+
+#benutzerNameSpalte {
+
+    -fx-font-weight: 900;
+}
+
+#titelSpalte .list-cell {
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+    -fx-fill: red;
+}
+
 
 #anwesenheitsAnteilSpalte {
     -fx-alignment: center-right;
@@ -389,12 +454,38 @@
 #mitgliedSpalte {
 
 }
+
 .label {
     -fx-font-family: "Andale Mono";
     -fx-label-padding: 0;
     -fx-text-fill: #708ca6;
     -fx-font-size: 1em;
     -fx-font-weight: 100;
+}
+
+#anwesenheitenLabel {
+    -fx-background-color: #8FAD88;
+    -fx-text-fill: #000000;
+    -fx-padding: 5px;
+}
+
+#mitgliederLabel {
+    -fx-background-color: #F78888;
+    -fx-text-fill: #000000;
+    -fx-padding: 5px;
+}
+
+#terminLabel {
+    -fx-background-color: #F3D250;
+    -fx-text-fill: #000000;
+    -fx-padding: 5px;
+}
+
+#jubilaeumLabel {
+    -fx-background-color: #F3D250;
+    -fx-text-fill: #000000;
+    -fx-padding: 5px;
+
 }
 
 .text-field {
@@ -457,7 +548,7 @@
     -fx-border: none;
     -fx-background-radius: 0;
     text-area-background: #ECECEC;
-    -fx-text-fill: white;
+    -fx-text-fill: #000000;
 
 }
 
@@ -579,15 +670,30 @@
     -fx-border-color: #FFFFFF;
     -fx-text-fill: #000000;
 }
+
+#homeButton {
+    -fx-min-height: 30;
+    -fx-padding: 0 0 0 20;
+    -fx-alignment: center-left;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+}
+
+#homeButton:hover {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
 .button:hover {
     -fx-border-color: #000000;
     -fx-text-fill: #000000;
 }
+
 .check-box {
 
 
-
 }
+
 .slider .thumb {
     -fx-background-color: black;
     -fx-background-radius:50px;
@@ -609,13 +715,22 @@
     -fx-font-size: 0.8em;
 }
 
-#titelLabel {
-    -fx-text-fill: #90CCF4;
+#titelLabel, #loggingTitleLabel {
+    -fx-text-fill: #000000;
     -fx-font-size: 2em;
 }
+
 /* Kalender View */
 #topRowVBox {
     -fx-background-color: #F3D250;
+}
+
+#taskEditVBox {
+    -fx-background-color: #90CCF4;
+}
+
+#taskEditVBox .label {
+    -fx-text-fill: #000000;
 }
 
 #topRowVBox .label {

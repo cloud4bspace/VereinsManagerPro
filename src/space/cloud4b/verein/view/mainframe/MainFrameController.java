@@ -14,19 +14,20 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.controller.AdressController;
+import space.cloud4b.verein.controller.BenutzerController;
 import space.cloud4b.verein.controller.KalenderController;
+import space.cloud4b.verein.controller.TaskController;
 import space.cloud4b.verein.einstellungen.Einstellung;
 import space.cloud4b.verein.model.verein.meldung.Meldung;
 import space.cloud4b.verein.services.Observer;
 import space.cloud4b.verein.services.output.ExcelWriter;
-import space.cloud4b.verein.services.output.PdfWriterV02;
+import space.cloud4b.verein.services.output.PdfFileWriter;
 import space.cloud4b.verein.view.browser.Browser;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
@@ -35,10 +36,12 @@ public class MainFrameController implements Observer {
     int anzMitglieder = 0;
     int anzTermine = 0;
     int anzTasks = 0;
+    int anzUser = 0;
 
     // Reference to the main application
     private MainApp mainApp;
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private Label titleLabel;
     @FXML
@@ -48,7 +51,15 @@ public class MainFrameController implements Observer {
     @FXML
     private MenuItem exitMenuItem;
     @FXML
+    private MenuItem setupMenuItem;
+    @FXML
     private MenuItem infoMenuItem;
+    @FXML
+    private MenuItem benutzerMenuItem;
+    @FXML
+    private MenuItem statusMenuItem;
+    @FXML
+    private MenuItem logFileMenuItem;
     @FXML
     private MenuItem helpMenuItem;
     @FXML
@@ -62,8 +73,6 @@ public class MainFrameController implements Observer {
     @FXML
     private VBox vMenuBarLeftContainer;
     @FXML
-    private TextArea meldungAusgabeText;
-    @FXML
     private ListView<Meldung> meldungAusgabeListView;
     @FXML
     private Label circleLabelI;
@@ -71,6 +80,8 @@ public class MainFrameController implements Observer {
     private Label circleLabelII;
     @FXML
     private Label circleLabelIII;
+    @FXML
+    private Label circleLabelIV;
     @FXML
     private Button homeButton;
     @FXML
@@ -94,25 +105,35 @@ public class MainFrameController implements Observer {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+
+        // in die Obersverlisten eintragen der relevanten Controller
         mainApp.getAdressController().Attach(this);
         mainApp.getKalenderController().Attach(this);
+        mainApp.getTaskController().Attach(this);
+        mainApp.getBenutzerController().Attach(this);
+        mainApp.getRanglisteController().Attach(this);
+
         this.titleLabel.setText(Einstellung.getVereinsName()); // bei Initialize geht es nicht...
         this.dateLabel.setText(LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
         this.sessionLabel.setText("Session#" + mainApp.getCurrentUser().getSessionId());
         this.anzMitglieder = mainApp.getAdressController().getAnzahlMitglieder();
-        circleLabelI.setText(this.anzMitglieder + " Mitglieder");
+        circleLabelI.setText(this.anzMitglieder + "\nMitglieder");
         circleLabelI.setContentDisplay(ContentDisplay.CENTER);
 
         this.anzTermine = mainApp.getKalenderController().getAnzahlTermine();
-        circleLabelII.setText(this.anzTermine + " Termine");
+        circleLabelII.setText(this.anzTermine + "\nTermine");
         circleLabelII.setContentDisplay(ContentDisplay.CENTER);
 
-        this.anzTasks = mainApp.getTaskController().getanzahlTasks();
-        circleLabelIII.setText(this.anzTasks + " Tasks");
+        this.anzTasks = mainApp.getTaskController().getAnzahlOpenTasks();
+        circleLabelIII.setText(this.anzTasks + "\nTasks");
         circleLabelIII.setContentDisplay(ContentDisplay.CENTER);
 
+        this.anzUser = mainApp.getBenutzerController().getAnzahlBenutzer();
+        circleLabelIV.setText(this.anzUser + "\nUser");
+        circleLabelIV.setContentDisplay(ContentDisplay.CENTER);
+
         infoLabel.setText(mainApp.getCurrentUser().toString());
-        meldungAusgabeText.setWrapText(true);
+
         setMeldungInListView("Herzlich willkommen\n"
                 + mainApp.getCurrentUser().getUserName() + "!", "INFO");
     }
@@ -122,8 +143,8 @@ public class MainFrameController implements Observer {
      * after the fxml file has been loaded.
      */
     @FXML
-    private void initialize() {
-        this.mainApp = mainApp;
+    public void initialize() {
+
         Text iconTxt;
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.GROUP, "14px");
@@ -151,11 +172,11 @@ public class MainFrameController implements Observer {
         exportMenu.setGraphic(iconTxt);
         exportMenu.setText("Exportieren");
 
-        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.BACKWARD,"14px");
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.HOME, "14px");
         iconTxt.setFill(Color.GRAY);
        // iconTxt.setStyle("-fx-end-margin: 20px");
         homeButton.setGraphic(iconTxt);
-        homeButton.setText("Home");
+        homeButton.setText("Dashboard");
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.USER, "20px");
         iconTxt.setFill(javafx.scene.paint.Color.BLACK);
@@ -170,6 +191,22 @@ public class MainFrameController implements Observer {
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.INFO, "15px");
         iconTxt.setFill(Color.BLACK);
         infoMenuItem.setGraphic(iconTxt);
+
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.GROUP, "15px");
+        iconTxt.setFill(Color.BLACK);
+        benutzerMenuItem.setGraphic(iconTxt);
+
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.CODE, "15px");
+        iconTxt.setFill(Color.BLACK);
+        statusMenuItem.setGraphic(iconTxt);
+
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.FILE_TEXT, "15px");
+        iconTxt.setFill(Color.BLACK);
+        logFileMenuItem.setGraphic(iconTxt);
+
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.COGS, "15px");
+        iconTxt.setFill(Color.BLACK);
+        setupMenuItem.setGraphic(iconTxt);
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.QUESTION, "15px");
         iconTxt.setFill(Color.BLACK);
@@ -200,16 +237,17 @@ public class MainFrameController implements Observer {
                 if (empty || item == null) {
                     setText(null);
                 } else {
+                    setWrapText(true);
                     setText(item.getMeldungOutputString());
                     switch (item.getMeldungType()) {
                         case "OK":
-                            setStyle("-fx-background-color: #badcb3;");
+                            setStyle("-fx-text-fill: #3a7e46;");
                             break;
                         case "NOK":
-                            setStyle("-fx-background-color: #ffdada;");
+                            setStyle("-fx-text-fill: #e06666;");
                             break;
                         default:
-                            setStyle("-fx-background-color: #ffffff;");
+                            setStyle("-fx-text-fill: #000000;");
                             break;
                     }
                 }
@@ -218,6 +256,7 @@ public class MainFrameController implements Observer {
     }
 
     // Top-Menu
+
     /**
      * Opens Einstellungen-Dialog
      */
@@ -225,19 +264,35 @@ public class MainFrameController implements Observer {
     private void handleEinstellungen() {
         mainApp.showEinstellungenView();
     }
+
+    /**
+     * Öffnet die Benutzerliste
+     */
+    @FXML
+    private void handleBenutzer() {
+        mainApp.showBenutzerView();
+    }
+
+    /**
+     * Öffnet die Ansicht für die Anzeige der Statuselemente
+     */
+    @FXML
+    private void handleStatusElemente() {
+        mainApp.showStatusView();
+    }
+
     /**
      * Opens an about dialog.
      */
     @FXML
     private void showInfo() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Vereins-App");
-        alert.setHeaderText("über..");
-        alert.setContentText("Serge Kaulitz & Bernhard Kämpf\nWebsite: https://cloud4b.space");
+        alert.setTitle("über..");
+        alert.setHeaderText("JavaFx-Applikation «VereinsManager Pro»\n\nMAS Informatik (MAS I 13)\n" +
+                "Modul 2.3 «Fallbeispiel JavaFx-Applikation»");
+        alert.setContentText("© 2019/2020 by Serge Kaulitz & Bernhard Kämpf");
         alert.showAndWait();
     }
-
-
 
     /**
      * Oeffnet ein Browserfenster mit der Hilfe
@@ -246,11 +301,9 @@ public class MainFrameController implements Observer {
     private void handleHilfe() {
         System.out.println("showHilfe");
         Stage stage = new Stage();
-        stage.setTitle("Web View");
+        stage.setTitle("Online-Hilfe");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Hilfe/help.html"), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
-        scene.getStylesheets().add("../css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
         stage.show();
     }
 
@@ -263,9 +316,15 @@ public class MainFrameController implements Observer {
         stage.setTitle("JavaDoc");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Hilfe/JavaDoc/"), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
-        scene.getStylesheets().add("../css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
         stage.show();
+    }
+
+    /**
+     * Öffnet die View für die Darstellung der Logfile-Einträge
+     */
+    @FXML
+    private void handleShowLogFile() {
+        mainApp.showLogFileView();
     }
 
     /**
@@ -277,8 +336,6 @@ public class MainFrameController implements Observer {
         stage.setTitle("JavaDoc");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Hilfe/bookmarks.html"), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
-        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
         stage.show();
     }
 
@@ -294,9 +351,10 @@ public class MainFrameController implements Observer {
     // Linker Menu-/Navigationsbereich
     @FXML
     private void handleRefresh() {
-        System.out.println("Restarting app!");
+       /* System.out.println("Restarting app!");
         mainApp.getPrimaryStage().close();
-        Platform.runLater(() -> mainApp.start(new Stage()));
+        Platform.runLater(() -> mainApp.start(new Stage()));*/
+        mainApp.showDashboard();
     }
 
     /* Menupunkte unter Mitglieder
@@ -338,11 +396,18 @@ public class MainFrameController implements Observer {
         mainApp.showMemberKatIStatistics();
     }
 
+    /**
+     * Öffnet die Task-Statistik
+     */
+    @FXML
+    private void handleShowTaskStatistics() {
+        mainApp.showTaskStatistics();
+    }
+
     @FXML
     private void handleCreatePDF() {
-        // PdfOutput.mitgliederListePdf(mainApp.getAdressController().getMitgliederListe());
         try {
-            PdfWriterV02.writePdf(mainApp.getCurrentUser(), mainApp.getAdressController().getMitgliederListe());
+            PdfFileWriter.writePdf(mainApp.getCurrentUser(), mainApp.getAdressController().getMitgliederListe());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -374,13 +439,11 @@ public class MainFrameController implements Observer {
      * Oeffnet ein Browserfenster mit der Terminmatrix
      */
     @FXML
-    private void handleDoodle() {
+    public void handleDoodle() {
         Stage stage = new Stage();
         stage.setTitle("Doodle");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Doodle/doodle.php"), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
-        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
         stage.show();
     }
 
@@ -388,14 +451,21 @@ public class MainFrameController implements Observer {
      * Oeffnet ein Browserfenster mit der Präsenzkontrolle
      */
     @FXML
-    private void handleKontrolle() {
+    public void handleKontrolle() {
         Stage stage = new Stage();
         stage.setTitle("Präsenzkontrolle");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Kontrolle/kontrolluebersicht.php"), 750, 500, Color.web("#666970"));
         stage.setScene(scene);
-        scene.getStylesheets().add("../view/css/BrowserToolbar.css");
-        //TODO Path to stylesheet not correct...
         stage.show();
+    }
+
+    /* Menupunkte unter Tasks
+     * Pos#01: handleTerminbereich() --> Taskbereich öffnen
+     * Pos#02: handleTaskList() --> Taskliste in separatem Fenster
+     */
+    @FXML
+    private void handleTask() {
+        mainApp.showTask();
     }
 
     @FXML
@@ -405,49 +475,6 @@ public class MainFrameController implements Observer {
 
     public void setMeldungInListView(String meldungText, String meldungTyp) {
         meldungAusgabeListView.getItems().add(0, new Meldung(meldungText, meldungTyp));
-    }
-
-    public void setInfo(String infoText, String infoTyp) {
-        this.meldungAusgabeText.setText(infoText);
-        switch (infoTyp) {
-            case "OK":
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #4FA67B");
-                break;
-            case "NOK":
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #FF5F67");
-                break;
-            case "Info":
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #708ca6");
-                break;
-            default:
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #708ca6");
-                break;
-        }
-    }
-
-    public void setInfo(String infoText, String infoTyp, boolean add) {
-        if(add == true){
-            this.meldungAusgabeText.setText("*** " +LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-                    + " ***\n" + infoText + "\n\n" + this.meldungAusgabeText.getText());
-       // this.meldungAusgabeText.appendText("\n" + LocalTime.now() + " - " + infoText);
-       // this.meldungAusgabeText.insertText(LocalTime.now() + " - " + infoText);
-        } else {
-            this.meldungAusgabeText.setText(infoText);
-        }
-        switch (infoTyp) {
-            case "OK":
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #4FA67B");
-                break;
-            case "NOK":
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #FF5F67");
-                break;
-            case "Info":
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #708ca6");
-                break;
-            default:
-                this.meldungAusgabeText.setStyle("-fx-text-fill: #708ca6");
-                break;
-        }
     }
 
     /**
@@ -476,6 +503,30 @@ public class MainFrameController implements Observer {
                 @Override
                 public void run() {
                     circleLabelII.setText(anzTermine + " Termine (ab heute)");
+                }
+            });
+        }
+
+        // wenn die Benachrichtigung vom TaskController kommt
+        if (o instanceof TaskController) {
+            anzTasks = mainApp.getTaskController().getAnzahlOpenTasks();
+            Platform.runLater(new Runnable() {
+                // Anzahl Tasks im UI aktualisieren
+                @Override
+                public void run() {
+                    circleLabelIII.setText(anzTasks + "\npendente Tasks");
+                }
+            });
+        }
+
+        // wenn die Benachrichtigung vom BenutzerController kommt
+        if (o instanceof BenutzerController) {
+            anzUser = mainApp.getBenutzerController().getAnzahlBenutzer();
+            Platform.runLater(new Runnable() {
+                // Anzahl Benutzer im UI aktualisieren
+                @Override
+                public void run() {
+                    circleLabelIV.setText(anzUser + "\nUser");
                 }
             });
         }

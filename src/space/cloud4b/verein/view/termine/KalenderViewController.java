@@ -32,6 +32,7 @@ public class KalenderViewController implements Observer {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. LLL");
     private DateTimeFormatter formatterMonth = DateTimeFormatter.ofPattern("MMMM yyyy");
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private GridPane kalenderGrid;
     @FXML

@@ -29,9 +29,9 @@ public class TaskListViewController {
     private Stage dialogStage;
     private MainApp mainApp;
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private ListView<Task> taskListView;
-
     @FXML
     private Label titelLabel;
     @FXML
@@ -142,39 +142,20 @@ public class TaskListViewController {
             vbox.getChildren().addAll(label2, label3);
             gridPane.add(vbox, 3, i);
 
-            ArrayList<Integer> verantwortlicheId = new ArrayList<>();
-            verantwortlicheId = DatabaseReader.getVerantwortlicheId(taskList.get(i));
-            String string = new String();
+
             vbox = new VBox();
             vbox.setId("taskCell");
 
-
-            for (int j = 0; j < verantwortlicheId.size(); j++) {
-                string += verantwortlicheId.get(j);
-
-                for (int k = 0; k < mitgliederListe.size(); k++) {
-                    if (mitgliederListe.get(k).getId() == verantwortlicheId.get(j)) {
-                        label = new Label(mitgliederListe.get(k).getKurzbezeichnung());
-                        label.setWrapText(true);
-                        label.setId("taskTitel");
-                        iconUserTxt = GlyphsDude.createIcon(FontAwesomeIcon.USER, "16px");
-                        //iconTxt.setFill(Color.color(0.969, 0.535, 0.535));
-                        iconUserTxt.setFill(Color.BLACK);
-                        label.setGraphic(iconUserTxt);
-                        ;
-                        vbox.getChildren().add(label);
-                    }
-
-                }
-
-            }
-/*
-            label = new Label(string);
+            label = new Label(taskList.get(i).getVerantwortlichesMitglied().getKurzbezeichnung());
             label.setWrapText(true);
             label.setId("taskTitel");
-            vbox = new VBox();
-            vbox.setId("taskCell");
-            vbox.getChildren().addAll(label);*/
+            iconUserTxt = GlyphsDude.createIcon(FontAwesomeIcon.USER, "16px");
+            //iconTxt.setFill(Color.color(0.969, 0.535, 0.535));
+            iconUserTxt.setFill(Color.BLACK);
+            label.setGraphic(iconUserTxt);
+
+            vbox.getChildren().add(label);
+
             gridPane.add(vbox, 4, i);
 
 
