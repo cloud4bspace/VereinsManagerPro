@@ -25,6 +25,7 @@ import space.cloud4b.verein.view.chart.MemberStatistics01Controller;
 import space.cloud4b.verein.view.chart.TaskStatistics01Controller;
 import space.cloud4b.verein.view.dashboard.DashBoardController;
 import space.cloud4b.verein.view.einstellungen.EinstellungenViewController;
+import space.cloud4b.verein.view.einstellungen.StatusViewController;
 import space.cloud4b.verein.view.logging.LogViewController;
 import space.cloud4b.verein.view.login.LoginViewController;
 import space.cloud4b.verein.view.login.SignupViewController;
@@ -55,6 +56,7 @@ public class MainApp extends Application {
     private AdressController adressController;
     private TaskController taskController;
     private BenutzerController benutzerController;
+    private StatusController statusController;
 
     public MainApp() {
        // DatabaseOperation.createDatabaseFromTemplate();
@@ -76,6 +78,7 @@ public class MainApp extends Application {
             this.taskController = new TaskController();
             this.benutzerController = new BenutzerController();
             this.ranglisteController = new RanglisteController(this);
+            this.statusController = new StatusController();
 
             initMainFrame();
             showDashboard();
@@ -270,6 +273,10 @@ public class MainApp extends Application {
 
     public BenutzerController getBenutzerController() {
         return this.benutzerController;
+    }
+
+    public StatusController getStatusElementController() {
+        return this.statusController;
     }
 
     /**
@@ -710,4 +717,30 @@ public class MainApp extends Application {
         }
 
     }
+
+    public void showStatusView() {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/einstellungen/StatusView.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Statusübersicht");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the persons into the controller.
+            StatusViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setStage(dialogStage);
+            dialogStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

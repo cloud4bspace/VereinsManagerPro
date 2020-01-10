@@ -63,12 +63,70 @@ public abstract class DatabaseReader {
     }
 
     /**
+     * ermittelt für einen bestimmten Termin die Anzahl der anwesenden Personen gemäss
+     * der Präsenzkontrolle (Tabelle "terminkontrolle")
+     */
+    public static int getAnzAnwesenheiten(Termin termin) {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle WHERE KontrolleArt = 'Anwesenheit' " +
+                    "AND KontrolleWert= 1 AND KontrolleTerminId=" + termin.getTerminId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return rs.getInt("Anzahl");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * ermittelt für einen bestimmten Termin die Anzahl der abwesenden (entschuldigten) Personen gemäss
+     * der Präsenzkontrolle (Tabelle "terminkontrolle")
+     */
+    public static int getAnzEntschuldigteAbwesenheiten(Termin termin) {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle WHERE KontrolleArt = 'Anwesenheit' " +
+                    "AND KontrolleWert= 2 AND KontrolleTerminId=" + termin.getTerminId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return rs.getInt("Anzahl");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * ermittelt für einen bestimmten Termin die Anzahl der abwesenden (unentschuldigten) Personen gemäss
+     * der Präsenzkontrolle (Tabelle "terminkontrolle")
+     */
+    public static int getAnzUnentschuldigteAbwesenheiten(Termin termin) {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle WHERE KontrolleArt = 'Anwesenheit' " +
+                    "AND KontrolleWert= 3 AND KontrolleTerminId=" + termin.getTerminId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return rs.getInt("Anzahl");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
      * ermittelt die anzahl Mitglieder, die sich zu einem Termin eingetragen haben (an-/abmeldung/vielleicht)
      */
     public static int getAnzMeldungen() {
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
-            String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle WHERE KontrolleArt = 'Anmeldung'";
+            //String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle WHERE KontrolleArt = 'Anmeldung'";
+            String query = "SELECT COUNT(*) Anzahl FROM terminkontrolle";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 return rs.getInt("Anzahl");
@@ -259,7 +317,8 @@ public abstract class DatabaseReader {
                 rs = st.executeQuery(query);
                 while (rs.next()) {
                     // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
-                    teilnehmerListe.get(i).setAnmeldeStatus(anmeldung.getStatusElemente().get(rs.getInt("AnmeldeStatus")));
+                    teilnehmerListe.get(i).setAnmeldeStatus(anmeldung.getStatusElemente()
+                            .get(rs.getInt("AnmeldeStatus")));
                     teilnehmerListe.get(i).setAnmeldungText(rs.getString("KontrolleBemerkungen"));
                 }
                 i++;
@@ -880,7 +939,6 @@ public abstract class DatabaseReader {
 
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-
                 statusHashMap.put(rs.getInt("StatusElementKey"), new StatusElement(rs.getInt("StatusElementKey"),
                         rs.getString("StatusElementNameLong"), rs.getString("StatusElementNameShort"), rs.getString("StatusElementUnicodeChar")));
             }
@@ -890,7 +948,48 @@ public abstract class DatabaseReader {
         return statusHashMap;
     }
 
-    public static ArrayList<Termin> getKommendeTermineAsArrayList(){
+    public static ArrayList<StatusElement> getStatusElementeAsArrayList() {
+        ArrayList<StatusElement> statusElementListe = new ArrayList<>();
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT status.StatusId AS StatusId, StatusNameLong, StatusElementId, StatusElementKey," +
+                    " StatusElementNameLong, StatusElementNameShort, StatusElementUnicodeChar FROM statusElement " +
+                    "LEFT JOIN status ON status.StatusId = statusElement.StatusId ORDER BY StatusId, StatusElementKey";
+
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                statusElementListe.add(new StatusElement(
+                        rs.getInt("StatusId"),
+                        rs.getString("StatusNameLong"),
+                        rs.getInt("StatusElementId"),
+                        rs.getInt("StatusElementKey"),
+                        rs.getString("StatusElementNameLong"),
+                        rs.getString("StatusElementNameShort"),
+                        rs.getString("StatusElementUnicodeChar")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return statusElementListe;
+    }
+
+    public static int getAnzahlStatusElemente() {
+        int anzahlStatusElemente = 0;
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) AS Anzahl FROM statusElement";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                anzahlStatusElemente = rs.getInt("Anzahl");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return anzahlStatusElemente;
+    }
+
+    public static ArrayList<Termin> getKommendeTermineAsArrayList() {
         ArrayList<Termin> terminListe = new ArrayList<>();
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
             String query = "SELECT * from usr_web116_5.termin WHERE TerminDatum >= CURRENT_DATE() ORDER BY TerminDatum ASC";
@@ -1286,4 +1385,6 @@ public abstract class DatabaseReader {
         }
         return mitgliedName;
     }
+
+
 }

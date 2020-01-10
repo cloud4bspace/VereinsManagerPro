@@ -19,12 +19,17 @@
                      </items></Menu>
                   <Menu fx:id="infoMenu" mnemonicParsing="false" text="Vereinsmanager">
                      <items>
-                         <MenuItem fx:id="setupMenuItem" mnemonicParsing="false" onAction="#handleEinstellungen" text="Einstellungen" />
-                         <MenuItem fx:id="benutzerMenuItem" mnemonicParsing="false" onAction="#handleBenutzer" text="Benutzer" />
-                        <MenuItem fx:id="logFileMenuItem" mnemonicParsing="false" onAction="#handleShowLogFile"
-                                  text="LogFile"/>
-                         <MenuItem fx:id="infoMenuItem" mnemonicParsing="false" onAction="#showInfo" text="Info" />
-                         <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleBeenden" text="beenden" />
+                         <MenuItem fx:id="setupMenuItem" mnemonicParsing="false" onAction="#handleEinstellungen"
+                                   text="Einstellungen"/>
+                         <MenuItem fx:id="benutzerMenuItem" mnemonicParsing="false" onAction="#handleBenutzer"
+                                   text="Benutzer"/>
+                         <MenuItem fx:id="statusMenuItem" mnemonicParsing="false" onAction="#handleStatusElemente"
+                                   text="Statuselemente"/>
+                         <MenuItem fx:id="logFileMenuItem" mnemonicParsing="false" onAction="#handleShowLogFile"
+                                   text="LogFile"/>
+                         <MenuItem fx:id="infoMenuItem" mnemonicParsing="false" onAction="#showInfo" text="Info"/>
+                         <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleBeenden"
+                                   text="beenden"/>
                      </items></Menu>
               </menus>
                <rotationAxis>

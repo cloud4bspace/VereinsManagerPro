@@ -2,5 +2,5 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <comment>Zähler für Log-Einträge (letzter Counterwert wird hier gespeichert)</comment>
-    <entry key="logCounter">30</entry>
+    <entry key="logCounter">32</entry>
 </properties>

@@ -144,7 +144,7 @@ public class KalenderController implements Subject {
     }
 
     /**
-     * Methode startet den Observer-Thread "Anmeldungen" und überprüft in einem ständigen
+     * Methode startet den Observer-Thread "Terminkontrolle" und überprüft in einem ständigen
      * Loop alle 2 Sekunden die zugrundeliegenden MYSQL-Tabelle auf folgende Änderungen:
      * - Anzahl der Datensätze hat sich geändert
      * - Der Zeitstempel der letzen Änderung bei einem Datensatz hat sich geändert
@@ -178,7 +178,7 @@ public class KalenderController implements Subject {
             }
         };
         Thread thread = new Thread(observerAnmeldungen);
-        thread.setName("AnmeldungenObserver");
+        thread.setName("TerminkontrollObserver");
         thread.setDaemon(true);
         thread.start();
     }

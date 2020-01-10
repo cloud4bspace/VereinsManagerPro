@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Die Klass Mitglied erweitert die Klasse Kontakt und beinhaltet mitgliederspezifische
- * Daten (Eintritts-/Austrittsdatum usw.).
+ * Datenfelder (Eintritts-/Austrittsdatum usw.).
  * Mitglieder bilden die Basis für Adress- bzw. Mitgliederliste.
  *
  * @author Bernhard Kämpf und Serge Kaulitz

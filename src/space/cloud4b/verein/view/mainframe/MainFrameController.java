@@ -57,6 +57,8 @@ public class MainFrameController implements Observer {
     @FXML
     private MenuItem benutzerMenuItem;
     @FXML
+    private MenuItem statusMenuItem;
+    @FXML
     private MenuItem logFileMenuItem;
     @FXML
     private MenuItem helpMenuItem;
@@ -194,6 +196,10 @@ public class MainFrameController implements Observer {
         iconTxt.setFill(Color.BLACK);
         benutzerMenuItem.setGraphic(iconTxt);
 
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.CODE, "15px");
+        iconTxt.setFill(Color.BLACK);
+        statusMenuItem.setGraphic(iconTxt);
+
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.FILE_TEXT, "15px");
         iconTxt.setFill(Color.BLACK);
         logFileMenuItem.setGraphic(iconTxt);
@@ -265,6 +271,14 @@ public class MainFrameController implements Observer {
     @FXML
     private void handleBenutzer() {
         mainApp.showBenutzerView();
+    }
+
+    /**
+     * Öffnet die Ansicht für die Anzeige der Statuselemente
+     */
+    @FXML
+    private void handleStatusElemente() {
+        mainApp.showStatusView();
     }
 
     /**

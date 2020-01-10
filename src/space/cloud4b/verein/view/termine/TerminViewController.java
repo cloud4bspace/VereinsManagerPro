@@ -88,6 +88,18 @@ public class TerminViewController implements Observer {
     @FXML
     private Label neinLabel = new Label();
     @FXML
+    private Label unbekanntLabelI;
+    @FXML
+    private Label anwesendLabel;
+    @FXML
+    private Label entschuldigtLael;
+    @FXML
+    private Label unentschuldigtLabel;
+    @FXML
+    private Label unbekanntLabelII;
+    @FXML
+    private Label anzTotalLabel;
+    @FXML
     private Label anzMitgliederLabel = new Label();
 
     /**
@@ -245,20 +257,41 @@ public class TerminViewController implements Observer {
             minutenBisFeld.clear();
         }
 
-        if(termin.getKatIElement()!=null) {
+        if (termin.getKatIElement() != null) {
             comboBoxKategorieI.getSelectionModel().select(termin.getKatIElement());
         }
-        if(termin.getKatIIElement()!=null) {
+        if (termin.getKatIIElement() != null) {
             comboBoxKategorieII.getSelectionModel().select(termin.getKatIIElement());
         }
 
 
         // Tab Kontrolle/Planung
-        angemeldetLabel.setText(Integer.toString(DatabaseReader.getAnzAnmeldungen(termin)));
-        vielleichtLabel.setText(Integer.toString(DatabaseReader.getAnzVielleicht(termin)));
-        neinLabel.setText(Integer.toString(DatabaseReader.getAnzNein(termin)));
-        anzMitgliederLabel.setText(Integer.toString(DatabaseReader.readAnzahlMitglieder()));
-     //   comboBoxKategorieI.getSelectionModel().select(termin.getKatIElement().getStatusElementKey());
+        updatePlanungTab();
+
+        //   comboBoxKategorieI.getSelectionModel().select(termin.getKatIElement().getStatusElementKey());
+    }
+
+    public void updatePlanungTab() {
+        int angemeldet = DatabaseReader.getAnzAnmeldungen(termin);
+        int vielleicht = DatabaseReader.getAnzVielleicht(termin);
+        int nein = DatabaseReader.getAnzNein(termin);
+        int mitglieder = DatabaseReader.readAnzahlMitglieder();
+        int unbekanntI = mitglieder - angemeldet - vielleicht - nein;
+        int anwesend = DatabaseReader.getAnzAnwesenheiten(termin);
+        int entschuldigt = DatabaseReader.getAnzEntschuldigteAbwesenheiten(termin);
+        int unentschuldigt = DatabaseReader.getAnzUnentschuldigteAbwesenheiten(termin);
+        int unbekanntII = mitglieder - anwesend - entschuldigt - unentschuldigt;
+        angemeldetLabel.setText(Integer.toString(angemeldet));
+        vielleichtLabel.setText(Integer.toString(vielleicht));
+        neinLabel.setText(Integer.toString(nein));
+        anzMitgliederLabel.setText(Integer.toString(mitglieder));
+        unbekanntLabelI.setText(Integer.toString(unbekanntI));
+        anwesendLabel.setText(Integer.toString(anwesend));
+        entschuldigtLael.setText(Integer.toString(entschuldigt));
+        unentschuldigtLabel.setText(Integer.toString(unentschuldigt));
+        unbekanntLabelII.setText(Integer.toString(unbekanntII));
+        anzTotalLabel.setText(Integer.toString(mitglieder));
+
     }
 
     public void showTeilnehmerListe(Termin termin) {
@@ -425,6 +458,7 @@ public class TerminViewController implements Observer {
                     if (termin != null) {
                         setTermin(termin);
                     }
+                    showTeilnehmerListe(termin);
                     // Termin ist nicht mehr dasselbe Objekt.. deshalb muss ich mit der ID arbeiten
 
                 }
