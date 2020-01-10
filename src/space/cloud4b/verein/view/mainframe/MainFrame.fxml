@@ -133,10 +133,13 @@
                      <Insets top="10.0" />
                  </VBox.margin>
              </MenuBar>
-              <Label text="Meldungen">
+              <Label onMouseClicked="#resetMeldungen" text="Meldungen">
                   <VBox.margin>
-                      <Insets left="10.0" top="20.0" />
+                      <Insets left="10.0" top="20.0"/>
                   </VBox.margin>
+                  <tooltip>
+                      <Tooltip text="anklicken um Meldungen zu löschen"/>
+                  </tooltip>
               </Label>
               <ListView fx:id="meldungAusgabeListView" cacheShape="false" centerShape="false" nodeOrientation="LEFT_TO_RIGHT" scaleShape="false">
                   <VBox.margin>

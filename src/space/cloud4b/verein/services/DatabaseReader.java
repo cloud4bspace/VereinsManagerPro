@@ -465,8 +465,9 @@ public abstract class DatabaseReader {
 
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
+            // TODO sha1Hex + eMail?
             String query = "SELECT COUNT(*) Treffer FROM benutzer WHERE BenutzerName = '" + eMail + "' AND BenutzerPW=" +
-                    "'" + DigestUtils.sha1Hex(String.valueOf(pw)) + "' AND BenutzerSperrcode=0";
+                    "'" + DigestUtils.sha1Hex(String.valueOf(pw) + eMail) + "' AND BenutzerSperrcode=0";
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {

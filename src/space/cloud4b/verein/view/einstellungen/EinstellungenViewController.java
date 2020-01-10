@@ -111,7 +111,7 @@ public class EinstellungenViewController {
             // das übergebene File wird mit dem neuen Namen in den Zielordner kopiert
             java.nio.file.Files.copy(
                     src, dst, StandardCopyOption.COPY_ATTRIBUTES,
-                    StandardCopyOption.REPLACE_EXISTING
+                    StandardCopyOption.REPLACE_EXISTING // TODO Microsoft kann das nicht?
             );
         } catch (IOException e) {
             System.out.println("Neues Logo konnte nicht gespeicher twerden (" + e + ")");

@@ -477,8 +477,13 @@ public class MainFrameController implements Observer {
         meldungAusgabeListView.getItems().add(0, new Meldung(meldungText, meldungTyp));
     }
 
+    public void resetMeldungen() {
+        meldungAusgabeListView.getItems().clear();
+    }
+
     /**
      * wird ausgeführt, wenn eine der überwachte Instanzen eine Notify-Benachrichtigung absetzt.
+     *
      * @param o das Objekt des überwachten Objekts
      */
     @Override
