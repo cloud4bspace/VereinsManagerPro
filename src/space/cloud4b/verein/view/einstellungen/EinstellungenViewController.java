@@ -14,7 +14,6 @@ import space.cloud4b.verein.einstellungen.Einstellung;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -61,12 +60,12 @@ public class EinstellungenViewController {
         dbDatabaseFeld.setText(Einstellung.getdbDatenbank());
         dbPasswortFeld.setText(Einstellung.getdbPW());
 
-        try {
-            FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");
+        try (FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");) {
             Image image = new Image(inputStream);
             clubLogoImage.setImage(image);
             clubLogoImageSmall.setImage(image);
-        } catch (FileNotFoundException e) {
+
+        } catch (IOException e) {
         }
     }
 
@@ -111,7 +110,7 @@ public class EinstellungenViewController {
             // das übergebene File wird mit dem neuen Namen in den Zielordner kopiert
             java.nio.file.Files.copy(
                     src, dst, StandardCopyOption.COPY_ATTRIBUTES,
-                    StandardCopyOption.REPLACE_EXISTING
+                    StandardCopyOption.REPLACE_EXISTING // TODO Microsoft kann das nicht?
             );
         } catch (IOException e) {
             System.out.println("Neues Logo konnte nicht gespeicher twerden (" + e + ")");

@@ -61,7 +61,6 @@ public abstract class DatabaseOperation {
             ps.setString(2, vorname);
             ps.setString(3, eintrittsDatum);
             ps.setString(4, currentUser.getUserName());
-            // TODO Username vom angemeldeten User lesen
             System.out.println("neues Mitglied hinzugefügt: " + ps.executeUpdate());
             System.out.println(ps.getGeneratedKeys());
             ResultSet keys = null;
@@ -419,7 +418,7 @@ public abstract class DatabaseOperation {
             try (PreparedStatement ps = conn.getConnection().prepareStatement(query)) {
                 ps.setInt(1, mitgliedId);//KontaktID
                 ps.setString(2, eMail);
-                ps.setString(3, DigestUtils.sha1Hex(String.valueOf(pw)));
+                ps.setString(3, DigestUtils.sha1Hex(String.valueOf(pw) + eMail));
                 ps.setInt(4, 0);
                 ps.setString(5, "neuer User #" + mitgliedId);
                 System.out.println("Rückmeldung preparedStmt: " + ps.executeUpdate());

@@ -186,10 +186,26 @@ public class MitgliedViewController implements Observer {
         }
     }
 
+    public void handleGetPreviousMitglied() {
+        int i = mitgliedArrayList.indexOf(aktuellesMitglied) - 1;
+
+        if (i >= 0) {
+            mitgliedTabelle.scrollTo(i);
+
+            mitgliedTabelle.getSelectionModel().select(i);
+            mitgliedTabelle.getFocusModel().focus(i);
+            setMitglied(mitgliedArrayList.get(mitgliedTabelle.getSelectionModel().getFocusedIndex()));
+
+        } else {
+            mainApp.getMainFrameController().setMeldungInListView("Blättern nicht möglich..", "NOK");
+        }
+    }
+
 
     /**
      * soll ein neueröffnetes Mitglied direkt selektieren aufgrund der neuen Key-ID
      * TODO funktioniert nicht...
+     *
      * @param mitgliedId
      */
     public void setMitglied(int mitgliedId) throws InterruptedException {
@@ -475,7 +491,7 @@ public class MitgliedViewController implements Observer {
             aktuellesMitglied.setVorName(vorNameFeld.getText());
             aktuellesMitglied.setAdresse(adresseFeld.getText());
             aktuellesMitglied.setAdresszusatz(adressZusatzFeld.getText());
-            aktuellesMitglied.setPlz(Integer.parseInt(plzFeld.getText()));
+            aktuellesMitglied.setPlz(Integer.parseInt(plzFeld.getText().trim()));
             aktuellesMitglied.setOrt(ortFeld.getText());
             aktuellesMitglied.setGeburtsdatum(geburtsdatumPicker.getValue());
             aktuellesMitglied.setAnredeStatus(comboBoxAnrede.getValue());

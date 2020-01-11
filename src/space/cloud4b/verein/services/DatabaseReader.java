@@ -232,7 +232,6 @@ public abstract class DatabaseReader {
                     "FROM terminkontrolle LEFT JOIN kontakt ON kontakt.KontaktId = KontrolleMitgliedId " +
                     "WHERE KontrolleArt = 'Anmeldung' AND KontrolleTerminId = " + terminId +
                     " GROUP BY KontrolleMitgliedId";
-            //KontrolleArt = 'Anmeldung' TODO: Einschränkung evtl. weglassen...
 
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
@@ -286,7 +285,6 @@ public abstract class DatabaseReader {
      * ermittelt die Teilnehmerliste zu einem Termin
      */
     public static ArrayList<Teilnehmer> getTeilnehmer(Termin termin) {
-        //TODO extrem langsam hier...
         ArrayList<Teilnehmer> teilnehmerListe = new ArrayList<>();
         Status anmeldung = new Status(5);
         Status teilnahme = new Status(6);
@@ -297,7 +295,6 @@ public abstract class DatabaseReader {
                     "FROM terminkontrolle LEFT JOIN kontakt ON kontakt.KontaktId = KontrolleMitgliedId " +
                     "WHERE KontrolleArt = 'Anmeldung' AND KontrolleTerminId = " + terminId +
                     " GROUP BY KontrolleMitgliedId";
-            //KontrolleArt = 'Anmeldung' TODO: Einschränkung evtl. weglassen...
 
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
@@ -466,7 +463,7 @@ public abstract class DatabaseReader {
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
             String query = "SELECT COUNT(*) Treffer FROM benutzer WHERE BenutzerName = '" + eMail + "' AND BenutzerPW=" +
-                    "'" + DigestUtils.sha1Hex(String.valueOf(pw)) + "' AND BenutzerSperrcode=0";
+                    "'" + DigestUtils.sha1Hex(String.valueOf(pw) + eMail) + "' AND BenutzerSperrcode=0";
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
