@@ -14,7 +14,6 @@ import space.cloud4b.verein.einstellungen.Einstellung;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -61,12 +60,12 @@ public class EinstellungenViewController {
         dbDatabaseFeld.setText(Einstellung.getdbDatenbank());
         dbPasswortFeld.setText(Einstellung.getdbPW());
 
-        try {
-            FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");
+        try (FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");) {
             Image image = new Image(inputStream);
             clubLogoImage.setImage(image);
             clubLogoImageSmall.setImage(image);
-        } catch (FileNotFoundException e) {
+
+        } catch (IOException e) {
         }
     }
 

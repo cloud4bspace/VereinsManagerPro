@@ -228,6 +228,7 @@ public class MainFrameController implements Observer {
             FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");
             Image image = new Image(inputStream);
             clubLogoImage.setImage(image);
+            // TODO muss man da was schliessen
         } catch (FileNotFoundException e) {
         }
 

@@ -491,7 +491,7 @@ public class MitgliedViewController implements Observer {
             aktuellesMitglied.setVorName(vorNameFeld.getText());
             aktuellesMitglied.setAdresse(adresseFeld.getText());
             aktuellesMitglied.setAdresszusatz(adressZusatzFeld.getText());
-            aktuellesMitglied.setPlz(Integer.parseInt(plzFeld.getText()));
+            aktuellesMitglied.setPlz(Integer.parseInt(plzFeld.getText().trim()));
             aktuellesMitglied.setOrt(ortFeld.getText());
             aktuellesMitglied.setGeburtsdatum(geburtsdatumPicker.getValue());
             aktuellesMitglied.setAnredeStatus(comboBoxAnrede.getValue());
