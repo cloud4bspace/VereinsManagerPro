@@ -13,7 +13,7 @@ import space.cloud4b.verein.services.DatabaseOperation;
 import space.cloud4b.verein.services.DatabaseReader;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Die Klasse SignupViewController ist verknüpft mit dem JavaFX-Unserinterface SignupView.fxml
@@ -64,11 +64,10 @@ public class SignupViewController {
     private void initialize() {
         saveButton.setVisible(true);
         gotoLoginButton.setVisible(false);
-        try {
-            FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");
+        try (FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");) {
             Image image = new Image(inputStream);
             clubLogoImage.setImage(image);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
         }
     }
 

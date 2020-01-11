@@ -30,11 +30,9 @@ public class TaskController implements Subject {
 
 
     public TaskController() {
-
         // Die benötigten Listen werden instanziert
         observerList = new ArrayList<>();
         taskListe = DatabaseReader.getTaskList();
-
         // der Observer-Thread wird gestartet
         startTasksObserver();
     }
@@ -46,6 +44,12 @@ public class TaskController implements Subject {
         return anzahlOpenTasks;
     }
 
+    /**
+     * Aktualisiert die Anzahl der offenen/pendenten Tasks im entsprechenden
+     * Datenfeld
+     *
+     * @param anzahlOpenTasks
+     */
     public void setAnzahlOpenTasks(int anzahlOpenTasks) {
         this.anzahlOpenTasks = anzahlOpenTasks;
     }
@@ -58,28 +62,39 @@ public class TaskController implements Subject {
     }
 
     /**
-     * die Listen (ArrayList) werden nach einer Änderung in der Datenbank aktualisiert und die
+     * Die als Datenfelder geführten Listen (ArrayList) werden nach einer Änderung in der Datenbank aktualisiert und die
      * Observer werden benachrichtigt.
      */
     public void updateListen() {
         this.taskListe = DatabaseReader.getTaskList();
-        System.out.println("Aenderungen bei Listen umgesetzt");
     }
 
     /**
-     * aktualisiert den Zeitstempel für die letzte Änderung in der Termin-Tabelle der Datenbank
+     * aktualisiert den Zeitstempel für die letzte Änderung in der Task-Tabelle der Datenbank
      *
      * @param neuerZeitstempel der aktuelle (höchste) Zeitstempel
      */
     public void updateLetzeAenderung(Timestamp neuerZeitstempel) {
         this.timestamp = neuerZeitstempel;
-        System.out.println("Aenderungen bei den Tasks mit neuem Zeitstempel (" + neuerZeitstempel + ") festgestellt");
     }
 
+    /**
+     * aktualisiert die Anzahl der Task in dem entsprechenden Datenfeld
+     *
+     * @param anzahlTasks
+     */
     public void setAnzahlTasks(int anzahlTasks) {
         this.anzahlTasks = anzahlTasks;
     }
 
+    /**
+     * Methode startet den Observer-Thread "TaskObserver" und überprüft in einem ständigen
+     * Loop alle 2 Sekunden die zugrundeliegenden MYSQL-Tabellen auf folgende Änderungen:
+     * - Anzahl der Datensätze hat sich geändert
+     * - Der Zeitstempel der letzen Änderung bei einem Datensatz hat sich geändert
+     * Festgestellte Änderungen werden in den Datenfeldern nachgeführt und die Observer
+     * werden benachrichtigt.
+     */
     private void startTasksObserver() {
         Runnable observerTask = () -> {
             boolean update = false;
@@ -119,7 +134,6 @@ public class TaskController implements Subject {
     public void Attach(Observer o) {
         // überprüfen, ob ein Objekt derselben Klasse bereits vorhanden ist und ggf. löschen
         for (int i = 0; i < observerList.size(); i++) {
-            System.out.println("O#" + i + ": " + observerList.get(i));
             if (observerList.get(i).getClass().equals(o.getClass())) {
                 observerList.remove(i);
             }

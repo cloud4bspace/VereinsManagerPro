@@ -151,7 +151,6 @@ public class AdressController implements Subject {
     public void Attach(Observer o) {
         // überprüfen, ob ein Objekt derselben Klasse bereits vorhanden ist und ggf. löschen
         for (int i = 0; i < observerList.size(); i++) {
-            System.out.println("O#" + i + ": " + observerList.get(i));
             if (observerList.get(i).getClass().equals(o.getClass())) {
                 observerList.remove(i);
             }
