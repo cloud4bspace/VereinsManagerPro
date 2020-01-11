@@ -13,7 +13,7 @@ import space.cloud4b.verein.services.DatabaseOperation;
 import space.cloud4b.verein.services.DatabaseReader;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Die Klasse LoginViewController ist verknüpft mit dem JavaFX-Unserinterface LoginView.fxml
@@ -54,11 +54,10 @@ public class LoginViewController {
     private void initialize() {
         feedbackLabel.setText("Bitte melde dich mit deinem Benutzernamen (E-Mail) und Passwort an..");
         loginTitleLabel.setText("Login VereinsManager");
-        try {
-            FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");
+        try (FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");) {
             Image image = new Image(inputStream);
             clubLogoImage.setImage(image);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

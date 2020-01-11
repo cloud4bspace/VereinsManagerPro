@@ -9,8 +9,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
- * Die Klasse BenutzerController stellt den fxml-Controllern die Benutzerliste zur Verfügung.
- * Zudem überwacht die Klasse die zugrundeliegenden MYSQL-Tabelle und gibt Änderungen, Ergänzungen und
+ * Die Klasse StatusController stellt den fxml-Controllern die StatusListe zur Verfügung.
+ * Zudem überwacht die Klasse die zugrundeliegenden MYSQL-Tabellen und gibt Änderungen, Ergänzungen und
  * Löschungen an die in der Observer-Liste (observerList) eingetragenen fxml-Controllern weiter.
  * Dazu implementiert die Klasse das Subject-Interface
  *
@@ -37,8 +37,8 @@ public class StatusController implements Subject {
     }
 
     /**
-     * Aktualisiert die übergebene Anzahl der Mitglieder in der entsprechenden
-     * Instanzvariabel.
+     * Aktualisiert die übergebene Anzahl Status-Element in der entsprechenden
+     * Datenfeldern.
      * Mittels Notify() werden die in der Observer-Liste eingetragenen Klassen über die Änderung
      * orientiert (Start der Methode update()) bei den Observer-Klassen
      *
@@ -104,17 +104,9 @@ public class StatusController implements Subject {
                     update = true;
                 }
                 // hat sich der Zeitstempel der letzten Äenderung verändert?
-                // TODO dies ggf. noch implementieren
-                /*
-                if (this.timestamp == null) {
-                    updateLetzeBenutzerAenderung(DatabaseReader.readLetzteBenutzerAenderung());
-                    update = true;
-                } else if (Objects.requireNonNull(DatabaseReader.readLetzteBenutzerAenderung()).after(this.timestamp)) {
-                    updateLetzeBenutzerAenderung(DatabaseReader.readLetzteBenutzerAenderung());
-                    update = true;
-                }
+                /* --> reine Änderungen werden durch diesen Observer nicht weitergegeben, da die
+                   entsprechenden Daten wenig zeitkritisch sind.
                 */
-
                 if (update) {
                     updateListen();
                     Notify();
@@ -140,7 +132,6 @@ public class StatusController implements Subject {
 
         // überprüfen, ob ein Objekt derselben Klasse bereits vorhanden ist und ggf. löschen
         for (int i = 0; i < observerList.size(); i++) {
-            System.out.println("O#" + i + ": " + observerList.get(i));
             if (observerList.get(i).getClass().equals(o.getClass())) {
                 observerList.remove(i);
             }

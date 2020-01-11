@@ -21,7 +21,6 @@ import space.cloud4b.verein.services.Observer;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -288,26 +287,23 @@ public class MitgliedViewController implements Observer {
 
         // Profilbild des Mitglieds wird gesucht im Ordner "ressources/images/profilbilder/"
         // zwei Formate sind möglich (.jpg oder .png)
-        try {
+        try (FileInputStream inputStream = new FileInputStream("ressources/images/profilbilder/ProfilBild_"
+                + mitglied.getId() + ".jpg");) {
             // Suche nach .jpg-Bild
-            FileInputStream inputStream = new FileInputStream("ressources/images/profilbilder/ProfilBild_"
-                    + mitglied.getId() + ".jpg");
             Image image = new Image(inputStream);
             profilBild.setImage(image);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             // Suche nach .png-Bild
-            try {
-                FileInputStream inputStream = new FileInputStream("ressources/images/profilbilder/ProfilBild_"
-                        + mitglied.getId() + ".png");
+            try (FileInputStream inputStream = new FileInputStream("ressources/images/profilbilder/ProfilBild_"
+                    + mitglied.getId() + ".png");) {
                 Image image = new Image(inputStream);
                 profilBild.setImage(image);
-            } catch (FileNotFoundException ex) {
+            } catch (IOException ex) {
                 // wenn weder .jpg noch .png-Bild vorhanden sind, wird ein Dummy-Bild geladen
-                try {
-                    FileInputStream inputStream = new FileInputStream("ressources/images/profilbilder/Dummy.png");
+                try (FileInputStream inputStream = new FileInputStream("ressources/images/profilbilder/Dummy.png");) {
                     Image image = new Image(inputStream);
                     profilBild.setImage(image);
-                } catch (FileNotFoundException exe) {
+                } catch (IOException exe) {
                     System.out.println("Keine Bilddateien gefunden (" + exe + ")");
                 }
             }
