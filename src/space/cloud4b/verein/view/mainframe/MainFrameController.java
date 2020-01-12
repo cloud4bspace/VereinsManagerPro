@@ -412,6 +412,13 @@ public class MainFrameController implements Observer {
         }
     }
 
+    @FXML
+    private void handleTerminePDFMenuItem() {
+        PdfFileWriter.writeTermineAsPdf(mainApp.getCurrentUser()
+                , mainApp.getKalenderController().getNaechsteTerminListe()
+                , mainApp.getAdressController().getMitgliederListe());
+    }
+
     /* Menupunkte unter Termine
      * Pos#01: handleTerminbereich() --> Mitgliederbereich öffnen
      * handleDoodle() --> Anwesenheits-Matrix öffnen
