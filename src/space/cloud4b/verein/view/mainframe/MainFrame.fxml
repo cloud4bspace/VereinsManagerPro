@@ -86,6 +86,7 @@
                       <MenuItem mnemonicParsing="false" onAction="#handelKalenderansicht" text="Monatsansicht" />
                         <MenuItem mnemonicParsing="false" onAction="#handleDoodle" text="Doodle" />
                       <MenuItem mnemonicParsing="false" onAction="#handleKontrolle" text="Präsenzkontrolle" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleTerminePDFMenuItem" text="Agenda als PDF"/>
                   </items>
                 </Menu>
               </menus>
@@ -125,7 +126,12 @@
               <menus>
                   <Menu fx:id="exportMenu" mnemonicParsing="false" text="Export">
                       <items>
-                          <MenuItem fx:id="mitgliederExcelMenuItem" mnemonicParsing="false" onAction="#handleExportMitglieder" text="Mitgliederliste (Excel)" />
+                          <MenuItem fx:id="mitgliederExcelMenuItem" mnemonicParsing="false"
+                                    onAction="#handleExportMitglieder" text="Mitgliederliste (Excel)"/>
+                          <MenuItem fx:id="mitgliederPDFMenuItem" mnemonicParsing="false" onAction="#handleCreatePDF"
+                                    text="Mitgliederliste (PDF)"/>
+                          <MenuItem fx:id="terminePDFMenuItem" mnemonicParsing="false"
+                                    onAction="#handleTerminePDFMenuItem" text="Agenda (PDF)"/>
                       </items>
                   </Menu>
               </menus>

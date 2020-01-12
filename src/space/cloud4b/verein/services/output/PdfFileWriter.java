@@ -7,7 +7,10 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import org.apache.poi.util.IOUtils;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
+import space.cloud4b.verein.model.verein.kalender.Teilnehmer;
+import space.cloud4b.verein.model.verein.kalender.Termin;
 import space.cloud4b.verein.model.verein.user.User;
+import space.cloud4b.verein.services.DatabaseReader;
 
 import java.awt.*;
 import java.io.*;
@@ -15,7 +18,9 @@ import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Die Klasse bietet Methoden zur Erstellung von PDF-Dokumenten
@@ -25,12 +30,13 @@ import java.util.ArrayList;
  */
 public abstract class PdfFileWriter {
     public static final String DEST = "ressources/files/pdf/Mitgliederliste_" + LocalDate.now().toString() + ".pdf";
+    public static final String DESTTERMINE = "ressources/files/pdf/Terminliste_"
+            + LocalDate.now().toString() + ".pdf";
     public static Font font = new Font(Font.FontFamily.UNDEFINED, 8, Font.NORMAL);
     public static Font fontBold = new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD);
 
 
     public static void writePdf(User user, ArrayList<Mitglied> mitgliederListe) throws IOException {
-
         File file = new File(DEST);
         file.getParentFile().mkdirs();
         FileOutputStream fos = null;
@@ -256,4 +262,142 @@ public abstract class PdfFileWriter {
 
     }
 
+    public static void writeTermineAsPdf(User user, ArrayList<Termin> terminListe, ArrayList<Mitglied> mitgliederListe) {
+        File file = new File(DESTTERMINE);
+        file.getParentFile().mkdirs();
+        FileOutputStream fos = null;
+        Document document = new Document(PageSize.A4);
+        // document.newPage();
+        document.setMargins(20F, 10F, 80F, 20F);
+        try {
+            try {
+                fos = new FileOutputStream(DESTTERMINE);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            com.itextpdf.text.pdf.PdfWriter writer = com.itextpdf.text.pdf.PdfWriter.getInstance(document, fos);
+
+            // HeaderFooterPageEvent reagiert auf
+            HeaderFooterPageEvent event = new HeaderFooterPageEvent();
+            event.setHeader("Terminliste ");
+            event.setUser(user);
+            writer.setPageEvent(event);
+            document.open();
+            document.addCreationDate();
+            document.addTitle("Terminliste");
+            document.addAuthor(user.getUserName());
+            document.addCreator("VereinsManagerPro (www.cloud4b.space)");
+            document.addSubject("Terminliste");
+            //setHeader(writer, document);
+
+            // document.setMargins(50F,20F,20F,20F);
+            float[] pointColumnWidths = {75F, 300F};
+            PdfPTable table = new PdfPTable(2);
+            table.setHeaderRows(1);
+            table.setHorizontalAlignment(0);
+            table.setTotalWidth(pointColumnWidths);
+            table.setWidthPercentage(100f);
+            // Header Row
+            Paragraph paraHeader01 = new Paragraph("Termin", fontBold);
+            PdfPCell paraCell01 = new PdfPCell(paraHeader01);
+            paraCell01.setPadding(5);
+            paraCell01.setBorderWidthLeft(0);
+            paraCell01.setBorderWidthRight(0);
+            paraCell01.setBorderColor(new BaseColor(243, 210, 80));
+            paraCell01.setBackgroundColor(new BaseColor(243, 210, 80));
+            paraCell01.setHorizontalAlignment(Element.ALIGN_LEFT);
+            table.addCell(paraCell01);
+
+            Paragraph paraHeader02 = new Paragraph("Details", fontBold);
+            PdfPCell paraCell02 = new PdfPCell(paraHeader02);
+            paraCell02.setPadding(5);
+            paraCell02.setBorderWidthLeft(0);
+            paraCell02.setBorderWidthRight(0);
+            paraCell02.setBorderColor(new BaseColor(243, 210, 80));
+            paraCell02.setBackgroundColor(new BaseColor(243, 210, 80));
+            paraCell02.setHorizontalAlignment(Element.ALIGN_LEFT);
+            table.addCell(paraCell02);
+
+
+            for (Termin termin : terminListe) {
+                // Spalte 1
+                Paragraph paragraph1CellCol01 = new Paragraph(termin.getDateAsLocalStringLong().getValue()
+                        + " (" + termin.getDatum().getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.GERMAN) + ")"
+                        , fontBold);
+                Paragraph paragraph2CellCol01 = new Paragraph(termin.getZeitText(), font);
+                paragraph1CellCol01.setLeading(5);
+                paragraph1CellCol01.setAlignment(Element.ALIGN_LEFT);
+                PdfPCell cellCol01 = new PdfPCell();
+                cellCol01.setBorderWidthLeft(0);
+                cellCol01.setBorderWidthRight(0);
+                cellCol01.setBorderColor(new BaseColor(243, 210, 80));
+                cellCol01.addElement(paragraph1CellCol01);
+                cellCol01.addElement(paragraph2CellCol01);
+                cellCol01.setHorizontalAlignment(Element.ALIGN_LEFT);
+                // cellCol01.setBackgroundColor(new BaseColor(247, 136, 136));
+                cellCol01.setPadding(5);
+                table.addCell(cellCol01);
+
+
+                // Spalte 2
+                Paragraph paragraph3CellCol02;
+                Paragraph paragraph2CellCol02;
+                Paragraph paragraph1CellCol02 = new Paragraph(termin.getTerminText().getValue(), fontBold);
+                paragraph1CellCol02.setLeading(5);
+                if (termin.getOrt() != null) {
+                    paragraph2CellCol02 = new Paragraph(termin.getOrt(), font);
+                } else {
+                    paragraph2CellCol02 = new Paragraph("", font);
+                }
+                if (termin.getDetails() != null) {
+                    paragraph3CellCol02 = new Paragraph(termin.getDetails(), font);
+                } else {
+                    paragraph3CellCol02 = new Paragraph("", font);
+                }
+                paragraph3CellCol02.setSpacingAfter(0);
+                ArrayList<Teilnehmer> teilnehmerListe = new ArrayList<>(DatabaseReader.getTeilnehmer(termin, mitgliederListe));
+                String teilnehmerString = null;
+                int zaehler = 1;
+                for (Teilnehmer teilnehmer : teilnehmerListe) {
+                    if (teilnehmer.getAnmeldungWert() == 1) {
+                        if (zaehler > 1) {
+                            teilnehmerString += ", ";
+                        }
+                        if (zaehler == 1) {
+
+                            teilnehmerString = DatabaseReader.getAnzAnmeldungen(termin) + " angemeldete Mitglieder: ";
+                        }
+                        teilnehmerString += "#" + zaehler + " " + teilnehmer.getMitglied()
+                                .getNachName() + " " + teilnehmer.getMitglied().getVorname();
+                        zaehler++;
+                    }
+                }
+                Paragraph paragraph4CellCol02 = new Paragraph(teilnehmerString, font);
+
+                PdfPCell cellCol02 = new PdfPCell();
+                cellCol02.setBorderWidthLeft(0);
+                cellCol02.setBorderWidthRight(0);
+                cellCol02.setBorderColor(new BaseColor(243, 210, 80));
+                cellCol02.setPadding(5);
+                cellCol02.addElement(paragraph1CellCol02);
+                cellCol02.addElement(paragraph2CellCol02);
+                cellCol02.addElement(paragraph3CellCol02);
+                cellCol02.addElement(paragraph4CellCol02);
+                table.addCell(cellCol02);
+
+
+            }
+            document.add(table);
+
+            document.close();
+            try {
+                Desktop.getDesktop().open(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

@@ -41,7 +41,11 @@ public class Kontakt {
     }
 
     public String toString() {
-        return "#" + kontaktId + ": " + nachName + " " + vorName + " | " + plz + " " + ort;
+        String string = "#" + kontaktId + ": " + nachName + " " + vorName;
+        if (this.plz > 0) {
+            string += " | " + plz + " " + ort;
+        }
+        return string;
     }
 
     /**

@@ -28,6 +28,7 @@ public class HeaderFooterPageEvent extends PdfPageEventHelper {
      * Der angemeldete User für den Header
      */
     private User user;
+    private BaseColor baseColor;
 
     /**
      * Ermöglicht die Übergabe eines individuellen Titels
@@ -47,6 +48,7 @@ public class HeaderFooterPageEvent extends PdfPageEventHelper {
         this.user = user;
     }
 
+
     /**
      * Fügt jeder Seite einen Header hinzu (bei onEndPage-Event)
      * @see com.itextpdf.text.pdf.PdfPageEventHelper#onEndPage(com.itextpdf.text.pdf.PdfWriter, com.itextpdf.text.Document)
@@ -55,7 +57,8 @@ public class HeaderFooterPageEvent extends PdfPageEventHelper {
         FontSelector fs = new FontSelector();
         Font fontTitel = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
         Font fontSubHeader = FontFactory.getFont(FontFactory.HELVETICA, 8);
-        fontTitel.setColor(new BaseColor(247, 136, 136));
+        fontTitel.setColor(new BaseColor(0, 0, 0));
+        //fontTitel.setColor(baseColor);
         fs.addFont(fontTitel);
         Phrase titel = new Phrase(header, fontTitel);
         PdfPTable table = new PdfPTable(2);
