@@ -1,4 +1,6 @@
 # VereinsManagerPro
+## GitHub Repository
+[https://github.com/cloud4bspace/VereinsManagerPro](https://github.com/cloud4bspace/VereinsManagerPro)
 ## JavaDoc
 [Link JavaDoc](https://www.cloud4b.space/VereinsManager/Hilfe/JavaDoc/)
 
