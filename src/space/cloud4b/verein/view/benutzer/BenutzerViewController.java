@@ -11,21 +11,25 @@ import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.controller.BenutzerController;
-import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.Observer;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
+/**
+ * der Controller für die BenutzerView
+ *
+ * @author Bernhard Kämpf & Serge Kaulitz
+ * @version 2020-01-07
+ */
 public class BenutzerViewController implements Observer {
 
     // allgemeine Instanzvariabeln
     private MainApp mainApp;
     private Stage dialogStage;
-    private Mitglied aktuellesMitglied = null;
-    private ArrayList<User> userArrayList;
 
+
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private TableView<User> userTabelle;
     @FXML
@@ -86,9 +90,11 @@ public class BenutzerViewController implements Observer {
         initializeTable();
         mainApp.getBenutzerController().Attach(this);
     }
+
     public void setStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
+
     public void initializeTable() {
         // Add observable list data to the tables
         userTabelle.setItems(FXCollections.observableArrayList(mainApp.getBenutzerController().getBenutzerListe()));

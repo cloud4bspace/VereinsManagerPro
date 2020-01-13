@@ -31,6 +31,8 @@ public class StatusViewController implements Observer {
     private TreeTableColumn<StatusElement, String> titelSpalte;
     @FXML
     private TreeTableColumn<StatusElement, String> keySpalte;
+    @FXML
+    private TreeTableColumn<StatusElement, String> symbolSpalte;
 
     public StatusViewController() {
         // Konstruktor wird nicht benötigt
@@ -44,10 +46,12 @@ public class StatusViewController implements Observer {
 
         titelSpalte = new TreeTableColumn<>("Titel");
         keySpalte = new TreeTableColumn<>("Key");
+        symbolSpalte = new TreeTableColumn<>("Symbol");
 
 
         titelSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("titel"));
         keySpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("Key"));
+        symbolSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("Symbol"));
 
         titelSpalte.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn());
 
@@ -59,7 +63,7 @@ public class StatusViewController implements Observer {
         TreeItem statusTreeItem = null;
 
         ArrayList<StatusElement> statusElementList = mainApp.getStatusElementController().getStatusElementeListe();
-        statusElementTreeTableView.getColumns().setAll(titelSpalte, keySpalte);
+        statusElementTreeTableView.getColumns().setAll(titelSpalte, keySpalte, symbolSpalte);
 
         TreeItem<StatusElement> root = new TreeItem<>(new StatusElement(0, "StatusElemente"));
 
@@ -89,6 +93,17 @@ public class StatusViewController implements Observer {
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<StatusElement, String> param) {
                 if (param.getValue().getValue().getStatusElementKey() > 0) {
                     return new SimpleStringProperty("" + param.getValue().getValue().getStatusElementKey());
+                } else {
+                    return new SimpleStringProperty("");
+                }
+            }
+        });
+
+        symbolSpalte.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<StatusElement, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<StatusElement, String> param) {
+                if (param.getValue().getValue().getStatusElementSymbol() != null) {
+                    return new SimpleStringProperty("" + param.getValue().getValue().getStatusElementSymbol());
                 } else {
                     return new SimpleStringProperty("");
                 }

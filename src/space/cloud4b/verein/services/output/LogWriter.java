@@ -43,6 +43,8 @@ public abstract class LogWriter {
 
     /**
      * Erhöht den Zählerwert im File LogCounter.xml um 1.
+     *
+     * @param lastCounterValue der letzte Zählerwert
      */
     public static void setNextLogCounterValue(int lastCounterValue) {
         OutputStream os = null;

@@ -57,4 +57,8 @@ public class StatusElement {
     public String getStatusText() {
         return statusText;
     }
+
+    public String getStatusElementSymbol() {
+        return this.statusElementSymbol;
+    }
 }

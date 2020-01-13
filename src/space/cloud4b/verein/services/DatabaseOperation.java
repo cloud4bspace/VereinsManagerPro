@@ -13,7 +13,15 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Die abstrakte Klasse DataBaseOperation stellt Methoden zur Verfügung, um in den Tabellen der
+ * Datenbank Änderungen an Datensätzen vorzunehmen.
+ *
+ * @author Bernhard Kämpf & Serge Kaulitz
+ * @version 2019-11
+ */
 public abstract class DatabaseOperation {
+
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm");
 
     /**
@@ -38,15 +46,18 @@ public abstract class DatabaseOperation {
             query = "INSERT usr_web116_5.termin SELECT * FROM usr_web116_5.termin_template;";
             st.executeUpdate(query);
             System.out.println("Datenbank für Termine erstellt und mit Beispieldaten gefüllt");
-
         } catch (SQLException e) {
             System.out.println("Datenbanken konnten nicht bereitgestellt werden (" + e + ")");
-
         }
     }
 
     /**
-     * neues Mitglied in der Datenbank anlegen
+     * legt mit den übergebenen Basisdaten ein neues Mitglied in der Datenbank an.
+     * @param currentUser der angemeldete User
+     * @param nachname der Nachname des Mitglieds
+     * @param vorname der Vorname des Mitglieds
+     * @param eintrittsDatum das Eintrittsdatum des Mitglieds
+     * @return die MitgliederId des neuen Tabelleneintrags als int
      */
     public static int saveNewMember(String nachname, String vorname, String eintrittsDatum, User currentUser) {
 
@@ -71,7 +82,6 @@ public abstract class DatabaseOperation {
             LogWriter.setNextLogCounterValue(++logCounter);
             LogWriter.writePostNewLog("Mitglied", newKey, currentUser, logCounter);
             return newKey;
-
         } catch (SQLException e) {
             System.out.println("Fehler " + e);
         }
@@ -79,7 +89,13 @@ public abstract class DatabaseOperation {
     }
 
     /**
-     * neuen Task in der Datenbank anlegen
+     * legt in der Datenbank einen neuen Task mit den übergebenen Basisdaten an
+     * @param bezeichnung die Kurzbezeichhnung des Tasks
+     * @param details weitere Detailangaben zum Task
+     * @param terminDatum das Fälligkeitsdatum des Tasks
+     * @param verantwortlich das verantwortliche Mitglied
+     * @param user der angemeldete User
+     * @return die TaskId des neu eingefügten Tasks aus der Datenbank-Tabelle
      */
     public static int saveNewTask(String bezeichnung, String details, String terminDatum, Mitglied verantwortlich, User user) {
 
@@ -106,7 +122,6 @@ public abstract class DatabaseOperation {
             LogWriter.setNextLogCounterValue(++logCounter);
             LogWriter.writePostNewLog("Task", newKey, user, logCounter);
 
-            // addVerantwortlichen(newKey, verantwortlich.getId(), user);
             return newKey;
 
         } catch (SQLException e) {
@@ -117,7 +132,9 @@ public abstract class DatabaseOperation {
 
 
     /**
-     * Mitglied in den Datenbanken löschen
+     * löscht das übergebene Mitglied aus den relevanten Tabellen der Datenbank
+     * @param mitglied das zu löschende Mitglied
+     * @param currentUser der angemeldete User
      */
     public static void deleteMitglied(Mitglied mitglied, User currentUser) {
 
@@ -140,9 +157,10 @@ public abstract class DatabaseOperation {
     }
 
     /**
-     * Löscht einen Termin in der Datenbank
+     * löscht den übergebenen Termin in den relevanten Tabellen der Datenbank
      *
-     * @param termin
+     * @param termin der zu löschende Termin
+     * @param currentUser der angemeldete User
      */
     public static void deleteTermin(Termin termin, User currentUser) {
         if (termin != null) {
@@ -169,9 +187,10 @@ public abstract class DatabaseOperation {
     }
 
     /**
-     * Löscht eine Task in der Datenbank
+     * löscht den übergebenen Task aus den relevanten Datenbanken
      *
-     * @param task die übergebene Task
+     * @param task die zu löschende Task
+     * @param currentUser der angemeldete User
      */
     public static void deleteTask(Task task, User currentUser) {
         if (task != null) {
@@ -193,12 +212,13 @@ public abstract class DatabaseOperation {
     }
 
     /**
-     * Prüft aufgrund des Austrittsdatums den aktuellen Mitgliederstatus
+     * prüft und ändert gegebenenfalls den Mitgliederstatus anhand des gesetzten Austrittsdatums
      */
     public static void checkMitgliederStatus() {
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
-            String query = "UPDATE usr_web116_5.kontakt SET `KontaktIstMitglied` = 0 WHERE KontaktAustrittsdatum < CURRENT_DATE AND KontaktAustrittsdatum NOT LIKE '0000-00-00'";
+            String query = "UPDATE usr_web116_5.kontakt SET `KontaktIstMitglied` = 0 " +
+                    "WHERE KontaktAustrittsdatum < CURRENT_DATE AND KontaktAustrittsdatum NOT LIKE '0000-00-00'";
             st.executeUpdate(query);
 
         } catch(SQLException e) {
@@ -212,6 +232,7 @@ public abstract class DatabaseOperation {
      * Nach dem Update werden die neuen Werte ebenfalls in das Logfile geschrieben.
      *
      * @param mitglied das geänderte und zu aktualisierende Mitlied
+     * @param currentUser der angemeldete User
      */
     public static void updateMitglied(Mitglied mitglied, User currentUser) {
 
@@ -290,13 +311,13 @@ public abstract class DatabaseOperation {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
      * Das Übergebene Objekt vom Typ Termin wird in der Termin-Tabelle aktualisiert
      *
      * @param termin der geänderte Termin
+     * @param user der angemeldete User
      */
     public static void updateTermin(Termin termin, User user) {
         // Schritt 1: alte DB-Werte in Logfile schreiben
@@ -355,6 +376,12 @@ public abstract class DatabaseOperation {
 
     }
 
+    /**
+     * aktualisiert den übergebenen Task in der entsprechenden Datenbanktabelle
+     *
+     * @param task        der zu aktualisierende Task
+     * @param currentUser der angemeldete User
+     */
     public static void updateTask(Task task, User currentUser) {
 
         // Schritt 1: alte DB-Werte in Logfile schreiben
@@ -401,7 +428,9 @@ public abstract class DatabaseOperation {
     }
 
     /**
-     * Save new User credentials
+     * trägt einen neuen Benutzer/User in der Benutzertabelle ein
+     * @param eMail die E-Mail-Adresse des neuen Users
+     * @param pw das Passwort des neuen Users
      */
     public static void saveUserCredentials(String eMail, String pw) {
 
@@ -429,7 +458,6 @@ public abstract class DatabaseOperation {
         } else {
             System.out.println("Keine gültige E-Mail-Adresse eines Mitglieds");
         }
-
     }
 
 
@@ -473,7 +501,7 @@ public abstract class DatabaseOperation {
      * erhöht in der Benutzer-Datenbank die Anzahl der Zugriffe um einen Zählerwert und
      * trägt beim entsprechenden Benutzer das Datum der letzten Anmeldung ein
      *
-     * @param mitgliedId
+     * @param mitgliedId die Id des Mitglieds
      */
     public static void incrementLoginCounter(int mitgliedId) {
         try (Connection conn = new MysqlConnection().getConnection();
@@ -487,7 +515,13 @@ public abstract class DatabaseOperation {
         }
     }
 
-
+    /**
+     * setzt beim übergebenen User einen Sperrcode
+     *
+     * @param sperrCode   der zu setzende Sperrcode
+     * @param user        der von der Sperrung betroffene User
+     * @param currentUser der angemeldete Benutzer
+     */
     public static void setSperrCode(int sperrCode, User user, User currentUser) {
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
@@ -498,7 +532,7 @@ public abstract class DatabaseOperation {
             st.execute(query);
 
         } catch (SQLException e) {
-            System.out.println("Mitglied konnte nicht gelöscht werden (" + e + ")");
+            e.printStackTrace();
         }
     }
 }

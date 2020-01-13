@@ -19,7 +19,6 @@ import space.cloud4b.verein.model.verein.kalender.Termin;
 import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.model.verein.user.User;
-import space.cloud4b.verein.services.DatabaseReader;
 
 import java.awt.*;
 import java.io.*;
@@ -30,20 +29,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Die abstrakte Klasse ExcelWriter stellt Methoden zur Verfügung, um Daten im Excel-Format zu exportieren.
+ *
+ * @author Bernhard Kämpf & Serge Kaulitz
+ * @version 2020-01-03
+ */
 public abstract class ExcelWriter extends Application {
 
 
     /**
-     * exportiert die aktuelle Mitgliederliste in ein Excel-File
+     * exportiert die übergebene Mitgliederliste in ein Excel-File
+     *
+     * @param mitgliedArrayList - die Mitgliederliste als ArrayList<Mitglied>
      * @throws IOException
      */
-    public static void exportMirgliederToExcel() throws IOException {
+    public static void exportMitgliederToExcel(ArrayList<Mitglied> mitgliedArrayList) throws IOException {
         File file = chooseFile("Mitgliederliste");
         System.out.println(file.getName());
 
         String[] columns = {"Bild", "Name", "Vorname", "Anrede", "Adresse", "Adresszusatz",
                 "PLZ", "Ort", "E-Mail", "Telefon", "Geburtsdatum", "Kat I", "Kat II", "Eintrittsdatum", "Vorstandsmitglied"};
-        List<Mitglied> mitgliedList = new ArrayList<>(DatabaseReader.getMitgliederAsArrayList());
+        List<Mitglied> mitgliedList = mitgliedArrayList;
 
         Workbook workbook = new XSSFWorkbook();
         CreationHelper createHelper = workbook.getCreationHelper();
@@ -204,16 +211,18 @@ public abstract class ExcelWriter extends Application {
         fileOut.close();
         workbook.setForceFormulaRecalculation(true);
         Desktop.getDesktop().open(file);
-        // Closing the workbook
-        //workbook.close();
     }
 
     /**
      * exportiert die Teilnehmerliste zu einem übergebenen Termin
      *
+     * @param termin         - das übergebene Termindatum
+     * @param currentUser    - der angemeldete User
+     * @param teilnehmerList - die Liste der Teilnehmer als ArrayList<Teilnehmer>
      * @throws IOException
      */
-    public static void exportTeilnehmerToExcel(Termin termin, User currentUser, ArrayList<Teilnehmer> teilnehmerList) throws IOException {
+    public static void exportTeilnehmerToExcel(Termin termin, User currentUser
+            , ArrayList<Teilnehmer> teilnehmerList) throws IOException {
         File file = chooseFile("Teilnehmerliste");
         int rowNumber = 0;
         System.out.println(file.getName());
@@ -342,7 +351,7 @@ public abstract class ExcelWriter extends Application {
 
     /**
      * öffnet einen "Save as"-Dialog
-     * @param fileName gibt einen Filnamen vor
+     * @param fileName der standardmässig vorgeschlagene Filename
      * @return gibt ein neues File mit dem vom User gewählten Namen zurück
      */
     public static File chooseFile(String fileName) {
