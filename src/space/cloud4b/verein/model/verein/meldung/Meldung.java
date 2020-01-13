@@ -36,7 +36,6 @@ public class Meldung {
      */
     public String getMeldungOutputString() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        System.out.println("Meldung: " + this.meldungTimestamp + " " + meldungText);
         return "»» " + sdf.format(this.meldungTimestamp) + "\n" + meldungText;
     }
 }

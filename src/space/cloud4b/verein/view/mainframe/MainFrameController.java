@@ -376,7 +376,7 @@ public class MainFrameController implements Observer {
      */
     @FXML
     private void handleExportMitglieder() throws IOException {
-        ExcelWriter.exportMirgliederToExcel();
+        ExcelWriter.exportMitgliederToExcel(mainApp.getAdressController().getMitgliederListe());
     }
 
     /**
@@ -405,11 +405,7 @@ public class MainFrameController implements Observer {
 
     @FXML
     private void handleCreatePDF() {
-        try {
-            PdfFileWriter.writePdf(mainApp.getCurrentUser(), mainApp.getAdressController().getMitgliederListe());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        PdfFileWriter.writePdf(mainApp.getCurrentUser(), mainApp.getAdressController().getMitgliederListe());
     }
 
     @FXML
@@ -417,6 +413,12 @@ public class MainFrameController implements Observer {
         PdfFileWriter.writeTermineAsPdf(mainApp.getCurrentUser()
                 , mainApp.getKalenderController().getNaechsteTerminListe()
                 , mainApp.getAdressController().getMitgliederListe());
+    }
+
+    @FXML
+    private void handleRanglistePDFMenuItem() {
+        PdfFileWriter.writeRanglisteAsPdf(mainApp.getCurrentUser()
+                , mainApp.getRanglisteController().getRanglisteAsArrayList());
     }
 
     /* Menupunkte unter Termine

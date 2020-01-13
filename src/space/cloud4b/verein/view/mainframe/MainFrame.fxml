@@ -66,11 +66,18 @@
                   <menus>
                       <Menu fx:id="mitgliederMenu" mnemonicParsing="false" text="Mitglieder">
                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#handleMitgliederbereich" text="Mitgliederbereich öffnen" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleShowBirthdayStatistics" text="Geburtstags-Statistik" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleShowKatIStatistics" text="Auswertung Kat I" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleExportMitglieder" text="nach Excel exportieren.." />
-                              <MenuItem mnemonicParsing="false" onAction="#handleCreatePDF" text="PDF erstellen" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleMitgliederbereich"
+                                        text="Mitgliederbereich öffnen"/>
+                              <MenuItem mnemonicParsing="false" onAction="#handleShowBirthdayStatistics"
+                                        text="Geburtstags-Statistik"/>
+                              <MenuItem mnemonicParsing="false" onAction="#handleShowKatIStatistics"
+                                        text="Auswertung Kat I"/>
+                              <MenuItem mnemonicParsing="false" onAction="#handleExportMitglieder"
+                                        text="nach Excel exportieren.."/>
+                              <MenuItem mnemonicParsing="false" onAction="#handleCreatePDF"
+                                        text="Mitgliederliste (PDF)"/>
+                              <MenuItem mnemonicParsing="false" onAction="#handleRanglistePDFMenuItem"
+                                        text="Rangliste (PDF)"/>
                           </items>
                       </Menu>
               </menus>
@@ -132,6 +139,8 @@
                                     text="Mitgliederliste (PDF)"/>
                           <MenuItem fx:id="terminePDFMenuItem" mnemonicParsing="false"
                                     onAction="#handleTerminePDFMenuItem" text="Agenda (PDF)"/>
+                          <MenuItem mnemonicParsing="false" onAction="#handleRanglistePDFMenuItem"
+                                    text="Rangliste (PDF)"/>
                       </items>
                   </Menu>
               </menus>
