@@ -298,7 +298,6 @@ public class MainFrameController implements Observer {
      */
     @FXML
     private void handleHilfe() {
-        System.out.println("showHilfe");
         Stage stage = new Stage();
         stage.setTitle("Online-Hilfe");
         Scene scene = new Scene(new Browser("https://www.cloud4b.space/VereinsManager/Hilfe/help.html"), 750, 500, Color.web("#666970"));

@@ -32,7 +32,7 @@ public class User {
         this.userIstVorstand = istVorstand;
         this.sessionId = DigestUtils.sha256(userName + new Timestamp(System.currentTimeMillis())).toString();
         System.out.println("SessionId: " + this.sessionId);
-        System.out.println(this);
+        System.out.println("angemeldeter User: " + this);
     }
 
     public User(int userId, int kontaktId, String userName, String userPw, LocalDate userLastLogin,

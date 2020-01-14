@@ -28,6 +28,8 @@ public class BenutzerController implements Subject {
 
     public BenutzerController() {
 
+        System.out.println("Benutzercontroller erzeugt..");
+
         // Die benötigten Listen werden instanziert
         observerList = new ArrayList<>();
         benutzerListe = new ArrayList<>();

@@ -30,6 +30,7 @@ public class TaskController implements Subject {
 
 
     public TaskController() {
+        System.out.println("Taskcontroller erzeugt..");
         // Die benötigten Listen werden instanziert
         observerList = new ArrayList<>();
         taskListe = DatabaseReader.getTaskList();
