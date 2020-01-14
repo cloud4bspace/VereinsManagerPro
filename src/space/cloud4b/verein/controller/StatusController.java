@@ -27,6 +27,8 @@ public class StatusController implements Subject {
 
     public StatusController() {
 
+        System.out.println("Statuscontroller erzeugt..");
+
         // Die benötigten Listen werden instanziert
         observerList = new ArrayList<>();
 

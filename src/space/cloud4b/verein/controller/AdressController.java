@@ -31,6 +31,7 @@ public class AdressController implements Subject {
     private ArrayList<Jubilaeum> jubilaeumsListe;
 
     public AdressController() {
+        System.out.println("Adresscontroller erzeugt..");
         // Der Mitgliederstatus in der MYSQL-Tabelle kontakt wird für jedes Element überprüft
         DatabaseOperation.checkMitgliederStatus();
 

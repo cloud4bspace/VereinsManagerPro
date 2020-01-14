@@ -359,10 +359,6 @@ public class TerminViewController implements Observer {
     public void handleSpeichernButton() {
         if (isInputValid()) {
            // unsavedChanges = false;
-            System.out.println(terminDatumPicker.getValue());
-            System.out.println(termin);
-            System.out.println("Stunde: " + stundenVonFeld.getText());
-            System.out.println("Minute: " + minutenVonFeld.getText());
             termin.setDatum(Date.valueOf(terminDatumPicker.getValue()).toLocalDate());
 
             if(stundenVonFeld.getText().length() > 0 && minutenVonFeld.getText().length() > 0) {

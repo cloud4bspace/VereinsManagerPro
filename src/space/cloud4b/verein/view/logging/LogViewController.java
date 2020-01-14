@@ -52,7 +52,6 @@ public class LogViewController {
             try {
                 if (!((st = br.readLine()) != null)) break;
                 Text text = new Text(st + "\n");
-                System.out.println(st.startsWith("*"));
                 if (st.length() > 1 && st.startsWith("*")) {
                     text.setFont(Font.font(java.awt.Font.MONOSPACED, 14));
                     text.setFill(Color.RED);
