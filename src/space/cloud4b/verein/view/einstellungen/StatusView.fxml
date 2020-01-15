@@ -12,11 +12,6 @@
             <center>
                 <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="TOP_LEFT">
                     <children>
-                        <Button mnemonicParsing="false" text="Task erfassen..">
-                            <VBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0"/>
-                            </VBox.margin>
-                        </Button>
                         <TreeTableView fx:id="statusElementTreeTableView" prefHeight="1000.0" prefWidth="200.0">
                             <columns>
                                 <TreeTableColumn fx:id="titelSpalte" minWidth="200.0" prefWidth="-1.0"/>
@@ -31,6 +26,14 @@
                     </children>
                 </VBox>
             </center>
+            <top>
+                <Label fx:id="titelLabel" alignment="BASELINE_LEFT" text="Übersicht der Statuselemente"
+                       BorderPane.alignment="CENTER_LEFT">
+                    <BorderPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </BorderPane.margin>
+                </Label>
+            </top>
         </BorderPane>
     </children>
 </AnchorPane>

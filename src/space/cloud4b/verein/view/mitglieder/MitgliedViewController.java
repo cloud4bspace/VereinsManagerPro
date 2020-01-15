@@ -43,8 +43,6 @@ import java.util.Optional;
  * @author Bernhard Kämpf und Serge Kaulitz
  * @version 2019-12-17
  */
-// TODO - nach dem Erfassen eines neuen Kontakts sollte dieser angezeigt werden
-// TODO - nach dem Speichern von Änderungen funktioniert der Filter nicht mehr..
 public class MitgliedViewController implements Observer {
 
     // allgemeine Instanzvariabeln

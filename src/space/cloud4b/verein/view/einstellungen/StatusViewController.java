@@ -12,15 +12,21 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import space.cloud4b.verein.MainApp;
-import space.cloud4b.verein.controller.TaskController;
+import space.cloud4b.verein.controller.StatusController;
 import space.cloud4b.verein.model.verein.status.StatusElement;
-import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.services.Observer;
 
 import java.util.ArrayList;
 
+/**
+ * Die Controller-Class zur StatusView
+ *
+ * @version 2019-12
+ * @autor Bernhard Kämpf & Serge Kaulitz
+ */
 public class StatusViewController implements Observer {
 
+    // die allgemeinen Instanzvariabeln
     private MainApp mainApp;
     private Stage stage;
 
@@ -38,25 +44,26 @@ public class StatusViewController implements Observer {
         // Konstruktor wird nicht benötigt
     }
 
+    /**
+     * Initialisierung der Controller-Class. Die Methode wird automatisch aufgerufen, nachdem
+     * das fxml-File geladen wurde.
+     */
+    @FXML
     public void initialize() {
         statusElementTreeTableView.setEditable(false);
         statusElementTreeTableView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
-        //  statusElementTreeTableView.getSelectionModel().selectedItemProperty().addListener(
-        //         (observable, oldValue, newValue) -> openTask(newValue.getValue()));
-
         titelSpalte = new TreeTableColumn<>("Titel");
         keySpalte = new TreeTableColumn<>("Key");
         symbolSpalte = new TreeTableColumn<>("Symbol");
-
-
         titelSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("titel"));
         keySpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("Key"));
         symbolSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("Symbol"));
-
         titelSpalte.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn());
-
     }
 
+    /**
+     * Initialisiert die TreeView und generiet die benötigten Knoten und Einträge
+     */
     public void setupTreeView() {
         int statusId = 0;
         ArrayList<TreeItem<StatusElement>> statusTreeItems = new ArrayList<>();
@@ -78,7 +85,6 @@ public class StatusViewController implements Observer {
             statusTreeItem.getChildren().add(new TreeItem<StatusElement>(statusElement));
 
         }
-
 
         root.getChildren().setAll(statusTreeItems);
         titelSpalte.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<StatusElement, String>, ObservableValue<String>>() {
@@ -109,26 +115,11 @@ public class StatusViewController implements Observer {
                 }
             }
         });
-
         root.setExpanded(true);
         statusElementTreeTableView.setRoot(root);
         statusElementTreeTableView.setTableMenuButtonVisible(true);
         statusElementTreeTableView.setShowRoot(false);
 
-    }
-
-    public void openTask(Task task) {
-        if (task.getPrioStatus() != null) {
-            mainApp.showTaskEdit(task);
-        }
-    }
-
-    /**
-     * Wird aufgerufen, wenn der User den Button "Task hinzufügen" betätigt
-     */
-    public void handleErfassenButton() {
-        // ruft das Erfassungs-UI über die MainApp auf
-        mainApp.showTaskErfassen();
     }
 
     public void setMainApp(MainApp mainApp) {
@@ -144,16 +135,14 @@ public class StatusViewController implements Observer {
     @Override
     public void update(Object o) {
         System.out.println("StatusViewController hat Update-Meldung erhalten von " + o);
-        if (o instanceof TaskController) { // TODO noch falscher Kontroller
-            TaskController tc = (TaskController) o;
+        if (o instanceof StatusController) {
+            StatusController sc = (StatusController) o;
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     setupTreeView();
-                    System.out.println(this + ": update...");
                 }
             });
-
         }
     }
 }

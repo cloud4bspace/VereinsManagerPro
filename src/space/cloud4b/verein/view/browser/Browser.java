@@ -9,7 +9,10 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
-
+/**
+ * Die Klasse stellt eine Browserfenster zur Verfügung und ruft die übergebene
+ * URL auf.
+ */
 public class Browser extends Region {
 
         final WebView browser = new WebView();
@@ -22,7 +25,8 @@ public class Browser extends Region {
             getChildren().add(browser);
 
         }
-        private Node createSpacer() {
+
+    private Node createSpacer() {
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
             return spacer;

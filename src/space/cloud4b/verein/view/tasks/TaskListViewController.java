@@ -39,10 +39,7 @@ public class TaskListViewController {
     private ObservableList<Task> masterData = FXCollections.observableArrayList();
 
     public TaskListViewController() {
-
-
-        //Konstruktor wird nicht (zwingend) benötigt
-        //Konstruktor hat noch keinen Zugriff auf @FXML-Variabeln
+        //Konstruktor wird nicht benötigt
     }
 
     /**

@@ -12,6 +12,7 @@ import java.util.Comparator;
  * @see space.cloud4b.verein.controller.KalenderController
  */
 public class Sortbydate implements Comparator<Jubilaeum> {
+    // TODO Interessante Code-Passagen
     public int compare(Jubilaeum a, Jubilaeum b) {
         return Period.between(b.getDatum(), a.getDatum()).getDays();
     }

@@ -14,42 +14,40 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * The controller for the birthday statistics view.
+ * Der Controller für die BirthdayStatisticsView
  *
- * @author Marco Jakob
+ * @author Bernhard Kämpf & Serge Kaulitz
+ * @version 2019-12
  */
 public class BirthdayStatisticsController {
 
+    // allgemeine Instanzvariabeln
+    private ObservableList<String> monthNames = FXCollections.observableArrayList();
+
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private BarChart<String, Integer> barChart;
-
     @FXML
     private CategoryAxis xAxis;
 
-    private ObservableList<String> monthNames = FXCollections.observableArrayList();
-
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
+     * Initialisierung der Controller-Class (wird automatisch beim Laden des fxml-Files
+     * ausgeführt
      */
     @FXML
     private void initialize() {
-        // Get an array with the English month names.
-        String[] months = DateFormatSymbols.getInstance(Locale.ENGLISH).getMonths();
-        // Convert it to a list and add it to our ObservableList of months.
+        String[] months = DateFormatSymbols.getInstance(Locale.GERMAN).getMonths();
         monthNames.addAll(Arrays.asList(months));
-
-        // Assign the month names as categories for the horizontal axis.
         xAxis.setCategories(monthNames);
     }
 
     /**
-     * Sets the persons to show the statistics for.
+     * Setzt die Person, deren Statistik angezeigt werden soll
      *
      * @param persons
      */
     public void setPersonData(List<Mitglied> persons) {
-        // Count the number of people having their birthday in a specific month.
+        // Anzahl Personen mit Geburtsdatum in diesem Monat zählen
         int[] monthCounter = new int[12];
         for (Mitglied p : persons) {
             int month = p.getGeburtsdatum().getMonthValue() - 1;
@@ -58,11 +56,10 @@ public class BirthdayStatisticsController {
 
         XYChart.Series<String, Integer> series = new XYChart.Series<>();
 
-        // Create a XYChart.Data object for each month. Add it to the series.
+        // Erstelle ein XYChart.Data object for jeden Monat und füge diese als Chart-Element hinzu.
         for (int i = 0; i < monthCounter.length; i++) {
             series.getData().add(new XYChart.Data<>(monthNames.get(i), monthCounter[i]));
         }
-
         barChart.getData().add(series);
     }
 }

@@ -112,6 +112,7 @@ public class AdressController implements Subject {
      * Festgestellte Änderungen werden in den Instanzvariabeln nachgeführt.
      */
     private void startAdressObserver() {
+        // TODO interessante Code-Stellen
         Runnable observeMitglieder = () -> {
             while (true) {
                 boolean update = false;
@@ -174,6 +175,7 @@ public class AdressController implements Subject {
      */
     @Override
     public void Notify() {
+        // TODO interessante Code-Stellen
         for (Observer observer : observerList) {
             observer.update(this);
         }

@@ -349,9 +349,6 @@ public class MainFrameController implements Observer {
     // Linker Menu-/Navigationsbereich
     @FXML
     private void handleRefresh() {
-       /* System.out.println("Restarting app!");
-        mainApp.getPrimaryStage().close();
-        Platform.runLater(() -> mainApp.start(new Stage()));*/
         mainApp.showDashboard();
     }
 

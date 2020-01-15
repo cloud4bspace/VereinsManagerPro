@@ -14,12 +14,20 @@ import space.cloud4b.verein.MainApp;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Die Controller-Class zur LogView
+ *
+ * @version 2020-01
+ * @autor Bernhard Kämpf & Serge Kaulitz
+ */
 public class LogViewController {
 
+    // die allgemeinen Instanzvariabeln
     private MainApp mainApp;
     private Stage dialogStage;
     private ArrayList<Text> textLines;
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private VBox logViewVBox;
     @FXML

@@ -23,6 +23,14 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
+/**
+ * Die Klasse verknüpft mit dem JavaFX-Unserinterfac KalenderView.fxml
+ * und generiert eine Kalender-Ansicht des jeweils aktuellen Monats und zeigt
+ * die entsprechenden Termine an.
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12
+ */
 public class KalenderViewController implements Observer {
 
     private Stage dialogStage;
@@ -43,11 +51,8 @@ public class KalenderViewController implements Observer {
     private Button nextButton;
 
 
-
     public KalenderViewController() {
-
-        //Konstruktor wird nicht (zwingend) benötigt
-        //Konstruktor hat noch keinen Zugriff auf @FXML-Variabeln
+        // der Konstruktor wird hier nicht benötigt
     }
 
     /**
@@ -153,7 +158,6 @@ public class KalenderViewController implements Observer {
     public void handlePreviousMonth() {
         this.firstOfMonth = this.firstOfMonth.minusMonths(1);
         initialize();
-
     }
 
     /**
@@ -164,7 +168,6 @@ public class KalenderViewController implements Observer {
         this.mainApp = mainApp;
         mainApp.getKalenderController().Attach(this);
     }
-
 
     @Override
     public void update(Object o) {

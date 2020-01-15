@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" build-on-make="true" name="VereinsManager">
+    <output-path>$PROJECT_DIR$/out/artifacts/VereinsManager</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="space.cloud4b.verein.MainApp" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="VereinsManagerPro" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="VereinsManager.jar">
+        <element id="module-output" name="VereinsManager" />
+      </element>
+    </root>
+  </artifact>
+</component>
