@@ -2,9 +2,8 @@
 ## Projektauftrag
 Fallbeispiel Modul 2.4 Programmiersprachen (zhaw MAS I 13)
 ## Projektteam
-Serge Kaulitz
-Bernhard Kämpf
-
+* Serge Kaulitz
+* Bernhard Kämpf
 
 ## GitHub Repository
 [https://github.com/cloud4bspace/VereinsManagerPro](https://github.com/cloud4bspace/VereinsManagerPro)
