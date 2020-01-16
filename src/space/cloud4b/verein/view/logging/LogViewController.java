@@ -15,10 +15,11 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Die Controller-Class zur LogView
+ * Controller zum JavaFX-UI LogView.fxml (Anzeige der Logfile-Einträge)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten.
  *
- * @version 2020-01
- * @autor Bernhard Kämpf & Serge Kaulitz
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-17
  */
 public class LogViewController {
 

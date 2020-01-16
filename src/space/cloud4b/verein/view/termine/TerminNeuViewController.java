@@ -9,9 +9,8 @@ import space.cloud4b.verein.model.verein.kalender.Termin;
 import space.cloud4b.verein.services.DatabaseOperation;
 
 /**
- * Die Klasse TerminNeuViewController ist verknüpft mit dem JavaFX-Unserinterface TerminNeuView.fxml
- * Sie dient zur Erfassung eines neuen Termins mit wenigen Basisdaten. Weitere Daten können später
- * via TerminView.fxml ergänzt werden.
+ * Controller zum JavaFX-UI TerminNeuView.fxml (neuer Termin erfassen)
+ * Behandelt die Action-Events
  *
  * @author Bernhard Kämpf und Serge Kaulitz
  * @version 2019-12-17

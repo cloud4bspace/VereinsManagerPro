@@ -21,7 +21,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 /**
- * Controller-Class zur EinstellungenView.fxml.
+ * Controller zum JavaFX-UI EinstellungenView.fxml (Mandanteneinstellungen anzeigen und ändern)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten und behandelt die Action-Events
  *
  * @author Bernhard Kämpf und Serge Kaulitz
  * @version 2020-01

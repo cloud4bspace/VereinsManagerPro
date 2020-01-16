@@ -24,12 +24,12 @@ import java.time.temporal.WeekFields;
 import java.util.Locale;
 
 /**
- * Die Klasse verknüpft mit dem JavaFX-Unserinterfac KalenderView.fxml
- * und generiert eine Kalender-Ansicht des jeweils aktuellen Monats und zeigt
- * die entsprechenden Termine an.
+ * Controller zum JavaFX-UI KalenderView.fxml (Anzeige Kalenderansicht)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten und behandelt die Action-Events
+ * Erhält Benachrichtigungen der abonnierten Observer-Klasse(n), wenn Datensätze geändert wurden.
  *
  * @author Bernhard Kämpf und Serge Kaulitz
- * @version 2019-12
+ * @version 2020-01
  */
 public class KalenderViewController implements Observer {
 

@@ -27,8 +27,17 @@ import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
+/**
+ * Controller zum JavaFX-UI TaskView.fxml (Anzeige des Taskbereichs)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten und behandelt die Action-Events
+ * Erhält Benachrichtigungen der abonnierten Observer-Klasse(n), wenn Datensätze geändert wurden.
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2020-01
+ */
 public class TaskViewController implements Observer {
 
+    // allgemeine Instanzvariabeln
     private MainApp mainApp;
     private Stage stage;
 
@@ -210,16 +219,8 @@ public class TaskViewController implements Observer {
         taskTreeTableView.setTableMenuButtonVisible(true);
         taskTreeTableView.setShowRoot(false);
 
-    /*    ArrayList<TreeItem> taskTreeItemArrayList = null;
-        ArrayList<Task> taskArrayList = mainApp.getTaskController().getTasksAsArrayList();
-
-        pendent.getChildren().setAll((Collection<? extends TreeItem<Task>>) taskTreeItemArrayList);
-
-
-        for(Task task : taskArrayList) {
-            taskTreeItemArrayList.add(new TreeItem<Task>(task));
-        }*/
     }
+
     public void openTask(Task task) {
         if (task.getPrioStatus() != null) {
             mainApp.showTaskEdit(task);

@@ -29,6 +29,14 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * Controller zum JavaFX-UI TerminView.fxml (Anzeige Terminbereich)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten und behandelt die Action-Events
+ * Erhält Benachrichtigungen der abonnierten Observer-Klasse(n), wenn Datensätze geändert wurden.
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-17
+ */
 public class TerminViewController implements Observer {
 
     // allgemeine Instanzvariabeln
@@ -216,10 +224,12 @@ public class TerminViewController implements Observer {
         stage.setScene(scene);
         stage.show();
     }
+
     public void terminAuswahlComboBoxAction() {
         setTermin(terminAuswahlComboBox.getValue());
         showTeilnehmerListe(terminAuswahlComboBox.getValue());
     }
+
     public void setTermin(Termin termin) {
 
         // wenn kein gültiger Termin übergeben wird
@@ -358,7 +368,7 @@ public class TerminViewController implements Observer {
      */
     public void handleSpeichernButton() {
         if (isInputValid()) {
-           // unsavedChanges = false;
+            // unsavedChanges = false;
             termin.setDatum(Date.valueOf(terminDatumPicker.getValue()).toLocalDate());
 
             if(stundenVonFeld.getText().length() > 0 && minutenVonFeld.getText().length() > 0) {
@@ -440,25 +450,25 @@ public class TerminViewController implements Observer {
     public void update(Object o) {
         System.out.println("TerminController Update-Meldung erhalten von " + o);
 
-            KalenderController kc = (KalenderController) o;
-            Platform.runLater(new Runnable() { // TODO
-                @Override
-                public void run() {
+        KalenderController kc = (KalenderController) o;
+        Platform.runLater(new Runnable() { // TODO
+            @Override
+            public void run() {
 
-                    terminAuswahlComboBox.getItems().remove(0, terminListe.size());
-                    terminListe = mainApp.getKalenderController().getTermineAsArrayList();
-                    terminAuswahlComboBox.getItems().addAll(terminListe);
-                    terminAuswahlComboBox.getSelectionModel().select(termin);
-                    teilnehmerTabelle.setItems(FXCollections.observableArrayList(DatabaseReader.getTeilnehmer(termin,
-                            mainApp.getAdressController().getMitgliederListe())));
-                    if (termin != null) {
-                        setTermin(termin);
-                    }
-                    showTeilnehmerListe(termin);
-                    // Termin ist nicht mehr dasselbe Objekt.. deshalb muss ich mit der ID arbeiten
-
+                terminAuswahlComboBox.getItems().remove(0, terminListe.size());
+                terminListe = mainApp.getKalenderController().getTermineAsArrayList();
+                terminAuswahlComboBox.getItems().addAll(terminListe);
+                terminAuswahlComboBox.getSelectionModel().select(termin);
+                teilnehmerTabelle.setItems(FXCollections.observableArrayList(DatabaseReader.getTeilnehmer(termin,
+                        mainApp.getAdressController().getMitgliederListe())));
+                if (termin != null) {
+                    setTermin(termin);
                 }
-            });
+                showTeilnehmerListe(termin);
+                // Termin ist nicht mehr dasselbe Objekt.. deshalb muss ich mit der ID arbeiten
+
+            }
+        });
 
 
     }

@@ -19,10 +19,12 @@ import space.cloud4b.verein.services.Observer;
 import java.util.ArrayList;
 
 /**
- * Die Controller-Class zur StatusView
+ * Controller zum JavaFX-UI StatusView.fxml (Anzeige der Statuselemente)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten
+ * Erhält Benachrichtigungen der abonnierten Observer-Klasse(n), wenn Datensätze geändert wurden.
  *
- * @version 2019-12
- * @autor Bernhard Kämpf & Serge Kaulitz
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-17
  */
 public class StatusViewController implements Observer {
 

@@ -16,12 +16,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
- * Die Klasse SignupViewController ist verknüpft mit dem JavaFX-Unserinterface SignupView.fxml
- * Sie ermöglicht es einem User, sich mit seiner E-Mail-Adresse und einem Passwort
- * als neuer Benutzer anzumelden.
+ * Controller zum JavaFX-UI SignupView.fxml (als neuer Benutzer registrieren)
+ * Behandelt die Action-Events
  *
  * @author Bernhard Kämpf und Serge Kaulitz
- * @version 2019-01-03
+ * @version 2019-12-17
  */
 public class SignupViewController {
 

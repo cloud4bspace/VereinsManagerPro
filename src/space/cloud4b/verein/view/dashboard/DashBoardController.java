@@ -22,9 +22,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
 /**
- * Die Klasse ist verknüpft mit dem JavaFX-Unserinterface DashBoard.fxml
- * Sie dient zur Anzeige von 4 Listen im Center-Bereich des Borderpanes der
- * MainFrame-Anzeige
+ * Controller zum JavaFX-UI DashBoard.fxml (Anzeige DashBoard)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten und behandelt die Action-Events
+ * Erhält Benachrichtigungen der abonnierten Observer-Klasse(n), wenn Datensätze geändert wurden.
  *
  * @author Bernhard Kämpf und Serge Kaulitz
  * @version 2019-12-17
