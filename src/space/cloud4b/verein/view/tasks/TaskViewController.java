@@ -66,7 +66,7 @@ public class TaskViewController implements Observer {
         terminSpalte = new TreeTableColumn<>("Termin");
         tageBisTerminSpalte = new TreeTableColumn<>("Tage bis Termin");
         detailsSpalte = new TreeTableColumn<>("Details");
-        verantwortlicheSpalte = new TreeTableColumn<>("Verantwortliche");
+        verantwortlicheSpalte = new TreeTableColumn<>("Verantwortlicher");
 
         idSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("id#"));
         prioSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("prio"));
@@ -74,7 +74,7 @@ public class TaskViewController implements Observer {
         tageBisTerminSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("tagebis"));
         terminSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("termin"));
         detailsSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("details"));
-        verantwortlicheSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("verantwortliche"));
+        verantwortlicheSpalte.setCellValueFactory(new TreeItemPropertyValueFactory<>("verantwortlichr"));
 
         titelSpalte.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn());
 

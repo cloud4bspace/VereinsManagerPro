@@ -68,10 +68,6 @@
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleMitgliederbereich"
                                         text="Mitgliederbereich öffnen"/>
-                              <MenuItem mnemonicParsing="false" onAction="#handleShowBirthdayStatistics"
-                                        text="Geburtstags-Statistik"/>
-                              <MenuItem mnemonicParsing="false" onAction="#handleShowKatIStatistics"
-                                        text="Auswertung Kat I"/>
                               <MenuItem mnemonicParsing="false" onAction="#handleExportMitglieder"
                                         text="nach Excel exportieren.."/>
                               <MenuItem mnemonicParsing="false" onAction="#handleCreatePDF"
@@ -103,11 +99,10 @@
             </MenuBar>
              <MenuBar id="mBar03">
                  <menus>
-                     <Menu fx:id="kontrolleMenu" mnemonicParsing="false" text="Tasks">
+                     <Menu fx:id="kontrolleMenu" mnemonicParsing="false" text="Aufgaben (Tasks)">
                          <items>
-                             <MenuItem mnemonicParsing="false" onAction="#handleTask" text="Tasks" />
-                             <MenuItem mnemonicParsing="false" onAction="#handleTaskList" text="Taskliste" />
-                             <MenuItem mnemonicParsing="false" onAction="#handleShowTaskStatistics" text="Tasks nach Status" />
+                             <MenuItem mnemonicParsing="false" onAction="#handleTask" text="Tasks"/>
+                             <MenuItem mnemonicParsing="false" onAction="#handleTaskList" text="Taskliste"/>
                          </items>
                      </Menu>
                  </menus>
