@@ -70,8 +70,12 @@ public class MitgliedNeuViewController {
             // Die MYSQL-Tabelle wird mit einem neuen Eintrag ergänzt und gibt die ID des neuen Mitglieds zurück
             this.neueId = DatabaseOperation.saveNewMember(nachnameFeld.getText(),
                     vornameFeld.getText(), eintrittsDatumPicker.getValue().toString(), mainApp.getCurrentUser());
-            // mainApp.getMitgliedViewController().setMitglied(neueId);
+            mainApp.getMainFrameController().setMeldungInListView("Mitglied #" + neueId + " eigefügt."
+                    , "OK");
+
+
         }
+
     }
 
 
@@ -116,4 +120,6 @@ public class MitgliedNeuViewController {
     public void handleAbbrechen() {
         this.dialogStage.close();
     }
+
+
 }

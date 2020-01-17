@@ -240,7 +240,6 @@ public abstract class DatabaseReader {
                     if (rs.getInt("KontaktId") == mitgliederListe.get(i).getId()) {
                         teilnehmerListe.add(new Teilnehmer(mitgliederListe.get(i)));
                     }
-                    ;
                 }
             }
             int i = 0;
@@ -446,11 +445,7 @@ public abstract class DatabaseReader {
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
-                if (rs.getInt("Treffer") == 1) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return rs.getInt("Treffer") == 1;
             }
 
         } catch (SQLException e) {
@@ -467,15 +462,11 @@ public abstract class DatabaseReader {
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
             String query = "SELECT COUNT(*) Treffer FROM benutzer WHERE BenutzerName = '" + eMail + "' AND BenutzerPW=" +
-                    "'" + DigestUtils.sha1Hex(String.valueOf(pw) + eMail) + "' AND BenutzerSperrcode=0";
+                    "'" + DigestUtils.sha1Hex(pw + eMail) + "' AND BenutzerSperrcode=0";
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
-                if (rs.getInt("Treffer") == 1) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return rs.getInt("Treffer") == 1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1146,13 +1137,13 @@ public abstract class DatabaseReader {
 
                     // Wenn der nächste Geburtstag grösser ist als heute
                     if (geburtsDatumLD.isAfter(LocalDate.now().minusDays(1))) {
-                        if (alter % 10 == 0) {
+                        if (alter % 10 == 0 && alter > 0) {
                             jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD, alter + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
                         }
                     } else {
                         // nächster Geburtstag ist erst im nächsten Jahr
                         // dann ist das Mitglied ein Jahr älter..
-                        if ((alter + 1) % 10 == 0) {
+                        if ((alter + 1) % 10 == 0 && (alter + 1) > 0) {
                             jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD.plusYears(1), (alter + 1) + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
                         }
                     }
@@ -1174,11 +1165,11 @@ public abstract class DatabaseReader {
 
                 // Wenn das nächste Jubiläumsdatum grösser ist als heute
                 if(eintrittsDatumLD.isAfter(LocalDate.now().minusDays(1))) {
-                    if (anzahlJahre % 5 == 0) {
+                    if (anzahlJahre % 5 == 0 && anzahlJahre > 0) {
                         jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD, "Jubiläum: " + anzahlJahre + " Jahr(e) " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
                     }
                 } else {
-                    if ((anzahlJahre + 1) % 5 == 0) {
+                    if ((anzahlJahre + 1) % 5 == 0 && (anzahlJahre + 1) > 0) {
                         // nächstes Jubilaeum ist erst im nächsten Jahr
                         jubilaeumsListe.add(new Jubilaeum(i, eintrittsDatumLD.plusYears(1), "Jubiläum: " + (anzahlJahre + 1) + " Jahr(e) " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
                     }
@@ -1320,7 +1311,7 @@ public abstract class DatabaseReader {
      *
      * @return die Anzahl der pendenten Tasks als int
      */
-    public static int readAnzahlTasks() {
+    public static int readAnzahlOpenTasks() {
         int anzTasks = 0;
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
             String query = "SELECT COUNT(*) AS ANZTASKS from usr_web116_5.task WHERE TaskStatus < 3";

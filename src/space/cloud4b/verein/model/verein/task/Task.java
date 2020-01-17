@@ -70,6 +70,10 @@ public class Task {
     }
 
     // Termin
+    public void setTermin(LocalDate termin) {
+        this.taskDatum = termin;
+    }
+
     public LocalDate getTaskDatum() {
         return this.taskDatum;
     }
@@ -102,6 +106,9 @@ public class Task {
     }
 
     public String toString() {
-        return this.taskTitel + ": " + taskPrio.getStatusElementTextLang() + " (" + taskDatum.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)) + ")";
+        return this.taskTitel + ": " + taskPrio.getStatusElementTextLang() + " ("
+                + taskDatum.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)) + ")";
     }
+
+
 }
