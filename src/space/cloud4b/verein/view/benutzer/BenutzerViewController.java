@@ -54,6 +54,10 @@ public class BenutzerViewController implements Observer {
 
     }
 
+    /**
+     * Initialisieurng der FXML-Felder (wird automatisch nach dem Konstruktor aufgerufen
+     */
+    @FXML
     public void initialize() {
         benutzerIdSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getUserIdProperty());
@@ -74,6 +78,11 @@ public class BenutzerViewController implements Observer {
                 cellData -> cellData.getValue().getUserPWProperty());
     }
 
+    /**
+     * wird ausgeführt, wenn der User in der Zelle eine Änderung vornimmt
+     *
+     * @param userNumberCellEditEvent die ID des Benutzers bei dem die Änderung vorgenommen wurde
+     */
     public void onEditChange(TableColumn.CellEditEvent<User, Number> userNumberCellEditEvent) {
         User user = userTabelle.getSelectionModel().getSelectedItem();
         user.setSperrCode(userNumberCellEditEvent.getNewValue(), mainApp.getCurrentUser());
@@ -81,9 +90,9 @@ public class BenutzerViewController implements Observer {
     }
 
     /**
-     * Is called by the main application to give a reference back to itself.
+     * Setzt die Referenz zur MainApp
      *
-     * @param mainApp
+     * @param mainApp die Referenz zur MainApp
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
@@ -91,10 +100,18 @@ public class BenutzerViewController implements Observer {
         mainApp.getBenutzerController().Attach(this);
     }
 
+    /**
+     * Setzt die Referenz zur eigenen Stage
+     *
+     * @param dialogStage
+     */
     public void setStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
+    /**
+     * initialisiert die TableView
+     */
     public void initializeTable() {
         // Add observable list data to the tables
         userTabelle.setItems(FXCollections.observableArrayList(mainApp.getBenutzerController().getBenutzerListe()));
@@ -105,13 +122,10 @@ public class BenutzerViewController implements Observer {
                 super.updateItem(item, empty);
                 if (item == null) {
                     setId("");
-                    // setStyle("");
                 } else if (item.isUserGesperrt()) {
                     setId("gesperrt");
-                    // setStyle("-fx-background-color: #F78888;-fx-text-fill: #000000;");
                 } else {
                     setId("");
-                    // setStyle("-fx-background-color: #FFFFFF;-fx-text-fill: #000000;");
                 }
             }
         });
@@ -129,6 +143,4 @@ public class BenutzerViewController implements Observer {
             });
         }
     }
-
-
 }

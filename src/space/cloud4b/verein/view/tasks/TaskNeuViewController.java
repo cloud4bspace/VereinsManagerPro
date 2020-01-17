@@ -15,6 +15,13 @@ import space.cloud4b.verein.services.DatabaseOperation;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Controller zum JavaFX-UI TaskNeuView.fxml (Erfassung eines neuen Tasks)
+ * Behandelt die Action-Events
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-17
+ */
 public class TaskNeuViewController {
     MainApp mainApp;
     Stage dialogStage;

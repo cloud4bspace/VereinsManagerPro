@@ -34,17 +34,13 @@ import java.util.Optional;
 
 
 /**
- * Die Klasse MitgleidViewController ist verknüpft mit dem JavaFX-Unserinterfac MitgliedView.fxml
- * Sie versorgt die Felder und Tabellen mit Daten und behandelt die Action-Events, welche aus
- * dem Userinterface ausgelöst werden.
- * Sie wird von der Controller-Klasse AdressController benachrichtigt, wenn Datensätze geändert wurden
- * und aktualisiert werden müssen.
+ * Controller zum JavaFX-UI MitgliedView.fxml (Anzeige Mitgliederbereich)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten und behandelt die Action-Events
+ * Erhält Benachrichtigungen der abonnierten Observer-Klasse(n), wenn Datensätze geändert wurden.
  *
  * @author Bernhard Kämpf und Serge Kaulitz
  * @version 2019-12-17
  */
-// TODO - nach dem Erfassen eines neuen Kontakts sollte dieser angezeigt werden
-// TODO - nach dem Speichern von Änderungen funktioniert der Filter nicht mehr..
 public class MitgliedViewController implements Observer {
 
     // allgemeine Instanzvariabeln

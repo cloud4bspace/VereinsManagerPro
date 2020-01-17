@@ -25,6 +25,14 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
+/**
+ * Controller zum JavaFX-UI TaskListView.fxml (Anzeige der Tasks als Liste)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten
+ * Erhält Benachrichtigungen der abonnierten Observer-Klasse(n), wenn Datensätze geändert wurden.
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-17
+ */
 public class TaskListViewController {
     private Stage dialogStage;
     private MainApp mainApp;
@@ -39,10 +47,7 @@ public class TaskListViewController {
     private ObservableList<Task> masterData = FXCollections.observableArrayList();
 
     public TaskListViewController() {
-
-
-        //Konstruktor wird nicht (zwingend) benötigt
-        //Konstruktor hat noch keinen Zugriff auf @FXML-Variabeln
+        //Konstruktor wird nicht benötigt
     }
 
     /**

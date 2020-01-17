@@ -8,9 +8,8 @@ import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.services.DatabaseOperation;
 
 /**
- * Die Klasse MitgliedNeuViewController ist verknüpft mit dem JavaFX-Unserinterface MitgliedNeuView.fxml
- * Sie dient zur Erfassung eines neuen Mitglieds mit wenigen Basisdaten. Weitere Daten können später
- * via MitgliedView.fxml ergänzt werden.
+ * Controller zum JavaFX-UI MitgliedNeuView.fxml (Erfassung eines neuen Mitglieds)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten und behandelt die Action-Events
  *
  * @author Bernhard Kämpf und Serge Kaulitz
  * @version 2019-12-17

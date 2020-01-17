@@ -14,6 +14,13 @@ import space.cloud4b.verein.services.DatabaseOperation;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * Controller zum JavaFX-UI TaskEditView.fxml (Task anzeigen und bearbeiten)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten und behandelt die Action-Events
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-17
+ */
 public class TaskEditViewController {
 
     MainApp mainApp;

@@ -21,8 +21,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
+/**
+ * Controller zum JavaFX-UI DashBoard.fxml (Anzeige DashBoard)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten und behandelt die Action-Events
+ * Erhält Benachrichtigungen der abonnierten Observer-Klasse(n), wenn Datensätze geändert wurden.
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-17
+ */
 public class DashBoardController implements Observer {
 
+    // allgemeine Instanzvariabeln
     private MainApp mainApp;
 
     // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
@@ -40,7 +49,6 @@ public class DashBoardController implements Observer {
     private TableColumn<Mitglied, StatusElement> anredeSpalte;
     @FXML
     private TableColumn<Mitglied, StatusElement> kategorieSpalte;
-
     @FXML
     private TableView<Termin> termineTabelle;
     @FXML
@@ -53,7 +61,6 @@ public class DashBoardController implements Observer {
     private TableColumn<Termin, String> terminTextSpalte;
     @FXML
     private TableColumn<Termin, String> terminWoSpalte;
-
     @FXML
     private TableView<Jubilaeum> jubilaeumTabelle;
     @FXML
@@ -62,7 +69,6 @@ public class DashBoardController implements Observer {
     private TableColumn<Jubilaeum, String> jubilaeumDatumStringSpalte;
     @FXML
     private TableColumn<Jubilaeum, String> jubilaeumTextSpalte;
-
     @FXML
     private TableView<Position> ranglisteTabelle;
     @FXML
@@ -80,17 +86,20 @@ public class DashBoardController implements Observer {
 
 
     /**
-     * Is called by the main application to give a reference back to itself.
+     * Wird von der MainApp aufgerufen und setzt eine Referenz von sich selbst.
+     * Desweitern trägt sich der Controller in die benötigten Observer-Listen ein.
      *
-     * @param mainApp
+     * @param mainApp die Referenz zur MainApp-Klasse
      */
     public void setMainApp(MainApp mainApp) {
+        // TODO Interessante Code-Stellen
         this.mainApp = mainApp;
         mainApp.getAdressController().Attach(this);
         mainApp.getKalenderController().Attach(this);
         mainApp.getRanglisteController().Attach(this);
 
         // Add observable list data to the tables
+        // TODO Interessante Code-Stellen
         mitgliederTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController()
                 .getMitgliederListe()));
         termineTabelle.setItems(FXCollections.observableArrayList(mainApp.getKalenderController()
@@ -121,7 +130,6 @@ public class DashBoardController implements Observer {
         kategorieSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getKategorieIElementProperty());
 
-
         // Terminliste initialisieren
         terminDatumSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getDateAsLocalStringMedium());
@@ -132,10 +140,7 @@ public class DashBoardController implements Observer {
         terminWoSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getOrtProperty());
 
-
         // Jubiläumsliste initialisieren
-        //  jubilaeumDatumSpalte.setCellValueFactory(
-        //     cellData -> cellData.getValue().getDatumProperty());
         jubilaeumTextSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getTextProperty());
         jubilaeumDatumStringSpalte.setCellValueFactory(
@@ -153,7 +158,6 @@ public class DashBoardController implements Observer {
                 cellData -> cellData.getValue().getAnzahlAnwesenheitenProperty());
         anwesenheitsAnteilSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getAnwesenheitsAnteilProperty());
-
     }
 
     /**
@@ -223,6 +227,5 @@ public class DashBoardController implements Observer {
                 }
             });
         }
-
     }
 }

@@ -20,6 +20,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
+/**
+ * Controller zum JavaFX-UI EinstellungenView.fxml (Mandanteneinstellungen anzeigen und ändern)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten und behandelt die Action-Events
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2020-01
+ */
 public class EinstellungenViewController {
     private MainApp mainApp;
     private Stage dialogStage;
@@ -73,16 +80,23 @@ public class EinstellungenViewController {
         dialogStage.close();
     }
 
+    /**
+     * Wird ausgeführt, wenn der User den Button "speichern" betätigt.
+     * Es erfolgt eine Gültigkeitsprüfung der eingegebenen Werte.
+     * Wenn die Werte gültig sind, werden diese in den Properties gespeichert.
+     */
     public void handleSpeichern() {
-        if(isValid()) {
+        if (isValid()) {
             Einstellung.setProperties(vereinsNameFeld.getText(), dbHostFeld.getText(), dbPortFeld.getText(),
                     dbDatabaseFeld.getText(), dbUserFeld.getText(), dbPasswortFeld.getText());
-
             feedbackLabel.setText("Änderungen gespeichert und wirksam nach nächstem Login");
-
         }
     }
 
+    /**
+     * Wird ausgeführt, wenn der User den Button betätigt, um das Logo zu ändern.
+     * Speichert das übergebene File als neues Logo ab.
+     */
     public void handelLogoButton() {
         File selectedFile = mainApp.chooseImageFile();
         if (selectedFile != null) {
@@ -96,10 +110,10 @@ public class EinstellungenViewController {
     /**
      * speichert die übergebene Bilddatei als Profilbild des Users im dafür
      * vorgesehenen Ordner ab
-     * @param file
+     *
+     * @param file das übergebene neue Logo-File
      */
     public void saveNeuesLogo(File file) {
-        // TODO Bild kann jpg oder png sein... Entweder umwandeln oder dann immer beim Auslesen des Bilds beide Varianten in Betracht ziehen..
         // die File-Extension des übergebenen Filenamens wird extrahiert
         Optional<String> ext = mainApp.getExtensionByStringHandling(file.getName());
         String extStr = ext.get();
@@ -110,12 +124,13 @@ public class EinstellungenViewController {
             // das übergebene File wird mit dem neuen Namen in den Zielordner kopiert
             java.nio.file.Files.copy(
                     src, dst, StandardCopyOption.COPY_ATTRIBUTES,
-                    StandardCopyOption.REPLACE_EXISTING // TODO Microsoft kann das nicht?
+                    StandardCopyOption.REPLACE_EXISTING
             );
         } catch (IOException e) {
             System.out.println("Neues Logo konnte nicht gespeicher twerden (" + e + ")");
         }
     }
+
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
@@ -124,6 +139,13 @@ public class EinstellungenViewController {
         this.dialogStage = dialogStage;
     }
 
+
+    /**
+     * Überprüft die Gültigkeit der vom User eingegebenen Werte und gibt true zurück, wenn
+     * alles i.O. ist. Ansonsten wird eine Fehlermeldung ausgegeben und false zurückgegeben.
+     *
+     * @return das Resultat der Überprüfung als boolean-Wert.
+     */
     public boolean isValid() {
         boolean isValid = true;
         String errorMeldung = null;
@@ -133,7 +155,8 @@ public class EinstellungenViewController {
         }
         if (dbHostFeld.getText().length() < 1 || vereinsNameFeld.getText() == null) {
             isValid = false;
-            if(errorMeldung.length()>0) {errorMeldung += "\n";}
+            if (errorMeldung.length() > 0) {
+                errorMeldung += "\n";}
             errorMeldung += "Host ist ungültig.";
         }
 
@@ -165,13 +188,22 @@ public class EinstellungenViewController {
 
         if (dbPasswortFeld.getText().length() < 1 || dbPasswortFeld.getText() == null) {
             isValid = false;
-            if(errorMeldung.length()>0) {errorMeldung += "\n";}
+            if (errorMeldung.length() > 0) {
+                errorMeldung += "\n";
+            }
             errorMeldung += "Passwort ist ungültig.";
         }
-        if(!isValid) { showWarning(errorMeldung);}
+        if (!isValid) {
+            showWarning(errorMeldung);
+        }
         return isValid;
     }
 
+    /**
+     * zeigt dem User eine Warnmeldung an mit der übergebenen Fehlermeldung
+     *
+     * @param errorMeldung die anzuzeigende Fehlermeldung
+     */
     private void showWarning(String errorMeldung) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Ungültige Eingaben..");

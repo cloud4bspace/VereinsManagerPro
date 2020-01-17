@@ -23,6 +23,14 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
+/**
+ * Controller zum JavaFX-UI KalenderView.fxml (Anzeige Kalenderansicht)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten und behandelt die Action-Events
+ * Erhält Benachrichtigungen der abonnierten Observer-Klasse(n), wenn Datensätze geändert wurden.
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2020-01
+ */
 public class KalenderViewController implements Observer {
 
     private Stage dialogStage;
@@ -43,11 +51,8 @@ public class KalenderViewController implements Observer {
     private Button nextButton;
 
 
-
     public KalenderViewController() {
-
-        //Konstruktor wird nicht (zwingend) benötigt
-        //Konstruktor hat noch keinen Zugriff auf @FXML-Variabeln
+        // der Konstruktor wird hier nicht benötigt
     }
 
     /**
@@ -153,7 +158,6 @@ public class KalenderViewController implements Observer {
     public void handlePreviousMonth() {
         this.firstOfMonth = this.firstOfMonth.minusMonths(1);
         initialize();
-
     }
 
     /**
@@ -164,7 +168,6 @@ public class KalenderViewController implements Observer {
         this.mainApp = mainApp;
         mainApp.getKalenderController().Attach(this);
     }
-
 
     @Override
     public void update(Object o) {

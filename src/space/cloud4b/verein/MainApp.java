@@ -59,40 +59,19 @@ public class MainApp extends Application {
     private StatusController statusController;
 
     public MainApp() {
-       // DatabaseOperation.createDatabaseFromTemplate();
-        // TODO Restore Database from Template (beim Testen wichtig)
-        // verein = new Verein(Einstellung.getVereinsName());
-
-    }
-    @Override
-    public void start(Stage primaryStage) {
-
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle(Einstellung.getVereinsName());
-        this.primaryStage.getIcons().add(new Image("file:ressources/images/address_book_32.png"));
-        this.primaryStage.setMaximized(true);
-
-        if (currentUser != null) {
-            this.kalenderController = new KalenderController();
-            this.adressController = new AdressController();
-            this.taskController = new TaskController();
-            this.benutzerController = new BenutzerController();
-            this.ranglisteController = new RanglisteController(this);
-            this.statusController = new StatusController();
-
-            initMainFrame();
-            showDashboard();
-        } else {
-            showLoginView();
-        }
+        /* Erstellung der Datenbanktabelle aus Template wird normalerweise nicht
+           benötigt und ist deshalb hier auskommentiert
+        */
+        // DatabaseOperation.createDatabaseFromTemplate();
     }
 
-    public void setMitgliedViewController(MitgliedViewController mitgliedViewController){
-        this.mitgliedViewController = mitgliedViewController;
-    }
-
-    public MitgliedViewController getMitgliedViewController(){
-        return mitgliedViewController;
+    /**
+     * Main-Methode, welche die FX-start-Methode aufruft.
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        launch(args);
     }
 
     /**
@@ -110,20 +89,13 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
-            // Set the persons into the controller.
             LoginViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setStage(dialogStage);
-            // controller.setPersonData(contactData);
-            //controller.setPersonData(verein.getAdressBuch().getMitgliederListe());
-
             dialogStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -141,12 +113,9 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
-            // Set the persons into the controller.
             SignupViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setStage(dialogStage);
-
             dialogStage.show();
 
         } catch (IOException e) {
@@ -195,38 +164,44 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
             EinstellungenViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setStage(dialogStage);
-
             dialogStage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
-     * Zeigt die Hauptübersicht (Dashboard/Cockpit) in der Mitte des Hauptfensters
+     * die start-Methode entspricht beim JavaFX der sonst üblichen main-Methode und wird
+     * beim Ausführen der Applikation als erstes ausgeführt.
+     *
+     * @param primaryStage
      */
-    public void showDashboard() {
-        try {
-            // Load person overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/dashboard/DashBoard.fxml"));
-            AnchorPane dashBoard = loader.load();
-            dashBoard.setPadding(new Insets(10,10,10,10));
-            // Set person overview into the center of root layout.
-            mainFrame.setCenter(dashBoard);
+    @Override
+    public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        this.primaryStage.setTitle(Einstellung.getVereinsName());
+        this.primaryStage.getIcons().add(new Image("file:ressources/images/favicon-32x32.png"));
+        this.primaryStage.setMaximized(true);
 
-            // Give the controller access to the main app.
-            DashBoardController controller = loader.getController();
-            controller.setMainApp(this);
+        if (currentUser != null) {
+            // wenn bereits ein User angemeldet ist, die benötigten Controller
+            // starten und das Hauptfenster öffnen
+            this.kalenderController = new KalenderController();
+            this.adressController = new AdressController();
+            this.taskController = new TaskController();
+            this.benutzerController = new BenutzerController();
+            this.ranglisteController = new RanglisteController(this);
+            this.statusController = new StatusController();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            initMainFrame(); // den MainFrame laden mit den Benutzermenus
+            showDashboard(); // das Dashboard in der Mitte anzeigen
+        } else {
+            // falls kein User angemeldet ist, den Login-Dialog anzeigen
+            showLoginView();
         }
     }
 
@@ -301,10 +276,6 @@ public class MainApp extends Application {
             mainFrame.setCenter(page);
             TerminViewController controller = loader.getController();
             controller.setMainApp(this);
-            // controller.setMainFrameController(mainFrameController);
-            //   controller.setKalenderController(kalenderController);
-
-
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -328,7 +299,6 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
             BirthdayStatisticsController controller = loader.getController();
             controller.setPersonData(DatabaseReader.getMitgliederAsArrayList());
 
@@ -354,11 +324,7 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
-            // Set the persons into the controller.
             MemberStatistics01Controller controller = loader.getController();
-         //   controller.setPersonData(verein.getAdressBuch().getMitgliederListe());
-
             dialogStage.show();
 
         } catch (IOException e) {
@@ -382,13 +348,9 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
             MitgliedNeuViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setStage(dialogStage);
-            // controller.setPersonData(contactData);
-            //controller.setPersonData(verein.getAdressBuch().getMitgliederListe());
-
             dialogStage.show();
 
         } catch (IOException e) {
@@ -412,12 +374,9 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
             TerminNeuViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setStage(dialogStage);
-            // controller.setPersonData(contactData);
-            //controller.setPersonData(verein.getAdressBuch().getMitgliederListe());
 
             dialogStage.show();
 
@@ -442,13 +401,9 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
             TaskNeuViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setStage(dialogStage);
-            // controller.setPersonData(contactData);
-            //controller.setPersonData(verein.getAdressBuch().getMitgliederListe());
-
             dialogStage.show();
 
         } catch (IOException e) {
@@ -472,13 +427,10 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
             TaskEditViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setTask(task);
             controller.setStage(dialogStage);
-            // controller.setPersonData(contactData);
-            //controller.setPersonData(verein.getAdressBuch().getMitgliederListe());
 
             dialogStage.show();
 
@@ -487,34 +439,65 @@ public class MainApp extends Application {
         }
     }
 
-
     /**
-     * Gibt den Haupt-Stage (primaryStage) zurück
+     * Zeigt die Hauptübersicht (Dashboard/Cockpit) in der Mitte des Hauptfensters
      */
-    public Stage getPrimaryStage() {
-        return primaryStage;
+    public void showDashboard() {
+        try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/dashboard/DashBoard.fxml"));
+            AnchorPane dashBoard = loader.load();
+            dashBoard.setPadding(new Insets(10, 10, 10, 10));
+            // setzt das DashBoard in die Mitte
+            mainFrame.setCenter(dashBoard);
+            DashBoardController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * gibt den aktuell angemeldeten Benutzer/User zurück
+     *
+     * @return der angemeldete User
+     */
     public User getCurrentUser() {
         return currentUser;
     }
 
+    /**
+     * gibt den für die Rangliste zuständige Controller zurück
+     *
+     * @return der für die Rangliste zuständige Controller
+     */
     public RanglisteController getRanglisteController() {
         return ranglisteController;
     }
 
+    /**
+     * gibt den für die Hauptansicht zuständige Controller zurück
+     *
+     * @return der für die Hauptansicht zuständige Controller
+     */
     public MainFrameController getMainFrameController() {
         return mainFrameController;
     }
 
+    /**
+     * setzt den angemeldeten User
+     *
+     * @param user der angemeldete User
+     */
     public void setUser(User user) {
         this.currentUser = user;
     }
-    public static void main(String[] args) {
-        launch(args);
-    }
 
-
+    /**
+     * zeigt die Kalenderansicht des aktuellen Monats an
+     */
     public void showTerminOverview() {
         try {
             // Load the fxml file and create a new stage for the popup.
@@ -528,7 +511,6 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
             KalenderViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setStage(dialogStage);
@@ -539,6 +521,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * zeigt die Taskübersicht an
+     */
     public void showTaskOverview() {
         try {
             // Load the fxml file and create a new stage for the popup.
@@ -552,7 +537,6 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
             TaskListViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setStage(dialogStage);
@@ -562,7 +546,9 @@ public class MainApp extends Application {
         }
     }
 
-
+    /**
+     * zeigt den Taskbereich in der Mitte des MainFrame an
+     */
     public void showTask() {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
@@ -585,6 +571,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * zeigt die Statistik zu den Tasks an
+     */
     public void showTaskStatistics() {
         try {
             // Load the fxml file and create a new stage for the popup.
@@ -598,9 +587,7 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
             TaskStatistics01Controller controller = loader.getController();
-            //   controller.setPersonData(verein.getAdressBuch().getMitgliederListe());
 
             dialogStage.show();
 
@@ -621,6 +608,9 @@ public class MainApp extends Application {
         Optional<ButtonType> result = alert.showAndWait();
     }
 
+    /**
+     * Zeigt die BenutzerView an
+     */
     public void showBenutzerView() {
         try {
             // Load the fxml file and create a new stage for the popup.
@@ -634,7 +624,6 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
             BenutzerViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setStage(dialogStage);
@@ -679,8 +668,8 @@ public class MainApp extends Application {
     /**
      * öffnet einen "Save as"-Dialog
      *
-     * @param fileName gibt den vom
-     * @return
+     * @param fileName den Filenamen (Vorschlag)
+     * @return das vom User ausgewählte File
      */
     public File saveAsFile(String fileName) {
         FileChooser fileChooser = new FileChooser();
@@ -693,6 +682,9 @@ public class MainApp extends Application {
         return file;
     }
 
+    /**
+     * zeigt die LogFileView an
+     */
     public void showLogFileView() {
         try {
             // Load the fxml file and create a new stage for the popup.
@@ -706,7 +698,6 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
             LogViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setStage(dialogStage);
@@ -718,6 +709,9 @@ public class MainApp extends Application {
 
     }
 
+    /**
+     * zeigt die Status-Ansicht
+     */
     public void showStatusView() {
         try {
             // Load the fxml file and create a new stage for the popup.
@@ -731,7 +725,6 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the persons into the controller.
             StatusViewController controller = loader.getController();
             controller.setMainApp(this);
             controller.setStage(dialogStage);
@@ -741,6 +734,4 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
-
-
 }

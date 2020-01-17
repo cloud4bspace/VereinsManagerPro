@@ -253,7 +253,8 @@ public abstract class DatabaseReader {
                 rs = st.executeQuery(query);
                 while (rs.next()) {
                     // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
-                    teilnehmerListe.get(i).setAnmeldeStatus(anmeldung.getStatusElemente().get(rs.getInt("AnmeldeStatus")));
+                    teilnehmerListe.get(i).setAnmeldeStatus(anmeldung.getStatusElemente().get(rs
+                            .getInt("AnmeldeStatus")));
                     teilnehmerListe.get(i).setAnmeldungText(rs.getString("KontrolleBemerkungen"));
                 }
                 i++;
@@ -270,7 +271,8 @@ public abstract class DatabaseReader {
                 rs = st.executeQuery(query);
                 while (rs.next()) {
                     // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
-                    teilnehmerListe.get(i).setTeilnahmeStatus(teilnahme.getStatusElemente().get(rs.getInt("TeilnahmeStatus")));
+                    teilnehmerListe.get(i).setTeilnahmeStatus(teilnahme.getStatusElemente().get(rs
+                            .getInt("TeilnahmeStatus")));
                     teilnehmerListe.get(i).setTeilnahmeText(rs.getString("KontrolleBemerkungen"));
                 }
                 i++;
@@ -333,7 +335,8 @@ public abstract class DatabaseReader {
                 rs = st.executeQuery(query);
                 while (rs.next()) {
                     // anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus"))
-                    teilnehmerListe.get(i).setTeilnahmeStatus(teilnahme.getStatusElemente().get(rs.getInt("TeilnahmeStatus")));
+                    teilnehmerListe.get(i).setTeilnahmeStatus(teilnahme.getStatusElemente().get(rs
+                            .getInt("TeilnahmeStatus")));
                     teilnehmerListe.get(i).setTeilnahmeText(rs.getString("KontrolleBemerkungen"));
                 }
                 i++;
@@ -460,7 +463,7 @@ public abstract class DatabaseReader {
      * check User credentials
      */
     public static boolean checkUserCredentials(String eMail, String pw) {
-
+        // TODO interessante Code-Passagen
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
             String query = "SELECT COUNT(*) Treffer FROM benutzer WHERE BenutzerName = '" + eMail + "' AND BenutzerPW=" +
@@ -586,19 +589,22 @@ public abstract class DatabaseReader {
                 String kontaktAustrittsdatumString = rs.getString("KontaktAustrittsdatum");
                 LocalDate kontaktGeburtsdatum;
                 LocalDate kontaktAustrittsdatum = null;
-                if (kontaktGeburtsdatumString != null && kontaktGeburtsdatumString != "0000-00-00" && !kontaktGeburtsdatumString.isEmpty()) {
+                if (kontaktGeburtsdatumString != null && kontaktGeburtsdatumString != "0000-00-00"
+                        && !kontaktGeburtsdatumString.isEmpty()) {
                     kontaktGeburtsdatum = Date.valueOf(kontaktGeburtsdatumString).toLocalDate();
                     mitglied.setGeburtsdatum(kontaktGeburtsdatum);
                 }
 
 
-                if (kontaktAustrittsdatumString != null && kontaktAustrittsdatumString != "0000-00-00" && !kontaktAustrittsdatumString.isEmpty()) {
+                if (kontaktAustrittsdatumString != null && kontaktAustrittsdatumString != "0000-00-00"
+                        && !kontaktAustrittsdatumString.isEmpty()) {
                     kontaktAustrittsdatum = Date.valueOf(kontaktAustrittsdatumString).toLocalDate();
                     mitglied.setAustrittsDatum(kontaktAustrittsdatum);
                 }
 
                 //kontakt.setAnredeStatus(rs.getInt("KontaktAnredeStatus"));
-                mitglied.setAnredeStatus(anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus")));
+                mitglied.setAnredeStatus(anredeStatus.getStatusElemente().get(rs
+                        .getInt("KontaktAnredeStatus")));
 
                 if (mitglied instanceof Mitglied) {
                     String kontaktEintrittsdatumString = rs.getString("KontaktEintrittsdatum");
@@ -608,8 +614,10 @@ public abstract class DatabaseReader {
                     }
 
                     mitglied.setEintrittsDatum(kontaktEintrittsdatum);
-                    mitglied.setKategorieIStatus(kategorieIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieA")));
-                    mitglied.setKategorieIIStatus(kategorieIIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieB")));
+                    mitglied.setKategorieIStatus(kategorieIStatus.getStatusElemente()
+                            .get(rs.getInt("KontaktKategorieA")));
+                    mitglied.setKategorieIIStatus(kategorieIIStatus.getStatusElemente()
+                            .get(rs.getInt("KontaktKategorieB")));
                     mitglied.setIstVorstandsmitglied(rs.getBoolean("KontaktIstVorstandsmitglied"));
                 }
 
@@ -639,7 +647,6 @@ public abstract class DatabaseReader {
                 String kontaktNachname = rs.getString("KontaktNachname");
                 String kontaktVorname = rs.getString("KontaktVorname");
 
-
                 // Objekte werden erzeugt
                 if (rs.getBoolean("KontaktIstMitglied")) {
                     kontakt = new Mitglied(kontaktId, kontaktNachname, kontaktVorname);
@@ -666,33 +673,37 @@ public abstract class DatabaseReader {
                 String kontaktAustrittsdatumString = rs.getString("KontaktAustrittsdatum");
                 LocalDate kontaktGeburtsdatum = null;
                 LocalDate kontaktAustrittsdatum = null;
-                if(kontaktGeburtsdatumString != null && kontaktGeburtsdatumString !="0000-00-00" && !kontaktGeburtsdatumString.isEmpty()) {
+                if (kontaktGeburtsdatumString != null && kontaktGeburtsdatumString != "0000-00-00"
+                        && !kontaktGeburtsdatumString.isEmpty()) {
                     kontaktGeburtsdatum = Date.valueOf(kontaktGeburtsdatumString).toLocalDate();
                     kontakt.setGeburtsdatum(kontaktGeburtsdatum);
                 }
 
 
-                if(kontaktAustrittsdatumString != null && kontaktAustrittsdatumString != "0000-00-00" && !kontaktAustrittsdatumString.isEmpty()) {
+                if (kontaktAustrittsdatumString != null && kontaktAustrittsdatumString != "0000-00-00"
+                        && !kontaktAustrittsdatumString.isEmpty()) {
                     kontaktAustrittsdatum = Date.valueOf(kontaktAustrittsdatumString).toLocalDate();
                     kontakt.setAustrittsDatum(kontaktAustrittsdatum);
                 }
 
-                //kontakt.setAnredeStatus(rs.getInt("KontaktAnredeStatus"));
-                kontakt.setAnredeStatus(anredeStatus.getStatusElemente().get(rs.getInt("KontaktAnredeStatus")));
+                kontakt.setAnredeStatus(anredeStatus.getStatusElemente()
+                        .get(rs.getInt("KontaktAnredeStatus")));
 
-                if(kontakt instanceof Mitglied) {
+                if (kontakt instanceof Mitglied) {
                     String kontaktEintrittsdatumString = rs.getString("KontaktEintrittsdatum");
                     LocalDate kontaktEintrittsdatum = null;
-                    if(kontaktEintrittsdatumString != null && kontaktEintrittsdatumString !="0000-00-00") {
+                    if (kontaktEintrittsdatumString != null && kontaktEintrittsdatumString != "0000-00-00") {
                         kontaktEintrittsdatum = Date.valueOf(kontaktEintrittsdatumString).toLocalDate();
                     }
 
                     ((Mitglied) kontakt).setEintrittsDatum(kontaktEintrittsdatum);
-                    ((Mitglied) kontakt).setKategorieIStatus(kategorieIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieA")));
-                    ((Mitglied) kontakt).setKategorieIIStatus(kategorieIIStatus.getStatusElemente().get(rs.getInt("KontaktKategorieB")));
-                    ((Mitglied) kontakt).setIstVorstandsmitglied(rs.getBoolean("KontaktIstVorstandsmitglied"));
+                    ((Mitglied) kontakt).setKategorieIStatus(kategorieIStatus
+                            .getStatusElemente().get(rs.getInt("KontaktKategorieA")));
+                    ((Mitglied) kontakt).setKategorieIIStatus(kategorieIIStatus
+                            .getStatusElemente().get(rs.getInt("KontaktKategorieB")));
+                    ((Mitglied) kontakt).setIstVorstandsmitglied(rs
+                            .getBoolean("KontaktIstVorstandsmitglied"));
                 }
-
 
                 /**
                  * Kontakt wird zur Liste hinzugefügt
@@ -701,15 +712,10 @@ public abstract class DatabaseReader {
                 if(kontakt instanceof Mitglied) {
                     mitgliederListe.add((Mitglied) kontakt);
                 }
-
-
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
-
         }
-
         return mitgliederListe;
     }
 
@@ -728,7 +734,8 @@ public abstract class DatabaseReader {
             ResultSet result = st.executeQuery(query);
             while (result.next()) {
 
-                pieChartData.add(new PieChart.Data(result.getString("StatusLong"), result.getInt("MembersCount")));
+                pieChartData.add(new PieChart.Data(result.getString("StatusLong"),
+                        result.getInt("MembersCount")));
 
             }
             return pieChartData;
@@ -754,7 +761,8 @@ public abstract class DatabaseReader {
             ResultSet result = st.executeQuery(query);
             while (result.next()) {
 
-                pieChartData.add(new PieChart.Data(result.getString("StatusLong"), result.getInt("TasksCount")));
+                pieChartData.add(new PieChart.Data(result.getString("StatusLong")
+                        , result.getInt("TasksCount")));
 
             }
             return pieChartData;

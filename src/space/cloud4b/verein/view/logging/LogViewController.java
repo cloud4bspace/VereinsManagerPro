@@ -14,12 +14,21 @@ import space.cloud4b.verein.MainApp;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Controller zum JavaFX-UI LogView.fxml (Anzeige der Logfile-Einträge)
+ * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten.
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-17
+ */
 public class LogViewController {
 
+    // die allgemeinen Instanzvariabeln
     private MainApp mainApp;
     private Stage dialogStage;
     private ArrayList<Text> textLines;
 
+    // UI-Variabeln (Verknüpfung mit Elementen des Userinterfaces)
     @FXML
     private VBox logViewVBox;
     @FXML

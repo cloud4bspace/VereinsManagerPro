@@ -16,11 +16,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
- * Die Klasse LoginViewController ist verknüpft mit dem JavaFX-Unserinterface LoginView.fxml
- * Sie ermöglicht einem registrierten Benutzer/User, sich anzumelden und die Applikation zu starten.
+ * Controller zum JavaFX-UI LoginView.fxml (Anzeige fürs Login)
+ * Behandelt die Action-Events
  *
  * @author Bernhard Kämpf und Serge Kaulitz
- * @version 2019-01-03
+ * @version 2020-01
  */
 public class LoginViewController {
 

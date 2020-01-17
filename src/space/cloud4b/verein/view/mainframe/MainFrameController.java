@@ -30,6 +30,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
+/**
+ * Controller zum JavaFX-UI MeinFrame.fxml (Anzeige des Hauptbereichs und der Menus)
+ * Behandelt die Action-Events (insbesondere für die Menu-Items)
+ *
+ * @author Bernhard Kämpf und Serge Kaulitz
+ * @version 2019-12-17
+ */
 public class MainFrameController implements Observer {
 
     int anzMitglieder = 0;
@@ -173,7 +180,7 @@ public class MainFrameController implements Observer {
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.HOME, "14px");
         iconTxt.setFill(Color.GRAY);
-       // iconTxt.setStyle("-fx-end-margin: 20px");
+        // iconTxt.setStyle("-fx-end-margin: 20px");
         homeButton.setGraphic(iconTxt);
         homeButton.setText("Dashboard");
 
@@ -349,9 +356,6 @@ public class MainFrameController implements Observer {
     // Linker Menu-/Navigationsbereich
     @FXML
     private void handleRefresh() {
-       /* System.out.println("Restarting app!");
-        mainApp.getPrimaryStage().close();
-        Platform.runLater(() -> mainApp.start(new Stage()));*/
         mainApp.showDashboard();
     }
 
