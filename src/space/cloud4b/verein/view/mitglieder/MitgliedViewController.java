@@ -284,19 +284,19 @@ public class MitgliedViewController implements Observer {
         // Profilbild des Mitglieds wird gesucht im Ordner "ressources/images/profilbilder/"
         // zwei Formate sind möglich (.jpg oder .png)
         try (FileInputStream inputStream = new FileInputStream("ressources/images/profilbilder/ProfilBild_"
-                + mitglied.getId() + ".jpg");) {
+                + mitglied.getId() + ".jpg")) {
             // Suche nach .jpg-Bild
             Image image = new Image(inputStream);
             profilBild.setImage(image);
         } catch (IOException e) {
             // Suche nach .png-Bild
             try (FileInputStream inputStream = new FileInputStream("ressources/images/profilbilder/ProfilBild_"
-                    + mitglied.getId() + ".png");) {
+                    + mitglied.getId() + ".png")) {
                 Image image = new Image(inputStream);
                 profilBild.setImage(image);
             } catch (IOException ex) {
                 // wenn weder .jpg noch .png-Bild vorhanden sind, wird ein Dummy-Bild geladen
-                try (FileInputStream inputStream = new FileInputStream("ressources/images/profilbilder/Dummy.png");) {
+                try (FileInputStream inputStream = new FileInputStream("ressources/images/profilbilder/Dummy.png")) {
                     Image image = new Image(inputStream);
                     profilBild.setImage(image);
                 } catch (IOException exe) {
@@ -392,10 +392,7 @@ public class MitgliedViewController implements Observer {
                 } else if (mitglied.getNachName().toLowerCase().contains(lowerCaseFilter)) {
                     return true; // Filter matches last name.
                 }*/
-                if (mitglied.getKurzbezeichnung().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false; // Does not match.
+                return mitglied.getKurzbezeichnung().toLowerCase().contains(lowerCaseFilter);// Does not match.
             });
         });
         // 3. Wrap the FilteredList in a SortedList.
@@ -450,9 +447,16 @@ public class MitgliedViewController implements Observer {
         if(result.get() == ButtonType.OK) {
             // Löschung in der Datenbank umsetzen
             DatabaseOperation.deleteMitglied(aktuellesMitglied, mainApp.getCurrentUser());
-            // Löschung in der ArrayList umsetzen
-            mitgliedTabelle.getItems().remove(mitgliedTabelle.getSelectionModel().getSelectedItem());
-            // TODO: Profilbild könnte in diesem Fall auch noch gelöscht werden
+            mainApp.getMainFrameController().setMeldungInListView(aktuellesMitglied.getKurzbezeichnung()
+                    + " gelöscht ", "OK");
+            // zum ersten (noch vorhandenen) Mitglied in der Liste wechseln
+            if (mitgliedArrayList.get(0).getId() != aktuellesMitglied.getId()) {
+                setMitglied(mitgliedArrayList.get(0));
+            } else {
+                setMitglied(mitgliedArrayList.get(1));
+            }
+
+
         }
     }
 
@@ -473,8 +477,7 @@ public class MitgliedViewController implements Observer {
      * wird ausgeführt, wenn der User den "Speichern"-Button betätigt hat
      */
     public void handleSpeichernButton() throws InterruptedException {
-        //TODO eigentlich nur auszuführen, wenn überhaupt Daten geändert wurden.
-        //TODO nach dem Speichern funktioniert der Filter nicht mehr
+        //TODO Bug: nach dem Speichern funktioniert der Filter nicht mehr
 
         // Die Gültigkeit der Daten wird überprüft. Falls die Daten gültig sind wird gespeichert.
         if (isInputValid()) {
@@ -507,8 +510,6 @@ public class MitgliedViewController implements Observer {
             //   mitgliedArrayList = new ArrayList<>(mainApp.getAdressController().getMitgliederListe());
 
             unsavedChanges = false;
-
-            // initialize();
         }
     }
 

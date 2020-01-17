@@ -73,6 +73,7 @@ public class TaskEditViewController {
             task.setPrioStatus(prioComBox.getValue());
             task.setStatusStatus(statusComBox.getValue());
             task.setVerantwortliches(verantwortlichComBox.getValue());
+            task.setTermin(terminDatumPicker.getValue());
 
             // die Änderungen werden an die Datenbank weitergegeben
             DatabaseOperation.updateTask(task, mainApp.getCurrentUser());

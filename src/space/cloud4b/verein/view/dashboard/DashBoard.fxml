@@ -24,7 +24,8 @@
                           text="Mitgliederliste" textFill="#b93030"/>
                   <TableView fx:id="mitgliederTabelle">
                     <columns>
-                        <TableColumn fx:id="idSpalte" maxWidth="40.0" prefWidth="30.0" resizable="false" text="#" />
+                        <TableColumn fx:id="idSpalte" maxWidth="40.0" minWidth="35.0" prefWidth="35.0" resizable="false"
+                                     text="#"/>
                       <TableColumn fx:id="nachNameSpalte" prefWidth="120.0" text="Name" />
                       <TableColumn fx:id="vorNameSpalte" prefWidth="120.0" text="Vorname" />
                         <TableColumn fx:id="anredeSpalte" prefWidth="75.0" text="Anrede" />
@@ -64,12 +65,12 @@
                <children>
                    <Label fx:id="terminLabel" onMouseClicked="#onClickedLabelTermine" text="nächste Termine"/>
                   <TableView fx:id="termineTabelle" prefHeight="305.0" prefWidth="450.0">
-                     <columns>
-                        <TableColumn fx:id="terminDatumSpalte" maxWidth="90.0" prefWidth="90.0" text="Datum" />
-                        <TableColumn fx:id="terminZeitSpalte" prefWidth="100.0" text="Zeit" />
-                        <TableColumn fx:id="terminTextSpalte" prefWidth="200.0" text="Infos" />
-                         <TableColumn fx:id="terminWoSpalte" prefWidth="150.0" text="Wo"/>
-                     </columns>
+                      <columns>
+                          <TableColumn fx:id="terminDatumSpalte" maxWidth="90.0" prefWidth="90.0" text="Datum"/>
+                          <TableColumn fx:id="terminZeitSpalte" text="Zeit"/>
+                          <TableColumn fx:id="terminTextSpalte" prefWidth="170.0" text="Infos"/>
+                          <TableColumn fx:id="terminWoSpalte" prefWidth="150.0" text="Wo"/>
+                      </columns>
                   </TableView>
                </children>
             </VBox>

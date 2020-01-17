@@ -102,12 +102,13 @@ public class TaskController implements Subject {
             while (true) {
                 if (DatabaseReader.readTotalAnzahlTasks() != anzahlTasks) {
                     setAnzahlTasks(DatabaseReader.readTotalAnzahlTasks());
-                    setAnzahlOpenTasks(DatabaseReader.readAnzahlTasks());
+                    setAnzahlOpenTasks(DatabaseReader.readAnzahlOpenTasks());
                     update = true;
                 }
                 // hat sich der Zeitstempel der letzten Äenderung verändert?
                 else if (this.timestamp == null || Objects.requireNonNull(DatabaseReader.readLetzteAenderungTask())
                         .after(this.timestamp)) {
+                    setAnzahlOpenTasks(DatabaseReader.readAnzahlOpenTasks());
                     updateLetzeAenderung(DatabaseReader.readLetzteAenderungTask());
                     update = true;
                 }
