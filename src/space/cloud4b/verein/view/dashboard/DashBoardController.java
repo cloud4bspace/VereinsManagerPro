@@ -195,8 +195,6 @@ public class DashBoardController implements Observer {
                     mitgliederTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController()
                             .getMitgliederListe()));
                 }
-
-                // FXCollections.observableArrayList(mitgliederListe);
             });
             Platform.runLater(new Runnable() {
                 @Override

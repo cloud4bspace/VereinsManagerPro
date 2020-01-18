@@ -989,41 +989,41 @@ public abstract class DatabaseReader {
     }
 
     /**
-     * ermittelt die künftigen Termine aus der Datenbank und gibt diese als ArrayList zurück
+     * Ermittelt die künftigen Termine aus der Datenbank und gibt diese als ArrayList zurück
      *
      * @return Terminliste als ArrayList<Termin>
      */
     public static ArrayList<Termin> getKommendeTermineAsArrayList() {
         ArrayList<Termin> terminListe = new ArrayList<>();
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
-            String query = "SELECT * from usr_web116_5.termin WHERE TerminDatum >= CURRENT_DATE() ORDER BY TerminDatum ASC";
+            String query =
+                    "SELECT * from usr_web116_5.termin WHERE TerminDatum >= CURRENT_DATE() ORDER BY TerminDatum ASC";
             ResultSet rs = st.executeQuery(query);
-
             while (rs.next()) {
                 Termin termin;
                 LocalDateTime terminZeit = null;
                 LocalDateTime terminZeitBis = null;
                 int terminId = rs.getInt("TerminId");
                 LocalDate terminDatum = Date.valueOf(rs.getString("TerminDatum")).toLocalDate();
-
                 String terminText = rs.getString("TerminText");
                 String terminOrt = rs.getString("TerminOrt");
 
                 // Objekte werden erzeugt und der Terminliste hinzugefügt
                 termin = new Termin(terminId, terminDatum, terminText, terminOrt);
                 if(rs.getString("TerminZeit") != null) {
-                    terminZeit = LocalDateTime.of(terminDatum, Time.valueOf(rs.getString("TerminZeit")).toLocalTime());
+                    terminZeit = LocalDateTime.of(terminDatum, Time.valueOf(rs.getString("TerminZeit"))
+                            .toLocalTime());
                     termin.setZeit(terminZeit);
                 }
-                if(rs.getString("TerminZeitBis") != null) {
-                    terminZeitBis = LocalDateTime.of(terminDatum, Time.valueOf(rs.getString("TerminZeitBis")).toLocalTime());
+                if (rs.getString("TerminZeitBis") != null) {
+                    terminZeitBis = LocalDateTime.of(terminDatum,
+                            Time.valueOf(rs.getString("TerminZeitBis")).toLocalTime());
                     termin.setZeitBis(terminZeitBis);
                 }
                 terminListe.add(termin);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            e.printStackTrace(); }
         return terminListe;
     }
 
@@ -1112,8 +1112,8 @@ public abstract class DatabaseReader {
     /**
      * Ermittelt anhand der Geburtstage und der Eintrittsdaten pro Mitglied
      * das nächste Geburtsdatum und das nächste Jubiläum.
-     * Runde Geburtstage = Alter % 10 = 0
-     * Jubiläum = Vereinszugehörigkeit % 5 = 0
+     * Runde Geburtstage = Alter % 10 = 0 && Alter != 0
+     * Jubiläum = Vereinszugehörigkeit % 5 = 0  && Vereinszugehörigkeit !=0
      * @return die Jubiläumsliste als ArrayList<Jubilaeum>
      */
     public static ArrayList<Jubilaeum> getJubilaeenAsArrayList() {
@@ -1138,13 +1138,19 @@ public abstract class DatabaseReader {
                     // Wenn der nächste Geburtstag grösser ist als heute
                     if (geburtsDatumLD.isAfter(LocalDate.now().minusDays(1))) {
                         if (alter % 10 == 0 && alter > 0) {
-                            jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD, alter + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                            jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD
+                                    , alter + ". Geburtstag von "
+                                    + rs.getString("KontaktVorname")
+                                    + " " + rs.getString("KontaktNachname")));
                         }
                     } else {
                         // nächster Geburtstag ist erst im nächsten Jahr
                         // dann ist das Mitglied ein Jahr älter..
                         if ((alter + 1) % 10 == 0 && (alter + 1) > 0) {
-                            jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD.plusYears(1), (alter + 1) + ". Geburtstag von " + rs.getString("KontaktVorname") + " " + rs.getString("KontaktNachname")));
+                            jubilaeumsListe.add(new Jubilaeum(999, geburtsDatumLD.plusYears(1)
+                                    , (alter + 1) + ". Geburtstag von "
+                                    + rs.getString("KontaktVorname") + " "
+                                    + rs.getString("KontaktNachname")));
                         }
                     }
                 }
