@@ -132,25 +132,26 @@ public abstract class DatabaseOperation {
 
 
     /**
-     * löscht das übergebene Mitglied aus den relevanten Tabellen der Datenbank
-     * @param mitglied das zu löschende Mitglied
+     * Löscht das übergebene Mitglied aus den relevanten Tabellen der Datenbank
+     *
+     * @param mitglied    das zu löschende Mitglied
      * @param currentUser der angemeldete User
      */
     public static void deleteMitglied(Mitglied mitglied, User currentUser) {
-
         // Schritt 1: alte DB-Werte in Logfile schreiben
         int logCounter = LogWriter.getLastLogCounterValue();
         LogWriter.setNextLogCounterValue(++logCounter);
         LogWriter.writePreDeleteLog(mitglied, currentUser, logCounter);
 
+        // Schritt 2: das Mitglied in der Datenbank löschen
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
+            // Schritt 2.1: Löschen in der Kontakt-Tabelle
             String query = "DELETE FROM kontakt WHERE KontaktId=" + mitglied.getId();
             st.execute(query);
-
+            // Schritt 2.2: Löschen in der Tabelle "Terminkontrolle"
             query = "DELETE FROM `terminkontrolle` WHERE `KontrolleMitgliedId` = " + mitglied.getId();
             st.execute(query);
-
         } catch (SQLException e) {
             System.out.println("Mitglied konnte nicht gelöscht werden (" + e + ")");
         }
@@ -448,14 +449,13 @@ public abstract class DatabaseOperation {
             try (PreparedStatement ps = conn.getConnection().prepareStatement(query)) {
                 ps.setInt(1, mitgliedId);//KontaktID
                 ps.setString(2, eMail);
-                ps.setString(3, DigestUtils.sha1Hex(String.valueOf(pw) + eMail));
+                ps.setString(3, DigestUtils.sha1Hex(pw + eMail));
                 ps.setInt(4, 0);
                 ps.setString(5, "neuer User #" + mitgliedId);
                 System.out.println("Rückmeldung preparedStmt: " + ps.executeUpdate());
             } catch (SQLException e) {
                 System.out.println("Fehler: " + e);
             }
-            ;
         } else {
             System.out.println("Keine gültige E-Mail-Adresse eines Mitglieds");
         }

@@ -553,7 +553,7 @@ public class MitgliedViewController implements Observer {
 
     @Override
     public void update(Object o) {
-        System.out.println("MitgliedViewController hat Update-Meldung erhalten von " + o);
+        mainApp.getMainFrameController().setMeldungInListView("Update-Meldung erhalten", "INFO");
         if (o instanceof AdressController) {
             AdressController ac = (AdressController) o;
             Platform.runLater(new Runnable() { // TODO

@@ -449,12 +449,11 @@ public class TerminViewController implements Observer {
     @Override
     public void update(Object o) {
         System.out.println("TerminController Update-Meldung erhalten von " + o);
-
         KalenderController kc = (KalenderController) o;
-        Platform.runLater(new Runnable() { // TODO
+        mainApp.getMainFrameController().setMeldungInListView("Update-Meldung erhalten", "INFO");
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
                 terminAuswahlComboBox.getItems().remove(0, terminListe.size());
                 terminListe = mainApp.getKalenderController().getTermineAsArrayList();
                 terminAuswahlComboBox.getItems().addAll(terminListe);
