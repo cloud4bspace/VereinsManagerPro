@@ -27,7 +27,8 @@ public abstract class Einstellung {
             // Load Settings
             Properties loadProps = new Properties();
             loadProps.loadFromXML(new FileInputStream(
-                    "../VereinsManager/src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
+                //    "../VereinsManager/src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
+            "src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
             return loadProps.getProperty("dbURL");
         } catch (Exception e) {
             System.out.println("dbURL konnte nicht ermittelt werden.");
@@ -46,7 +47,7 @@ public abstract class Einstellung {
             // Load Settings
             Properties loadProps = new Properties();
             loadProps.loadFromXML(new FileInputStream(
-                    "../VereinsManager/src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
+                    "src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
             return loadProps.getProperty("mysqlPW");
         } catch (Exception e) {
             System.out.println("dbPW konnte nicht ermittelt werden.");
@@ -65,7 +66,7 @@ public abstract class Einstellung {
             // Load Settings
             Properties loadProps = new Properties();
             loadProps.loadFromXML(new FileInputStream(
-                    "../VereinsManager/src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
+                    "src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
             return loadProps.getProperty("dbUser");
         } catch (Exception e) {
             System.out.println("dbPW konnte nicht ermittelt werden.");
@@ -83,7 +84,8 @@ public abstract class Einstellung {
         try {
             Properties loadProps = new Properties();
             loadProps.loadFromXML(new FileInputStream(
-                    "../VereinsManager/src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
+                   // "../VereinsManager/src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
+                    "src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
             return loadProps.getProperty("VereinsName");
         } catch (IOException e) {
             return "Verein ohne Namen";
@@ -116,7 +118,7 @@ public abstract class Einstellung {
         prop.setProperty("dbURL", dbUrl);
         try {
             os = new FileOutputStream(
-                    "../VereinsManager/src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml");
+                    "src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml");
             prop.storeToXML(os, "Update durch Methode setVereinsName");
         } catch (IOException e) {
             e.printStackTrace();
@@ -133,7 +135,7 @@ public abstract class Einstellung {
             // Load Settings
             Properties loadProps = new Properties();
             loadProps.loadFromXML(new FileInputStream(
-                    "../VereinsManager/src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
+                    "src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
             return loadProps.getProperty("dbHost");
         } catch (Exception e) {
             System.out.println("dbHost konnte nicht ermittelt werden.");
@@ -152,7 +154,7 @@ public abstract class Einstellung {
             // Load Settings
             Properties loadProps = new Properties();
             loadProps.loadFromXML(new FileInputStream(
-                    "../VereinsManager/src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
+                    "src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
             return loadProps.getProperty("dbPort");
         } catch (Exception e) {
             System.out.println("dbPort konnte nicht ermittelt werden.");
@@ -171,7 +173,7 @@ public abstract class Einstellung {
             // Load Settings
             Properties loadProps = new Properties();
             loadProps.loadFromXML(new FileInputStream(
-                    "../VereinsManager/src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
+                    "src/space/cloud4b/verein/einstellungen/Mandanteneinstellungen.xml"));
             return loadProps.getProperty("dbDatabase");
         } catch (Exception e) {
             System.out.println("dbDatenbank konnte nicht ermittelt werden.");

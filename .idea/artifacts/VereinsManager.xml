@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="javafx" build-on-make="true" name="VereinsManager">
-    <output-path>$PROJECT_DIR$/out/artifacts/VereinsManager</output-path>
+    <output-path>$USER_HOME$/Desktop/deploy</output-path>
     <properties id="javafx-properties">
       <options>
         <option name="appClass" value="space.cloud4b.verein.MainApp" />

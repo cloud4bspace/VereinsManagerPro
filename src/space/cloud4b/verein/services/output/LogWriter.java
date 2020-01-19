@@ -30,7 +30,7 @@ public abstract class LogWriter {
             // Load Settings
             Properties loadProps = new Properties();
             loadProps.loadFromXML(new FileInputStream(
-                    "../VereinsManager/src/space/cloud4b/verein/services/output/LogCounter.xml"));
+                    "src/space/cloud4b/verein/services/output/LogCounter.xml"));
             String propValue = loadProps.getProperty("logCounter");
             return Integer.parseInt(propValue);
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public abstract class LogWriter {
         prop.setProperty("logCounter", Integer.toString(lastCounterValue));
         try {
             os = new FileOutputStream(
-                    "../VereinsManager/src/space/cloud4b/verein/services/output/LogCounter.xml");
+                    "src/space/cloud4b/verein/services/output/LogCounter.xml");
             prop.storeToXML(os, "Zähler für Log-Einträge (letzter Counterwert wird hier gespeichert)");
         } catch (IOException e) {
             e.printStackTrace();
