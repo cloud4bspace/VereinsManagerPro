@@ -230,10 +230,9 @@ public class MainFrameController implements Observer {
         iconTxt.setFill(Color.GRAY);
         this.dateLabel.setGraphic(iconTxt);
 
-        try (FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");) {
+        try (FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png")) {
             Image image = new Image(inputStream);
             clubLogoImage.setImage(image);
-            // TODO muss man da was schliessen
         } catch (IOException e) {
         }
 
