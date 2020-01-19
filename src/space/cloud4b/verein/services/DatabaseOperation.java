@@ -445,7 +445,6 @@ public abstract class DatabaseOperation {
             String query = "INSERT INTO benutzer (BenutzerId, KontaktId, BenutzerName, BenutzerPw," +
                     " BenutzerLastlogin, BenutzerNumberLogins, BenutzerSperrcode, BenutzerTrackChangeUsr," +
                     " BenutzerTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, CURRENT_DATE, ?, '0', ?, CURRENT_TIMESTAMP );";
-            // TODO interessante Code-Passagen
             try (PreparedStatement ps = conn.getConnection().prepareStatement(query)) {
                 ps.setInt(1, mitgliedId);//KontaktID
                 ps.setString(2, eMail);

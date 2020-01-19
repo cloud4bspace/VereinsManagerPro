@@ -54,7 +54,7 @@ public class LoginViewController {
     private void initialize() {
         feedbackLabel.setText("Bitte melde dich mit deinem Benutzernamen (E-Mail) und Passwort an..");
         loginTitleLabel.setText("Login VereinsManager");
-        try (FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png");) {
+        try (FileInputStream inputStream = new FileInputStream("ressources/images/logo/ClubLogo01.png")) {
             Image image = new Image(inputStream);
             clubLogoImage.setImage(image);
         } catch (IOException e) {
@@ -100,8 +100,8 @@ public class LoginViewController {
             // der Zähler für die Anzahl Zugriffe wird beim User hochgezählt
             DatabaseOperation.incrementLoginCounter(mitgliedId);
 
-            // TODO: Feld wird nicht aktualisiert...
-            feedbackLabel.setText("Login erfolgreich - Applikation wird gestartet");
+            // TODO - Label wird hier nicht aktualisiert. Problem konnte nicht gelöst werden
+            this.feedbackLabel.setText("Login erfolgreich - Applikation wird gestartet");
             dialogStage.close();
             mainApp.start(dialogStage);
         } else {

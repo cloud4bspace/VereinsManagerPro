@@ -92,14 +92,13 @@ public class DashBoardController implements Observer {
      * @param mainApp die Referenz zur MainApp-Klasse
      */
     public void setMainApp(MainApp mainApp) {
-        // TODO Interessante Code-Stellen
+
         this.mainApp = mainApp;
         mainApp.getAdressController().Attach(this);
         mainApp.getKalenderController().Attach(this);
         mainApp.getRanglisteController().Attach(this);
 
         // Add observable list data to the tables
-        // TODO Interessante Code-Stellen
         mitgliederTabelle.setItems(FXCollections.observableArrayList(mainApp.getAdressController()
                 .getMitgliederListe()));
         termineTabelle.setItems(FXCollections.observableArrayList(mainApp.getKalenderController()

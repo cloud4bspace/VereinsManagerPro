@@ -458,7 +458,6 @@ public abstract class DatabaseReader {
      * check User credentials
      */
     public static boolean checkUserCredentials(String eMail, String pw) {
-        // TODO interessante Code-Passagen
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
             String query = "SELECT COUNT(*) Treffer FROM benutzer WHERE BenutzerName = '" + eMail + "' AND BenutzerPW=" +

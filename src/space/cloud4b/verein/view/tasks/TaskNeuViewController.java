@@ -44,12 +44,10 @@ public class TaskNeuViewController {
         mitgliedArrayList = mainApp.getAdressController().getMitgliederListe();
         verantwortlichComBox.getItems().addAll(mitgliedArrayList);
         User currentUser = mainApp.getCurrentUser();
-        // TODO hier ist etwas falsch
         for (int i = 0; i < mitgliedArrayList.size(); i++) {
             if (mitgliedArrayList.get(i).getId() == currentUser.getUserId()) {
                 indexOfCurrentUser = i;
             }
-            ;
         }
         verantwortlichComBox.getSelectionModel().select(indexOfCurrentUser);
     }

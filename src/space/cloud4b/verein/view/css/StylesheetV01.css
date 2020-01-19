@@ -55,8 +55,6 @@
     -fx-pref-height: 100;
 }
 
-/* hover Hauptmenu-Ueberschriften
-   funktioniert nicht gut mit dem linken Menu TODO */
 .menu:hover {
    -fx-background-color: #ffffff;
 }

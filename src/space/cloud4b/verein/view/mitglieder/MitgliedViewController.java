@@ -175,8 +175,6 @@ public class MitgliedViewController implements Observer {
             setMitglied(mitgliedArrayList.get(mitgliedTabelle.getSelectionModel().getFocusedIndex()));
 
         } else {
-            // mainFrameController.setInfo("Blättern nicht möglich..", "NOK", true);
-            // TODO löschen  mainApp.getMainFrameController().setInfo("Blättern nicht möglich..", "NOK", true);
             mainApp.getMainFrameController().setMeldungInListView("Blättern nicht möglich..", "NOK");
         }
     }
@@ -199,7 +197,6 @@ public class MitgliedViewController implements Observer {
 
     /**
      * soll ein neueröffnetes Mitglied direkt selektieren aufgrund der neuen Key-ID
-     * TODO funktioniert nicht...
      *
      * @param mitgliedId
      */
@@ -477,7 +474,8 @@ public class MitgliedViewController implements Observer {
      * wird ausgeführt, wenn der User den "Speichern"-Button betätigt hat
      */
     public void handleSpeichernButton() throws InterruptedException {
-        //TODO Bug: nach dem Speichern funktioniert der Filter nicht mehr
+
+        //TODO Bug: nach dem Speichern funktioniert der Filter nicht mehr -> Problem konnte nicht behoben werden.
 
         // Die Gültigkeit der Daten wird überprüft. Falls die Daten gültig sind wird gespeichert.
         if (isInputValid()) {
@@ -556,7 +554,7 @@ public class MitgliedViewController implements Observer {
         mainApp.getMainFrameController().setMeldungInListView("Update-Meldung erhalten", "INFO");
         if (o instanceof AdressController) {
             AdressController ac = (AdressController) o;
-            Platform.runLater(new Runnable() { // TODO
+            Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     mitgliedTabelle.setItems(FXCollections.observableArrayList(((AdressController) o).getMitgliederListe()));
