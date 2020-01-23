@@ -1,9 +1,11 @@
 package space.cloud4b.verein.controller;
 
 import org.junit.Before;
+
 import org.junit.Test;
 import space.cloud4b.verein.services.DatabaseReader;
 
+import java.lang.annotation.Annotation;
 import java.sql.Timestamp;
 
 import static org.junit.Assert.assertTrue;
@@ -51,4 +53,8 @@ public class AdressControllerTest {
         assertTrue(ac.getJubilaeumsListe().size() > 0);
     }
 
+
+    @org.junit.jupiter.api.Test
+    void getAnzahlMitglieder() {
+    }
 }

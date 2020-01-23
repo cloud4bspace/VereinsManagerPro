@@ -434,11 +434,9 @@ public abstract class DatabaseOperation {
      * @param pw das Passwort des neuen Users
      */
     public static void saveUserCredentials(String eMail, String pw) {
-
         // Check I: gehört die E-Mail-Adresse zu einem aktiven Mitglied?
         int mitgliedId = DatabaseReader.isMitgliedEmail(eMail);
         if (mitgliedId > 0) {
-
             // Check II: gibt es den User bereits?
             boolean isUser = DatabaseReader.isUser(mitgliedId);
             MysqlConnection conn = new MysqlConnection();
@@ -446,7 +444,7 @@ public abstract class DatabaseOperation {
                     " BenutzerLastlogin, BenutzerNumberLogins, BenutzerSperrcode, BenutzerTrackChangeUsr," +
                     " BenutzerTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, CURRENT_DATE, ?, '0', ?, CURRENT_TIMESTAMP );";
             try (PreparedStatement ps = conn.getConnection().prepareStatement(query)) {
-                ps.setInt(1, mitgliedId);//KontaktID
+                ps.setInt(1, mitgliedId); // = KontaktID
                 ps.setString(2, eMail);
                 ps.setString(3, DigestUtils.sha1Hex(pw + eMail));
                 ps.setInt(4, 0);

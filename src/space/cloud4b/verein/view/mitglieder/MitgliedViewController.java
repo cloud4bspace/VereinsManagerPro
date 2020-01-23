@@ -331,7 +331,7 @@ public class MitgliedViewController implements Observer {
         String extStr = ext.get();
         // die Pfade der Ursprungsdatei und der Zieldatei werden gelesen/generiert
         Path src = Paths.get(file.getAbsolutePath());
-        Path dst = Paths.get("../VereinsManager/ressources/images/profilbilder/ProfilBild_"
+        Path dst = Paths.get("ressources/images/profilbilder/ProfilBild_"
                 + aktuellesMitglied.getId() + "." + extStr);
         try {
             // das übergebene File wird mit dem neuen Namen in den Zielordner kopiert
@@ -342,7 +342,7 @@ public class MitgliedViewController implements Observer {
             setMitglied(this.aktuellesMitglied);
 
         } catch (IOException e) {
-            System.out.println("File konnte nicht gespeicher twerden (" + e + ")");
+            System.out.println("File konnte nicht gespeichert werden (" + e + ")");
         }
     }
 

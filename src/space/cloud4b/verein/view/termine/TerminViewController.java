@@ -450,7 +450,6 @@ public class TerminViewController implements Observer {
     public void update(Object o) {
         System.out.println("TerminController Update-Meldung erhalten von " + o);
         KalenderController kc = (KalenderController) o;
-        mainApp.getMainFrameController().setMeldungInListView("Update-Meldung erhalten", "INFO");
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

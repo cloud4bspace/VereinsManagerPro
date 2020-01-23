@@ -119,7 +119,7 @@ public class EinstellungenViewController {
         String extStr = ext.get();
         // die Pfade der Ursprungsdatei und der Zieldatei werden gelesen/generiert
         Path src = Paths.get(file.getAbsolutePath());
-        Path dst = Paths.get("../VereinsManager/ressources/images/logo/ClubLogo01." + extStr);
+        Path dst = Paths.get("ressources/images/logo/ClubLogo01." + extStr);
         try {
             // das übergebene File wird mit dem neuen Namen in den Zielordner kopiert
             java.nio.file.Files.copy(
@@ -127,7 +127,7 @@ public class EinstellungenViewController {
                     StandardCopyOption.REPLACE_EXISTING
             );
         } catch (IOException e) {
-            System.out.println("Neues Logo konnte nicht gespeicher twerden (" + e + ")");
+            System.out.println("Neues Logo konnte nicht gespeichert werden (" + e + ")");
         }
     }
 

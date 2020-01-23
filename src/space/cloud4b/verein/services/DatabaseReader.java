@@ -460,8 +460,8 @@ public abstract class DatabaseReader {
     public static boolean checkUserCredentials(String eMail, String pw) {
         try (Connection conn = new MysqlConnection().getConnection();
              Statement st = conn.createStatement()) {
-            String query = "SELECT COUNT(*) Treffer FROM benutzer WHERE BenutzerName = '" + eMail + "' AND BenutzerPW=" +
-                    "'" + DigestUtils.sha1Hex(pw + eMail) + "' AND BenutzerSperrcode=0";
+            String query = "SELECT COUNT(*) Treffer FROM benutzer WHERE BenutzerName = '" + eMail + "' AND BenutzerPW="
+                    + "'" + DigestUtils.sha1Hex(pw + eMail) + "' AND BenutzerSperrcode=0";
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
