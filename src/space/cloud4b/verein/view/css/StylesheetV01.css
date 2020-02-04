@@ -3,6 +3,7 @@
  blue:  #90CCF4 ->144, 204, 244
  yellow:  #F3D250 ->243, 210, 80
  green: #8FAD88 ->143, 173, 136
+ gray: #717C89 oder 6C698D
 */
 
 
@@ -110,6 +111,12 @@
     -fx-background-color: #F78888;
 }
 
+#finanzMenu .menu-item {
+    -fx-background-color: #badcb3;
+    -fx-text-fill: #ECECEC;
+
+}
+
 #termineMenu .menu-item {
     -fx-background-color: #F3D250;
 }
@@ -167,6 +174,10 @@
 
 #mBar05 {
     -fx-background-color: #ECECEC;
+}
+#mBarFinanzen {
+    -fx-background-color: #BADCB3;
+    -fx-text-fill: #ECECEC;
 }
 
 #vMenuBarLeftContainer .menu-bar {
@@ -436,6 +447,10 @@
 #anwesenheitsAnteilSpalte {
     -fx-alignment: center-right;
 }
+#belegBetragStringSpalte {
+    -fx-alignment: top-right;
+}
+
 
 #anzTermineSpalte {
     -fx-alignment: center-right;

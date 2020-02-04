@@ -26,6 +26,8 @@ import space.cloud4b.verein.view.chart.TaskStatistics01Controller;
 import space.cloud4b.verein.view.dashboard.DashBoardController;
 import space.cloud4b.verein.view.einstellungen.EinstellungenViewController;
 import space.cloud4b.verein.view.einstellungen.StatusViewController;
+import space.cloud4b.verein.view.finanzen.HauptjournalViewController;
+import space.cloud4b.verein.view.finanzen.KontenplanViewController;
 import space.cloud4b.verein.view.logging.LogViewController;
 import space.cloud4b.verein.view.login.LoginViewController;
 import space.cloud4b.verein.view.login.SignupViewController;
@@ -732,6 +734,55 @@ public class MainApp extends Application {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void showHauptjournalView() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/finanzen/HauptjournalView.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Finanzen");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            mainFrame.setCenter(page);
+            HauptjournalViewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+    public void showKontenplanView() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/finanzen/KontenplanView.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Kontenplan");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            mainFrame.setCenter(page);
+            KontenplanViewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
         }
     }
 }

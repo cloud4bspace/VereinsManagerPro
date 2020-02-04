@@ -99,6 +99,8 @@ public class MainFrameController implements Observer {
     @FXML
     private Menu auswertungenMenu;
     @FXML
+    private Menu finanzMenu;
+    @FXML
     private Menu exportMenu;
     @FXML
     private MenuItem mitgliederExcelMenuItem;
@@ -172,6 +174,11 @@ public class MainFrameController implements Observer {
         iconTxt.setFill(Color.GRAY);
         auswertungenMenu.setGraphic(iconTxt);
         auswertungenMenu.setText("Analyse");
+
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.MONEY, "14px");
+        iconTxt.setFill(Color.GRAY);
+        finanzMenu.setGraphic(iconTxt);
+        finanzMenu.setText("Finanzen");
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.FILE_EXCEL_ALT, "14px");
         iconTxt.setFill(Color.GRAY);
@@ -482,6 +489,28 @@ public class MainFrameController implements Observer {
     private void handleTaskList() {
         mainApp.showTaskOverview();
     }
+
+    /* Menupunkte unter Finanzen
+     * Pos#01: handleHauptjournal() --> Hauptjournal öffnen
+     * Pos#02: handleKontenplan() --> Kontenplan öffnen
+     */
+
+    /**
+     * Oeffnet das Hauptjournal
+     */
+    @FXML
+    private void handleHauptjournal() {
+        mainApp.showHauptjournalView();
+    }
+
+    /**
+     * Oeffnet den Kontorahmen
+     */
+    @FXML
+    private void handleKontenplan() {
+        mainApp.showKontenplanView();
+    }
+
 
     public void setMeldungInListView(String meldungText, String meldungTyp) {
         meldungAusgabeListView.getItems().add(0, new Meldung(meldungText, meldungTyp));

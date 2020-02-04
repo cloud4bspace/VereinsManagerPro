@@ -182,3 +182,83 @@ Vorgang: Task #26 UPDATE
 old values in mysql-db: | TaskId=26 | TaskBezeichnung=Termin mit Revisor | TaskPrio=3 | TaskStatus=3 | TaskDetails=Revisor treffen im Café | TaskTerminBis=2020-03-10 | TaskMitgliedId=7 | TaskTrackChangeUser=64-Muster Felix-Talents | TaskTrackChangeTimestamp=2020-01-23 08:16:19 | 
 new values in mysql-db: | TaskId=26 | TaskBezeichnung=Termin mit Revisor | TaskPrio=3 | TaskStatus=1 | TaskDetails=Revisor treffen im Café | TaskTerminBis=2020-03-10 | TaskMitgliedId=7 | TaskTrackChangeUser=64-Muster Felix-Talents | TaskTrackChangeTimestamp=2020-01-23 08:17:20 | 
 ***** Log#132 --> E N D E
+
+***** Log#133 --> 2020-01-23 08:41:13.761 durch User: 1-Kämpf Bernhard-Talents | [B@6d0f1844 | Europe/Zurich | 
+Vorgang: Mitglied #127 LOESCHEN
+old values in mysql-db: | KontaktId=127 | KontaktNachname=Bachmann | KontaktVorname=Bruno | KontaktAdresse=Teststrasse 22 | KontaktAdresszusatz=null | KontaktPLZ=8004 | KontaktOrt=Zürich | KontaktGeburtsdatum=1951-10-01 | KontaktAnredeStatus=1 | KontaktEintrittsdatum=2020-01-23 | KontaktAustrittsdatum=null | KontaktKategorieA=5 | KontaktKategorieB=1 | KontaktIstMitglied=1 | KontaktIstVorstandsmitglied=0 | KontaktBemerkungen=neues Mitglied  | KontaktMobile=+41 79 239 25 38 | KontaktTelefon=null | KontaktEMail=bachmann.bruno@test.com | KontaktEMailII=null | KontaktTrackChangeUsr=#64 Muster Felix (Talents|*Vorstand*) | KontaktTrackChangeTimestamp=2020-01-23 08:01:40 | 
+***** Log#133 --> E N D E
+
+***** Log#134 --> 2020-01-23 08:42:22.989 durch User: 1-Kämpf Bernhard-Talents | [B@6d0f1844 | Europe/Zurich | 
+Vorgang: Mitglied #129 NEU
+neu values in mysql-db: | KontaktId=129 | KontaktNachname=Bachmann | KontaktVorname=Bruno | KontaktAdresse=null | KontaktAdresszusatz=null | KontaktPLZ=null | KontaktOrt=null | KontaktGeburtsdatum=1900-01-01 | KontaktAnredeStatus=null | KontaktEintrittsdatum=2020-01-01 | KontaktAustrittsdatum=null | KontaktKategorieA=null | KontaktKategorieB=null | KontaktIstMitglied=1 | KontaktIstVorstandsmitglied=0 | KontaktBemerkungen=null | KontaktMobile=null | KontaktTelefon=null | KontaktEMail=null | KontaktEMailII=null | KontaktTrackChangeUsr=Kämpf Bernhard | KontaktTrackChangeTimestamp=2020-01-23 08:42:16 | 
+***** Log#134 --> E N D E
+
+***** Log#135 --> 2020-01-23 08:43:58.782 durch User: 1-Kämpf Bernhard-Talents | [B@6d0f1844 | Europe/Zurich | 
+Vorgang: Mitglied #129 UPDATE
+old values in mysql-db: | KontaktId=129 | KontaktNachname=Bachmann | KontaktVorname=Bruno | KontaktAdresse=null | KontaktAdresszusatz=null | KontaktPLZ=null | KontaktOrt=null | KontaktGeburtsdatum=1900-01-01 | KontaktAnredeStatus=null | KontaktEintrittsdatum=2020-01-01 | KontaktAustrittsdatum=null | KontaktKategorieA=null | KontaktKategorieB=null | KontaktIstMitglied=1 | KontaktIstVorstandsmitglied=0 | KontaktBemerkungen=null | KontaktMobile=null | KontaktTelefon=null | KontaktEMail=null | KontaktEMailII=null | KontaktTrackChangeUsr=Kämpf Bernhard | KontaktTrackChangeTimestamp=2020-01-23 08:42:16 | 
+new values in mysql-db: | KontaktId=129 | KontaktNachname=Bachmann | KontaktVorname=Bruno | KontaktAdresse=Teststrasse 7 | KontaktAdresszusatz=null | KontaktPLZ=8004 | KontaktOrt=Zürich | KontaktGeburtsdatum=1950-03-01 | KontaktAnredeStatus=1 | KontaktEintrittsdatum=2020-01-01 | KontaktAustrittsdatum=null | KontaktKategorieA=2 | KontaktKategorieB=2 | KontaktIstMitglied=1 | KontaktIstVorstandsmitglied=0 | KontaktBemerkungen=null | KontaktMobile=+41 79 239 25 38 | KontaktTelefon=null | KontaktEMail=bruno.bachmann@gmail.com | KontaktEMailII=null | KontaktTrackChangeUsr=#1 Kämpf Bernhard (Talents|*Vorstand*) | KontaktTrackChangeTimestamp=2020-01-23 08:43:52 | 
+***** Log#135 --> E N D E
+
+***** Log#136 --> 2020-01-23 08:56:07.563 durch User: 64-Muster Felix-Talents | [B@179c0035 | Europe/Zurich | 
+Vorgang: Task #26 UPDATE
+old values in mysql-db: | TaskId=26 | TaskBezeichnung=Termin mit Revisor | TaskPrio=3 | TaskStatus=1 | TaskDetails=Revisor treffen im Café | TaskTerminBis=2020-03-10 | TaskMitgliedId=7 | TaskTrackChangeUser=64-Muster Felix-Talents | TaskTrackChangeTimestamp=2020-01-23 08:17:20 | 
+new values in mysql-db: | TaskId=26 | TaskBezeichnung=Termin mit Revisor | TaskPrio=3 | TaskStatus=3 | TaskDetails=Revisor treffen im Café | TaskTerminBis=2020-03-10 | TaskMitgliedId=7 | TaskTrackChangeUser=64-Muster Felix-Talents | TaskTrackChangeTimestamp=2020-01-23 08:56:01 | 
+***** Log#136 --> E N D E
+
+***** Log#137 --> 2020-01-23 09:41:05.481 durch User: 1-Kämpf Bernhard-Talents | [B@7523a112 | Europe/Zurich | 
+Vorgang: Mitglied #129 LOESCHEN
+old values in mysql-db: | KontaktId=129 | KontaktNachname=Bachmann | KontaktVorname=Bruno | KontaktAdresse=Teststrasse 7 | KontaktAdresszusatz=null | KontaktPLZ=8004 | KontaktOrt=Zürich | KontaktGeburtsdatum=1950-03-01 | KontaktAnredeStatus=1 | KontaktEintrittsdatum=2020-01-01 | KontaktAustrittsdatum=null | KontaktKategorieA=2 | KontaktKategorieB=2 | KontaktIstMitglied=1 | KontaktIstVorstandsmitglied=0 | KontaktBemerkungen=null | KontaktMobile=+41 79 239 25 38 | KontaktTelefon=null | KontaktEMail=bruno.bachmann@gmail.com | KontaktEMailII=null | KontaktTrackChangeUsr=#1 Kämpf Bernhard (Talents|*Vorstand*) | KontaktTrackChangeTimestamp=2020-01-23 08:43:52 | 
+***** Log#137 --> E N D E
+
+***** Log#138 --> 2020-01-23 09:41:55.437 durch User: 1-Kämpf Bernhard-Talents | [B@7523a112 | Europe/Zurich | 
+Vorgang: Mitglied #129 UPDATE
+old values in mysql-db: | new values in mysql-db: | 
+***** Log#138 --> E N D E
+
+***** Log#139 --> 2020-01-23 10:08:41.598 durch User: 1-Kämpf Bernhard-Talents | [B@6d0f1844 | Europe/Zurich | 
+Vorgang: Mitglied #89 UPDATE
+old values in mysql-db: | KontaktId=89 | KontaktNachname=Bonetti | KontaktVorname=Silvia | KontaktAdresse=Meisenweg 4 | KontaktAdresszusatz=null | KontaktPLZ=3423 | KontaktOrt=Ersigen | KontaktGeburtsdatum=1967-01-14 | KontaktAnredeStatus=2 | KontaktEintrittsdatum=2010-07-07 | KontaktAustrittsdatum=null | KontaktKategorieA=0 | KontaktKategorieB=2 | KontaktIstMitglied=1 | KontaktIstVorstandsmitglied=0 | KontaktBemerkungen=null | KontaktMobile=+41 78 345 33 22 | KontaktTelefon=null | KontaktEMail=null | KontaktEMailII=null | KontaktTrackChangeUsr=#64 Muster Felix (Kids|*Vorstand*) | KontaktTrackChangeTimestamp=2020-01-13 12:19:25 | 
+new values in mysql-db: | KontaktId=89 | KontaktNachname=Bonetti | KontaktVorname=Silvia | KontaktAdresse=Meisenweg 4 | KontaktAdresszusatz=null | KontaktPLZ=3423 | KontaktOrt=Ersigen | KontaktGeburtsdatum=1967-01-14 | KontaktAnredeStatus=2 | KontaktEintrittsdatum=2010-07-07 | KontaktAustrittsdatum=null | KontaktKategorieA=0 | KontaktKategorieB=2 | KontaktIstMitglied=1 | KontaktIstVorstandsmitglied=0 | KontaktBemerkungen=null | KontaktMobile=+41 78 345 33 22 | KontaktTelefon=null | KontaktEMail=null | KontaktEMailII=null | KontaktTrackChangeUsr=#1 Kämpf Bernhard (Talents|*Vorstand*) | KontaktTrackChangeTimestamp=2020-01-23 10:08:34 | 
+***** Log#139 --> E N D E
+
+***** Log#140 --> 2020-01-24 08:11:27.232 durch User: 1-Kämpf Bernhard-Talents | [B@74d4dabf | Europe/Zurich | 
+Vorgang: Task #19 UPDATE
+old values in mysql-db: | TaskId=19 | TaskBezeichnung=neues Konto eröffnen | TaskPrio=1 | TaskStatus=1 | TaskDetails=Konto für neue Sammelaktion eröffnen bei der ZKB | TaskTerminBis=2020-05-01 | TaskMitgliedId=92 | TaskTrackChangeUser=64-Muster Felix-Talents | TaskTrackChangeTimestamp=2020-01-17 20:33:45 | 
+new values in mysql-db: | TaskId=19 | TaskBezeichnung=neues Konto eröffnen | TaskPrio=1 | TaskStatus=3 | TaskDetails=Konto für neue Sammelaktion eröffnen bei der ZKB | TaskTerminBis=2020-05-01 | TaskMitgliedId=92 | TaskTrackChangeUser=1-Kämpf Bernhard-Talents | TaskTrackChangeTimestamp=2020-01-24 08:11:20 | 
+***** Log#140 --> E N D E
+
+***** Log#141 --> 2020-01-24 08:11:54.482 durch User: 1-Kämpf Bernhard-Talents | [B@74d4dabf | Europe/Zurich | 
+Vorgang: Task #26 UPDATE
+old values in mysql-db: | TaskId=26 | TaskBezeichnung=Termin mit Revisor | TaskPrio=3 | TaskStatus=3 | TaskDetails=Revisor treffen im Café | TaskTerminBis=2020-03-10 | TaskMitgliedId=7 | TaskTrackChangeUser=64-Muster Felix-Talents | TaskTrackChangeTimestamp=2020-01-23 08:56:01 | 
+new values in mysql-db: | TaskId=26 | TaskBezeichnung=Termin mit Revisor | TaskPrio=3 | TaskStatus=1 | TaskDetails=Revisor treffen im Café | TaskTerminBis=2020-03-10 | TaskMitgliedId=7 | TaskTrackChangeUser=1-Kämpf Bernhard-Talents | TaskTrackChangeTimestamp=2020-01-24 08:11:47 | 
+***** Log#141 --> E N D E
+
+***** Log#142 --> 2020-01-24 08:36:04.366 durch User: 1-Kämpf Bernhard-Talents | [B@6a04cd7d | Europe/Zurich | 
+Vorgang: Task #30 UPDATE
+old values in mysql-db: | TaskId=30 | TaskBezeichnung=Geburtstagsgeschenk organisieren | TaskPrio=1 | TaskStatus=1 | TaskDetails=für Präsidenten | TaskTerminBis=2020-04-04 | TaskMitgliedId=100 | TaskTrackChangeUser=Muster Felix | TaskTrackChangeTimestamp=2020-01-08 18:22:49 | 
+new values in mysql-db: | TaskId=30 | TaskBezeichnung=Geburtstagsgeschenk organisieren | TaskPrio=1 | TaskStatus=3 | TaskDetails=für Präsidenten | TaskTerminBis=2020-04-04 | TaskMitgliedId=100 | TaskTrackChangeUser=1-Kämpf Bernhard-Talents | TaskTrackChangeTimestamp=2020-01-24 08:35:58 | 
+***** Log#142 --> E N D E
+
+***** Log#143 --> 2020-01-24 08:36:29.741 durch User: 1-Kämpf Bernhard-Talents | [B@6a04cd7d | Europe/Zurich | 
+Vorgang: Task #29 UPDATE
+old values in mysql-db: | TaskId=29 | TaskBezeichnung=Budget fertigstellen | TaskPrio=1 | TaskStatus=3 | TaskDetails=an Vorstand schicken vor der nächsten Sitzung | TaskTerminBis=2020-02-29 | TaskMitgliedId=13 | TaskTrackChangeUser=64-Muster Felix-Talents | TaskTrackChangeTimestamp=2020-01-17 19:11:20 | 
+new values in mysql-db: | TaskId=29 | TaskBezeichnung=Budget fertigstellen | TaskPrio=1 | TaskStatus=1 | TaskDetails=an Vorstand schicken vor der nächsten Sitzung | TaskTerminBis=2020-02-29 | TaskMitgliedId=13 | TaskTrackChangeUser=1-Kämpf Bernhard-Talents | TaskTrackChangeTimestamp=2020-01-24 08:36:23 | 
+***** Log#143 --> E N D E
+
+***** Log#144 --> 2020-01-24 15:44:04.911 durch User: 1-Kämpf Bernhard-Talents | [B@77f5c9e8 | Europe/Zurich | 
+Vorgang: Mitglied #4 UPDATE
+old values in mysql-db: | KontaktId=4 | KontaktNachname=Bruderer | KontaktVorname=Marie | KontaktAdresse=Hauptstrasse 99 | KontaktAdresszusatz=c/o Kathrin Bruderer | KontaktPLZ=8230 | KontaktOrt=Wolfsberg | KontaktGeburtsdatum=1985-11-25 | KontaktAnredeStatus=2 | KontaktEintrittsdatum=2019-11-01 | KontaktAustrittsdatum=null | KontaktKategorieA=2 | KontaktKategorieB=1 | KontaktIstMitglied=1 | KontaktIstVorstandsmitglied=0 | KontaktBemerkungen=null | KontaktMobile=+41 76 564 66 77 | KontaktTelefon=null | KontaktEMail=Marie.Bruderer@gmail.com | KontaktEMailII=null | KontaktTrackChangeUsr=bernhardkaempf | KontaktTrackChangeTimestamp=2019-12-11 06:39:13 | 
+new values in mysql-db: | KontaktId=4 | KontaktNachname=Bruderer | KontaktVorname=Marie | KontaktAdresse=Hauptstrasse 99 | KontaktAdresszusatz=c/o Kathrin Bruderer | KontaktPLZ=8230 | KontaktOrt=Wolfsberg | KontaktGeburtsdatum=1985-11-25 | KontaktAnredeStatus=2 | KontaktEintrittsdatum=2019-11-01 | KontaktAustrittsdatum=null | KontaktKategorieA=2 | KontaktKategorieB=1 | KontaktIstMitglied=1 | KontaktIstVorstandsmitglied=0 | KontaktBemerkungen=null | KontaktMobile=+41 76 564 66 77 | KontaktTelefon=null | KontaktEMail=Marie.Bruderer@gmail.com | KontaktEMailII=null | KontaktTrackChangeUsr=#1 Kämpf Bernhard (Talents|*Vorstand*) | KontaktTrackChangeTimestamp=2020-01-24 15:43:56 | 
+***** Log#144 --> E N D E
+
+***** Log#145 --> 2020-01-24 20:06:40.415 durch User: 1-Kämpf Bernhard-Talents | [B@374d0c0b | Europe/Zurich | 
+Vorgang: Mitglied #130 UPDATE
+old values in mysql-db: | KontaktId=130 | KontaktNachname=Apple | KontaktVorname=Steve "Jobs" | KontaktAdresse=null | KontaktAdresszusatz=null | KontaktPLZ=null | KontaktOrt=null | KontaktGeburtsdatum=1900-01-01 | KontaktAnredeStatus=null | KontaktEintrittsdatum=2020-01-24 | KontaktAustrittsdatum=null | KontaktKategorieA=null | KontaktKategorieB=null | KontaktIstMitglied=1 | KontaktIstVorstandsmitglied=0 | KontaktBemerkungen=null | KontaktMobile=null | KontaktTelefon=null | KontaktEMail=null | KontaktEMailII=null | KontaktTrackChangeUsr=Muster Felix | KontaktTrackChangeTimestamp=2020-01-24 20:05:43 | 
+new values in mysql-db: | KontaktId=130 | KontaktNachname=Apple | KontaktVorname=Steve "Jobs" | KontaktAdresse=null | KontaktAdresszusatz=null | KontaktPLZ=8400 | KontaktOrt=null | KontaktGeburtsdatum=1900-01-01 | KontaktAnredeStatus=1 | KontaktEintrittsdatum=2020-01-24 | KontaktAustrittsdatum=null | KontaktKategorieA=2 | KontaktKategorieB=2 | KontaktIstMitglied=1 | KontaktIstVorstandsmitglied=0 | KontaktBemerkungen=null | KontaktMobile=null | KontaktTelefon=null | KontaktEMail=null | KontaktEMailII=null | KontaktTrackChangeUsr=#1 Kämpf Bernhard (Talents|*Vorstand*) | KontaktTrackChangeTimestamp=2020-01-24 20:06:30 | 
+***** Log#145 --> E N D E
+
+***** Log#146 --> 2020-01-24 20:09:48.138 durch User: 1-Kämpf Bernhard-Talents | [B@374d0c0b | Europe/Zurich | 
+Vorgang: Task #26 UPDATE
+old values in mysql-db: | TaskId=26 | TaskBezeichnung=Termin mit Revisor | TaskPrio=3 | TaskStatus=1 | TaskDetails=Revisor treffen im Café | TaskTerminBis=2020-03-10 | TaskMitgliedId=7 | TaskTrackChangeUser=1-Kämpf Bernhard-Talents | TaskTrackChangeTimestamp=2020-01-24 08:11:47 | 
+new values in mysql-db: | TaskId=26 | TaskBezeichnung=Termin mit Revisor | TaskPrio=3 | TaskStatus=3 | TaskDetails=Revisor treffen im Café | TaskTerminBis=2020-03-10 | TaskMitgliedId=7 | TaskTrackChangeUser=1-Kämpf Bernhard-Talents | TaskTrackChangeTimestamp=2020-01-24 20:09:38 | 
+***** Log#146 --> E N D E

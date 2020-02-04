@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+
 <BorderPane fx:id="dashBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="space.cloud4b.verein.view.mainframe.MainFrameController">
    <top>
       <VBox prefHeight="88.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -19,17 +22,12 @@
                      </items></Menu>
                   <Menu fx:id="infoMenu" mnemonicParsing="false" text="Vereinsmanager">
                      <items>
-                         <MenuItem fx:id="setupMenuItem" mnemonicParsing="false" onAction="#handleEinstellungen"
-                                   text="Einstellungen"/>
-                         <MenuItem fx:id="benutzerMenuItem" mnemonicParsing="false" onAction="#handleBenutzer"
-                                   text="Benutzer"/>
-                         <MenuItem fx:id="statusMenuItem" mnemonicParsing="false" onAction="#handleStatusElemente"
-                                   text="Statuselemente"/>
-                         <MenuItem fx:id="logFileMenuItem" mnemonicParsing="false" onAction="#handleShowLogFile"
-                                   text="LogFile"/>
-                         <MenuItem fx:id="infoMenuItem" mnemonicParsing="false" onAction="#showInfo" text="Info"/>
-                         <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleBeenden"
-                                   text="beenden"/>
+                         <MenuItem fx:id="setupMenuItem" mnemonicParsing="false" onAction="#handleEinstellungen" text="Einstellungen" />
+                         <MenuItem fx:id="benutzerMenuItem" mnemonicParsing="false" onAction="#handleBenutzer" text="Benutzer" />
+                         <MenuItem fx:id="statusMenuItem" mnemonicParsing="false" onAction="#handleStatusElemente" text="Statuselemente" />
+                         <MenuItem fx:id="logFileMenuItem" mnemonicParsing="false" onAction="#handleShowLogFile" text="LogFile" />
+                         <MenuItem fx:id="infoMenuItem" mnemonicParsing="false" onAction="#showInfo" text="Info" />
+                         <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleBeenden" text="beenden" />
                      </items></Menu>
               </menus>
                <rotationAxis>
@@ -66,14 +64,10 @@
                   <menus>
                       <Menu fx:id="mitgliederMenu" mnemonicParsing="false" text="Mitglieder">
                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#handleMitgliederbereich"
-                                        text="Mitgliederbereich öffnen"/>
-                              <MenuItem mnemonicParsing="false" onAction="#handleExportMitglieder"
-                                        text="nach Excel exportieren.."/>
-                              <MenuItem mnemonicParsing="false" onAction="#handleCreatePDF"
-                                        text="Mitgliederliste (PDF)"/>
-                              <MenuItem mnemonicParsing="false" onAction="#handleRanglistePDFMenuItem"
-                                        text="Rangliste (PDF)"/>
+                              <MenuItem mnemonicParsing="false" onAction="#handleMitgliederbereich" text="Mitgliederbereich öffnen" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleExportMitglieder" text="nach Excel exportieren.." />
+                              <MenuItem mnemonicParsing="false" onAction="#handleCreatePDF" text="Mitgliederliste (PDF)" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleRanglistePDFMenuItem" text="Rangliste (PDF)" />
                           </items>
                       </Menu>
               </menus>
@@ -89,7 +83,7 @@
                       <MenuItem mnemonicParsing="false" onAction="#handelKalenderansicht" text="Monatsansicht" />
                         <MenuItem mnemonicParsing="false" onAction="#handleDoodle" text="Doodle" />
                       <MenuItem mnemonicParsing="false" onAction="#handleKontrolle" text="Präsenzkontrolle" />
-                      <MenuItem mnemonicParsing="false" onAction="#handleTerminePDFMenuItem" text="Agenda als PDF"/>
+                      <MenuItem mnemonicParsing="false" onAction="#handleTerminePDFMenuItem" text="Agenda als PDF" />
                   </items>
                 </Menu>
               </menus>
@@ -101,8 +95,8 @@
                  <menus>
                      <Menu fx:id="kontrolleMenu" mnemonicParsing="false" text="Aufgaben (Tasks)">
                          <items>
-                             <MenuItem mnemonicParsing="false" onAction="#handleTask" text="Tasks"/>
-                             <MenuItem mnemonicParsing="false" onAction="#handleTaskList" text="Taskliste"/>
+                             <MenuItem mnemonicParsing="false" onAction="#handleTask" text="Tasks" />
+                             <MenuItem mnemonicParsing="false" onAction="#handleTaskList" text="Taskliste" />
                          </items>
                      </Menu>
                  </menus>
@@ -124,18 +118,27 @@
                      <Insets top="10.0" />
                  </VBox.margin>
             </MenuBar>
+            <MenuBar id="mBarFinanzen">
+              <menus>
+                <Menu fx:id="finanzMenu" mnemonicParsing="false" text="Finanzen">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#handleHauptjournal" text="Hauptjournal" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleKontenplan" text="Kontenplan" />
+                  </items>
+                </Menu>
+              </menus>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </MenuBar>
              <MenuBar id="mBar05">
               <menus>
                   <Menu fx:id="exportMenu" mnemonicParsing="false" text="Export">
                       <items>
-                          <MenuItem fx:id="mitgliederExcelMenuItem" mnemonicParsing="false"
-                                    onAction="#handleExportMitglieder" text="Mitgliederliste (Excel)"/>
-                          <MenuItem fx:id="mitgliederPDFMenuItem" mnemonicParsing="false" onAction="#handleCreatePDF"
-                                    text="Mitgliederliste (PDF)"/>
-                          <MenuItem fx:id="terminePDFMenuItem" mnemonicParsing="false"
-                                    onAction="#handleTerminePDFMenuItem" text="Agenda (PDF)"/>
-                          <MenuItem mnemonicParsing="false" onAction="#handleRanglistePDFMenuItem"
-                                    text="Rangliste (PDF)"/>
+                          <MenuItem fx:id="mitgliederExcelMenuItem" mnemonicParsing="false" onAction="#handleExportMitglieder" text="Mitgliederliste (Excel)" />
+                          <MenuItem fx:id="mitgliederPDFMenuItem" mnemonicParsing="false" onAction="#handleCreatePDF" text="Mitgliederliste (PDF)" />
+                          <MenuItem fx:id="terminePDFMenuItem" mnemonicParsing="false" onAction="#handleTerminePDFMenuItem" text="Agenda (PDF)" />
+                          <MenuItem mnemonicParsing="false" onAction="#handleRanglistePDFMenuItem" text="Rangliste (PDF)" />
                       </items>
                   </Menu>
               </menus>
@@ -145,10 +148,10 @@
              </MenuBar>
               <Label onMouseClicked="#resetMeldungen" text="Meldungen">
                   <VBox.margin>
-                      <Insets left="10.0" top="20.0"/>
+                      <Insets left="10.0" top="20.0" />
                   </VBox.margin>
                   <tooltip>
-                      <Tooltip text="anklicken um Meldungen zu löschen"/>
+                      <Tooltip text="anklicken um Meldungen zu löschen" />
                   </tooltip>
               </Label>
               <ListView fx:id="meldungAusgabeListView" cacheShape="false" centerShape="false" nodeOrientation="LEFT_TO_RIGHT" scaleShape="false">

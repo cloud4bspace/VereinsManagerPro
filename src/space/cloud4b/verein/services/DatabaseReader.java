@@ -6,6 +6,7 @@ import javafx.scene.chart.PieChart;
 import org.apache.commons.codec.digest.DigestUtils;
 import space.cloud4b.verein.model.verein.adressbuch.Kontakt;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
+import space.cloud4b.verein.model.verein.finanzen.*;
 import space.cloud4b.verein.model.verein.kalender.Jubilaeum;
 import space.cloud4b.verein.model.verein.kalender.Teilnehmer;
 import space.cloud4b.verein.model.verein.kalender.Termin;
@@ -16,6 +17,7 @@ import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.connection.MysqlConnection;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.*;
 import java.time.LocalDate;
@@ -1436,5 +1438,152 @@ public abstract class DatabaseReader {
         return mitgliedName;
     }
 
+    /**
+     * ermittelt die Buchungsperioden und gibt diese zurück
+     * @return die Buchungsperioden als ArrayList<Year>
+     */
+    public static ArrayList<Year> getBuchungsperioden() {
+        ArrayList<Year> buchungsPerioden = new ArrayList<>();
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT Buchungsperiode FROM bhBelegkopf GROUP BY Buchungsperiode " +
+                    "ORDER BY Buchungsperiode ASC";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                buchungsPerioden.add(Year.of(rs.getInt("Buchungsperiode")));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return buchungsPerioden;
+        }
+    }
 
+    /**
+     * ermittelt die Anzahl Belege einer Buchungsperiode
+     * @param jahr Buchungsperiode als Year
+     * @return Anzahl Belege als int
+     */
+    public static int getAnzBelege(Year jahr) {
+        int anzBelege = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) AS AnzahlBelege FROM `bhBelegkopf` WHERE Buchungsperiode='" + jahr + "'";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                anzBelege = rs.getInt("AnzahlBelege");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return anzBelege;
+        }
+    }
+
+    /**
+     * ermittelt die Belege einer Periode und gibt diese als Liste zurück
+     * @param periode
+     * @return Belegliste als ArrayList<Belegkopf>
+     */
+    public static ArrayList<Belegkopf> getBelegliste(Buchungsperiode periode) {
+        ArrayList<Belegkopf> belegListe = new ArrayList<>();
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM bhBelegkopf WHERE Buchungsperiode='" + periode.getJahr() + "'";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                belegListe.add(new Belegkopf(rs.getInt("BelegkopfId")
+                        , rs.getInt("BelegNummer")
+                        , rs.getDate("Belegdatum").toLocalDate()
+                        , rs.getDate("Buchungsdatum").toLocalDate()
+                        , periode
+                        , rs.getString("BelegkopfText")
+                        , new Betrag(new BigDecimal(rs.getDouble("Betrag"))
+                            , Currency.getInstance(rs.getString("BelegWaehrung"))
+                            ,new BigDecimal(rs.getDouble("BetragCHF")))));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return belegListe;
+        }
+    }
+
+    /**
+     * ermittelt die Buchungspositionen zu einem Beleg und gibt diese als Liste zurück
+     * @param belegkopf der Belegkopf
+     * @return liste der Buchungspositionen als ArrayList<Belegposition>
+     */
+    public static ArrayList<Belegposition> getBelegPositionen(Belegkopf belegkopf) {
+        ArrayList<Belegposition> belegPositionen = new ArrayList<>();
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM bhBelegposition WHERE BelegkopfId=" + belegkopf.getBelegkopfId()
+                    + " ORDER BY PositionsNummer ASC";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                belegPositionen.add(new Belegposition(
+                        rs.getInt("BelegpositionId")
+                , rs.getInt("PositionsNummer")
+                , rs.getString("SollHaben").toCharArray()[0]
+                , new Konto(rs.getInt("Konto"), belegkopf.getBuchungsPeriode())
+                , new Betrag(new BigDecimal(rs.getDouble("Betrag")), Currency.getInstance(rs.getString("Waehrung")), new BigDecimal(rs.getDouble("BetragCHF")))
+                , rs.getString("PositionsText")));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return belegPositionen;
+        }
+    }
+
+    public static ArrayList<Konto> getKontenplan(Buchungsperiode periode) {
+        ArrayList<Konto> kontenPlan = new ArrayList<>();
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+
+            String query = "SELECT * FROM bhKontenplan WHERE GueltigAb <= '" + periode.getJahr() + "-12-31' " +
+                    "AND GueltigBis >= '" + periode.getJahr() + "-01-01'";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                kontenPlan.add(new Konto(rs.getInt("Kontonummer"), periode));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return kontenPlan;
+        }
+    }
+
+    public static String getKontobezeichnung(int konto, Buchungsperiode periode) {
+        String kontoBezeichnung = new String();
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+
+            String query = "SELECT * FROM bhKontenplan WHERE GueltigAb <= '" + periode.getJahr() + "-12-31' " +
+                    "AND GueltigBis >= '" + periode.getJahr() + "-01-01' AND Kontonummer = " + konto;
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                kontoBezeichnung = rs.getString("Kontobezeichnung");
+
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return kontoBezeichnung;
+        }
+
+    }
+
+    public static int getKontoId(int kontoNummer, Buchungsperiode periode) {
+        int kontoId = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+
+            String query = "SELECT * FROM bhKontenplan WHERE GueltigAb <= '" + periode.getJahr() + "-12-31' " +
+                    "AND GueltigBis >= '" + periode.getJahr() + "-01-01' AND Kontonummer = " + kontoNummer;
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                kontoId = rs.getInt("KontoId");
+
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return kontoId;
+        }
+    }
 }
