@@ -16,6 +16,9 @@ import javafx.stage.Window;
 import space.cloud4b.verein.controller.*;
 import space.cloud4b.verein.einstellungen.Einstellung;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
+import space.cloud4b.verein.model.verein.finanzen.Belegkopf;
+import space.cloud4b.verein.model.verein.finanzen.Belegposition;
+import space.cloud4b.verein.model.verein.finanzen.Konto;
 import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.DatabaseReader;
@@ -26,8 +29,7 @@ import space.cloud4b.verein.view.chart.TaskStatistics01Controller;
 import space.cloud4b.verein.view.dashboard.DashBoardController;
 import space.cloud4b.verein.view.einstellungen.EinstellungenViewController;
 import space.cloud4b.verein.view.einstellungen.StatusViewController;
-import space.cloud4b.verein.view.finanzen.HauptjournalViewController;
-import space.cloud4b.verein.view.finanzen.KontenplanViewController;
+import space.cloud4b.verein.view.finanzen.*;
 import space.cloud4b.verein.view.logging.LogViewController;
 import space.cloud4b.verein.view.login.LoginViewController;
 import space.cloud4b.verein.view.login.SignupViewController;
@@ -59,6 +61,7 @@ public class MainApp extends Application {
     private TaskController taskController;
     private BenutzerController benutzerController;
     private StatusController statusController;
+    private FinanzController finanzController;
 
     public MainApp() {
         /* Erstellung der Datenbanktabelle aus Template wird normalerweise nicht
@@ -198,6 +201,8 @@ public class MainApp extends Application {
             this.benutzerController = new BenutzerController();
             this.ranglisteController = new RanglisteController(this);
             this.statusController = new StatusController();
+            this.finanzController = new FinanzController(this);
+            //finanzController.setMainApp(this);
 
             initMainFrame(); // den MainFrame laden mit den Benutzermenus
             showDashboard(); // das Dashboard in der Mitte anzeigen
@@ -742,8 +747,10 @@ public class MainApp extends Application {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/finanzen/HauptjournalView.fxml"));
-            AnchorPane page = loader.load();
 
+            AnchorPane page = loader.load();
+            HauptjournalViewController controller = loader.getController();
+            controller.setMainApp(this);
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Finanzen");
@@ -752,14 +759,34 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
             mainFrame.setCenter(page);
-            HauptjournalViewController controller = loader.getController();
-            controller.setMainApp(this);
 
         } catch (IOException e) {
             e.printStackTrace();
-
         }
+    }
 
+    public void showBelegkopfEdit_old(Belegkopf beleg) {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/finanzen/BelegView.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Beleg verbuchen");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            BelegViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setBelegkopf(beleg);
+            controller.setStage(dialogStage);
+            dialogStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void showKontenplanView() {
@@ -779,6 +806,109 @@ public class MainApp extends Application {
             mainFrame.setCenter(page);
             KontenplanViewController controller = loader.getController();
             controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showBelegkopfEdit(Belegkopf beleg) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/finanzen/BelegView.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Beleganzeige");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            mainFrame.setCenter(page);
+            BelegViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setBelegkopf(beleg);
+            controller.setStage(dialogStage);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+    public void showKontoTreeView() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/finanzen/KontoTreeView.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Saldobilanz");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            mainFrame.setCenter(page);
+            KontoTreeViewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    public FinanzController getFinanzController() {
+        return this.finanzController;
+    }
+
+    public void showBelegpositionEdit(Belegposition position, Stage fromDialogStage, Belegkopf belegkopf) {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/finanzen/PositionView.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Belegposition");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            PositionViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setBelegposition(position, belegkopf);
+            controller.setStage(dialogStage);
+            controller.setFromStage(fromDialogStage);
+            dialogStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showKontoauszug(Konto konto) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/finanzen/KontoAuszugView.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Kontoauszug");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            mainFrame.setCenter(page);
+            KontoAuszugViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setKonto(konto);
+            controller.setStage(dialogStage);
 
         } catch (IOException e) {
             e.printStackTrace();

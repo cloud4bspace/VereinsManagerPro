@@ -6,13 +6,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="space.cloud4b.verein.view.finanzen.KontenplanViewController">
    <children>
-      <TableView fx:id="kontenplanTabelle" layoutX="109.0" layoutY="129.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TableView fx:id="kontenplanTabelle" layoutX="109.0" layoutY="129.0" prefHeight="400.0" prefWidth="600.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
           <TableColumn fx:id="kontoNummerSpalte" prefWidth="75.0" text="Kontonummer" />
-          <TableColumn fx:id="kontoBezeichnungSpalte" prefWidth="300.0" text="Kontobezeichnung" />
+          <TableColumn fx:id="kontoBezeichnungSpalte" prefWidth="200.0" text="Kontobezeichnung" />
+            <TableColumn fx:id="kontoSaldoSpalte" minWidth="100.0" prefWidth="-1.0" text="Saldo CHF" />
+            <TableColumn fx:id="kontoUmgiederungSpalte" prefWidth="75.0" text="Umgliederung" />
+            <TableColumn fx:id="kontoKlasseSpalte" prefWidth="200.0" text="Klasse" />
+            <TableColumn fx:id="kontoHauptgruppeSpalte" prefWidth="200.0" text="Hauptgruppe" />
+            <TableColumn fx:id="kontoGruppeSpalte" prefWidth="200.0" text="Gruppe" />
         </columns>
       </TableView>
    </children>

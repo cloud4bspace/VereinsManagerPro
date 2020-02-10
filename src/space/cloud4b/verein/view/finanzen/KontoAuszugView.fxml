@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="space.cloud4b.verein.view.finanzen.KontoAuszugViewController">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" text="zurück" />
+                  <ComboBox fx:id="kontoComboBox" onAction="#setKontoComboBoxAction" prefWidth="150.0">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </ComboBox>
+               </children>
+            </HBox>
+            <TableView fx:id="kontoAuszugTabelle" layoutX="106.0" layoutY="72.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                <TableColumn fx:id="belegNummerColumn" editable="false" prefWidth="75.0" sortable="false" text="Beleg#" />
+                <TableColumn fx:id="belegDatumColumn" editable="false" prefWidth="105.0" sortable="false" text="Datum" />
+                  <TableColumn fx:id="belegTextColumn" editable="false" minWidth="100.0" prefWidth="250.0" sortable="false" text="Text" />
+                  <TableColumn fx:id="sollHabenColumn" editable="false" prefWidth="35.0" sortable="false" text="SH" />
+                  <TableColumn fx:id="sollBetragCHFColumn" editable="false" prefWidth="123.0" sortable="false" text="Solll CHF" />
+                  <TableColumn fx:id="habenBetragCHFColumn" editable="false" prefWidth="123.0" sortable="false" text="Haben CHF" />
+                  <TableColumn fx:id="saldoCHFColumn" editable="false" prefWidth="123.0" sortable="false" text="Saldo CHF" />
+              </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

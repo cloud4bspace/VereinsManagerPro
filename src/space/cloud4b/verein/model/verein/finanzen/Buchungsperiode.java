@@ -4,11 +4,13 @@ import space.cloud4b.verein.services.DatabaseReader;
 
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Buchungsperiode {
 
     private Year periode;
     private ArrayList<Belegkopf> hauptJournal;
+    private HashMap<Integer, Konto> kontenPlanHashMap;
     private ArrayList<Konto> kontenPlan;
 
     public Buchungsperiode(Year periode) {
@@ -16,19 +18,23 @@ public class Buchungsperiode {
         this.periode = periode;
         hauptJournal = new ArrayList<>();
         kontenPlan = new ArrayList<>();
-        fillBelegliste();
         fillKontenPlan();
+        fillBelegliste();
     }
 
     public String toString() {
         return "Periode " + periode.getValue();
     }
     public void fillBelegliste() {
-        this.hauptJournal = DatabaseReader.getBelegliste(this);
+        this.hauptJournal = DatabaseReader.getBelegliste(this, kontenPlanHashMap);
     }
 
     public void fillKontenPlan() {
         this.kontenPlan = DatabaseReader.getKontenplan(this);
+        kontenPlanHashMap = new HashMap<>();
+        for(Konto konto : kontenPlan) {
+            kontenPlanHashMap.put(konto.getKontoNummer(), konto);
+        }
     }
 
     public int getJahr() {
@@ -49,4 +55,9 @@ public class Buchungsperiode {
     public ArrayList<Konto> getKontenplan() {
         return this.kontenPlan;
     }
+
+    public HashMap<Integer, Konto> getKontenPlanHashMap() {
+        return this.kontenPlanHashMap;
+    }
+
 }

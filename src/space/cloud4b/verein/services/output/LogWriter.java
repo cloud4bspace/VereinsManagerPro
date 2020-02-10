@@ -1,6 +1,8 @@
 package space.cloud4b.verein.services.output;
 
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
+import space.cloud4b.verein.model.verein.finanzen.Belegkopf;
+import space.cloud4b.verein.model.verein.finanzen.Belegposition;
 import space.cloud4b.verein.model.verein.kalender.Termin;
 import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.model.verein.user.User;
@@ -71,6 +73,8 @@ public abstract class LogWriter {
         Mitglied mitglied = null;
         Termin termin = null;
         Task task = null;
+        Belegposition belegposition = null;
+        Belegkopf belegkopf = null;
         String query = null;
         try (FileWriter fw = new FileWriter("ressources/files/logfiles/logfile.txt", true);
              BufferedWriter bw = new BufferedWriter(fw);
@@ -96,6 +100,16 @@ public abstract class LogWriter {
                 task = (Task) object;
                 query = "SELECT * FROM usr_web116_5.task WHERE TaskId=" + task.getTaskId();
                 out.println("Vorgang: Task #" + task.getTaskId() + " UPDATE");
+            }
+            if(object instanceof Belegposition) {
+                belegposition = (Belegposition) object;
+                query = "SELECT * FROM bhBelegposition WHERE BelegpositionId=" + belegposition.getPositionId();
+                out.println("Vorgang: Belegposition #" + belegposition.getPositionId() + " UPDATE");
+            }
+            if(object instanceof Belegkopf) {
+                belegkopf = (Belegkopf) object;
+                query = "SELECT * FROM bhBelegkopf WHERE BelegkopfId=" + belegkopf.getBelegkopfId();
+                out.println("Vorgang: Belegkopf #" + belegkopf.getBelegkopfId() + " UPDATE");
             }
             out.print("old values in mysql-db: | ");
 
@@ -129,6 +143,8 @@ public abstract class LogWriter {
         Mitglied mitglied = null;
         Termin termin = null;
         Task task = null;
+        Belegposition belegposition = null;
+        Belegkopf belegkopf = null;
         String query = null;
         try (FileWriter fw = new FileWriter("ressources/files/logfiles/logfile.txt", true);
              BufferedWriter bw = new BufferedWriter(fw);
@@ -144,6 +160,16 @@ public abstract class LogWriter {
             if (object instanceof Task) {
                 task = (Task) object;
                 query = "SELECT * FROM usr_web116_5.task WHERE TaskId=" + task.getTaskId();
+            }
+            if(object instanceof Belegposition) {
+                belegposition = (Belegposition) object;
+                query = "SELECT * FROM bhBelegposition WHERE BelegpositionId=" + belegposition.getPositionId();
+                out.println("Vorgang: Belegposition #" + belegposition.getPositionId() + " UPDATE");
+            }
+            if(object instanceof Belegkopf) {
+                belegkopf = (Belegkopf) object;
+                query = "SELECT * FROM bhBelegkopf WHERE BelegkopfId=" + belegkopf.getBelegkopfId();
+                out.println("Vorgang: Belegkopf #" + belegkopf.getBelegkopfId() + " UPDATE");
             }
             out.print("new values in mysql-db: | ");
 
@@ -178,6 +204,8 @@ public abstract class LogWriter {
         Mitglied mitglied = null;
         Termin termin = null;
         Task task = null;
+        Belegposition belegposition = null;
+        Belegkopf belegkopf = null;
         String query = null;
         try (FileWriter fw = new FileWriter("ressources/files/logfiles/logfile.txt", true);
              BufferedWriter bw = new BufferedWriter(fw);
@@ -203,6 +231,16 @@ public abstract class LogWriter {
                 task = (Task) object;
                 query = "SELECT * FROM usr_web116_5.task WHERE TaskId=" + task.getTaskId();
                 out.println("Vorgang: Task #" + task.getTaskId() + " LOESCHEN");
+            }
+            if(object instanceof Belegposition) {
+                belegposition = (Belegposition) object;
+                query = "SELECT * FROM bhBelegposition WHERE BelegpositionId=" + belegposition.getPositionId();
+                out.println("Vorgang: Belegposition #" + belegposition.getPositionId() + " LOESCHEN");
+            }
+            if(object instanceof Belegkopf) {
+                belegkopf = (Belegkopf) object;
+                query = "SELECT * FROM bhBelegkopf WHERE BelegkopfId=" + belegkopf.getBelegkopfId();
+                out.println("Vorgang: Belegkopf #" + belegkopf.getBelegkopfId() + " LOESCHEN");
             }
             out.print("old values in mysql-db: | ");
 
@@ -260,6 +298,14 @@ public abstract class LogWriter {
             if (klasse == "Task") {
                 query = "SELECT * FROM usr_web116_5.task WHERE TaskId=" + objectKey;
                 out.println("Vorgang: Task #" + objectKey + " NEU");
+            }
+            if(klasse == "Belegposition") {
+                query = "SELECT * FROM bhBelegposition WHERE BelegpositionId=" + objectKey;
+                out.println("Vorgang: Belegposition #" + objectKey + " NEU");
+            }
+            if(klasse == "Belegkopf") {
+                query = "SELECT * FROM bhBelegkopf WHERE BelegkopfId=" + objectKey;
+                out.println("Vorgang: Belegkopf #" + objectKey + " NEU");
             }
             out.print("neu values in mysql-db: | ");
 

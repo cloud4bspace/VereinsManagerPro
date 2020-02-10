@@ -1483,13 +1483,14 @@ public abstract class DatabaseReader {
      * @param periode
      * @return Belegliste als ArrayList<Belegkopf>
      */
-    public static ArrayList<Belegkopf> getBelegliste(Buchungsperiode periode) {
+    public static ArrayList<Belegkopf> getBelegliste(Buchungsperiode periode, HashMap<Integer, Konto> kontenPlan) {
         ArrayList<Belegkopf> belegListe = new ArrayList<>();
+        Status belegStatus = new Status(9);
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
             String query = "SELECT * FROM bhBelegkopf WHERE Buchungsperiode='" + periode.getJahr() + "'";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                belegListe.add(new Belegkopf(rs.getInt("BelegkopfId")
+                belegListe.add(new Belegkopf(belegStatus.getElementsAsArrayList().get(1), rs.getInt("BelegkopfId")
                         , rs.getInt("BelegNummer")
                         , rs.getDate("Belegdatum").toLocalDate()
                         , rs.getDate("Buchungsdatum").toLocalDate()
@@ -1497,7 +1498,9 @@ public abstract class DatabaseReader {
                         , rs.getString("BelegkopfText")
                         , new Betrag(new BigDecimal(rs.getDouble("Betrag"))
                             , Currency.getInstance(rs.getString("BelegWaehrung"))
-                            ,new BigDecimal(rs.getDouble("BetragCHF")))));
+                            ,new BigDecimal(rs.getDouble("BetragCHF")))
+                        , rs.getString("BelegkopfTrackChangeUser")
+                        , rs.getTimestamp("BelegkopfTrackChangeTimestamp"), kontenPlan));
             }
         } catch(SQLException e) {
             e.printStackTrace();
@@ -1511,7 +1514,7 @@ public abstract class DatabaseReader {
      * @param belegkopf der Belegkopf
      * @return liste der Buchungspositionen als ArrayList<Belegposition>
      */
-    public static ArrayList<Belegposition> getBelegPositionen(Belegkopf belegkopf) {
+    public static ArrayList<Belegposition> getBelegPositionen(Belegkopf belegkopf, HashMap<Integer, Konto> kontenPlan) {
         ArrayList<Belegposition> belegPositionen = new ArrayList<>();
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
             String query = "SELECT * FROM bhBelegposition WHERE BelegkopfId=" + belegkopf.getBelegkopfId()
@@ -1522,7 +1525,7 @@ public abstract class DatabaseReader {
                         rs.getInt("BelegpositionId")
                 , rs.getInt("PositionsNummer")
                 , rs.getString("SollHaben").toCharArray()[0]
-                , new Konto(rs.getInt("Konto"), belegkopf.getBuchungsPeriode())
+                , kontenPlan.get(rs.getInt("Konto"))
                 , new Betrag(new BigDecimal(rs.getDouble("Betrag")), Currency.getInstance(rs.getString("Waehrung")), new BigDecimal(rs.getDouble("BetragCHF")))
                 , rs.getString("PositionsText")));
             }
@@ -1538,7 +1541,7 @@ public abstract class DatabaseReader {
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
 
             String query = "SELECT * FROM bhKontenplan WHERE GueltigAb <= '" + periode.getJahr() + "-12-31' " +
-                    "AND GueltigBis >= '" + periode.getJahr() + "-01-01'";
+                    "AND GueltigBis >= '" + periode.getJahr() + "-01-01' ORDER BY KtoZuordnung ASC";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 kontenPlan.add(new Konto(rs.getInt("Kontonummer"), periode));
@@ -1586,4 +1589,244 @@ public abstract class DatabaseReader {
             return kontoId;
         }
     }
+
+    public static String getKontoHauptgruppeText(int kontoNummer) {
+        int kontoHauptgruppe = kontoNummer/100;
+        String kontoHauptgruppeText = null;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM bhKtoHauptgruppe WHERE KtoHauptgruppeVon <= " + kontoHauptgruppe
+                    + " AND KtoHauptgruppeBis >= " + kontoHauptgruppe;
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                kontoHauptgruppeText = rs.getString("KtoHauptgruppeText");
+
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return kontoHauptgruppeText;
+        }
+    }
+
+    public static String getKontoGruppeText(int kontoNummer) {
+        int kontoGruppe = kontoNummer/10;
+        String kontoGruppeText = null;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM bhKtoGruppe WHERE KtoGruppeVon <= " + kontoGruppe
+                    + " AND KtoGruppeBis >= " + kontoGruppe;
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                kontoGruppeText = rs.getString("KtoGruppeText");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return kontoGruppeText;
+        }
+    }
+
+    public static int getKontoZuordnung(int kontoNummer, Buchungsperiode periode) {
+        int kontoZuordnung = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM bhKontenplan WHERE GueltigAb <= '" + periode.getJahr() + "-12-31' " +
+                    "AND GueltigBis >= '" + periode.getJahr() + "-01-01' AND Kontonummer = " + kontoNummer;
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                kontoZuordnung = rs.getInt("KtoZuordnung");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return kontoZuordnung;
+        }
+    }
+
+    public static String getKontoKlasseText(int kontoZuordnung) {
+        int kontoKlasse = kontoZuordnung/1000;
+        String kontoKlasseText = null;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM bhKtoKlasse WHERE KtoKlasseNr = " + kontoKlasse;
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                kontoKlasseText = rs.getString("KtoKlasseText");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return kontoKlasseText;
+        }
+    }
+
+    public static int readAnzahlBelege() {
+        // TODO
+        return 0;
+    }
+
+    public static Betrag getSaldo(Konto konto, Buchungsperiode buchungsperiode) {
+        double betragDB = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT SUM(bhBelegposition.BetragCHF) AS BetragCHF, SollHaben FROM `bhBelegkopf` " +
+                    "LEFT JOIN bhBelegposition ON bhBelegkopf.BelegkopfId = bhBelegposition.BelegkopfId " +
+                    "WHERE Buchungsperiode=" + buchungsperiode.getJahr() +
+                    " AND Konto = " + konto.getKontoNummerProperty().getValue() + " GROUP BY bhBelegposition.SollHaben";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                double betragRS = rs.getDouble("BetragCHF");
+                if(rs.getString("SollHaben").equals("S")) {
+                    betragDB += betragRS;
+                } else {
+                    betragDB -= betragRS;
+                }
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Betrag betrag = new Betrag(new BigDecimal(betragDB), Currency.getInstance("CHF"), new BigDecimal(betragDB));
+            return betrag;
+        }
+    }
+
+    public static int getNextPositionsNummer(Belegkopf belegkopf) {
+        int nextPositionNumber = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) AS PosNumber FROM bhBelegposition WHERE BelegkopfId = " + belegkopf.getBelegkopfId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                nextPositionNumber = rs.getInt("PosNumber")+1;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return nextPositionNumber;
+        }
+    }
+
+    public static double readBelegkopfBetrag(Belegkopf belegkopf) {
+        double betrag = 0.0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT SUM(Betrag) AS Betrag FROM bhBelegposition WHERE SollHaben='S' " +
+                    "AND BelegkopfId = " + belegkopf.getBelegkopfId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                betrag = rs.getDouble("Betrag");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return betrag;
+        }
+    }
+
+    public static double readBelegkopfBetragCHF(Belegkopf belegkopf) {
+        double betragCHF = 0.0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT SUM(BetragCHF) AS BetragCHF FROM bhBelegposition WHERE SollHaben='S' " +
+                    "AND BelegkopfId = " + belegkopf.getBelegkopfId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                betragCHF = rs.getDouble("BetragCHF");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return betragCHF;
+        }
+    }
+
+    public static String readBelegkopfWaehrung(Belegkopf belegkopf) {
+        String waehrung = null;
+        String maxWaehrung = null;
+        String minWaehrung = null;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT MAX(Waehrung) AS MaxWaehrung FROM bhBelegposition " +
+                    "WHERE BelegkopfId = " + belegkopf.getBelegkopfId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                maxWaehrung = rs.getString("MaxWaehrung");
+            }
+            query = "SELECT MIN(Waehrung) AS MinWaehrung FROM bhBelegposition " +
+                    "WHERE BelegkopfId = " + belegkopf.getBelegkopfId();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                minWaehrung = rs.getString("MinWaehrung");
+            }
+            if(minWaehrung.equals(maxWaehrung)){
+                waehrung = minWaehrung;
+            } else {
+                waehrung = "CHF";
+            }
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return waehrung;
+        }
+    }
+
+    public static int getLastBelegnummer(Buchungsperiode buchungsperiode) {
+        int lastBelegnummer = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT MAX(BelegNummer) MaxBelegnummer FROM bhBelegkopf WHERE Buchungsperiode = "
+                    + buchungsperiode.getJahr();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                lastBelegnummer = rs.getInt("MaxBelegnummer");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return lastBelegnummer;
+        }
+    }
+
+    public static LocalDate getLastBelegdatum(Buchungsperiode buchungsperiode) {
+        LocalDate lastBelegdatum = null;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT MAX(Belegdatum) MaxBelegdatum FROM bhBelegkopf WHERE Buchungsperiode = "
+                    + buchungsperiode.getJahr();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                lastBelegdatum = LocalDate.parse(rs.getString("MaxBelegdatum"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return lastBelegdatum;
+        }
+    }
+    public static Betrag getSollBetrag(Belegkopf belegkopf) {
+        Betrag betrag = null;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT SUM(BetragCHF) AS SumCHF_S, SUM(Betrag) AS Sum_S, MAX(Waehrung) AS MaxWaehrung FROM bhBelegposition " +
+                    "WHERE BelegkopfId = " + belegkopf.getBelegkopfId() + " AND SollHaben = 'S'";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                betrag = new Betrag(new BigDecimal(rs.getDouble("Sum_S")), Currency.getInstance(rs.getString("MaxWaehrung"))
+                        , new BigDecimal(rs.getDouble("SumCHF_S")));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return betrag;
+        }
+    }
+
+    public static Betrag getHabenBetrag(Belegkopf belegkopf) {
+        Betrag betrag = null;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT SUM(BetragCHF) AS SumCHF_H, SUM(Betrag) AS Sum_H, MAX(Waehrung) AS MaxWaehrung FROM bhBelegposition " +
+                    "WHERE BelegkopfId = " + belegkopf.getBelegkopfId() + " AND SollHaben = 'H'";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                betrag = new Betrag(new BigDecimal(rs.getDouble("Sum_H")), Currency.getInstance(rs.getString("MaxWaehrung"))
+                        , new BigDecimal(rs.getDouble("SumCHF_H")));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return betrag;
+        }
+    }
+
+
 }

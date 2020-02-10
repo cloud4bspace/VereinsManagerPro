@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="space.cloud4b.verein.view.finanzen.PositionViewController">
+   <children>
+      <BorderPane layoutX="166.0" layoutY="56.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #BADCB3;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <top>
+            <GridPane hgap="5.0" prefWidth="570.0" vgap="5.0" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="250.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="300.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="302.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="300.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="15.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="15.0" vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="15.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="15.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="15.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="12.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="12.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Soll/Haben" GridPane.rowIndex="4" />
+                  <Label layoutX="10.0" layoutY="31.0" text="Konto" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                  <TextField fx:id="betragFeld" layoutX="463.0" layoutY="81.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+                  <Label layoutX="10.0" layoutY="108.0" text="Betrag Beleg" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                  <ComboBox fx:id="waehrungComboBox" GridPane.rowIndex="8" />
+                  <Label layoutX="10.0" layoutY="121.0" text="Betrag CHF" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                  <TextField fx:id="betragCHFFeld" layoutX="161.0" layoutY="115.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+                  <TextField fx:id="kursFeld" layoutX="161.0" layoutY="148.0" prefHeight="27.0" prefWidth="64.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+                  <Label layoutX="10.0" layoutY="154.0" text="zum Kurs" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                  <Label fx:id="idLabel" layoutX="10.0" layoutY="54.0" text="Positions-Nr." />
+                  <Label fx:id="letzteAenderungLabel" layoutX="10.0" layoutY="20.0" text="User" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
+                  <Label layoutX="15.0" layoutY="127.0" text="Text" GridPane.rowIndex="10" />
+                  <TextField fx:id="positionTextFeld" layoutX="162.0" layoutY="121.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="11" />
+                  <Label text="WG" GridPane.rowIndex="7" />
+                  <ComboBox fx:id="kontoComboBox" layoutX="343.0" layoutY="111.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
+                  <ComboBox fx:id="sollHabenComboBox" layoutX="15.0" layoutY="72.0" GridPane.rowIndex="5" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </GridPane>
+         </top>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+         <bottom>
+            <HBox>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#handleAbbrechen" text="abbrechen" BorderPane.alignment="CENTER" />
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleSpeichern" text="speichern">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin></Button>
+                  <Button layoutX="103.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleLoeschen" text="löschen">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</AnchorPane>

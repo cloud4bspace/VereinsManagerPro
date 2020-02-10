@@ -1,5 +1,8 @@
 package space.cloud4b.verein.model.verein.finanzen;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 import java.math.BigDecimal;
 import java.util.Currency;
 
@@ -66,7 +69,9 @@ public class Betrag {
     public String getBetragToShortString() {
         return String.format("%.2f", this.betragBelegWaehrung.doubleValue()) + " " + this.belegWaehrung.getCurrencyCode();
     }
-
+    public ObservableValue<String> toColumnString(){
+        return new SimpleStringProperty(String.format("%.2f", this.betragBelegWaehrung.doubleValue()));
+    }
     public BigDecimal getBetragBelegWaehrung() {
         return this.betragBelegWaehrung;
     }
@@ -79,5 +84,23 @@ public class Betrag {
                     + " (Kurs: " + String.format("%.3f", this.umrechnungsKurs) + ")";
         }
      return string;
+    }
+
+    public ObservableValue<String> toColumnCHFString() {
+        return new SimpleStringProperty(String.format("%.2f", this.betragBuchungsWaehrung.doubleValue()));
+    }
+
+    public void setWaehrung(Currency newValue) {
+        this.belegWaehrung = newValue;
+    }
+
+    public void setBetrag(double belegkopfBetrag) {
+        this.betragBelegWaehrung = new BigDecimal(belegkopfBetrag);
+        this.umrechnungsKurs = this.betragBuchungsWaehrung.doubleValue()/belegkopfBetrag;
+    }
+
+    public void setBetragCHF(double belegkopfBetragCHF) {
+        this.betragBuchungsWaehrung = new BigDecimal(belegkopfBetragCHF);
+        this.umrechnungsKurs = belegkopfBetragCHF/this.betragBelegWaehrung.doubleValue();
     }
 }

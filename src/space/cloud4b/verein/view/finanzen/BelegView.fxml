@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="space.cloud4b.verein.view.finanzen.BelegViewController">
+   <children>
+      <BorderPane layoutX="166.0" layoutY="56.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #BADCB3;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <top>
+            <GridPane hgap="5.0" prefWidth="570.0" vgap="5.0" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="300.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="302.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="230.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="300.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="15.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="15.0" vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Belegdatum" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <DatePicker fx:id="belegDatumPicker" GridPane.rowIndex="4" />
+                  <DatePicker fx:id="buchungsDatumPicker" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label layoutX="10.0" layoutY="31.0" text="Buchungsdatum" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                  <TextField fx:id="belegPeriodeFeld" maxWidth="1.7976931348623157E308" prefHeight="27.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Label layoutX="10.0" layoutY="87.0" text="Periode" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                  <TextField fx:id="belegBetragFeld" disable="true" editable="false" layoutX="463.0" layoutY="81.0" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                  <Label layoutX="10.0" layoutY="108.0" text="Betrag Beleg" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                  <ComboBox fx:id="belegWaehrungComboBox" disable="true" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <Label layoutX="10.0" layoutY="121.0" text="Betrag CHF" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="belegBetragCHFFeld" disable="true" editable="false" layoutX="161.0" layoutY="115.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                  <TextField fx:id="belegKursFeld" disable="true" editable="false" layoutX="161.0" layoutY="148.0" prefHeight="27.0" prefWidth="64.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                  <Label layoutX="10.0" layoutY="154.0" text="zum Kurs" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <Label fx:id="idLabel" layoutX="10.0" layoutY="54.0" text="Beleg-Nr." />
+                  <Label fx:id="letzteAenderungLabel" layoutX="10.0" layoutY="20.0" text="User" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
+                  <Label layoutX="15.0" layoutY="127.0" text="Text" GridPane.rowIndex="7" />
+                  <TextField fx:id="belegTextFeld" layoutX="162.0" layoutY="121.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
+                  <Label text="WG" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <Button mnemonicParsing="false" onAction="#handleHauptjournal" text="zurück zum Hauptjournal" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowSpan="3" GridPane.valignment="TOP" />
+                  <Label layoutX="15.0" layoutY="66.0" text="Belegstatus" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <Label fx:id="belegStatusLabel" layoutX="436.0" layoutY="66.0" text="Belegstatus" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </GridPane>
+         </top>
+         <center>
+            <VBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleAddPosition" text="Position hinzufügen">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleSpeichern" text="Speichern">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <TableView fx:id="belegPositionTabelle" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="positionPositionColumn" prefWidth="40.0" text="Pos#" />
+                      <TableColumn fx:id="positionSHColumn" prefWidth="30.0" text="SH" />
+                        <TableColumn fx:id="positionKontoColumn" prefWidth="200.0" text="Konto" />
+                        <TableColumn fx:id="positionBetragColumn" prefWidth="75.0" text="Betrag" />
+                        <TableColumn fx:id="positionWaehrungColumn" prefWidth="40.0" text="WG" />
+                        <TableColumn fx:id="positionBetragCHFColumn" prefWidth="75.0" text="Betrag CHF" />
+                        <TableColumn fx:id="positionTextColumn" prefWidth="250.0" text="Text" />
+                    </columns>
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </BorderPane.margin>
+                  </TableView>
+               </children>
+            </VBox>
+         </center>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </BorderPane>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</AnchorPane>

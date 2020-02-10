@@ -493,6 +493,7 @@ public class MainFrameController implements Observer {
     /* Menupunkte unter Finanzen
      * Pos#01: handleHauptjournal() --> Hauptjournal öffnen
      * Pos#02: handleKontenplan() --> Kontenplan öffnen
+     * Pos#03: handleSaldobilanz() --> Saldobilanz öffnen
      */
 
     /**
@@ -511,6 +512,13 @@ public class MainFrameController implements Observer {
         mainApp.showKontenplanView();
     }
 
+    /**
+     * Oeffnet den Kontorahmen
+     */
+    @FXML
+    private void handleSaldobilanz() {
+        mainApp.showKontoTreeView();
+    }
 
     public void setMeldungInListView(String meldungText, String meldungTyp) {
         meldungAusgabeListView.getItems().add(0, new Meldung(meldungText, meldungTyp));

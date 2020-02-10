@@ -2,16 +2,22 @@ package space.cloud4b.verein.services;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
+import space.cloud4b.verein.model.verein.finanzen.*;
 import space.cloud4b.verein.model.verein.kalender.Termin;
+import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.connection.MysqlConnection;
 import space.cloud4b.verein.services.output.LogWriter;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Currency;
+import java.util.HashMap;
 
 /**
  * Die abstrakte Klasse DataBaseOperation stellt Methoden zur Verfügung, um in den Tabellen der
@@ -532,5 +538,261 @@ public abstract class DatabaseOperation {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Belegposition addBelegPosition(Belegkopf belegkopf, User currentUser) {
+        String sollHaben = new String("S");
+        double betrag = 0;
+        double betragCHF = 0;
+        String waehrung = new String("CHF");
+        Betrag betragObject = null;
+
+        // Ist es die erste Position?
+
+        // Gibt es schon Positionen?
+        // --> ich ergänze die fehlende Gegenbuchung..
+        Betrag betragSoll = DatabaseReader.getSollBetrag(belegkopf);
+        Betrag betragHaben = DatabaseReader.getHabenBetrag(belegkopf);
+
+        if(betragSoll != null && betragHaben == null){
+            sollHaben = "H";
+            betrag = betragSoll.getBetragBelegWaehrung().doubleValue();
+            betragCHF = betragSoll.getBetragBuchungsWaehrung().doubleValue();
+            waehrung = betragSoll.getWaehrung().getCurrencyCode();
+        } else if (betragSoll == null && betragHaben != null) {
+            sollHaben = "S";
+            betrag = betragHaben.getBetragBelegWaehrung().doubleValue();
+            betragCHF = betragHaben.getBetragBuchungsWaehrung().doubleValue();
+            waehrung = betragHaben.getWaehrung().getCurrencyCode();
+        } else if(betragSoll != null && betragHaben != null) {
+            double differenz = betragSoll.getBetragBelegWaehrung().doubleValue() - betragHaben.getBetragBelegWaehrung().doubleValue();
+            double differenzCHF = betragSoll.getBetragBuchungsWaehrung().doubleValue() - betragHaben.getBetragBuchungsWaehrung().doubleValue();
+             if (differenz > 0) {
+                 sollHaben = "H";
+                 betrag = differenz;
+                 betragCHF = differenzCHF;
+                 waehrung = betragSoll.getWaehrung().getCurrencyCode();
+            } else if(differenz < 0) {
+                 sollHaben = "S";
+                 betrag = -differenz;
+                 betragCHF = -differenzCHF;
+                 waehrung = betragHaben.getWaehrung().getCurrencyCode();
+             }
+            }
+
+
+        betragObject = new Betrag(new BigDecimal(betrag), Currency.getInstance(waehrung), new BigDecimal(betragCHF));
+      //  Belegposition belegposition = null;
+        int newKey = 0;
+        int positionsnummer = DatabaseReader.getNextPositionsNummer(belegkopf);
+        String query = "INSERT INTO bhBelegposition (BelegpositionId, BelegkopfId, PositionsNummer, SollHaben," +
+                "Betrag, Waehrung, BetragCHF, BelegpositionTrackChangeUser, " +
+                "BelegpositionTrackChangeTimestamp) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+        MysqlConnection conn = new MysqlConnection();
+        PreparedStatement ps = null;
+        try {
+            ps = conn.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, belegkopf.getBelegkopfId());
+            ps.setInt(2, positionsnummer);
+            ps.setString(3, sollHaben);
+            ps.setDouble(4, betrag);
+            ps.setString(5, waehrung);
+            ps.setDouble(6, betragCHF);
+            ps.setString(7, currentUser.getUserName());
+            System.out.println("neue Buchungsposition: " + ps.executeUpdate());
+            ResultSet keys = null;
+            keys = ps.getGeneratedKeys();
+            keys.next();
+            newKey = keys.getInt(1);
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+       //     LogWriter.writePostNewLog("Buchungsposition", newKey, currentUser, logCounter);
+
+        } catch(SQLException e) {
+            System.out.println("Fehler " + e);
+        } finally {
+            Belegposition belegposition = new Belegposition(newKey, positionsnummer, sollHaben.toCharArray()[0], null, betragObject, null);
+
+            return belegposition;
+        }
+    }
+
+    /**
+     * aktualisiert den übergebenen Task in der entsprechenden Datenbanktabelle
+     *
+     * @param position        der zu aktualisierende Task
+     * @param currentUser der angemeldete User
+     */
+    public static void updateBelegPosition(Belegposition position, User currentUser) {
+
+            // Schritt 1: alte DB-Werte in Logfile schreiben
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePreUpdateLog(position, currentUser, logCounter);
+
+            // Schritt 2: DB-Tabelle aktualisieren
+            MysqlConnection conn = new MysqlConnection();
+
+            // create the java mysql update preparedstatement
+            String query = "UPDATE bhBelegposition SET Konto = ?,"
+                    + " SollHaben = ?,"
+                    + " Betrag = ?,"
+                    + " Waehrung = ?,"
+                    + " BetragCHF = ?,"
+                    + " PositionsText = ?,"
+                    + " BelegpositionTrackChangeUser = ?,"
+                    + " BelegpositionTrackChangeTimestamp = CURRENT_TIMESTAMP"
+                    + " WHERE BelegpositionId = ?";
+            //einzelne Änderungen abfragen und dann Wert alt und neu, User und Timestamp in logdatei schreiben
+            PreparedStatement preparedStmt = null;
+            try {
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+                preparedStmt = conn.getConnection().prepareStatement(query);
+                preparedStmt.setInt(1, position.getKonto().getValue().getKontoNummer());
+                preparedStmt.setString(2, position.getSH().getValue());
+                preparedStmt.setDouble(3, position.getBetrag().getValue().getBetragBelegWaehrung().doubleValue());
+                preparedStmt.setString(4, position.getBetrag().getValue().getWaehrung().getCurrencyCode());
+                preparedStmt.setDouble(5, position.getBetrag().getValue().getBetragBuchungsWaehrung().doubleValue());
+                preparedStmt.setString(6, position.getPositionTextProperty().getValue());
+                preparedStmt.setString(7, currentUser.getUserTxt());
+                preparedStmt.setInt(8, position.getPositionId());
+                // execute the java preparedstatement
+                System.out.println("Rückmeldung preparedStmt (updateTask): " + preparedStmt.executeUpdate());
+
+                // Schritt 3: neue DB-Werte in Logilfe schreiben
+                LogWriter.writePostUpdateLog(position, currentUser, logCounter);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+    }
+
+    public static void updateBelegKopf(Belegkopf belegkopf, User currentUser) {
+        // Schritt 1: alte DB-Werte in Logfile schreiben
+        int logCounter = LogWriter.getLastLogCounterValue();
+        LogWriter.setNextLogCounterValue(++logCounter);
+        LogWriter.writePreUpdateLog(belegkopf, currentUser, logCounter);
+
+        // Schritt 2: DB-Tabelle aktualisieren
+        MysqlConnection conn = new MysqlConnection();
+
+        // create the java mysql update preparedstatement
+        String query = "UPDATE bhBelegkopf SET Belegdatum = ?,"
+                + " Buchungsdatum = ?,"
+                + " Betrag = ?,"
+                + " BelegWaehrung = ?,"
+                + " BetragCHF = ?,"
+                + " BelegkopfText = ?,"
+                + " BelegkopfTrackChangeUser = ?,"
+                + " BelegkopfTrackChangeTimestamp = CURRENT_TIMESTAMP"
+                + " WHERE BelegkopfId = ?";
+        //einzelne Änderungen abfragen und dann Wert alt und neu, User und Timestamp in logdatei schreiben
+        PreparedStatement preparedStmt = null;
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            preparedStmt = conn.getConnection().prepareStatement(query);
+            preparedStmt.setString(1, belegkopf.getBelegDatum().toString());
+            preparedStmt.setString(2, belegkopf.getBuchungsDatum().toString());
+            preparedStmt.setDouble(3, DatabaseReader.readBelegkopfBetrag(belegkopf));
+            belegkopf.setBetrag(DatabaseReader.readBelegkopfBetrag(belegkopf));
+            preparedStmt.setString(4, DatabaseReader.readBelegkopfWaehrung(belegkopf));
+            belegkopf.setWaehrung(DatabaseReader.readBelegkopfWaehrung(belegkopf));
+            preparedStmt.setDouble(5, DatabaseReader.readBelegkopfBetragCHF(belegkopf));
+            belegkopf.setBetragCHF(DatabaseReader.readBelegkopfBetragCHF(belegkopf));
+            preparedStmt.setString(6, belegkopf.getBelegTextProperty().getValue());
+            preparedStmt.setString(7, currentUser.getUserTxt());
+            preparedStmt.setInt(8, belegkopf.getBelegkopfId());
+            // execute the java preparedstatement
+            System.out.println("Rückmeldung preparedStmt (updateBelegkopf): " + preparedStmt.executeUpdate());
+
+            // Schritt 3: neue DB-Werte in Logilfe schreiben
+            LogWriter.writePostUpdateLog(belegkopf, currentUser, logCounter);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void deleteBelegposision(Belegposition position, User currentUser) {
+        if (position != null) {
+
+            // Schritt 1: alte DB-Werte in Logfile schreiben
+            int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePreDeleteLog(position, currentUser, logCounter);
+            try (Connection conn = new MysqlConnection().getConnection();
+                 // Termin in der Tabelle termin löschen
+                 Statement st = conn.createStatement()) {
+                String query = "DELETE FROM bhBelegposition WHERE BelegpositionId=" + position.getPositionId();
+                st.execute(query);
+            } catch (SQLException e) {
+                System.out.println("Position konnte nicht gelöscht werden (" + e + ")");
+            }
+        }
+    }
+
+    public static Belegkopf addBelegkopf(Buchungsperiode buchungsperiode, User currentUser, HashMap<Integer, Konto> kontenPlan) {
+        int lastBelegnummer = DatabaseReader.getLastBelegnummer(buchungsperiode);
+        LocalDate lastBelegdatum = DatabaseReader.getLastBelegdatum(buchungsperiode);
+        Belegkopf belegkopf = null;
+        Belegkopf neuerBelegkopf = null;
+        Status belegStatus = new Status(9);
+
+
+        // Schritt 2: DB-Tabelle aktualisieren
+        MysqlConnection conn = new MysqlConnection();
+
+        // create the java mysql update preparedstatement
+        String query = "INSERT INTO bhBelegkopf (" +
+                "BelegKopfId, " +
+                "BelegNummer, " +
+                "Belegdatum," +
+                "Buchungsdatum," +
+                "Buchungsperiode," +
+                "BelegkopfText," +
+                "Betrag," +
+                "BelegWaehrung," +
+                "BetragCHF," +
+                "BelegStatus," +
+                "BelegkopfTrackChangeUser," +
+                "BelegkopfTrackChangeTimestamp) VALUES (" +
+                "NULL, ?, ?, ?, ?, '', 0, 'CHF', 0, ?, ?, CURRENT_TIMESTAMP)";
+
+        PreparedStatement preparedStmt = null;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            preparedStmt = conn.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStmt.setInt(1, lastBelegnummer+1);
+            preparedStmt.setDate(2, Date.valueOf(lastBelegdatum));
+            preparedStmt.setDate(3, Date.valueOf(lastBelegdatum));
+            preparedStmt.setInt(4, buchungsperiode.getJahr());
+            preparedStmt.setInt(5,1);
+            preparedStmt.setString(6, currentUser.getUserTxt());
+            // execute the java preparedstatement
+            System.out.println("Rückmeldung preparedStmt (newBelegkopf): " + preparedStmt.executeUpdate());
+            ResultSet keys = null;
+            keys = preparedStmt.getGeneratedKeys();
+            keys.next();
+            int newKey = keys.getInt(1);
+            neuerBelegkopf = new Belegkopf(belegStatus.getStatusElemente().get(1), newKey, lastBelegnummer+1, lastBelegdatum, lastBelegdatum, buchungsperiode, null,
+                    new Betrag(new BigDecimal(0), Currency.getInstance("CHF"), new BigDecimal(0)),
+                    currentUser.getUserTxt(), Timestamp.valueOf(LocalDateTime.now()), kontenPlan);
+            buchungsperiode.getHauptjournal().add(neuerBelegkopf);
+            return neuerBelegkopf;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+
+            // Schritt 1: alte DB-Werte in Logfile schreiben
+          /*  int logCounter = LogWriter.getLastLogCounterValue();
+            LogWriter.setNextLogCounterValue(++logCounter);
+            LogWriter.writePostNewLog(belegkopf, currentUser, logCounter);*/
+        }
+
     }
 }

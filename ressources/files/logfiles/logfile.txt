@@ -262,3 +262,1231 @@ Vorgang: Task #26 UPDATE
 old values in mysql-db: | TaskId=26 | TaskBezeichnung=Termin mit Revisor | TaskPrio=3 | TaskStatus=1 | TaskDetails=Revisor treffen im Café | TaskTerminBis=2020-03-10 | TaskMitgliedId=7 | TaskTrackChangeUser=1-Kämpf Bernhard-Talents | TaskTrackChangeTimestamp=2020-01-24 08:11:47 | 
 new values in mysql-db: | TaskId=26 | TaskBezeichnung=Termin mit Revisor | TaskPrio=3 | TaskStatus=3 | TaskDetails=Revisor treffen im Café | TaskTerminBis=2020-03-10 | TaskMitgliedId=7 | TaskTrackChangeUser=1-Kämpf Bernhard-Talents | TaskTrackChangeTimestamp=2020-01-24 20:09:38 | 
 ***** Log#146 --> E N D E
+
+***** Log#147 --> 2020-02-06 22:27:12.067 durch User: 64-Muster Felix-Talents | [B@d730f74 | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#148 --> 2020-02-06 22:27:13.558 durch User: 64-Muster Felix-Talents | [B@d730f74 | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#149 --> 2020-02-06 23:23:20.09 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+old values in mysql-db: | 
+***** Log#150 --> 2020-02-06 23:27:52.923 durch User: 64-Muster Felix-Talents | [B@4af4aec8 | Europe/Zurich | 
+
+***** Log#151 --> 2020-02-06 23:30:33.886 durch User: 64-Muster Felix-Talents | [B@6d8ff0a0 | Europe/Zurich | 
+Vorgang: Belegposition #7 UPDATE
+old values in mysql-db: | 
+***** Log#152 --> 2020-02-06 23:33:01.551 durch User: 64-Muster Felix-Talents | [B@6d8ff0a0 | Europe/Zurich | 
+Vorgang: Belegposition #7 UPDATE
+old values in mysql-db: | new values in mysql-db: | 
+***** Log#153 --> 2020-02-06 23:34:15.888 durch User: 64-Muster Felix-Talents | [B@6d8ff0a0 | Europe/Zurich | 
+Vorgang: Belegposition #7 UPDATE
+old values in mysql-db: | new values in mysql-db: | 
+***** Log#155 --> 2020-02-07 00:06:39.784 durch User: 64-Muster Felix-Talents | [B@482fa0a6 | Europe/Zurich | 
+Vorgang: Belegposition #8 UPDATE
+old values in mysql-db: | BelegpositionId=8 | BelegkopfId=3 | PositionsNummer=4 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-06 22:27:03 | 
+new values in mysql-db: | 
+***** Log#156 --> 2020-02-07 00:12:41.586 durch User: 64-Muster Felix-Talents | [B@10516ae | Europe/Zurich | 
+Vorgang: Belegposition #7 UPDATE
+old values in mysql-db: | BelegpositionId=7 | BelegkopfId=3 | PositionsNummer=3 | Konto=1010 | SollHaben=H | Betrag=100.0 | Waehrung=EUR | BetragCHF=120.0 | PositionsText=Test | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-06 23:34:06 | 
+Vorgang: Belegposition #7 UPDATE
+new values in mysql-db: | BelegpositionId=7 | BelegkopfId=3 | PositionsNummer=3 | Konto=1010 | SollHaben=H | Betrag=100.0 | Waehrung=EUR | BetragCHF=120.0 | PositionsText=Test II | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 00:12:33 | 
+***** Log#156 --> E N D E
+
+***** Log#157 --> 2020-02-07 00:16:31.243 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #7 UPDATE
+old values in mysql-db: | BelegpositionId=7 | BelegkopfId=3 | PositionsNummer=3 | Konto=1010 | SollHaben=H | Betrag=100.0 | Waehrung=EUR | BetragCHF=120.0 | PositionsText=Test II | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 00:12:33 | 
+Vorgang: Belegposition #7 UPDATE
+new values in mysql-db: | BelegpositionId=7 | BelegkopfId=3 | PositionsNummer=3 | Konto=1010 | SollHaben=H | Betrag=100.0 | Waehrung=EUR | BetragCHF=120.0 | PositionsText=Test II und so | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 00:16:23 | 
+***** Log#157 --> E N D E
+
+***** Log#158 --> 2020-02-07 00:17:39.693 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#159 --> 2020-02-07 00:18:20.359 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-07 00:17:31 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=1000.0 | Waehrung=CHF | BetragCHF=1000.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 00:18:12 | 
+***** Log#159 --> E N D E
+
+***** Log#160 --> 2020-02-07 00:19:01.324 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#161 --> 2020-02-07 00:19:25.613 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #10 UPDATE
+old values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-07 00:18:53 | 
+Vorgang: Belegposition #10 UPDATE
+new values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=CHF | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 00:19:17 | 
+***** Log#161 --> E N D E
+
+***** Log#162 --> 2020-02-07 00:22:28.271 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #8 UPDATE
+old values in mysql-db: | BelegpositionId=8 | BelegkopfId=3 | PositionsNummer=4 | Konto=1020 | SollHaben=H | Betrag=120.0 | Waehrung=CHF | BetragCHF=200.0 | PositionsText=dalf aöldfk aöfdkasödf | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 00:06:39 | 
+Vorgang: Belegposition #8 UPDATE
+new values in mysql-db: | BelegpositionId=8 | BelegkopfId=3 | PositionsNummer=4 | Konto=1020 | SollHaben=H | Betrag=120.0 | Waehrung=EUR | BetragCHF=200.0 | PositionsText=dalf aöldfk aöfdkasödf | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 00:22:19 | 
+***** Log#162 --> E N D E
+
+***** Log#163 --> 2020-02-07 05:30:11.911 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #1 UPDATE
+old values in mysql-db: | BelegpositionId=1 | BelegkopfId=1 | PositionsNummer=1 | Konto=1010 | SollHaben=S | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=Kämpf | BelegpositionTrackChangeTimestamp=2020-02-02 20:28:39 | 
+Vorgang: Belegposition #1 UPDATE
+new values in mysql-db: | BelegpositionId=1 | BelegkopfId=1 | PositionsNummer=1 | Konto=1010 | SollHaben=S | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:30:02 | 
+***** Log#163 --> E N D E
+
+***** Log#164 --> 2020-02-07 05:30:25.954 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #2 UPDATE
+old values in mysql-db: | BelegpositionId=2 | BelegkopfId=1 | PositionsNummer=2 | Konto=1000 | SollHaben=H | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=Kämpf | BelegpositionTrackChangeTimestamp=2020-02-02 20:28:39 | 
+Vorgang: Belegposition #2 UPDATE
+new values in mysql-db: | BelegpositionId=2 | BelegkopfId=1 | PositionsNummer=2 | Konto=1000 | SollHaben=H | Betrag=200.0 | Waehrung=CHF | BetragCHF=200.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:30:16 | 
+***** Log#164 --> E N D E
+
+***** Log#165 --> 2020-02-07 05:31:10.046 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #2 UPDATE
+old values in mysql-db: | BelegpositionId=2 | BelegkopfId=1 | PositionsNummer=2 | Konto=1000 | SollHaben=H | Betrag=200.0 | Waehrung=CHF | BetragCHF=200.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:30:16 | 
+Vorgang: Belegposition #2 UPDATE
+new values in mysql-db: | BelegpositionId=2 | BelegkopfId=1 | PositionsNummer=2 | Konto=1000 | SollHaben=H | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:31:00 | 
+***** Log#165 --> E N D E
+
+***** Log#166 --> 2020-02-07 05:34:25.894 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#167 --> 2020-02-07 05:46:06.145 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #4 UPDATE
+old values in mysql-db: | BelegpositionId=4 | BelegkopfId=3 | PositionsNummer=2 | Konto=1100 | SollHaben=H | Betrag=100.0 | Waehrung=EUR | BetragCHF=123.25 | PositionsText=Positionstext | BelegpositionTrackChangeUser=Kämpf | BelegpositionTrackChangeTimestamp=2020-02-02 20:28:39 | 
+Vorgang: Belegposition #4 UPDATE
+new values in mysql-db: | BelegpositionId=4 | BelegkopfId=3 | PositionsNummer=2 | Konto=1100 | SollHaben=H | Betrag=200.0 | Waehrung=EUR | BetragCHF=220.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:45:56 | 
+***** Log#167 --> E N D E
+
+***** Log#168 --> 2020-02-07 05:46:15.465 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #4 UPDATE
+old values in mysql-db: | BelegpositionId=4 | BelegkopfId=3 | PositionsNummer=2 | Konto=1100 | SollHaben=H | Betrag=200.0 | Waehrung=EUR | BetragCHF=220.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:45:56 | 
+Vorgang: Belegposition #4 UPDATE
+new values in mysql-db: | BelegpositionId=4 | BelegkopfId=3 | PositionsNummer=2 | Konto=1100 | SollHaben=H | Betrag=100.0 | Waehrung=EUR | BetragCHF=100.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:46:07 | 
+***** Log#168 --> E N D E
+
+***** Log#169 --> 2020-02-07 05:51:40.005 durch User: 64-Muster Felix-Talents | [B@4af4aec8 | Europe/Zurich | 
+Vorgang: Belegposition #10 UPDATE
+old values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=CHF | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 00:19:17 | 
+Vorgang: Belegposition #10 UPDATE
+new values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=CHF | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:51:30 | 
+***** Log#169 --> E N D E
+
+***** Log#170 --> 2020-02-07 05:54:36.551 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#171 --> 2020-02-07 05:54:54.774 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #12 UPDATE
+old values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-07 05:54:27 | 
+Vorgang: Belegposition #12 UPDATE
+new values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=1020 | SollHaben=S | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:54:45 | 
+***** Log#171 --> E N D E
+
+***** Log#172 --> 2020-02-07 05:55:03.266 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=1000.0 | Waehrung=CHF | BetragCHF=1000.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 00:18:12 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:54:54 | 
+***** Log#172 --> E N D E
+
+***** Log#173 --> 2020-02-07 06:24:30.461 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:54:54 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=120.0 | Waehrung=CHF | BetragCHF=120.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:24:20 | 
+***** Log#173 --> E N D E
+
+***** Log#174 --> 2020-02-07 06:24:30.743 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+old values in mysql-db: | new values in mysql-db: | 
+***** Log#175 --> 2020-02-07 06:34:59.138 durch User: 64-Muster Felix-Talents | [B@4af4aec8 | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=120.0 | Waehrung=CHF | BetragCHF=120.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:24:20 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=120.0 | Waehrung=CHF | BetragCHF=120.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:34:49 | 
+***** Log#175 --> E N D E
+
+***** Log#176 --> 2020-02-07 06:34:59.452 durch User: 64-Muster Felix-Talents | [B@4af4aec8 | Europe/Zurich | 
+old values in mysql-db: | new values in mysql-db: | 
+***** Log#177 --> 2020-02-07 06:35:08.972 durch User: 64-Muster Felix-Talents | [B@4af4aec8 | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=120.0 | Waehrung=CHF | BetragCHF=120.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:34:49 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=120.0 | Waehrung=LRD | BetragCHF=120.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:34:59 | 
+***** Log#177 --> E N D E
+
+***** Log#178 --> 2020-02-07 06:35:09.255 durch User: 64-Muster Felix-Talents | [B@4af4aec8 | Europe/Zurich | 
+old values in mysql-db: | new values in mysql-db: | 
+***** Log#179 --> 2020-02-07 06:35:52.754 durch User: 64-Muster Felix-Talents | [B@4af4aec8 | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=120.0 | Waehrung=LRD | BetragCHF=120.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:34:59 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=120.0 | Waehrung=CHF | BetragCHF=120.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:35:43 | 
+***** Log#179 --> E N D E
+
+***** Log#180 --> 2020-02-07 06:35:53.035 durch User: 64-Muster Felix-Talents | [B@4af4aec8 | Europe/Zurich | 
+old values in mysql-db: | new values in mysql-db: | 
+***** Log#181 --> 2020-02-07 06:43:52.436 durch User: 64-Muster Felix-Talents | [B@4af4aec8 | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=120.0 | Waehrung=CHF | BetragCHF=120.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:35:43 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=CHF | BetragCHF=130.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:43:43 | 
+***** Log#181 --> E N D E
+
+***** Log#182 --> 2020-02-07 06:43:52.727 durch User: 64-Muster Felix-Talents | [B@4af4aec8 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-29 | Buchungsdatum=2019-12-29 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=220.0 | BelegWaehrung=CHF | BetragCHF=220.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:35:43 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-28 | Buchungsdatum=2019-12-28 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:43:43 | 
+***** Log#182 --> E N D E
+
+***** Log#183 --> 2020-02-07 06:44:10.793 durch User: 64-Muster Felix-Talents | [B@4af4aec8 | Europe/Zurich | 
+Vorgang: Belegposition #12 UPDATE
+old values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=1020 | SollHaben=S | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:54:45 | 
+Vorgang: Belegposition #12 UPDATE
+new values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=1020 | SollHaben=S | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:44:01 | 
+***** Log#183 --> E N D E
+
+***** Log#184 --> 2020-02-07 06:44:11.177 durch User: 64-Muster Felix-Talents | [B@4af4aec8 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-28 | Buchungsdatum=2019-12-28 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:43:43 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-28 | Buchungsdatum=2019-12-28 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:44:02 | 
+***** Log#184 --> E N D E
+
+***** Log#185 --> 2020-02-07 06:52:58.078 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=CHF | BetragCHF=130.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:43:43 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=120.0 | Waehrung=CHF | BetragCHF=120.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:52:47 | 
+***** Log#185 --> E N D E
+
+***** Log#186 --> 2020-02-07 06:52:58.347 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-28 | Buchungsdatum=2019-12-28 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:44:02 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-27 | Buchungsdatum=2019-12-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=220.0 | BelegWaehrung=CHF | BetragCHF=220.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:52:48 | 
+***** Log#186 --> E N D E
+
+***** Log#187 --> 2020-02-07 06:53:06.279 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=120.0 | Waehrung=CHF | BetragCHF=120.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:52:47 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=CHF | BetragCHF=130.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:52:55 | 
+***** Log#187 --> E N D E
+
+***** Log#188 --> 2020-02-07 06:53:06.548 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-27 | Buchungsdatum=2019-12-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=220.0 | BelegWaehrung=CHF | BetragCHF=220.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:52:48 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-27 | Buchungsdatum=2019-12-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:52:56 | 
+***** Log#188 --> E N D E
+
+***** Log#189 --> 2020-02-07 06:53:16.713 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=CHF | BetragCHF=130.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:52:55 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=AZM | BetragCHF=130.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:53:05 | 
+***** Log#189 --> E N D E
+
+***** Log#190 --> 2020-02-07 06:53:17.82 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-27 | Buchungsdatum=2019-12-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:52:56 | 
+
+***** Log#191 --> 2020-02-07 06:56:13.028 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=AZM | BetragCHF=130.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:53:05 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=AZM | BetragCHF=130.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:56:02 | 
+***** Log#191 --> E N D E
+
+***** Log#192 --> 2020-02-07 06:56:13.364 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-27 | Buchungsdatum=2019-12-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:52:56 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:56:03 | 
+***** Log#192 --> E N D E
+
+***** Log#193 --> 2020-02-07 06:56:32.345 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #10 UPDATE
+old values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=CHF | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:51:30 | 
+Vorgang: Belegposition #10 UPDATE
+new values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=SDD | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:56:21 | 
+***** Log#193 --> E N D E
+
+***** Log#194 --> 2020-02-07 06:56:32.644 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:56:03 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:56:22 | 
+***** Log#194 --> E N D E
+
+***** Log#195 --> 2020-02-07 06:56:38.418 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=AZM | BetragCHF=130.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:56:02 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=SDD | BetragCHF=130.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:56:27 | 
+***** Log#195 --> E N D E
+
+***** Log#196 --> 2020-02-07 06:56:38.698 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:56:22 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:56:28 | 
+***** Log#196 --> E N D E
+
+***** Log#197 --> 2020-02-07 06:56:44.678 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #12 UPDATE
+old values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=1020 | SollHaben=S | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:44:01 | 
+Vorgang: Belegposition #12 UPDATE
+new values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=1020 | SollHaben=S | Betrag=100.0 | Waehrung=SDD | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:56:33 | 
+***** Log#197 --> E N D E
+
+***** Log#198 --> 2020-02-07 06:56:44.995 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:56:28 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=SDD | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:56:34 | 
+***** Log#198 --> E N D E
+
+***** Log#199 --> 2020-02-07 06:57:16.593 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=SDD | BetragCHF=130.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:56:27 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=USD | BetragCHF=130.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:57:05 | 
+***** Log#199 --> E N D E
+
+***** Log#200 --> 2020-02-07 06:57:17.341 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=SDD | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:56:34 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:57:07 | 
+***** Log#200 --> E N D E
+
+***** Log#201 --> 2020-02-07 06:57:50.036 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #10 UPDATE
+old values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=SDD | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:56:21 | 
+Vorgang: Belegposition #10 UPDATE
+new values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=USD | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:57:39 | 
+***** Log#201 --> E N D E
+
+***** Log#202 --> 2020-02-07 06:57:50.327 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:57:07 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:57:40 | 
+***** Log#202 --> E N D E
+
+***** Log#203 --> 2020-02-07 06:58:10.543 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #12 UPDATE
+old values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=1020 | SollHaben=S | Betrag=100.0 | Waehrung=SDD | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:56:33 | 
+Vorgang: Belegposition #12 UPDATE
+new values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=1020 | SollHaben=S | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:57:59 | 
+***** Log#203 --> E N D E
+
+***** Log#204 --> 2020-02-07 06:58:10.807 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:57:40 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=USD | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:58:00 | 
+***** Log#204 --> E N D E
+
+***** Log#205 --> 2020-02-07 06:58:25.645 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=USD | BetragCHF=130.0 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:57:05 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=USD | BetragCHF=113.23 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:58:14 | 
+***** Log#205 --> E N D E
+
+***** Log#206 --> 2020-02-07 06:58:26.967 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=USD | BetragCHF=230.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:58:00 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=USD | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:58:16 | 
+***** Log#206 --> E N D E
+
+***** Log#207 --> 2020-02-07 06:59:07.929 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-26 | Buchungsdatum=2019-12-26 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=USD | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:58:16 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-31 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=USD | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:58:57 | 
+***** Log#207 --> E N D E
+
+***** Log#208 --> 2020-02-07 10:29:27.09 durch User: 64-Muster Felix-Talents | [B@1a5927e4 | Europe/Zurich | 
+Vorgang: Belegposition #3 UPDATE
+old values in mysql-db: | BelegpositionId=3 | BelegkopfId=3 | PositionsNummer=1 | Konto=2000 | SollHaben=S | Betrag=100.0 | Waehrung=EUR | BetragCHF=123.25 | PositionsText=Positionstext | BelegpositionTrackChangeUser=Kämpf | BelegpositionTrackChangeTimestamp=2020-02-02 20:28:39 | 
+Vorgang: Belegposition #3 UPDATE
+new values in mysql-db: | BelegpositionId=3 | BelegkopfId=3 | PositionsNummer=1 | Konto=2000 | SollHaben=S | Betrag=120.0 | Waehrung=EUR | BetragCHF=140.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 10:29:18 | 
+***** Log#208 --> E N D E
+
+***** Log#209 --> 2020-02-07 10:29:27.35 durch User: 64-Muster Felix-Talents | [B@1a5927e4 | Europe/Zurich | 
+Vorgang: Belegkopf #3 UPDATE
+old values in mysql-db: | BelegkopfId=3 | BelegNummer=2 | Belegdatum=2020-02-03 | Buchungsdatum=2020-02-04 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2 | Betrag=200.0 | BelegWaehrung=USD | BetragCHF=189.24 | BelegkopfTrackChangeUser=Reto irgendwas | BelegkopfTrackChangeTimestamp=2020-02-06 06:16:42 | 
+Vorgang: Belegkopf #3 UPDATE
+new values in mysql-db: | BelegkopfId=3 | BelegNummer=2 | Belegdatum=2020-02-02 | Buchungsdatum=2020-02-03 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2 | Betrag=120.0 | BelegWaehrung=EUR | BetragCHF=140.0 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 10:29:19 | 
+***** Log#209 --> E N D E
+
+***** Log#210 --> 2020-02-07 10:36:38.377 durch User: 64-Muster Felix-Talents | [B@677e1de3 | Europe/Zurich | 
+Vorgang: Belegposition #10 UPDATE
+old values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=USD | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:57:39 | 
+Vorgang: Belegposition #10 UPDATE
+new values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=USD | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 10:36:30 | 
+***** Log#210 --> E N D E
+
+***** Log#211 --> 2020-02-07 10:36:38.615 durch User: 64-Muster Felix-Talents | [B@677e1de3 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-31 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=USD | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 06:58:57 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-30 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=USD | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 10:36:31 | 
+***** Log#211 --> E N D E
+
+***** Log#212 --> 2020-02-07 10:36:48.362 durch User: 64-Muster Felix-Talents | [B@677e1de3 | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=USD | BetragCHF=113.23 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:58:14 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=CHF | BetragCHF=113.23 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 10:36:40 | 
+***** Log#212 --> E N D E
+
+***** Log#213 --> 2020-02-07 10:36:48.616 durch User: 64-Muster Felix-Talents | [B@677e1de3 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-30 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=USD | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 10:36:31 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-30 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 10:36:41 | 
+***** Log#213 --> E N D E
+
+***** Log#214 --> 2020-02-07 10:36:55.903 durch User: 64-Muster Felix-Talents | [B@677e1de3 | Europe/Zurich | 
+Vorgang: Belegposition #10 UPDATE
+old values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=USD | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 10:36:30 | 
+Vorgang: Belegposition #10 UPDATE
+new values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=CHF | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 10:36:47 | 
+***** Log#214 --> E N D E
+
+***** Log#215 --> 2020-02-07 10:36:56.134 durch User: 64-Muster Felix-Talents | [B@677e1de3 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-30 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 10:36:41 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-30 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 10:36:48 | 
+***** Log#215 --> E N D E
+
+***** Log#216 --> 2020-02-07 10:37:01.922 durch User: 64-Muster Felix-Talents | [B@677e1de3 | Europe/Zurich | 
+Vorgang: Belegposition #12 UPDATE
+old values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=1020 | SollHaben=S | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 06:57:59 | 
+Vorgang: Belegposition #12 UPDATE
+new values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=1020 | SollHaben=S | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 10:36:53 | 
+***** Log#216 --> E N D E
+
+***** Log#217 --> 2020-02-07 10:37:02.17 durch User: 64-Muster Felix-Talents | [B@677e1de3 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-30 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 10:36:48 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-30 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 10:36:54 | 
+***** Log#217 --> E N D E
+
+***** Log#218 --> 2020-02-07 12:41:32.669 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=CHF | BetragCHF=113.23 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 10:36:40 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=EUR | BetragCHF=113.23 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 12:41:22 | 
+***** Log#218 --> E N D E
+
+***** Log#219 --> 2020-02-07 12:41:32.936 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-30 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 10:36:54 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-29 | Buchungsdatum=2019-12-30 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 12:41:23 | 
+***** Log#219 --> E N D E
+
+***** Log#220 --> 2020-02-07 12:41:38.947 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegposition #10 UPDATE
+old values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=CHF | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 10:36:47 | 
+Vorgang: Belegposition #10 UPDATE
+new values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=EUR | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 12:41:28 | 
+***** Log#220 --> E N D E
+
+***** Log#221 --> 2020-02-07 12:41:39.182 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-29 | Buchungsdatum=2019-12-30 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 12:41:23 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-29 | Buchungsdatum=2019-12-30 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 12:41:29 | 
+***** Log#221 --> E N D E
+
+***** Log#222 --> 2020-02-07 12:41:44.548 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegposition #12 UPDATE
+old values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=1020 | SollHaben=S | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 10:36:53 | 
+Vorgang: Belegposition #12 UPDATE
+new values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=1020 | SollHaben=S | Betrag=100.0 | Waehrung=EUR | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 12:41:34 | 
+***** Log#222 --> E N D E
+
+***** Log#223 --> 2020-02-07 12:41:44.779 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-29 | Buchungsdatum=2019-12-30 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 12:41:29 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-29 | Buchungsdatum=2019-12-30 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=EUR | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 12:41:35 | 
+***** Log#223 --> E N D E
+
+***** Log#224 --> 2020-02-07 12:57:35.723 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#225 --> 2020-02-07 12:57:41.347 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegposition #13 UPDATE
+old values in mysql-db: | BelegpositionId=13 | BelegkopfId=2 | PositionsNummer=4 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-07 12:57:25 | 
+Vorgang: Belegposition #13 UPDATE
+new values in mysql-db: | BelegpositionId=13 | BelegkopfId=2 | PositionsNummer=4 | Konto=1100 | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 12:57:31 | 
+***** Log#225 --> E N D E
+
+***** Log#226 --> 2020-02-07 12:57:41.633 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-29 | Buchungsdatum=2019-12-30 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=EUR | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 12:41:35 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-29 | Buchungsdatum=2019-12-30 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 12:57:32 | 
+***** Log#226 --> E N D E
+
+***** Log#227 --> 2020-02-07 12:57:53.93 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegposition #13 UPDATE
+old values in mysql-db: | BelegpositionId=13 | BelegkopfId=2 | PositionsNummer=4 | Konto=1100 | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 12:57:31 | 
+Vorgang: Belegposition #13 UPDATE
+new values in mysql-db: | BelegpositionId=13 | BelegkopfId=2 | PositionsNummer=4 | Konto=1100 | SollHaben=S | Betrag=677.0 | Waehrung=CHF | BetragCHF=677.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 12:57:44 | 
+***** Log#227 --> E N D E
+
+***** Log#228 --> 2020-02-07 12:57:54.182 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-29 | Buchungsdatum=2019-12-30 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=230.0 | BelegWaehrung=CHF | BetragCHF=213.23000000000002 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 12:57:32 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=200 | Belegdatum=2019-12-29 | Buchungsdatum=2019-12-30 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=907.0 | BelegWaehrung=CHF | BetragCHF=890.23 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 12:57:45 | 
+***** Log#228 --> E N D E
+
+***** Log#229 --> 2020-02-07 16:21:37.976 durch User: 64-Muster Felix-Talents | [B@220104f5 | Europe/Zurich | 
+Vorgang: Belegkopf #1 UPDATE
+old values in mysql-db: | BelegkopfId=1 | BelegNummer=1 | Belegdatum=2020-02-02 | Buchungsdatum=2020-02-02 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 1 | Betrag=100.0 | BelegWaehrung=CHF | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=Kämpf Bernhard User #54 | BelegkopfTrackChangeTimestamp=2020-02-06 06:16:27 | 
+Vorgang: Belegkopf #1 UPDATE
+new values in mysql-db: | BelegkopfId=1 | BelegNummer=1 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=100.0 | BelegWaehrung=CHF | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 16:21:33 | 
+***** Log#229 --> E N D E
+
+***** Log#230 --> 2020-02-07 16:22:23.491 durch User: 64-Muster Felix-Talents | [B@220104f5 | Europe/Zurich | 
+Vorgang: Belegposition #1 UPDATE
+old values in mysql-db: | BelegpositionId=1 | BelegkopfId=1 | PositionsNummer=1 | Konto=1010 | SollHaben=S | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:30:02 | 
+Vorgang: Belegposition #1 UPDATE
+new values in mysql-db: | BelegpositionId=1 | BelegkopfId=1 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=1650.0 | Waehrung=CHF | BetragCHF=1650.0 | PositionsText= | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 16:22:14 | 
+***** Log#230 --> E N D E
+
+***** Log#231 --> 2020-02-07 16:22:23.694 durch User: 64-Muster Felix-Talents | [B@220104f5 | Europe/Zurich | 
+Vorgang: Belegkopf #1 UPDATE
+old values in mysql-db: | BelegkopfId=1 | BelegNummer=1 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=100.0 | BelegWaehrung=CHF | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 16:21:33 | 
+Vorgang: Belegkopf #1 UPDATE
+new values in mysql-db: | BelegkopfId=1 | BelegNummer=1 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=1650.0 | BelegWaehrung=CHF | BetragCHF=1650.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 16:22:15 | 
+***** Log#231 --> E N D E
+
+***** Log#232 --> 2020-02-07 16:22:51.369 durch User: 64-Muster Felix-Talents | [B@220104f5 | Europe/Zurich | 
+Vorgang: Belegposition #2 UPDATE
+old values in mysql-db: | BelegpositionId=2 | BelegkopfId=1 | PositionsNummer=2 | Konto=1000 | SollHaben=H | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:31:00 | 
+Vorgang: Belegposition #2 UPDATE
+new values in mysql-db: | BelegpositionId=2 | BelegkopfId=1 | PositionsNummer=2 | Konto=9999 | SollHaben=H | Betrag=1650.0 | Waehrung=CHF | BetragCHF=1650.0 | PositionsText= | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 16:22:42 | 
+***** Log#232 --> E N D E
+
+***** Log#233 --> 2020-02-07 16:22:51.593 durch User: 64-Muster Felix-Talents | [B@220104f5 | Europe/Zurich | 
+Vorgang: Belegkopf #1 UPDATE
+old values in mysql-db: | BelegkopfId=1 | BelegNummer=1 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=1650.0 | BelegWaehrung=CHF | BetragCHF=1650.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 16:22:15 | 
+Vorgang: Belegkopf #1 UPDATE
+new values in mysql-db: | BelegkopfId=1 | BelegNummer=1 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=1650.0 | BelegWaehrung=CHF | BetragCHF=1650.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 16:22:43 | 
+***** Log#233 --> E N D E
+
+***** Log#234 --> 2020-02-07 16:34:07.663 durch User: 64-Muster Felix-Talents | [B@4dd2fd31 | Europe/Zurich | 
+Vorgang: Belegkopf #1 UPDATE
+old values in mysql-db: | BelegkopfId=1 | BelegNummer=1 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=1650.0 | BelegWaehrung=CHF | BetragCHF=1650.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 16:22:43 | 
+
+***** Log#235 --> 2020-02-07 16:38:33.483 durch User: 64-Muster Felix-Talents | [B@4db8da81 | Europe/Zurich | 
+Vorgang: Belegkopf #1 UPDATE
+old values in mysql-db: | BelegkopfId=1 | BelegNummer=1 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=1650.0 | BelegWaehrung=CHF | BetragCHF=1650.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 16:22:43 | 
+Vorgang: Belegkopf #1 UPDATE
+new values in mysql-db: | BelegkopfId=1 | BelegNummer=1 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=1650.0 | BelegWaehrung=CHF | BetragCHF=1650.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 16:38:23 | 
+***** Log#235 --> E N D E
+
+***** Log#236 --> 2020-02-07 17:02:55.463 durch User: 64-Muster Felix-Talents | [B@48e2af1d | Europe/Zurich | 
+Vorgang: Belegposition #11 LOESCHEN
+old values in mysql-db: | BelegpositionId=11 | BelegkopfId=1 | PositionsNummer=3 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-07 05:34:16 | 
+***** Log#236 --> E N D E
+
+***** Log#237 --> 2020-02-07 17:17:39.67 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=3 | Belegdatum=2019-12-29 | Buchungsdatum=2019-12-30 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=907.0 | BelegWaehrung=CHF | BetragCHF=890.23 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 12:57:45 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=3 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=907.0 | BelegWaehrung=CHF | BetragCHF=890.23 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:17:30 | 
+***** Log#237 --> E N D E
+
+***** Log#238 --> 2020-02-07 17:19:29.184 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #9 UPDATE
+old values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=130.0 | Waehrung=EUR | BetragCHF=113.23 | PositionsText=Bareinnahmen | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 12:41:22 | 
+Vorgang: Belegposition #9 UPDATE
+new values in mysql-db: | BelegpositionId=9 | BelegkopfId=2 | PositionsNummer=1 | Konto=1010 | SollHaben=S | Betrag=12345.45 | Waehrung=CHF | BetragCHF=12345.45 | PositionsText= | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 17:19:36 | 
+***** Log#238 --> E N D E
+
+***** Log#239 --> 2020-02-07 17:19:57.097 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=3 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=907.0 | BelegWaehrung=CHF | BetragCHF=890.23 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:17:30 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=3 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=13122.45 | BelegWaehrung=CHF | BetragCHF=13122.45 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:20:05 | 
+***** Log#239 --> E N D E
+
+***** Log#240 --> 2020-02-07 17:20:47.336 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #10 UPDATE
+old values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=1000.0 | Waehrung=EUR | BetragCHF=1000.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 12:41:28 | 
+Vorgang: Belegposition #10 UPDATE
+new values in mysql-db: | BelegpositionId=10 | BelegkopfId=2 | PositionsNummer=2 | Konto=9999 | SollHaben=H | Betrag=12345.45 | Waehrung=CHF | BetragCHF=12345.45 | PositionsText= | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 17:20:39 | 
+***** Log#240 --> E N D E
+
+***** Log#241 --> 2020-02-07 17:20:49.188 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=3 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=13122.45 | BelegWaehrung=CHF | BetragCHF=13122.45 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:20:05 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=3 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=13122.45 | BelegWaehrung=CHF | BetragCHF=13122.45 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:20:39 | 
+***** Log#241 --> E N D E
+
+***** Log#242 --> 2020-02-07 17:20:53.321 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #12 LOESCHEN
+old values in mysql-db: | BelegpositionId=12 | BelegkopfId=2 | PositionsNummer=3 | Konto=1020 | SollHaben=S | Betrag=100.0 | Waehrung=EUR | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 12:41:34 | 
+***** Log#242 --> E N D E
+
+***** Log#243 --> 2020-02-07 17:20:55.999 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #13 LOESCHEN
+old values in mysql-db: | BelegpositionId=13 | BelegkopfId=2 | PositionsNummer=4 | Konto=1100 | SollHaben=S | Betrag=677.0 | Waehrung=CHF | BetragCHF=677.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 12:57:44 | 
+***** Log#243 --> E N D E
+
+***** Log#244 --> 2020-02-07 17:21:19.097 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegkopf #2 UPDATE
+old values in mysql-db: | BelegkopfId=2 | BelegNummer=3 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2019 | Betrag=13122.45 | BelegWaehrung=CHF | BetragCHF=13122.45 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:20:39 | 
+Vorgang: Belegkopf #2 UPDATE
+new values in mysql-db: | BelegkopfId=2 | BelegNummer=3 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=12345.45 | BelegWaehrung=CHF | BetragCHF=12345.45 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:21:09 | 
+***** Log#244 --> E N D E
+
+***** Log#245 --> 2020-02-07 17:28:46.784 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegkopf #3 UPDATE
+old values in mysql-db: | BelegkopfId=3 | BelegNummer=2 | Belegdatum=2020-02-02 | Buchungsdatum=2020-02-03 | Buchungsperiode=2020-01-01 | BelegkopfText=Buchung 2 | Betrag=120.0 | BelegWaehrung=EUR | BetragCHF=140.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 10:29:19 | 
+Vorgang: Belegkopf #3 UPDATE
+new values in mysql-db: | BelegkopfId=3 | BelegNummer=2 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=120.0 | BelegWaehrung=EUR | BetragCHF=140.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:28:37 | 
+***** Log#245 --> E N D E
+
+***** Log#246 --> 2020-02-07 17:28:49.789 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #4 LOESCHEN
+old values in mysql-db: | BelegpositionId=4 | BelegkopfId=3 | PositionsNummer=2 | Konto=1100 | SollHaben=H | Betrag=100.0 | Waehrung=EUR | BetragCHF=100.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 05:46:07 | 
+***** Log#246 --> E N D E
+
+***** Log#247 --> 2020-02-07 17:28:51.87 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #7 LOESCHEN
+old values in mysql-db: | BelegpositionId=7 | BelegkopfId=3 | PositionsNummer=3 | Konto=1010 | SollHaben=H | Betrag=100.0 | Waehrung=EUR | BetragCHF=120.0 | PositionsText=Test II und so | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 00:16:23 | 
+***** Log#247 --> E N D E
+
+***** Log#248 --> 2020-02-07 17:28:53.971 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #8 LOESCHEN
+old values in mysql-db: | BelegpositionId=8 | BelegkopfId=3 | PositionsNummer=4 | Konto=1020 | SollHaben=H | Betrag=120.0 | Waehrung=EUR | BetragCHF=200.0 | PositionsText=dalf aöldfk aöfdkasödf | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 00:22:19 | 
+***** Log#248 --> E N D E
+
+***** Log#249 --> 2020-02-07 17:28:56.339 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #3 LOESCHEN
+old values in mysql-db: | BelegpositionId=3 | BelegkopfId=3 | PositionsNummer=1 | Konto=2000 | SollHaben=S | Betrag=120.0 | Waehrung=EUR | BetragCHF=140.0 | PositionsText=Positionstext | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 10:29:18 | 
+***** Log#249 --> E N D E
+
+***** Log#250 --> 2020-02-07 17:29:00.824 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#251 --> 2020-02-07 17:29:39.402 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #14 UPDATE
+old values in mysql-db: | BelegpositionId=14 | BelegkopfId=3 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-07 17:28:50 | 
+Vorgang: Belegposition #14 UPDATE
+new values in mysql-db: | BelegpositionId=14 | BelegkopfId=3 | PositionsNummer=1 | Konto=1060 | SollHaben=S | Betrag=10000.0 | Waehrung=EUR | BetragCHF=11345.45 | PositionsText=Eröffnungsbuchung | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 17:29:30 | 
+***** Log#251 --> E N D E
+
+***** Log#252 --> 2020-02-07 17:29:39.568 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegkopf #3 UPDATE
+old values in mysql-db: | BelegkopfId=3 | BelegNummer=2 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=120.0 | BelegWaehrung=EUR | BetragCHF=140.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:28:37 | 
+Vorgang: Belegkopf #3 UPDATE
+new values in mysql-db: | BelegkopfId=3 | BelegNummer=2 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=10000.0 | BelegWaehrung=EUR | BetragCHF=11345.45 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:29:30 | 
+***** Log#252 --> E N D E
+
+***** Log#253 --> 2020-02-07 17:29:42.21 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#254 --> 2020-02-07 17:30:16.379 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #15 UPDATE
+old values in mysql-db: | BelegpositionId=15 | BelegkopfId=3 | PositionsNummer=2 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-07 17:29:32 | 
+Vorgang: Belegposition #15 UPDATE
+new values in mysql-db: | BelegpositionId=15 | BelegkopfId=3 | PositionsNummer=2 | Konto=9999 | SollHaben=H | Betrag=10000.0 | Waehrung=EUR | BetragCHF=11345.45 | PositionsText= | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 17:30:07 | 
+***** Log#254 --> E N D E
+
+***** Log#255 --> 2020-02-07 17:30:17.172 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegkopf #3 UPDATE
+old values in mysql-db: | BelegkopfId=3 | BelegNummer=2 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=10000.0 | BelegWaehrung=EUR | BetragCHF=11345.45 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:29:30 | 
+Vorgang: Belegkopf #3 UPDATE
+new values in mysql-db: | BelegkopfId=3 | BelegNummer=2 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=10000.0 | BelegWaehrung=EUR | BetragCHF=11345.45 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:30:08 | 
+***** Log#255 --> E N D E
+
+***** Log#256 --> 2020-02-07 17:30:24.998 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegposition #14 UPDATE
+old values in mysql-db: | BelegpositionId=14 | BelegkopfId=3 | PositionsNummer=1 | Konto=1060 | SollHaben=S | Betrag=10000.0 | Waehrung=EUR | BetragCHF=11345.45 | PositionsText=Eröffnungsbuchung | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 17:29:30 | 
+Vorgang: Belegposition #14 UPDATE
+new values in mysql-db: | BelegpositionId=14 | BelegkopfId=3 | PositionsNummer=1 | Konto=1060 | SollHaben=S | Betrag=10000.0 | Waehrung=EUR | BetragCHF=11345.45 | PositionsText= | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 17:30:15 | 
+***** Log#256 --> E N D E
+
+***** Log#257 --> 2020-02-07 17:30:25.903 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+Vorgang: Belegkopf #3 UPDATE
+old values in mysql-db: | BelegkopfId=3 | BelegNummer=2 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=10000.0 | BelegWaehrung=EUR | BetragCHF=11345.45 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:30:08 | 
+Vorgang: Belegkopf #3 UPDATE
+new values in mysql-db: | BelegkopfId=3 | BelegNummer=2 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=10000.0 | BelegWaehrung=EUR | BetragCHF=11345.45 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 17:30:16 | 
+***** Log#257 --> E N D E
+
+***** Log#258 --> 2020-02-07 21:53:07.633 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#259 --> 2020-02-07 21:53:25.111 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegposition #16 UPDATE
+old values in mysql-db: | BelegpositionId=16 | BelegkopfId=17 | PositionsNummer=1 | Konto=null | SollHaben= | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-07 21:52:58 | 
+Vorgang: Belegposition #16 UPDATE
+new values in mysql-db: | BelegpositionId=16 | BelegkopfId=17 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 21:53:16 | 
+***** Log#259 --> E N D E
+
+***** Log#260 --> 2020-02-07 21:53:25.385 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegkopf #17 UPDATE
+old values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 21:21:26 | 
+Vorgang: Belegkopf #17 UPDATE
+new values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=100.0 | BelegWaehrung=USD | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 21:53:17 | 
+***** Log#260 --> E N D E
+
+***** Log#261 --> 2020-02-07 21:53:29.06 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#262 --> 2020-02-07 21:56:36.591 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegposition #17 UPDATE
+old values in mysql-db: | BelegpositionId=17 | BelegkopfId=17 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-07 21:53:20 | 
+Vorgang: Belegposition #17 UPDATE
+new values in mysql-db: | BelegpositionId=17 | BelegkopfId=17 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 21:56:28 | 
+***** Log#262 --> E N D E
+
+***** Log#263 --> 2020-02-07 21:56:36.973 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegkopf #17 UPDATE
+old values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=100.0 | BelegWaehrung=USD | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 21:53:17 | 
+Vorgang: Belegkopf #17 UPDATE
+new values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=100.0 | BelegWaehrung=USD | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 21:56:29 | 
+***** Log#263 --> E N D E
+
+***** Log#264 --> 2020-02-07 21:56:52.796 durch User: 64-Muster Felix-Talents | [B@d7db7a4 | Europe/Zurich | 
+Vorgang: Belegposition #17 LOESCHEN
+old values in mysql-db: | BelegpositionId=17 | BelegkopfId=17 | PositionsNummer=2 | Konto=1020 | SollHaben=H | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 21:56:28 | 
+***** Log#264 --> E N D E
+
+***** Log#265 --> 2020-02-07 21:59:31.559 durch User: 64-Muster Felix-Talents | [B@6dda0475 | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#266 --> 2020-02-07 22:02:34.447 durch User: 64-Muster Felix-Talents | [B@134a37a0 | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#267 --> 2020-02-07 22:02:54.204 durch User: 64-Muster Felix-Talents | [B@134a37a0 | Europe/Zurich | 
+Vorgang: Belegposition #19 UPDATE
+old values in mysql-db: | BelegpositionId=19 | BelegkopfId=17 | PositionsNummer=3 | Konto=null | SollHaben= | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-07 22:02:25 | 
+
+***** Log#268 --> 2020-02-07 22:29:49.183 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #18 LOESCHEN
+old values in mysql-db: | BelegpositionId=18 | BelegkopfId=17 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-07 21:59:22 | 
+***** Log#268 --> E N D E
+
+***** Log#269 --> 2020-02-07 22:29:56.515 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#270 --> 2020-02-07 22:33:13.328 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegkopf #17 UPDATE
+old values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=100.0 | BelegWaehrung=USD | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 21:56:29 | 
+Vorgang: Belegkopf #17 UPDATE
+new values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=100.0 | BelegWaehrung=CHF | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 22:33:04 | 
+***** Log#270 --> E N D E
+
+***** Log#271 --> 2020-02-07 22:33:25.127 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#272 --> 2020-02-07 22:41:59.435 durch User: 64-Muster Felix-Talents | [B@65c5b7cd | Europe/Zurich | 
+neu values in mysql-db: | 
+***** Log#277 --> 2020-02-08 01:56:54.249 durch User: 64-Muster Felix-Talents | [B@109250f0 | Europe/Zurich | 
+Vorgang: Belegposition #26 LOESCHEN
+old values in mysql-db: | BelegpositionId=26 | BelegkopfId=17 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 01:46:45 | 
+***** Log#277 --> E N D E
+
+***** Log#280 --> 2020-02-08 02:12:28.721 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #28 UPDATE
+old values in mysql-db: | BelegpositionId=28 | BelegkopfId=17 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 02:12:05 | 
+Vorgang: Belegposition #28 UPDATE
+new values in mysql-db: | BelegpositionId=28 | BelegkopfId=17 | PositionsNummer=2 | Konto=1010 | SollHaben=H | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=ddd | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 02:12:20 | 
+***** Log#280 --> E N D E
+
+***** Log#281 --> 2020-02-08 02:12:29.004 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegkopf #17 UPDATE
+old values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=100.0 | BelegWaehrung=CHF | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-07 22:33:04 | 
+Vorgang: Belegkopf #17 UPDATE
+new values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=100.0 | BelegWaehrung=USD | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 02:12:21 | 
+***** Log#281 --> E N D E
+
+***** Log#283 --> 2020-02-08 02:12:40.292 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #29 LOESCHEN
+old values in mysql-db: | BelegpositionId=29 | BelegkopfId=17 | PositionsNummer=3 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 02:12:27 | 
+***** Log#283 --> E N D E
+
+***** Log#284 --> 2020-02-08 02:12:52.119 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #28 LOESCHEN
+old values in mysql-db: | BelegpositionId=28 | BelegkopfId=17 | PositionsNummer=2 | Konto=1010 | SollHaben=H | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=ddd | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 02:12:20 | 
+***** Log#284 --> E N D E
+
+***** Log#287 --> 2020-02-08 02:13:21.474 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #31 LOESCHEN
+old values in mysql-db: | BelegpositionId=31 | BelegkopfId=17 | PositionsNummer=3 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 02:13:04 | 
+***** Log#287 --> E N D E
+
+***** Log#288 --> 2020-02-08 02:13:25.713 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #30 LOESCHEN
+old values in mysql-db: | BelegpositionId=30 | BelegkopfId=17 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 02:12:45 | 
+***** Log#288 --> E N D E
+
+***** Log#290 --> 2020-02-08 02:13:40.767 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegposition #32 UPDATE
+old values in mysql-db: | BelegpositionId=32 | BelegkopfId=17 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 02:13:18 | 
+Vorgang: Belegposition #32 UPDATE
+new values in mysql-db: | BelegpositionId=32 | BelegkopfId=17 | PositionsNummer=2 | Konto=1010 | SollHaben=H | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 02:13:32 | 
+***** Log#290 --> E N D E
+
+***** Log#291 --> 2020-02-08 02:13:41.039 durch User: 64-Muster Felix-Talents | [B@73ba2c5f | Europe/Zurich | 
+Vorgang: Belegkopf #17 UPDATE
+old values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=100.0 | BelegWaehrung=USD | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 02:12:21 | 
+Vorgang: Belegkopf #17 UPDATE
+new values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=100.0 | BelegWaehrung=USD | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 02:13:33 | 
+***** Log#291 --> E N D E
+
+***** Log#292 --> 2020-02-08 02:34:14.378 durch User: 64-Muster Felix-Talents | [B@109250f0 | Europe/Zurich | 
+Vorgang: Belegposition #16 UPDATE
+old values in mysql-db: | BelegpositionId=16 | BelegkopfId=17 | PositionsNummer=1 | Konto=1000 | SollHaben=S | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=neue Position | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-07 21:53:16 | 
+Vorgang: Belegposition #16 UPDATE
+new values in mysql-db: | BelegpositionId=16 | BelegkopfId=17 | PositionsNummer=1 | Konto=1100 | SollHaben=S | Betrag=450.9 | Waehrung=CHF | BetragCHF=450.9 | PositionsText= | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 02:34:06 | 
+***** Log#292 --> E N D E
+
+***** Log#293 --> 2020-02-08 02:34:14.835 durch User: 64-Muster Felix-Talents | [B@109250f0 | Europe/Zurich | 
+Vorgang: Belegkopf #17 UPDATE
+old values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=100.0 | BelegWaehrung=USD | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 02:13:33 | 
+Vorgang: Belegkopf #17 UPDATE
+new values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=450.9 | BelegWaehrung=CHF | BetragCHF=450.9 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 02:34:07 | 
+***** Log#293 --> E N D E
+
+***** Log#294 --> 2020-02-08 02:34:34.027 durch User: 64-Muster Felix-Talents | [B@109250f0 | Europe/Zurich | 
+Vorgang: Belegposition #32 LOESCHEN
+old values in mysql-db: | BelegpositionId=32 | BelegkopfId=17 | PositionsNummer=2 | Konto=1010 | SollHaben=H | Betrag=100.0 | Waehrung=USD | BetragCHF=100.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 02:13:32 | 
+***** Log#294 --> E N D E
+
+***** Log#296 --> 2020-02-08 02:34:45.791 durch User: 64-Muster Felix-Talents | [B@109250f0 | Europe/Zurich | 
+Vorgang: Belegposition #33 UPDATE
+old values in mysql-db: | BelegpositionId=33 | BelegkopfId=17 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=450.9 | Waehrung=CHF | BetragCHF=450.9 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 02:34:28 | 
+Vorgang: Belegposition #33 UPDATE
+new values in mysql-db: | BelegpositionId=33 | BelegkopfId=17 | PositionsNummer=2 | Konto=9999 | SollHaben=H | Betrag=450.9 | Waehrung=CHF | BetragCHF=450.9 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 02:34:37 | 
+***** Log#296 --> E N D E
+
+***** Log#297 --> 2020-02-08 02:34:46.052 durch User: 64-Muster Felix-Talents | [B@109250f0 | Europe/Zurich | 
+Vorgang: Belegkopf #17 UPDATE
+old values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=450.9 | BelegWaehrung=CHF | BetragCHF=450.9 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 02:34:07 | 
+Vorgang: Belegkopf #17 UPDATE
+new values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=450.9 | BelegWaehrung=CHF | BetragCHF=450.9 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 02:34:38 | 
+***** Log#297 --> E N D E
+
+***** Log#298 --> 2020-02-08 08:27:15.679 durch User: 64-Muster Felix-Talents | [B@4db8da81 | Europe/Zurich | 
+Vorgang: Belegposition #16 UPDATE
+old values in mysql-db: | BelegpositionId=16 | BelegkopfId=17 | PositionsNummer=1 | Konto=1100 | SollHaben=S | Betrag=450.9 | Waehrung=CHF | BetragCHF=450.9 | PositionsText= | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 02:34:06 | 
+Vorgang: Belegposition #16 UPDATE
+new values in mysql-db: | BelegpositionId=16 | BelegkopfId=17 | PositionsNummer=1 | Konto=1100 | SollHaben=S | Betrag=344.0 | Waehrung=CHF | BetragCHF=344.0 | PositionsText= | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 08:27:04 | 
+***** Log#298 --> E N D E
+
+***** Log#299 --> 2020-02-08 08:27:15.966 durch User: 64-Muster Felix-Talents | [B@4db8da81 | Europe/Zurich | 
+Vorgang: Belegkopf #17 UPDATE
+old values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=450.9 | BelegWaehrung=CHF | BetragCHF=450.9 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 02:34:38 | 
+Vorgang: Belegkopf #17 UPDATE
+new values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=344.0 | BelegWaehrung=CHF | BetragCHF=344.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 08:27:05 | 
+***** Log#299 --> E N D E
+
+***** Log#300 --> 2020-02-08 08:27:25.367 durch User: 64-Muster Felix-Talents | [B@4db8da81 | Europe/Zurich | 
+Vorgang: Belegposition #33 UPDATE
+old values in mysql-db: | BelegpositionId=33 | BelegkopfId=17 | PositionsNummer=2 | Konto=9999 | SollHaben=H | Betrag=450.9 | Waehrung=CHF | BetragCHF=450.9 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 02:34:37 | 
+Vorgang: Belegposition #33 UPDATE
+new values in mysql-db: | BelegpositionId=33 | BelegkopfId=17 | PositionsNummer=2 | Konto=9999 | SollHaben=H | Betrag=344.0 | Waehrung=CHF | BetragCHF=344.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 08:27:14 | 
+***** Log#300 --> E N D E
+
+***** Log#301 --> 2020-02-08 08:27:25.625 durch User: 64-Muster Felix-Talents | [B@4db8da81 | Europe/Zurich | 
+Vorgang: Belegkopf #17 UPDATE
+old values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=344.0 | BelegWaehrung=CHF | BetragCHF=344.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 08:27:05 | 
+Vorgang: Belegkopf #17 UPDATE
+new values in mysql-db: | BelegkopfId=17 | BelegNummer=4 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=344.0 | BelegWaehrung=CHF | BetragCHF=344.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 08:27:15 | 
+***** Log#301 --> E N D E
+
+***** Log#303 --> 2020-02-08 17:37:46.595 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #18 UPDATE
+old values in mysql-db: | BelegkopfId=18 | BelegNummer=5 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:37:22 | 
+Vorgang: Belegkopf #18 UPDATE
+new values in mysql-db: | BelegkopfId=18 | BelegNummer=5 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:37:37 | 
+***** Log#303 --> E N D E
+
+***** Log#304 --> 2020-02-08 17:38:13.998 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #34 UPDATE
+old values in mysql-db: | BelegpositionId=34 | BelegkopfId=18 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:37:33 | 
+Vorgang: Belegposition #34 UPDATE
+new values in mysql-db: | BelegpositionId=34 | BelegkopfId=18 | PositionsNummer=1 | Konto=1300 | SollHaben=S | Betrag=1200.0 | Waehrung=CHF | BetragCHF=1200.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:38:04 | 
+***** Log#304 --> E N D E
+
+***** Log#305 --> 2020-02-08 17:38:14.272 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #18 UPDATE
+old values in mysql-db: | BelegkopfId=18 | BelegNummer=5 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:37:37 | 
+Vorgang: Belegkopf #18 UPDATE
+new values in mysql-db: | BelegkopfId=18 | BelegNummer=5 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=1200.0 | BelegWaehrung=CHF | BetragCHF=1200.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:38:05 | 
+***** Log#305 --> E N D E
+
+***** Log#307 --> 2020-02-08 17:38:23.937 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #35 UPDATE
+old values in mysql-db: | BelegpositionId=35 | BelegkopfId=18 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=1200.0 | Waehrung=CHF | BetragCHF=1200.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:38:07 | 
+Vorgang: Belegposition #35 UPDATE
+new values in mysql-db: | BelegpositionId=35 | BelegkopfId=18 | PositionsNummer=2 | Konto=9999 | SollHaben=H | Betrag=1200.0 | Waehrung=CHF | BetragCHF=1200.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:38:14 | 
+***** Log#307 --> E N D E
+
+***** Log#308 --> 2020-02-08 17:38:24.306 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #18 UPDATE
+old values in mysql-db: | BelegkopfId=18 | BelegNummer=5 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=1200.0 | BelegWaehrung=CHF | BetragCHF=1200.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:38:05 | 
+Vorgang: Belegkopf #18 UPDATE
+new values in mysql-db: | BelegkopfId=18 | BelegNummer=5 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=1200.0 | BelegWaehrung=CHF | BetragCHF=1200.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:38:15 | 
+***** Log#308 --> E N D E
+
+***** Log#310 --> 2020-02-08 17:39:01.267 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #36 UPDATE
+old values in mysql-db: | BelegpositionId=36 | BelegkopfId=19 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:38:32 | 
+Vorgang: Belegposition #36 UPDATE
+new values in mysql-db: | BelegpositionId=36 | BelegkopfId=19 | PositionsNummer=1 | Konto=1400 | SollHaben=S | Betrag=122399.9 | Waehrung=CHF | BetragCHF=122399.9 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:38:51 | 
+***** Log#310 --> E N D E
+
+***** Log#311 --> 2020-02-08 17:39:01.544 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #19 UPDATE
+old values in mysql-db: | BelegkopfId=19 | BelegNummer=6 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:38:23 | 
+Vorgang: Belegkopf #19 UPDATE
+new values in mysql-db: | BelegkopfId=19 | BelegNummer=6 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=122399.9 | BelegWaehrung=CHF | BetragCHF=122399.9 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:38:52 | 
+***** Log#311 --> E N D E
+
+***** Log#313 --> 2020-02-08 17:39:10.76 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #37 UPDATE
+old values in mysql-db: | BelegpositionId=37 | BelegkopfId=19 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=122399.9 | Waehrung=CHF | BetragCHF=122399.9 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:38:54 | 
+Vorgang: Belegposition #37 UPDATE
+new values in mysql-db: | BelegpositionId=37 | BelegkopfId=19 | PositionsNummer=2 | Konto=9999 | SollHaben=H | Betrag=122399.9 | Waehrung=CHF | BetragCHF=122399.9 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:39:01 | 
+***** Log#313 --> E N D E
+
+***** Log#314 --> 2020-02-08 17:39:11.196 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #19 UPDATE
+old values in mysql-db: | BelegkopfId=19 | BelegNummer=6 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=122399.9 | BelegWaehrung=CHF | BetragCHF=122399.9 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:38:52 | 
+Vorgang: Belegkopf #19 UPDATE
+new values in mysql-db: | BelegkopfId=19 | BelegNummer=6 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=122399.9 | BelegWaehrung=CHF | BetragCHF=122399.9 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:39:02 | 
+***** Log#314 --> E N D E
+
+***** Log#316 --> 2020-02-08 17:39:57.143 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #38 UPDATE
+old values in mysql-db: | BelegpositionId=38 | BelegkopfId=20 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:39:21 | 
+Vorgang: Belegposition #38 UPDATE
+new values in mysql-db: | BelegpositionId=38 | BelegkopfId=20 | PositionsNummer=1 | Konto=1520 | SollHaben=S | Betrag=22000.0 | Waehrung=CHF | BetragCHF=22000.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:39:47 | 
+***** Log#316 --> E N D E
+
+***** Log#317 --> 2020-02-08 17:39:57.447 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #20 UPDATE
+old values in mysql-db: | BelegkopfId=20 | BelegNummer=7 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:39:13 | 
+Vorgang: Belegkopf #20 UPDATE
+new values in mysql-db: | BelegkopfId=20 | BelegNummer=7 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=22000.0 | BelegWaehrung=CHF | BetragCHF=22000.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:39:48 | 
+***** Log#317 --> E N D E
+
+***** Log#319 --> 2020-02-08 17:40:06.317 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #39 UPDATE
+old values in mysql-db: | BelegpositionId=39 | BelegkopfId=20 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=22000.0 | Waehrung=CHF | BetragCHF=22000.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:39:50 | 
+Vorgang: Belegposition #39 UPDATE
+new values in mysql-db: | BelegpositionId=39 | BelegkopfId=20 | PositionsNummer=2 | Konto=9999 | SollHaben=H | Betrag=22000.0 | Waehrung=CHF | BetragCHF=22000.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:39:56 | 
+***** Log#319 --> E N D E
+
+***** Log#320 --> 2020-02-08 17:40:06.617 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #20 UPDATE
+old values in mysql-db: | BelegkopfId=20 | BelegNummer=7 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=22000.0 | BelegWaehrung=CHF | BetragCHF=22000.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:39:48 | 
+Vorgang: Belegkopf #20 UPDATE
+new values in mysql-db: | BelegkopfId=20 | BelegNummer=7 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=22000.0 | BelegWaehrung=CHF | BetragCHF=22000.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:39:57 | 
+***** Log#320 --> E N D E
+
+***** Log#322 --> 2020-02-08 17:40:57.822 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #40 UPDATE
+old values in mysql-db: | BelegpositionId=40 | BelegkopfId=21 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:40:20 | 
+Vorgang: Belegposition #40 UPDATE
+new values in mysql-db: | BelegpositionId=40 | BelegkopfId=21 | PositionsNummer=1 | Konto=2000 | SollHaben=H | Betrag=2300.0 | Waehrung=CHF | BetragCHF=2300.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:40:49 | 
+***** Log#322 --> E N D E
+
+***** Log#323 --> 2020-02-08 17:40:59.69 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #21 UPDATE
+old values in mysql-db: | BelegkopfId=21 | BelegNummer=8 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:40:11 | 
+
+***** Log#324 --> 2020-02-08 17:41:18.71 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #21 UPDATE
+old values in mysql-db: | BelegkopfId=21 | BelegNummer=8 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:40:11 | 
+Vorgang: Belegkopf #21 UPDATE
+new values in mysql-db: | BelegkopfId=21 | BelegNummer=8 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:41:09 | 
+***** Log#324 --> E N D E
+
+***** Log#326 --> 2020-02-08 17:41:25.413 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #41 UPDATE
+old values in mysql-db: | BelegpositionId=41 | BelegkopfId=21 | PositionsNummer=2 | Konto=null | SollHaben=S | Betrag=2300.0 | Waehrung=CHF | BetragCHF=2300.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:41:10 | 
+Vorgang: Belegposition #41 UPDATE
+new values in mysql-db: | BelegpositionId=41 | BelegkopfId=21 | PositionsNummer=2 | Konto=9999 | SollHaben=S | Betrag=2300.0 | Waehrung=CHF | BetragCHF=2300.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:41:16 | 
+***** Log#326 --> E N D E
+
+***** Log#327 --> 2020-02-08 17:41:25.736 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #21 UPDATE
+old values in mysql-db: | BelegkopfId=21 | BelegNummer=8 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:41:09 | 
+Vorgang: Belegkopf #21 UPDATE
+new values in mysql-db: | BelegkopfId=21 | BelegNummer=8 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=2300.0 | BelegWaehrung=CHF | BetragCHF=2300.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:41:16 | 
+***** Log#327 --> E N D E
+
+***** Log#329 --> 2020-02-08 17:42:30.244 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #42 UPDATE
+old values in mysql-db: | BelegpositionId=42 | BelegkopfId=22 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:41:54 | 
+Vorgang: Belegposition #42 UPDATE
+new values in mysql-db: | BelegpositionId=42 | BelegkopfId=22 | PositionsNummer=1 | Konto=2030 | SollHaben=S | Betrag=12220.0 | Waehrung=CHF | BetragCHF=12220.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:42:20 | 
+***** Log#329 --> E N D E
+
+***** Log#330 --> 2020-02-08 17:42:30.54 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #22 UPDATE
+old values in mysql-db: | BelegkopfId=22 | BelegNummer=9 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:41:45 | 
+Vorgang: Belegkopf #22 UPDATE
+new values in mysql-db: | BelegkopfId=22 | BelegNummer=9 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=12220.0 | BelegWaehrung=CHF | BetragCHF=12220.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:42:21 | 
+***** Log#330 --> E N D E
+
+***** Log#332 --> 2020-02-08 17:42:43.625 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #43 UPDATE
+old values in mysql-db: | BelegpositionId=43 | BelegkopfId=22 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=12220.0 | Waehrung=CHF | BetragCHF=12220.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:42:23 | 
+Vorgang: Belegposition #43 UPDATE
+new values in mysql-db: | BelegpositionId=43 | BelegkopfId=22 | PositionsNummer=2 | Konto=9999 | SollHaben=S | Betrag=12220.0 | Waehrung=CHF | BetragCHF=12220.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:42:34 | 
+***** Log#332 --> E N D E
+
+***** Log#333 --> 2020-02-08 17:42:43.903 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #22 UPDATE
+old values in mysql-db: | BelegkopfId=22 | BelegNummer=9 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=12220.0 | BelegWaehrung=CHF | BetragCHF=12220.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:42:21 | 
+Vorgang: Belegkopf #22 UPDATE
+new values in mysql-db: | BelegkopfId=22 | BelegNummer=9 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=24440.0 | BelegWaehrung=CHF | BetragCHF=24440.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:42:35 | 
+***** Log#333 --> E N D E
+
+***** Log#334 --> 2020-02-08 17:42:50.243 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #42 UPDATE
+old values in mysql-db: | BelegpositionId=42 | BelegkopfId=22 | PositionsNummer=1 | Konto=2030 | SollHaben=S | Betrag=12220.0 | Waehrung=CHF | BetragCHF=12220.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:42:20 | 
+Vorgang: Belegposition #42 UPDATE
+new values in mysql-db: | BelegpositionId=42 | BelegkopfId=22 | PositionsNummer=1 | Konto=2030 | SollHaben=H | Betrag=12220.0 | Waehrung=CHF | BetragCHF=12220.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:42:40 | 
+***** Log#334 --> E N D E
+
+***** Log#335 --> 2020-02-08 17:42:50.545 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #22 UPDATE
+old values in mysql-db: | BelegkopfId=22 | BelegNummer=9 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=24440.0 | BelegWaehrung=CHF | BetragCHF=24440.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:42:35 | 
+Vorgang: Belegkopf #22 UPDATE
+new values in mysql-db: | BelegkopfId=22 | BelegNummer=9 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=12220.0 | BelegWaehrung=CHF | BetragCHF=12220.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:42:41 | 
+***** Log#335 --> E N D E
+
+***** Log#337 --> 2020-02-08 17:43:37.687 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #44 UPDATE
+old values in mysql-db: | BelegpositionId=44 | BelegkopfId=23 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:42:57 | 
+Vorgang: Belegposition #44 UPDATE
+new values in mysql-db: | BelegpositionId=44 | BelegkopfId=23 | PositionsNummer=1 | Konto=2300 | SollHaben=H | Betrag=240.0 | Waehrung=CHF | BetragCHF=240.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:43:28 | 
+***** Log#337 --> E N D E
+
+***** Log#338 --> 2020-02-08 17:43:38.107 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #23 UPDATE
+old values in mysql-db: | BelegkopfId=23 | BelegNummer=10 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:42:48 | 
+Vorgang: Belegkopf #23 UPDATE
+new values in mysql-db: | BelegkopfId=23 | BelegNummer=10 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:43:29 | 
+***** Log#338 --> E N D E
+
+***** Log#340 --> 2020-02-08 17:43:47.774 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #45 UPDATE
+old values in mysql-db: | BelegpositionId=45 | BelegkopfId=23 | PositionsNummer=2 | Konto=null | SollHaben=S | Betrag=240.0 | Waehrung=CHF | BetragCHF=240.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:43:31 | 
+Vorgang: Belegposition #45 UPDATE
+new values in mysql-db: | BelegpositionId=45 | BelegkopfId=23 | PositionsNummer=2 | Konto=9999 | SollHaben=S | Betrag=240.0 | Waehrung=CHF | BetragCHF=240.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:43:38 | 
+***** Log#340 --> E N D E
+
+***** Log#341 --> 2020-02-08 17:43:48.064 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #23 UPDATE
+old values in mysql-db: | BelegkopfId=23 | BelegNummer=10 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:43:29 | 
+Vorgang: Belegkopf #23 UPDATE
+new values in mysql-db: | BelegkopfId=23 | BelegNummer=10 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=240.0 | BelegWaehrung=CHF | BetragCHF=240.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:43:39 | 
+***** Log#341 --> E N D E
+
+***** Log#343 --> 2020-02-08 17:44:49.04 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #46 UPDATE
+old values in mysql-db: | BelegpositionId=46 | BelegkopfId=24 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:43:55 | 
+Vorgang: Belegposition #46 UPDATE
+new values in mysql-db: | BelegpositionId=46 | BelegkopfId=24 | PositionsNummer=1 | Konto=2800 | SollHaben=H | Betrag=100000.0 | Waehrung=CHF | BetragCHF=100000.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:44:39 | 
+***** Log#343 --> E N D E
+
+***** Log#344 --> 2020-02-08 17:44:49.438 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #24 UPDATE
+old values in mysql-db: | BelegkopfId=24 | BelegNummer=11 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:43:45 | 
+Vorgang: Belegkopf #24 UPDATE
+new values in mysql-db: | BelegkopfId=24 | BelegNummer=11 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:44:40 | 
+***** Log#344 --> E N D E
+
+***** Log#346 --> 2020-02-08 17:44:57.937 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegposition #47 UPDATE
+old values in mysql-db: | BelegpositionId=47 | BelegkopfId=24 | PositionsNummer=2 | Konto=null | SollHaben=S | Betrag=100000.0 | Waehrung=CHF | BetragCHF=100000.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:44:42 | 
+Vorgang: Belegposition #47 UPDATE
+new values in mysql-db: | BelegpositionId=47 | BelegkopfId=24 | PositionsNummer=2 | Konto=9999 | SollHaben=S | Betrag=100000.0 | Waehrung=CHF | BetragCHF=100000.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:44:48 | 
+***** Log#346 --> E N D E
+
+***** Log#347 --> 2020-02-08 17:44:58.213 durch User: 64-Muster Felix-Talents | [B@5183b823 | Europe/Zurich | 
+Vorgang: Belegkopf #24 UPDATE
+old values in mysql-db: | BelegkopfId=24 | BelegNummer=11 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:44:40 | 
+Vorgang: Belegkopf #24 UPDATE
+new values in mysql-db: | BelegkopfId=24 | BelegNummer=11 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=100000.0 | BelegWaehrung=CHF | BetragCHF=100000.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:44:49 | 
+***** Log#347 --> E N D E
+
+***** Log#348 --> 2020-02-08 17:49:14.395 durch User: 64-Muster Felix-Talents | [B@5e321c9c | Europe/Zurich | 
+Vorgang: Belegposition #46 UPDATE
+old values in mysql-db: | BelegpositionId=46 | BelegkopfId=24 | PositionsNummer=1 | Konto=2800 | SollHaben=H | Betrag=100000.0 | Waehrung=CHF | BetragCHF=100000.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:44:39 | 
+Vorgang: Belegposition #46 UPDATE
+new values in mysql-db: | BelegpositionId=46 | BelegkopfId=24 | PositionsNummer=1 | Konto=2800 | SollHaben=H | Betrag=156524.8 | Waehrung=CHF | BetragCHF=156524.8 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:49:04 | 
+***** Log#348 --> E N D E
+
+***** Log#349 --> 2020-02-08 17:49:16.108 durch User: 64-Muster Felix-Talents | [B@5e321c9c | Europe/Zurich | 
+Vorgang: Belegkopf #24 UPDATE
+old values in mysql-db: | BelegkopfId=24 | BelegNummer=11 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=100000.0 | BelegWaehrung=CHF | BetragCHF=100000.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:44:49 | 
+Vorgang: Belegkopf #24 UPDATE
+new values in mysql-db: | BelegkopfId=24 | BelegNummer=11 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=100000.0 | BelegWaehrung=CHF | BetragCHF=100000.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:49:05 | 
+***** Log#349 --> E N D E
+
+***** Log#350 --> 2020-02-08 17:49:41.618 durch User: 64-Muster Felix-Talents | [B@5e321c9c | Europe/Zurich | 
+Vorgang: Belegposition #47 UPDATE
+old values in mysql-db: | BelegpositionId=47 | BelegkopfId=24 | PositionsNummer=2 | Konto=9999 | SollHaben=S | Betrag=100000.0 | Waehrung=CHF | BetragCHF=100000.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:44:48 | 
+Vorgang: Belegposition #47 UPDATE
+new values in mysql-db: | BelegpositionId=47 | BelegkopfId=24 | PositionsNummer=2 | Konto=9999 | SollHaben=S | Betrag=156524.8 | Waehrung=CHF | BetragCHF=156524.8 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:49:30 | 
+***** Log#350 --> E N D E
+
+***** Log#351 --> 2020-02-08 17:49:41.963 durch User: 64-Muster Felix-Talents | [B@5e321c9c | Europe/Zurich | 
+Vorgang: Belegkopf #24 UPDATE
+old values in mysql-db: | BelegkopfId=24 | BelegNummer=11 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=100000.0 | BelegWaehrung=CHF | BetragCHF=100000.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:49:05 | 
+Vorgang: Belegkopf #24 UPDATE
+new values in mysql-db: | BelegkopfId=24 | BelegNummer=11 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Eröffnungsbuchung | Betrag=156524.8 | BelegWaehrung=CHF | BetragCHF=156524.8 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:49:31 | 
+***** Log#351 --> E N D E
+
+***** Log#353 --> 2020-02-08 17:53:26.405 durch User: 64-Muster Felix-Talents | [B@1609ab69 | Europe/Zurich | 
+Vorgang: Belegposition #48 UPDATE
+old values in mysql-db: | BelegpositionId=48 | BelegkopfId=25 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:52:07 | 
+Vorgang: Belegposition #48 UPDATE
+new values in mysql-db: | BelegpositionId=48 | BelegkopfId=25 | PositionsNummer=1 | Konto=3000 | SollHaben=S | Betrag=1200.0 | Waehrung=CHF | BetragCHF=1200.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:53:15 | 
+***** Log#353 --> E N D E
+
+***** Log#354 --> 2020-02-08 17:53:26.712 durch User: 64-Muster Felix-Talents | [B@1609ab69 | Europe/Zurich | 
+Vorgang: Belegkopf #25 UPDATE
+old values in mysql-db: | BelegkopfId=25 | BelegNummer=12 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:51:58 | 
+Vorgang: Belegkopf #25 UPDATE
+new values in mysql-db: | BelegkopfId=25 | BelegNummer=12 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Auflösung TA | Betrag=1200.0 | BelegWaehrung=CHF | BetragCHF=1200.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:53:16 | 
+***** Log#354 --> E N D E
+
+***** Log#356 --> 2020-02-08 17:53:36.093 durch User: 64-Muster Felix-Talents | [B@1609ab69 | Europe/Zurich | 
+Vorgang: Belegposition #49 UPDATE
+old values in mysql-db: | BelegpositionId=49 | BelegkopfId=25 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=1200.0 | Waehrung=CHF | BetragCHF=1200.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:53:19 | 
+Vorgang: Belegposition #49 UPDATE
+new values in mysql-db: | BelegpositionId=49 | BelegkopfId=25 | PositionsNummer=2 | Konto=1300 | SollHaben=H | Betrag=1200.0 | Waehrung=CHF | BetragCHF=1200.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:53:25 | 
+***** Log#356 --> E N D E
+
+***** Log#357 --> 2020-02-08 17:53:38.588 durch User: 64-Muster Felix-Talents | [B@1609ab69 | Europe/Zurich | 
+Vorgang: Belegkopf #25 UPDATE
+old values in mysql-db: | BelegkopfId=25 | BelegNummer=12 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Auflösung TA | Betrag=1200.0 | BelegWaehrung=CHF | BetragCHF=1200.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:53:16 | 
+Vorgang: Belegkopf #25 UPDATE
+new values in mysql-db: | BelegkopfId=25 | BelegNummer=12 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Auflösung TA | Betrag=1200.0 | BelegWaehrung=CHF | BetragCHF=1200.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:53:28 | 
+***** Log#357 --> E N D E
+
+***** Log#359 --> 2020-02-08 17:54:49.981 durch User: 64-Muster Felix-Talents | [B@1609ab69 | Europe/Zurich | 
+Vorgang: Belegposition #50 UPDATE
+old values in mysql-db: | BelegpositionId=50 | BelegkopfId=26 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:54:12 | 
+Vorgang: Belegposition #50 UPDATE
+new values in mysql-db: | BelegpositionId=50 | BelegkopfId=26 | PositionsNummer=1 | Konto=6510 | SollHaben=S | Betrag=240.0 | Waehrung=CHF | BetragCHF=240.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:54:39 | 
+***** Log#359 --> E N D E
+
+***** Log#360 --> 2020-02-08 17:54:50.424 durch User: 64-Muster Felix-Talents | [B@1609ab69 | Europe/Zurich | 
+Vorgang: Belegkopf #26 UPDATE
+old values in mysql-db: | BelegkopfId=26 | BelegNummer=13 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:53:59 | 
+Vorgang: Belegkopf #26 UPDATE
+new values in mysql-db: | BelegkopfId=26 | BelegNummer=13 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Rückbuchung TP | Betrag=240.0 | BelegWaehrung=CHF | BetragCHF=240.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:54:40 | 
+***** Log#360 --> E N D E
+
+***** Log#362 --> 2020-02-08 17:55:11.176 durch User: 64-Muster Felix-Talents | [B@1609ab69 | Europe/Zurich | 
+Vorgang: Belegposition #51 UPDATE
+old values in mysql-db: | BelegpositionId=51 | BelegkopfId=26 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=240.0 | Waehrung=CHF | BetragCHF=240.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-08 17:54:42 | 
+Vorgang: Belegposition #51 UPDATE
+new values in mysql-db: | BelegpositionId=51 | BelegkopfId=26 | PositionsNummer=2 | Konto=2300 | SollHaben=H | Betrag=240.0 | Waehrung=CHF | BetragCHF=240.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:55:00 | 
+***** Log#362 --> E N D E
+
+***** Log#363 --> 2020-02-08 17:55:11.548 durch User: 64-Muster Felix-Talents | [B@1609ab69 | Europe/Zurich | 
+Vorgang: Belegkopf #26 UPDATE
+old values in mysql-db: | BelegkopfId=26 | BelegNummer=13 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Rückbuchung TP | Betrag=240.0 | BelegWaehrung=CHF | BetragCHF=240.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:54:40 | 
+Vorgang: Belegkopf #26 UPDATE
+new values in mysql-db: | BelegkopfId=26 | BelegNummer=13 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Rückbuchung TP | Betrag=240.0 | BelegWaehrung=CHF | BetragCHF=240.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:55:01 | 
+***** Log#363 --> E N D E
+
+***** Log#364 --> 2020-02-08 17:55:27.906 durch User: 64-Muster Felix-Talents | [B@1609ab69 | Europe/Zurich | 
+Vorgang: Belegposition #50 UPDATE
+old values in mysql-db: | BelegpositionId=50 | BelegkopfId=26 | PositionsNummer=1 | Konto=6510 | SollHaben=S | Betrag=240.0 | Waehrung=CHF | BetragCHF=240.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:54:39 | 
+Vorgang: Belegposition #50 UPDATE
+new values in mysql-db: | BelegpositionId=50 | BelegkopfId=26 | PositionsNummer=1 | Konto=6510 | SollHaben=H | Betrag=240.0 | Waehrung=CHF | BetragCHF=240.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:55:16 | 
+***** Log#364 --> E N D E
+
+***** Log#365 --> 2020-02-08 17:55:28.202 durch User: 64-Muster Felix-Talents | [B@1609ab69 | Europe/Zurich | 
+Vorgang: Belegkopf #26 UPDATE
+old values in mysql-db: | BelegkopfId=26 | BelegNummer=13 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Rückbuchung TP | Betrag=240.0 | BelegWaehrung=CHF | BetragCHF=240.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:55:01 | 
+Vorgang: Belegkopf #26 UPDATE
+new values in mysql-db: | BelegkopfId=26 | BelegNummer=13 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Rückbuchung TP | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:55:17 | 
+***** Log#365 --> E N D E
+
+***** Log#366 --> 2020-02-08 17:55:33.374 durch User: 64-Muster Felix-Talents | [B@1609ab69 | Europe/Zurich | 
+Vorgang: Belegposition #51 UPDATE
+old values in mysql-db: | BelegpositionId=51 | BelegkopfId=26 | PositionsNummer=2 | Konto=2300 | SollHaben=H | Betrag=240.0 | Waehrung=CHF | BetragCHF=240.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:55:00 | 
+Vorgang: Belegposition #51 UPDATE
+new values in mysql-db: | BelegpositionId=51 | BelegkopfId=26 | PositionsNummer=2 | Konto=2300 | SollHaben=S | Betrag=240.0 | Waehrung=CHF | BetragCHF=240.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-08 17:55:22 | 
+***** Log#366 --> E N D E
+
+***** Log#367 --> 2020-02-08 17:55:33.68 durch User: 64-Muster Felix-Talents | [B@1609ab69 | Europe/Zurich | 
+Vorgang: Belegkopf #26 UPDATE
+old values in mysql-db: | BelegkopfId=26 | BelegNummer=13 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Rückbuchung TP | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:55:17 | 
+Vorgang: Belegkopf #26 UPDATE
+new values in mysql-db: | BelegkopfId=26 | BelegNummer=13 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Rückbuchung TP | Betrag=240.0 | BelegWaehrung=CHF | BetragCHF=240.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-08 17:55:23 | 
+***** Log#367 --> E N D E
+
+***** Log#369 --> 2020-02-10 08:05:05.304 durch User: 64-Muster Felix-Talents | [B@733c1937 | Europe/Zurich | 
+Vorgang: Belegposition #52 UPDATE
+old values in mysql-db: | BelegpositionId=52 | BelegkopfId=27 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-10 08:04:44 | 
+Vorgang: Belegposition #52 UPDATE
+new values in mysql-db: | BelegpositionId=52 | BelegkopfId=27 | PositionsNummer=1 | Konto=1010 | SollHaben=S | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=Zahlungseingang von Kämpf Bernhard | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-10 08:05:03 | 
+***** Log#369 --> E N D E
+
+***** Log#370 --> 2020-02-10 08:05:05.563 durch User: 64-Muster Felix-Talents | [B@733c1937 | Europe/Zurich | 
+Vorgang: Belegkopf #27 UPDATE
+old values in mysql-db: | BelegkopfId=27 | BelegNummer=14 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-10 08:04:26 | 
+
+***** Log#372 --> 2020-02-10 08:05:23.524 durch User: 64-Muster Felix-Talents | [B@733c1937 | Europe/Zurich | 
+Vorgang: Belegposition #53 UPDATE
+old values in mysql-db: | BelegpositionId=53 | BelegkopfId=27 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-10 08:05:06 | 
+Vorgang: Belegposition #53 UPDATE
+new values in mysql-db: | BelegpositionId=53 | BelegkopfId=27 | PositionsNummer=2 | Konto=1100 | SollHaben=H | Betrag=100.0 | Waehrung=CHF | BetragCHF=100.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-10 08:05:22 | 
+***** Log#372 --> E N D E
+
+***** Log#373 --> 2020-02-10 08:05:23.811 durch User: 64-Muster Felix-Talents | [B@733c1937 | Europe/Zurich | 
+Vorgang: Belegkopf #27 UPDATE
+old values in mysql-db: | BelegkopfId=27 | BelegNummer=14 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-10 08:04:26 | 
+
+***** Log#374 --> 2020-02-10 08:05:33.459 durch User: 64-Muster Felix-Talents | [B@733c1937 | Europe/Zurich | 
+Vorgang: Belegkopf #27 UPDATE
+old values in mysql-db: | BelegkopfId=27 | BelegNummer=14 | Belegdatum=2019-12-31 | Buchungsdatum=2019-12-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-10 08:04:26 | 
+Vorgang: Belegkopf #27 UPDATE
+new values in mysql-db: | BelegkopfId=27 | BelegNummer=14 | Belegdatum=2020-01-02 | Buchungsdatum=2020-01-02 | Buchungsperiode=2020-01-01 | BelegkopfText=Zahlungseingang | Betrag=100.0 | BelegWaehrung=CHF | BetragCHF=100.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-10 08:05:32 | 
+***** Log#374 --> E N D E
+
+***** Log#376 --> 2020-02-10 08:06:51.219 durch User: 64-Muster Felix-Talents | [B@733c1937 | Europe/Zurich | 
+Vorgang: Belegposition #54 UPDATE
+old values in mysql-db: | BelegpositionId=54 | BelegkopfId=28 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-10 08:06:27 | 
+Vorgang: Belegposition #54 UPDATE
+new values in mysql-db: | BelegpositionId=54 | BelegkopfId=28 | PositionsNummer=1 | Konto=1010 | SollHaben=S | Betrag=244.0 | Waehrung=CHF | BetragCHF=244.0 | PositionsText=Zahlung von Karin Egger | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-10 08:06:49 | 
+***** Log#376 --> E N D E
+
+***** Log#377 --> 2020-02-10 08:06:51.484 durch User: 64-Muster Felix-Talents | [B@733c1937 | Europe/Zurich | 
+Vorgang: Belegkopf #28 UPDATE
+old values in mysql-db: | BelegkopfId=28 | BelegNummer=15 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-10 08:06:20 | 
+
+***** Log#379 --> 2020-02-10 08:07:01.904 durch User: 64-Muster Felix-Talents | [B@733c1937 | Europe/Zurich | 
+Vorgang: Belegposition #55 UPDATE
+old values in mysql-db: | BelegpositionId=55 | BelegkopfId=28 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=244.0 | Waehrung=CHF | BetragCHF=244.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-02-10 08:06:53 | 
+Vorgang: Belegposition #55 UPDATE
+new values in mysql-db: | BelegpositionId=55 | BelegkopfId=28 | PositionsNummer=2 | Konto=1100 | SollHaben=H | Betrag=244.0 | Waehrung=CHF | BetragCHF=244.0 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-02-10 08:07:00 | 
+***** Log#379 --> E N D E
+
+***** Log#380 --> 2020-02-10 08:07:02.19 durch User: 64-Muster Felix-Talents | [B@733c1937 | Europe/Zurich | 
+Vorgang: Belegkopf #28 UPDATE
+old values in mysql-db: | BelegkopfId=28 | BelegNummer=15 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-10 08:06:20 | 
+
+***** Log#381 --> 2020-02-10 08:07:14.537 durch User: 64-Muster Felix-Talents | [B@733c1937 | Europe/Zurich | 
+Vorgang: Belegkopf #28 UPDATE
+old values in mysql-db: | BelegkopfId=28 | BelegNummer=15 | Belegdatum=2020-01-01 | Buchungsdatum=2020-01-01 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-10 08:06:20 | 
+Vorgang: Belegkopf #28 UPDATE
+new values in mysql-db: | BelegkopfId=28 | BelegNummer=15 | Belegdatum=2020-01-02 | Buchungsdatum=2020-01-02 | Buchungsperiode=2020-01-01 | BelegkopfText=Debitorenzahlung | Betrag=244.0 | BelegWaehrung=CHF | BetragCHF=244.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-10 08:07:13 | 
+***** Log#381 --> E N D E
