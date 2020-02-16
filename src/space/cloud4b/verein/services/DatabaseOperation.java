@@ -541,11 +541,13 @@ public abstract class DatabaseOperation {
     }
 
     public static Belegposition addBelegPosition(Belegkopf belegkopf, User currentUser) {
+        Status belegstatus = new Status(9);
         String sollHaben = new String("S");
         double betrag = 0;
         double betragCHF = 0;
         String waehrung = new String("CHF");
         Betrag betragObject = null;
+
 
         // Ist es die erste Position?
 
@@ -578,7 +580,13 @@ public abstract class DatabaseOperation {
                  betragCHF = -differenzCHF;
                  waehrung = betragHaben.getWaehrung().getCurrencyCode();
              }
-            }
+            } else if(betragSoll == null && betragHaben == null) {
+            sollHaben = "S";
+            betrag = 0;
+            betragCHF = 0;
+            waehrung = "CHF";
+
+        }
 
 
         betragObject = new Betrag(new BigDecimal(betrag), Currency.getInstance(waehrung), new BigDecimal(betragCHF));
@@ -607,7 +615,7 @@ public abstract class DatabaseOperation {
             int logCounter = LogWriter.getLastLogCounterValue();
             LogWriter.setNextLogCounterValue(++logCounter);
        //     LogWriter.writePostNewLog("Buchungsposition", newKey, currentUser, logCounter);
-
+            belegkopf.setStatus(belegstatus.getStatusElemente().get(1));
         } catch(SQLException e) {
             System.out.println("Fehler " + e);
         } finally {
@@ -669,7 +677,18 @@ public abstract class DatabaseOperation {
 
     }
 
+
+
     public static void updateBelegKopf(Belegkopf belegkopf, User currentUser) {
+        int neuerBelegkopfStatus = 0;
+        int belegKopfStatus = DatabaseReader.getBelegkopfStatus(belegkopf);
+        // Schritt 0: Belegstatus ermitteln
+        if(DatabaseReader.belegkopfIsValid(belegkopf) && belegKopfStatus == 1){
+            belegkopf.setStatus(new Status(9).getStatusElemente().get(2));
+            neuerBelegkopfStatus = 2;
+        }  else {
+            neuerBelegkopfStatus = belegKopfStatus;
+        }
         // Schritt 1: alte DB-Werte in Logfile schreiben
         int logCounter = LogWriter.getLastLogCounterValue();
         LogWriter.setNextLogCounterValue(++logCounter);
@@ -684,6 +703,7 @@ public abstract class DatabaseOperation {
                 + " Betrag = ?,"
                 + " BelegWaehrung = ?,"
                 + " BetragCHF = ?,"
+                + " BelegStatus = ?,"
                 + " BelegkopfText = ?,"
                 + " BelegkopfTrackChangeUser = ?,"
                 + " BelegkopfTrackChangeTimestamp = CURRENT_TIMESTAMP"
@@ -701,10 +721,11 @@ public abstract class DatabaseOperation {
             preparedStmt.setString(4, DatabaseReader.readBelegkopfWaehrung(belegkopf));
             belegkopf.setWaehrung(DatabaseReader.readBelegkopfWaehrung(belegkopf));
             preparedStmt.setDouble(5, DatabaseReader.readBelegkopfBetragCHF(belegkopf));
-            belegkopf.setBetragCHF(DatabaseReader.readBelegkopfBetragCHF(belegkopf));
-            preparedStmt.setString(6, belegkopf.getBelegTextProperty().getValue());
-            preparedStmt.setString(7, currentUser.getUserTxt());
-            preparedStmt.setInt(8, belegkopf.getBelegkopfId());
+            //belegkopf.setBetragCHF(DatabaseReader.readBelegkopfBetragCHF(belegkopf));
+            preparedStmt.setInt(6, neuerBelegkopfStatus);
+            preparedStmt.setString(7, belegkopf.getBelegTextProperty().getValue());
+            preparedStmt.setString(8, currentUser.getUserTxt());
+            preparedStmt.setInt(9, belegkopf.getBelegkopfId());
             // execute the java preparedstatement
             System.out.println("Rückmeldung preparedStmt (updateBelegkopf): " + preparedStmt.executeUpdate());
 
@@ -736,7 +757,8 @@ public abstract class DatabaseOperation {
     }
 
     public static Belegkopf addBelegkopf(Buchungsperiode buchungsperiode, User currentUser, HashMap<Integer, Konto> kontenPlan) {
-        int lastBelegnummer = DatabaseReader.getLastBelegnummer(buchungsperiode);
+       // int lastBelegnummer = DatabaseReader.getLastBelegnummer(buchungsperiode);
+        int dummyBelegnummer = 0;
         LocalDate lastBelegdatum = DatabaseReader.getLastBelegdatum(buchungsperiode);
         Belegkopf belegkopf = null;
         Belegkopf neuerBelegkopf = null;
@@ -766,7 +788,7 @@ public abstract class DatabaseOperation {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             preparedStmt = conn.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStmt.setInt(1, lastBelegnummer+1);
+            preparedStmt.setInt(1, dummyBelegnummer);
             preparedStmt.setDate(2, Date.valueOf(lastBelegdatum));
             preparedStmt.setDate(3, Date.valueOf(lastBelegdatum));
             preparedStmt.setInt(4, buchungsperiode.getJahr());
@@ -778,7 +800,8 @@ public abstract class DatabaseOperation {
             keys = preparedStmt.getGeneratedKeys();
             keys.next();
             int newKey = keys.getInt(1);
-            neuerBelegkopf = new Belegkopf(belegStatus.getStatusElemente().get(1), newKey, lastBelegnummer+1, lastBelegdatum, lastBelegdatum, buchungsperiode, null,
+            System.out.println("BelegStatus: " + belegStatus.getStatusElemente().get(1));
+            neuerBelegkopf = new Belegkopf(belegStatus.getStatusElemente().get(1), newKey, dummyBelegnummer, lastBelegdatum, lastBelegdatum, buchungsperiode, null,
                     new Betrag(new BigDecimal(0), Currency.getInstance("CHF"), new BigDecimal(0)),
                     currentUser.getUserTxt(), Timestamp.valueOf(LocalDateTime.now()), kontenPlan);
             buchungsperiode.getHauptjournal().add(neuerBelegkopf);
@@ -794,5 +817,60 @@ public abstract class DatabaseOperation {
             LogWriter.writePostNewLog(belegkopf, currentUser, logCounter);*/
         }
 
+    }
+
+    public static void bookBelegKopf(Belegkopf belegkopf, User currentUser) {
+        int lastBelegNummer = DatabaseReader.getLastBelegnummer(belegkopf.getBuchungsPeriode());
+        int neuerBelegkopfStatus = 3; // verbucht
+       // int belegKopfStatus = DatabaseReader.getBelegkopfStatus(belegkopf);
+
+        // Schritt 1: alte DB-Werte in Logfile schreiben
+        int logCounter = LogWriter.getLastLogCounterValue();
+        LogWriter.setNextLogCounterValue(++logCounter);
+        LogWriter.writePreUpdateLog(belegkopf, currentUser, logCounter);
+
+        // Schritt 2: DB-Tabelle aktualisieren
+        MysqlConnection conn = new MysqlConnection();
+
+        // create the java mysql update preparedstatement
+        String query = "UPDATE bhBelegkopf SET BelegNummer = ?,"
+                + " Belegdatum = ?,"
+                + " Buchungsdatum = ?,"
+                + " Betrag = ?,"
+                + " BelegWaehrung = ?,"
+                + " BetragCHF = ?,"
+                + " BelegStatus = ?,"
+                + " BelegkopfText = ?,"
+                + " BelegkopfTrackChangeUser = ?,"
+                + " BelegkopfTrackChangeTimestamp = CURRENT_TIMESTAMP"
+                + " WHERE BelegkopfId = ?";
+        //einzelne Änderungen abfragen und dann Wert alt und neu, User und Timestamp in logdatei schreiben
+        PreparedStatement preparedStmt = null;
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            preparedStmt = conn.getConnection().prepareStatement(query);
+            preparedStmt.setInt(1, lastBelegNummer+1);
+            preparedStmt.setString(2, belegkopf.getBelegDatum().toString());
+            preparedStmt.setString(3, belegkopf.getBuchungsDatum().toString());
+            preparedStmt.setDouble(4, DatabaseReader.readBelegkopfBetrag(belegkopf));
+            belegkopf.setBetrag(DatabaseReader.readBelegkopfBetrag(belegkopf));
+            preparedStmt.setString(5, DatabaseReader.readBelegkopfWaehrung(belegkopf));
+            belegkopf.setWaehrung(DatabaseReader.readBelegkopfWaehrung(belegkopf));
+            preparedStmt.setDouble(6, DatabaseReader.readBelegkopfBetragCHF(belegkopf));
+            //belegkopf.setBetragCHF(DatabaseReader.readBelegkopfBetragCHF(belegkopf));
+            preparedStmt.setInt(7, neuerBelegkopfStatus);
+            preparedStmt.setString(8, belegkopf.getBelegTextProperty().getValue());
+            preparedStmt.setString(9, currentUser.getUserTxt());
+            preparedStmt.setInt(10, belegkopf.getBelegkopfId());
+            // execute the java preparedstatement
+            System.out.println("Rückmeldung preparedStmt (updateBelegkopf): " + preparedStmt.executeUpdate());
+
+            // Schritt 3: neue DB-Werte in Logilfe schreiben
+            LogWriter.writePostUpdateLog(belegkopf, currentUser, logCounter);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

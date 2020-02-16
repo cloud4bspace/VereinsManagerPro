@@ -12,6 +12,7 @@ import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.model.verein.finanzen.Belegkopf;
 import space.cloud4b.verein.model.verein.finanzen.Belegposition;
 import space.cloud4b.verein.model.verein.finanzen.Konto;
+import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.services.DatabaseOperation;
 import space.cloud4b.verein.services.DatabaseReader;
 
@@ -66,6 +67,14 @@ public class BelegViewController {
     private TableColumn<Belegposition, String> positionTextColumn;
     @FXML
     private TableColumn<Belegposition, String> positionBetragCHFColumn;
+    @FXML
+    private Button speichernButton;
+    @FXML
+    private Button addPositionButton;
+    @FXML
+    private Button abschliessenButton;
+    @FXML
+    private Button stornoButten;
 
 
     /**
@@ -99,6 +108,51 @@ public class BelegViewController {
     }
 
     public void setBelegkopf(Belegkopf beleg) {
+        switch(beleg.getBelegStatus().getStatusElementKey()) {
+            case 1: // unvollständig
+            case 9: // fehler
+                buchungsDatumPicker.setDisable(false);
+                belegDatumPicker.setDisable(false);
+                addPositionButton.setDisable(false);
+                speichernButton.setDisable(false);
+                abschliessenButton.setDisable(true);
+                stornoButten.setDisable(true);
+                belegTextFeld.setDisable(false);
+                belegTextFeld.setEditable(true);
+                break;
+            case 2: // bereit zur Verbuchung
+                buchungsDatumPicker.setDisable(false);
+                belegDatumPicker.setDisable(false);
+                addPositionButton.setDisable(false);
+                speichernButton.setDisable(false);
+                abschliessenButton.setDisable(false);
+                stornoButten.setDisable(true);
+                belegTextFeld.setDisable(false);
+                belegTextFeld.setEditable(true);
+                break;
+            case 3: // verbucht
+                buchungsDatumPicker.setDisable(true);
+                belegDatumPicker.setDisable(true);
+                addPositionButton.setDisable(true);
+                speichernButton.setDisable(true);
+                abschliessenButton.setDisable(true);
+                stornoButten.setDisable(false);
+                belegTextFeld.setDisable(true);
+                belegTextFeld.setEditable(false);
+                break;
+            case 4: // archiviert
+                buchungsDatumPicker.setDisable(true);
+                belegDatumPicker.setDisable(true);
+                addPositionButton.setDisable(true);
+                speichernButton.setDisable(true);
+                abschliessenButton.setDisable(true);
+                stornoButten.setDisable(true);
+                belegTextFeld.setDisable(true);
+                belegTextFeld.setEditable(false);
+                break;
+            default:
+                break;
+        }
         this.belegkopf = beleg;
         belegStatusLabel.setText(beleg.getStatusStringProperty().getValue());
         idLabel.setText("Beleg #" + String.format("%04d",beleg.getBelegNummerProperty().getValue()));
@@ -139,7 +193,27 @@ public class BelegViewController {
             }
     }
 
+    public void handleStornieren(){
+        //TODO
+    }
+    public void handleAbschliessen() {
+        if(isValid()){
+            belegkopf.setBelegDatum(belegDatumPicker.getValue());
+            belegkopf.setBuchungsDatum(buchungsDatumPicker.getValue());
+            belegkopf.setBuchungsPeriode(mainApp.getFinanzController().getBuchhalung().getBuchungsperiode(Integer.parseInt(belegPeriodeFeld.getText())));
+            belegkopf.setBelegKopfText(belegTextFeld.getText());
+            // belegkopf.setBetrag(new Betrag(new BigDecimal(0), Currency.getInstance("CHF"),new BigDecimal(0)));
+            belegkopf.setBetrag(DatabaseReader.readBelegkopfBetrag(belegkopf));
+            belegkopf.setBetragCHF(DatabaseReader.readBelegkopfBetragCHF(belegkopf));
+            belegkopf.setWaehrung(DatabaseReader.readBelegkopfWaehrung(belegkopf));
+            belegkopf.setStatus(new Status(9).getStatusElemente().get(3));
+            DatabaseOperation.bookBelegKopf(belegkopf, mainApp.getCurrentUser());
+            belegkopf.setBelegNummer(DatabaseReader.getLastBelegnummer(belegkopf.getBuchungsPeriode())+1);
+            setBelegkopf(belegkopf);
+        }
+    }
     public void handleAddPosition() {
+        handleSpeichern();
         Belegposition belegposition = DatabaseOperation.addBelegPosition(belegkopf, mainApp.getCurrentUser());
         belegkopf.getBelegPositionenAsArrayList().add(belegposition);
         belegPositionTabelle.setItems(FXCollections.observableArrayList(belegkopf.getBelegPositionenAsArrayList()));

@@ -418,15 +418,23 @@
     -fx-padding: 5;
 }
 
-
-.tree-table-view .column-header .label {
-    -fx-font-size: 9pt;
-    -fx-font-family: "Verdana UI Light";
-    -fx-text-fill: #ffffff;
-    -fx-alignment: center-left;
-    -fx-opacity: 1;
+.tree-table-view .column-header#rightAlignColumn .label {
+    -fx-alignment: CENTER_RIGHT;
+}
+.tree-table-view .column-header#leftAlignColumn .label {
+    -fx-alignment: CENTER_LEFT;
 }
 
+.tree-table-row-cell:hover > *{
+    -fx-text-fill: #F78888;
+    -fx-background-color: #ececec;
+    -fx-table-cell-border-color: #ffffff;
+}
+.table-row-cell:hover > *{
+    -fx-text-fill: #F78888;
+    -fx-background-color: #ececec;
+    -fx-table-cell-border-color: #ffffff;
+}
 #benutzerIdSpalte, #mitgliedIdSpalte, #anzLoginsSpalte, #sperrcodeSpalte {
     -fx-alignment: TOP-RIGHT;
 

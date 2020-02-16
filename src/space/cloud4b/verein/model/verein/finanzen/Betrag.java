@@ -65,12 +65,14 @@ public class Betrag {
         }
         return string;
     }
-
+    public String getBetragToTableViewString() {
+        return String.format("%,.2f", this.betragBelegWaehrung.doubleValue());
+    }
     public String getBetragToShortString() {
-        return String.format("%.2f", this.betragBelegWaehrung.doubleValue()) + " " + this.belegWaehrung.getCurrencyCode();
+        return String.format("%,.2f", this.betragBelegWaehrung.doubleValue()) + " " + this.belegWaehrung.getCurrencyCode();
     }
     public ObservableValue<String> toColumnString(){
-        return new SimpleStringProperty(String.format("%.2f", this.betragBelegWaehrung.doubleValue()));
+        return new SimpleStringProperty(String.format("%,.2f", this.betragBelegWaehrung.doubleValue()));
     }
     public BigDecimal getBetragBelegWaehrung() {
         return this.betragBelegWaehrung;
@@ -103,4 +105,5 @@ public class Betrag {
         this.betragBuchungsWaehrung = new BigDecimal(belegkopfBetragCHF);
         this.umrechnungsKurs = belegkopfBetragCHF/this.betragBelegWaehrung.doubleValue();
     }
+
 }

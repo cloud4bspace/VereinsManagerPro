@@ -124,7 +124,8 @@
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#handleHauptjournal" text="Hauptjournal" />
                         <MenuItem mnemonicParsing="false" onAction="#handleKontenplan" text="Kontenplan" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleSaldobilanz" text="Saldobilanz" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleBilanz" text="Bilanz" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleErfolgsrechnung" text="Erfolgsrechnung" />
                   </items>
                 </Menu>
               </menus>

@@ -26,6 +26,8 @@ public class HauptjournalViewController {
     @FXML
     private TableView<Belegkopf> hauptJournalTabelle;
     @FXML
+    private TableColumn<Belegkopf, String> belegStatusSpalte;
+    @FXML
     private TableColumn<Belegkopf, String> belegDatumSpalte;
     @FXML
     private TableColumn<Belegkopf, Number> belegNummerSpalte;
@@ -54,7 +56,8 @@ public class HauptjournalViewController {
         hauptJournalTabelle.setItems(FXCollections.observableArrayList(buchungsperiode.getHauptjournal()));
         hauptJournalTabelle.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> openBeleg(newValue));
-
+        belegStatusSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getBelegStatusProperty());
         belegDatumSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getBelegDatumStringProperty());
         buchungsDatumSpalte.setCellValueFactory(

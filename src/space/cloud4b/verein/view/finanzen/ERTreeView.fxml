@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="space.cloud4b.verein.view.finanzen.ERTreeViewController">
+   <children>
+      <TreeTableView fx:id="erTreeTableView" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+        <columns>
+          <TreeTableColumn fx:id="bezeichnungColumn" prefWidth="550.0" text="Bezeichnung" />
+            <TreeTableColumn fx:id="betragCHFColumn" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="126.0" text="Betrag CHF" />
+        </columns>
+      </TreeTableView>
+   </children>
+</AnchorPane>

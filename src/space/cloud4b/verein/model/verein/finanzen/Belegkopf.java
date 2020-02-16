@@ -82,7 +82,7 @@ public class Belegkopf {
     }
 
     public SimpleStringProperty getStatusStringProperty() {
-        return new SimpleStringProperty(belegStatus.getStatusText());
+        return new SimpleStringProperty(this.belegStatus.getStatusElementTextLang());
     }
 
     public SimpleStringProperty getBelegBetragProperty() {
@@ -190,5 +190,21 @@ public class Belegkopf {
             return new SimpleStringProperty(this.belegKopfText + " (" + belegposition.getText() + ")");
         }
 
+    }
+
+    public void setStatus(StatusElement statusElement) {
+        this.belegStatus = statusElement;
+    }
+
+    public StatusElement getBelegStatus() {
+        return this.belegStatus;
+    }
+
+    public ObservableValue<String> getBelegStatusProperty() {
+        return new SimpleStringProperty(this.belegStatus.getStatusElementSymbol());
+    }
+
+    public void setBelegNummer(int i) {
+        belegNummer = i;
     }
 }

@@ -18,6 +18,7 @@ import space.cloud4b.verein.einstellungen.Einstellung;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.finanzen.Belegkopf;
 import space.cloud4b.verein.model.verein.finanzen.Belegposition;
+import space.cloud4b.verein.model.verein.finanzen.Buchungsperiode;
 import space.cloud4b.verein.model.verein.finanzen.Konto;
 import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.model.verein.user.User;
@@ -47,6 +48,7 @@ import space.cloud4b.verein.view.termine.TerminViewController;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.Optional;
 
 public class MainApp extends Application {
@@ -62,6 +64,7 @@ public class MainApp extends Application {
     private BenutzerController benutzerController;
     private StatusController statusController;
     private FinanzController finanzController;
+    private Buchungsperiode buchungsperiode;
 
     public MainApp() {
         /* Erstellung der Datenbanktabelle aus Template wird normalerweise nicht
@@ -202,6 +205,7 @@ public class MainApp extends Application {
             this.ranglisteController = new RanglisteController(this);
             this.statusController = new StatusController();
             this.finanzController = new FinanzController(this);
+            this.buchungsperiode = finanzController.getBuchhalung().getBuchungsperiode(Year.now().getValue());
             //finanzController.setMainApp(this);
 
             initMainFrame(); // den MainFrame laden mit den Benutzermenus
@@ -837,11 +841,11 @@ public class MainApp extends Application {
 
         }
     }
-    public void showKontoTreeView() {
+    public void showBilanzTreeView() {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/finanzen/KontoTreeView.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/finanzen/BilanzTreeView.fxml"));
             AnchorPane page = loader.load();
 
             // Create the dialog Stage.
@@ -852,12 +856,10 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
             mainFrame.setCenter(page);
-            KontoTreeViewController controller = loader.getController();
+            BilanzTreeViewController controller = loader.getController();
             controller.setMainApp(this);
-
         } catch (IOException e) {
             e.printStackTrace();
-
         }
     }
 
@@ -913,6 +915,28 @@ public class MainApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
 
+        }
+    }
+
+    public void showErfolgsrechnungTreeView() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/finanzen/ERTreeView.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Erfolgsrechnung");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            mainFrame.setCenter(page);
+            ERTreeViewController controller = loader.getController();
+            controller.setMainApp(this, buchungsperiode);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -70,12 +70,12 @@
          <bottom>
             <HBox>
                <children>
-                  <Button mnemonicParsing="false" onAction="#handleAbbrechen" text="abbrechen" BorderPane.alignment="CENTER" />
-                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleSpeichern" text="speichern">
+                  <Button fx:id="abbrechenButton" mnemonicParsing="false" onAction="#handleAbbrechen" text="abbrechen" BorderPane.alignment="CENTER" />
+                  <Button fx:id="speichernButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleSpeichern" text="speichern">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin></Button>
-                  <Button layoutX="103.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleLoeschen" text="löschen">
+                  <Button fx:id="loeschenButton" layoutX="103.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleLoeschen" text="löschen">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

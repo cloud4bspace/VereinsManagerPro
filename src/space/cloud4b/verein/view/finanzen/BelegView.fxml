@@ -69,12 +69,22 @@
                <children>
                   <HBox>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleAddPosition" text="Position hinzufügen">
+                        <Button fx:id="addPositionButton" mnemonicParsing="false" onAction="#handleAddPosition" text="Position hinzufügen">
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#handleSpeichern" text="Speichern">
+                        <Button fx:id="speichernButton" mnemonicParsing="false" onAction="#handleSpeichern" text="Speichern">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="abschliessenButton" layoutX="151.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleAbschliessen" text="Definitiv verbuchen">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="stornoButten" layoutX="241.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleStornieren" text="Stornieren">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

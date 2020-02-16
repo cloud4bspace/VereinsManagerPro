@@ -118,6 +118,7 @@ public class DashBoardController implements Observer {
         // Mitgliederliste initialisieren
         mitgliederLabel.setText("Mitglieder (Stand "
                 + LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)) + ")");
+        idSpalte.setId("rightAlignColumn");
         idSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getIdProperty());
         vorNameSpalte.setCellValueFactory(

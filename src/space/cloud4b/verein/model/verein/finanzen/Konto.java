@@ -15,8 +15,11 @@ public class Konto {
     private Betrag saldo;
     private Buchungsperiode buchungsperiode;
     private String kontoBezeichnung;
+    private int kontoKlasse;
     private String kontoKlasseText;
+    private int kontoHauptgruppe;
     private String kontoHauptgruppeText;
+    private int kontoGruppe;
     private String kontoGruppeText;
     private ArrayList<Kontoposition> kontoPositionen;
 
@@ -27,11 +30,74 @@ public class Konto {
         this.kontoZuordnung = DatabaseReader.getKontoZuordnung(this.kontoNummer, periode);
         this.kontoBezeichnung = DatabaseReader.getKontobezeichnung(this.kontoNummer, periode);
         this.kontoHauptgruppeText = DatabaseReader.getKontoHauptgruppeText(this.kontoZuordnung);
+        this.kontoHauptgruppe = kontoNummer/100;
         this.kontoGruppeText = DatabaseReader.getKontoGruppeText(this.kontoZuordnung);
+        this.kontoGruppe = kontoNummer/10;
         this.kontoKlasseText = DatabaseReader.getKontoKlasseText(this.kontoZuordnung);
+        this.kontoKlasse = kontoNummer/1000;
         this.buchungsperiode = periode;
 
         this.updateSaldo();
+    }
+
+    /**
+     * Konstruktur für eine Kontoklasse (wird in der TreeView benötigt)
+     * @param kontoBezeichnung
+     * @param nummer
+     * @param kontoKlasse
+     */
+    public Konto(String kontoBezeichnung, int nummer, int kontoKlasse, Buchungsperiode buchungsperiode) {
+        this.kontoBezeichnung = kontoBezeichnung;
+        this.kontoNummer = nummer;
+        this.kontoKlasse = kontoKlasse;
+        this.buchungsperiode = buchungsperiode;
+        this.saldo = DatabaseReader.getSaldoKontoKlasse(this);
+
+    }
+
+    /**
+     * Konstruktor für Hauptgruppe
+     * @param kontoBezeichnung
+     * @param nummer
+     * @param kontoKlasse
+     * @param kontoHauptgruppe
+     * @param buchungsperiode
+     */
+    public Konto(String kontoBezeichnung, int nummer, int kontoKlasse, int kontoHauptgruppe
+            , Buchungsperiode buchungsperiode) {
+        this.kontoBezeichnung = kontoBezeichnung;
+        this.kontoNummer = nummer;
+        this.kontoKlasse = kontoKlasse;
+        this.kontoHauptgruppe = kontoHauptgruppe;
+        this.buchungsperiode = buchungsperiode;
+        this.saldo = DatabaseReader.getSaldoKontoHauptgruppe(this);
+    }
+
+    /**
+     * Konstruktor für Gruppe
+     * @param kontoBezeichnung
+     * @param nummer
+     * @param kontoKlasse
+     * @param kontoHauptGruppe
+     * @param kontoGruppe
+     * @param buchungsperiode
+     */
+    public Konto(String kontoBezeichnung, int nummer, int kontoKlasse, int kontoHauptGruppe, int kontoGruppe
+            , Buchungsperiode buchungsperiode) {
+        this.kontoBezeichnung = kontoBezeichnung;
+        this.kontoNummer = nummer;
+        this.kontoKlasse = kontoKlasse;
+        this.kontoHauptgruppe = kontoHauptGruppe;
+        this.kontoGruppe = kontoGruppe;
+        this.buchungsperiode = buchungsperiode;
+        this.saldo = DatabaseReader.getSaldoKontoGruppe(this);
+    }
+
+    public Konto(String bilanz, Buchungsperiode buchungsperiode) {
+        this.kontoNummer = 0;
+        this.kontoBezeichnung = bilanz;
+        this.buchungsperiode = buchungsperiode;
+        this.saldo = DatabaseReader.getSaldoBilanz(this);
     }
 
     public void updateSaldo() {
@@ -106,5 +172,36 @@ public class Konto {
     {
         Random r = new Random();
         return this.kontoNummer * r.nextInt();
+    }
+
+    public int getKontoKlasse() {
+        return this.kontoKlasse;
+    }
+
+    public int getKontoHauptgruppe() {
+        return this.kontoHauptgruppe;
+    }
+    public int getKontoGruppe() {
+        return this.kontoGruppe;
+    }
+
+    public String getBetragBilanzTreeView() {
+        if(saldo != null) {
+            return saldo.getBetragToTableViewString();
+        } else {
+            return "-";
+        }
+    }
+
+    public String getBezeichnungTreeView() {
+        if(kontoNummer>0) {
+            return kontoNummer + " " + kontoBezeichnung;
+        } else {
+            return kontoBezeichnung;
+        }
+    }
+
+    public Buchungsperiode getBuchungsperiode() {
+        return this.buchungsperiode;
     }
 }

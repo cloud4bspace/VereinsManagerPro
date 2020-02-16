@@ -2,12 +2,11 @@ package space.cloud4b.verein.view.finanzen;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.model.verein.finanzen.Belegkopf;
 import space.cloud4b.verein.model.verein.finanzen.Belegposition;
@@ -19,7 +18,6 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.Year;
 import java.util.Currency;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 public class PositionViewController {
@@ -42,13 +40,19 @@ public class PositionViewController {
     @FXML
     private Label letzteAenderungLabel;
     @FXML
-    private ComboBox<Currency> waehrungComboBox;
+    private ComboBox<Currency> waehrungComboBox = new ComboBox<>();
     @FXML
-    private ComboBox<Konto> kontoComboBox;
+    private ComboBox<Konto> kontoComboBox = new ComboBox<>();
     @FXML
-    private ComboBox<String> sollHabenComboBox;
+    private ComboBox<String> sollHabenComboBox = new ComboBox<>();
     @FXML
     private TextField positionTextFeld;
+    @FXML
+    private Button loeschenButton;
+    @FXML
+    private Button abbrechenButton;
+    @FXML
+    private Button speichernButton;
     private Stage fromStage;
 
 
@@ -79,11 +83,13 @@ public class PositionViewController {
     public void setBelegposition(Belegposition position, Belegkopf belegkopf) {
         this.position = position;
         this.belegkopf = belegkopf;
-        idLabel.setText("Beleg #" + position.getPositionNummerProperty().getValue());
+        idLabel.setText("Position #" + position.getPositionNummerProperty().getValue());
         positionTextFeld.setText(position.getPositionTextProperty().getValue());
 
         letzteAenderungLabel.setText(position.getUserTimestamp());
-        waehrungComboBox.getSelectionModel().select(position.getBetrag().getValue().getWaehrung());
+        System.out.println("diese Waehrung wird gesetzt: " + position.getBetrag().getValue().getWaehrung());
+       // waehrungComboBox.getSelectionModel().select(position.getBetrag().getValue().getWaehrung());
+        waehrungComboBox.getSelectionModel().select(position.getWaehrung());
         kontoComboBox.getSelectionModel().select(position.getKonto().getValue());
         sollHabenComboBox.getSelectionModel().select(position.getSH().getValue());
        // TextFormatter<Double> textFormatter = new TextFormatter<>(converter, 0.00, filter);
@@ -94,42 +100,56 @@ public class PositionViewController {
             handleBetragChanged();
         });
 
+
+        if(belegkopf.getBelegStatus().getStatusElementKey() == 3 || belegkopf.getBelegStatus().getStatusElementKey() == 4){
+           // positionTextFeld.setEditable(false);
+            positionTextFeld.setDisable(true);
+            // waehrungComboBox.setEditable(false);
+            waehrungComboBox.setDisable(true);
+          //  kontoComboBox.setEditable(false);
+            kontoComboBox.setDisable(true);
+          //  sollHabenComboBox.setEditable(false);
+            sollHabenComboBox.setDisable(true);
+            betragFeld.setDisable(true);
+          //  betragFeld.setEditable(false);
+          //  betragCHFFeld.setEditable(false);
+            betragCHFFeld.setDisable(true);
+          //  kursFeld.setEditable(false);
+            kursFeld.setDisable(true);
+            loeschenButton.setDisable(true);
+            speichernButton.setDisable(true);
+
+        } else {
+           // positionTextFeld.setEditable(true);
+            positionTextFeld.setDisable(false);
+          //  waehrungComboBox.setEditable(true);
+            waehrungComboBox.setDisable(false);
+           // kontoComboBox.setEditable(true);
+            kontoComboBox.setDisable(false);
+           // sollHabenComboBox.setEditable(true);
+            sollHabenComboBox.setDisable(false);
+            betragFeld.setDisable(false);
+          //  betragFeld.setEditable(true);
+          //  betragCHFFeld.setEditable(true);
+            betragCHFFeld.setDisable(false);
+          //  kursFeld.setEditable(true);
+            kursFeld.setDisable(false);
+            loeschenButton.setDisable(false);
+            speichernButton.setDisable(false);
+        }
+
+
     }
 
-    StringConverter<Double> converter = new StringConverter<Double>() {
-
-        @Override
-        public Double fromString(String s) {
-            if (s.isEmpty() || "-".equals(s) || ".".equals(s) || "-.".equals(s)) {
-                return 0.00 ;
-            } else {
-                return Double.valueOf(s);
-            }
-        }
-
-        @Override
-        public String toString(Double d) {
-            return d.toString();
-        }
-    };
-
-    UnaryOperator<TextFormatter.Change> filter = c -> {
-        String text = c.getControlNewText();
-        if (validEditingState.matcher(text).matches()) {
-            return c ;
-        } else {
-            return null ;
-        }
-    };
-
     public void handleBetragChanged() {
+
         if(betragFeld.getText().isEmpty()) {
             betragFeld.setText(String.format("%.2f", 0.00));
         }
         double kurs = Double.valueOf(kursFeld.getText());
         double betrag = Double.valueOf(betragFeld.getText());
         double betragCHF = Double.valueOf(betragCHFFeld.getText());
-        if(waehrungComboBox.getValue().getCurrencyCode().equals("CHF")){
+        if(waehrungComboBox.getValue().equals(Currency.getInstance("CHF"))){
                     betragCHFFeld.setText(String.format("%.2f", Double.valueOf(betragFeld.getText())));
                     kursFeld.setText(String.format("%.4f",1.000));
         } else {
@@ -169,6 +189,7 @@ public class PositionViewController {
         boolean isValid = true;
         if (betragFeld.getText() == null || betragFeld.getText().length() == 0) {
             errorMeldung += "Ungültige PLZ!";
+            isValid = false;
         } else {
             // versuchen, die PLZ zu Integer zu parsen
             try {
@@ -176,6 +197,10 @@ public class PositionViewController {
             } catch (NumberFormatException e) {
                 errorMeldung += "PLZ muss eine Zahl sein!";
             }
+        }
+        if(kontoComboBox.getValue() == null) {
+            errorMeldung += "Konto auswählen!";
+            isValid = false;
         }
         // Meldung anzeigen, wenn Eingaben ungültig sind
         if (!isValid) {

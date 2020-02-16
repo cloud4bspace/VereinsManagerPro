@@ -140,4 +140,12 @@ public class Belegposition {
             return null;
         }
     }
+
+    public Currency getWaehrung() {
+        if(betrag != null) {
+            return betrag.getWaehrung();
+        } else {
+            return Currency.getInstance("CHF");
+        }
+    }
 }

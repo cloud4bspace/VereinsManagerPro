@@ -1490,7 +1490,7 @@ public abstract class DatabaseReader {
             String query = "SELECT * FROM bhBelegkopf WHERE Buchungsperiode='" + periode.getJahr() + "'";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                belegListe.add(new Belegkopf(belegStatus.getElementsAsArrayList().get(1), rs.getInt("BelegkopfId")
+                belegListe.add(new Belegkopf(belegStatus.getStatusElemente().get(rs.getInt("BelegStatus")), rs.getInt("BelegkopfId")
                         , rs.getInt("BelegNummer")
                         , rs.getDate("Belegdatum").toLocalDate()
                         , rs.getDate("Buchungsdatum").toLocalDate()
@@ -1750,16 +1750,18 @@ public abstract class DatabaseReader {
             while (rs.next()) {
                 minWaehrung = rs.getString("MinWaehrung");
             }
-            if(minWaehrung.equals(maxWaehrung)){
-                waehrung = minWaehrung;
-            } else {
-                waehrung = "CHF";
+            if(minWaehrung!=null) {
+                if(minWaehrung.equals(maxWaehrung)){
+                    return minWaehrung;
+                } else {
+                    return "CHF";
+                }
             }
+            return "CHF";
 
         } catch(SQLException e) {
             e.printStackTrace();
-        } finally {
-            return waehrung;
+            return "CHF";
         }
     }
 
@@ -1828,5 +1830,157 @@ public abstract class DatabaseReader {
         }
     }
 
+    public static boolean belegkopfIsValid(Belegkopf belegkopf){
+        int anzBelegPositionen = getAnzBelegPositionen(belegkopf);
+        Betrag sollBetrag = getSollBetrag(belegkopf);
+        Betrag betragHaben = getHabenBetrag(belegkopf);
+        if(anzBelegPositionen > 1) {
+            if(sollBetrag.getBetragBuchungsWaehrung().doubleValue() == betragHaben.getBetragBuchungsWaehrung().doubleValue()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+
+    public static int getAnzBelegPositionen(Belegkopf belegkopf) {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT COUNT(*) Anzahl FROM bhBelegposition WHERE BelegkopfId=" + belegkopf.getBelegkopfId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return rs.getInt("Anzahl");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+    public static int getBelegkopfStatus(Belegkopf belegkopf) {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM bhBelegkopf WHERE BelegkopfId=" + belegkopf.getBelegkopfId();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return rs.getInt("BelegStatus");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static Betrag getSaldoKontoKlasse(Konto konto) {
+        String kontoKlasseString = String.valueOf(konto.getKontoNummer()).substring(0,1);
+        Buchungsperiode buchungsperiode = konto.getBuchungsperiode();
+        double betrag = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT SUM(bhBelegposition.BetragCHF) AS BetragSCHF FROM bhBelegkopf LEFT JOIN bhBelegposition ON bhBelegkopf.BelegkopfId = bhBelegposition.BelegkopfId WHERE Buchungsperiode ='" + konto.getBuchungsperiode().getJahr() + "' AND Konto LIKE '" + kontoKlasseString + "%' AND bhBelegposition.SollHaben = 'S'";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                betrag = rs.getDouble("BetragSCHF");
+            }
+            query = "SELECT SUM(bhBelegposition.BetragCHF) AS BetragHCHF FROM bhBelegkopf LEFT JOIN bhBelegposition ON bhBelegkopf.BelegkopfId = bhBelegposition.BelegkopfId WHERE Buchungsperiode ='" + konto.getBuchungsperiode().getJahr() + "' AND Konto LIKE '" + kontoKlasseString + "%' AND bhBelegposition.SollHaben = 'H'";
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                betrag -= rs.getDouble("BetragHCHF");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Betrag newBetrag = new Betrag(new BigDecimal(betrag), Currency.getInstance("CHF"), new BigDecimal(betrag));
+            return newBetrag;
+        }
+    }
+
+    public static Betrag getSaldoKontoHauptgruppe(Konto konto) {
+        String kontoHauptgruppeString = String.valueOf(konto.getKontoNummer()).substring(0,2);
+        Buchungsperiode buchungsperiode = konto.getBuchungsperiode();
+        int hauptGruppeVon = 0;
+        int hauptGruppeBis = 0;
+        double betrag = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM `bhKtoHauptgruppe` WHERE " + kontoHauptgruppeString + " BETWEEN `KtoHauptgruppeVon` AND `KtoHauptgruppeBis`";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                hauptGruppeVon = rs.getInt("KtoHauptgruppeVon");
+                hauptGruppeBis = rs.getInt("KtoHauptgruppeBis");
+            }
+            query = "SELECT SUM(bhBelegposition.BetragCHF) AS BetragSCHF FROM bhBelegkopf LEFT JOIN bhBelegposition ON bhBelegkopf.BelegkopfId = bhBelegposition.BelegkopfId WHERE bhBelegposition.SollHaben = 'S' AND Buchungsperiode ='" + buchungsperiode.getJahr() + "' AND SUBSTR(Konto,1,2) BETWEEN " + hauptGruppeVon + " AND " + hauptGruppeBis;
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                betrag = rs.getDouble("BetragSCHF");
+            }
+            query = "SELECT SUM(bhBelegposition.BetragCHF) AS BetragHCHF FROM bhBelegkopf LEFT JOIN bhBelegposition ON bhBelegkopf.BelegkopfId = bhBelegposition.BelegkopfId WHERE bhBelegposition.SollHaben = 'H' AND Buchungsperiode ='" + buchungsperiode.getJahr() + "' AND SUBSTR(Konto,1,2) BETWEEN " + hauptGruppeVon + " AND " + hauptGruppeBis;
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                betrag -= rs.getDouble("BetragHCHF");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Betrag newBetrag = new Betrag(new BigDecimal(betrag), Currency.getInstance("CHF"), new BigDecimal(betrag));
+            return newBetrag;
+        }
+    }
+
+    public static Betrag getSaldoKontoGruppe(Konto konto) {
+        String kontoGruppeString = String.valueOf(konto.getKontoNummer()).substring(0,3);
+        Buchungsperiode buchungsperiode = konto.getBuchungsperiode();
+        int gruppeVon = 0;
+        int gruppeBis = 0;
+        double betrag = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * FROM `bhKtoGruppe` WHERE " + kontoGruppeString + " BETWEEN `KtoGruppeVon` AND `KtoGruppeBis`";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                gruppeVon = rs.getInt("KtoGruppeVon");
+                gruppeBis = rs.getInt("KtoGruppeBis");
+            }
+            query = "SELECT SUM(bhBelegposition.BetragCHF) AS BetragSCHF FROM bhBelegkopf LEFT JOIN bhBelegposition ON bhBelegkopf.BelegkopfId = bhBelegposition.BelegkopfId WHERE bhBelegposition.SollHaben = 'S' AND Buchungsperiode ='" + buchungsperiode.getJahr() + "' AND SUBSTR(Konto,1,3) BETWEEN " + gruppeVon + " AND " + gruppeBis;
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                betrag = rs.getDouble("BetragSCHF");
+            }
+            query = "SELECT SUM(bhBelegposition.BetragCHF) AS BetragHCHF FROM bhBelegkopf LEFT JOIN bhBelegposition ON bhBelegkopf.BelegkopfId = bhBelegposition.BelegkopfId WHERE bhBelegposition.SollHaben = 'H' AND Buchungsperiode ='" + buchungsperiode.getJahr() + "' AND SUBSTR(Konto,1,3) BETWEEN " + gruppeVon + " AND " + gruppeBis;
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                betrag -= rs.getDouble("BetragHCHF");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Betrag newBetrag = new Betrag(new BigDecimal(betrag), Currency.getInstance("CHF"), new BigDecimal(betrag));
+            return newBetrag;
+        }
+    }
+
+    public static Betrag getSaldoBilanz(Konto konto) {
+        double betrag = 0;
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT SUM(bhBelegposition.BetragCHF) AS BetragSCHF FROM bhBelegkopf " +
+                    "LEFT JOIN bhBelegposition ON bhBelegkopf.BelegkopfId = bhBelegposition.BelegkopfId " +
+                    "WHERE Buchungsperiode ='" + konto.getBuchungsperiode().getJahr() + "' " +
+                    "AND (SUBSTR(Konto,1,1) = 1 OR SUBSTR(Konto,1,1) = 2) AND bhBelegposition.SollHaben = 'S'";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                betrag = rs.getDouble("BetragSCHF");
+            }
+            query = "SELECT SUM(bhBelegposition.BetragCHF) AS BetragHCHF FROM bhBelegkopf " +
+                    "LEFT JOIN bhBelegposition ON bhBelegkopf.BelegkopfId = bhBelegposition.BelegkopfId " +
+                    "WHERE Buchungsperiode ='" + konto.getBuchungsperiode().getJahr() + "' " +
+                    "AND (SUBSTR(Konto,1,1) = 1 OR SUBSTR(Konto,1,1) = 2) AND bhBelegposition.SollHaben = 'H'";
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                betrag -= rs.getDouble("BetragHCHF");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Betrag newBetrag = new Betrag(new BigDecimal(betrag), Currency.getInstance("CHF"), new BigDecimal(betrag));
+            return newBetrag;
+        }
+    }
 }
