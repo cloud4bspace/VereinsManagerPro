@@ -46,5 +46,10 @@
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.mytdev</groupId>
+            <artifactId>jfx-autocomplete-textfield</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
 </project>

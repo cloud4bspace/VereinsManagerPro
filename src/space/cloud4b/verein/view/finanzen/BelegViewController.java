@@ -7,18 +7,15 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.model.verein.finanzen.Belegkopf;
 import space.cloud4b.verein.model.verein.finanzen.Belegposition;
-import space.cloud4b.verein.model.verein.finanzen.Konto;
 import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.services.DatabaseOperation;
 import space.cloud4b.verein.services.DatabaseReader;
 
 import java.text.DecimalFormat;
 import java.util.Currency;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 public class BelegViewController {
@@ -58,7 +55,7 @@ public class BelegViewController {
     @FXML
     private TableColumn<Belegposition, String> positionSHColumn;
     @FXML
-    private TableColumn<Belegposition, Konto> positionKontoColumn;
+    private TableColumn<Belegposition, String> positionKontoColumn;
     @FXML
     private TableColumn<Belegposition, String> positionBetragColumn;
     @FXML
@@ -119,6 +116,7 @@ public class BelegViewController {
                 stornoButten.setDisable(true);
                 belegTextFeld.setDisable(false);
                 belegTextFeld.setEditable(true);
+                belegPeriodeFeld.setDisable(false);
                 break;
             case 2: // bereit zur Verbuchung
                 buchungsDatumPicker.setDisable(false);
@@ -129,6 +127,7 @@ public class BelegViewController {
                 stornoButten.setDisable(true);
                 belegTextFeld.setDisable(false);
                 belegTextFeld.setEditable(true);
+                belegPeriodeFeld.setDisable(false);
                 break;
             case 3: // verbucht
                 buchungsDatumPicker.setDisable(true);
@@ -139,6 +138,7 @@ public class BelegViewController {
                 stornoButten.setDisable(false);
                 belegTextFeld.setDisable(true);
                 belegTextFeld.setEditable(false);
+                belegPeriodeFeld.setDisable(true);
                 break;
             case 4: // archiviert
                 buchungsDatumPicker.setDisable(true);
@@ -149,6 +149,7 @@ public class BelegViewController {
                 stornoButten.setDisable(true);
                 belegTextFeld.setDisable(true);
                 belegTextFeld.setEditable(false);
+                belegPeriodeFeld.setDisable(true);
                 break;
             default:
                 break;
@@ -161,8 +162,8 @@ public class BelegViewController {
         buchungsDatumPicker.setValue(beleg.getBuchungsDatum());
         letzteAenderungLabel.setText(beleg.getUserTimestamp());
         belegWaehrungComboBox.getSelectionModel().select(beleg.getBetrag().getWaehrung());
-        belegBetragFeld.setText(String.format("%.2f", beleg.getBetrag().getBetragBelegWaehrung().doubleValue()));
-        belegBetragCHFFeld.setText(String.format("%.2f", beleg.getBetrag().getBetragBuchungsWaehrung().doubleValue()));
+        belegBetragFeld.setText(String.format("%,.2f", beleg.getBetrag().getBetragBelegWaehrung().doubleValue()));
+        belegBetragCHFFeld.setText(String.format("%,.2f", beleg.getBetrag().getBetragBuchungsWaehrung().doubleValue()));
         belegKursFeld.setText(String.format("%.4f", beleg.getBetrag().getUmrechnungsKurs()));
         belegPeriodeFeld.setText(Integer.toString(beleg.getBuchungsPeriode().getJahr()));
 
@@ -174,7 +175,7 @@ public class BelegViewController {
         positionSHColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getSH());
         positionKontoColumn.setCellValueFactory(
-                cellData -> cellData.getValue().getKonto());
+                cellData -> cellData.getValue().getKontoObject().toTableString());
         positionBetragColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getBetrag().getValue().toColumnString());
         positionTextColumn.setCellValueFactory(
@@ -215,7 +216,8 @@ public class BelegViewController {
     public void handleAddPosition() {
         handleSpeichern();
         Belegposition belegposition = DatabaseOperation.addBelegPosition(belegkopf, mainApp.getCurrentUser());
-        belegkopf.getBelegPositionenAsArrayList().add(belegposition);
+       // belegkopf.getBelegPositionenAsArrayList().add(belegposition);
+        // erst hinzufügen, wenn Position komplett ist (inkl. Kontonummer)
         belegPositionTabelle.setItems(FXCollections.observableArrayList(belegkopf.getBelegPositionenAsArrayList()));
         openPosition(belegposition);
     }
@@ -236,31 +238,7 @@ public class BelegViewController {
     public boolean isValid() {
         return true;
     }
-    StringConverter<Double> converter = new StringConverter<Double>() {
 
-        @Override
-        public Double fromString(String s) {
-            if (s.isEmpty() || "-".equals(s) || ".".equals(s) || "-.".equals(s)) {
-                return 0.00 ;
-            } else {
-                return Double.valueOf(s);
-            }
-        }
-
-        @Override
-        public String toString(Double d) {
-            return d.toString();
-        }
-    };
-
-    UnaryOperator<TextFormatter.Change> filter = c -> {
-        String text = c.getControlNewText();
-        if (validEditingState.matcher(text).matches()) {
-            return c ;
-        } else {
-            return null ;
-        }
-    };
     public void handleHauptjournal(){
         mainApp.showHauptjournalView();
     }

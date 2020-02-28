@@ -137,7 +137,7 @@ public class ERTreeViewController {
             klasseTreeItem.setExpanded(false);
             root.getChildren().add(klasseTreeItem);
             for(Konto gruppenEbene : gruppeArrayList) {
-                if(gruppenEbene.getKontoKlasse() == gruppenEbene.getKontoKlasse()) {
+                if(klassenEbene.getKontoKlasse() == gruppenEbene.getKontoKlasse()) {
                     gruppeTreeItem = new TreeItem<>(gruppenEbene);
                     gruppeTreeItem.setExpanded(false);
                     klasseTreeItem.getChildren().add(gruppeTreeItem);

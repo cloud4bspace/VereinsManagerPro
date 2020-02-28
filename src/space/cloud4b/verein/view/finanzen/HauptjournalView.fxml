@@ -9,22 +9,24 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="space.cloud4b.verein.view.finanzen.HauptjournalViewController">
    <children>
-      <VBox prefHeight="453.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button mnemonicParsing="false" onAction="#handleBelegErfassen" text="Beleg erfassen">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <TableView fx:id="hauptJournalTabelle" layoutX="70.0" layoutY="32.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="hauptJournalTabelle" layoutX="70.0" layoutY="32.0" prefHeight="1000.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                  <TableColumn fx:id="belegStatusSpalte" prefWidth="57.0" text="Status" />
+                  <TableColumn fx:id="belegStatusSpalte" prefWidth="150.0" text="Status" />
                 <TableColumn fx:id="belegNummerSpalte" prefWidth="57.0" text="Beleg#" />
                 <TableColumn fx:id="belegDatumSpalte" prefWidth="100.0" text="Belegdatum" />
                   <TableColumn fx:id="buchungsDatumSpalte" prefWidth="100.0" text="Buchungsdatum" />
-                  <TableColumn fx:id="belegBetragStringSpalte" prefWidth="120.0" text="BetragTXT" />
+                  <TableColumn fx:id="belegBetragFWStringSpalte" prefWidth="120.0" text="Betrag" />
+                  <TableColumn fx:id="belegCurrencySpalte" prefWidth="120.0" text="WG" />
+                  <TableColumn fx:id="belegBetragCHFStringSpalte" prefWidth="120.0" text="Betrag CHF" />
+                  <TableColumn fx:id="belegKursStringSpalte" prefWidth="120.0" text="Kurs" />
                   <TableColumn fx:id="belegTextSpalte" prefWidth="300.0" text="Belegtext" />
-                  <TableColumn fx:id="belegPositionSpalte" prefWidth="350.0" text="Position(en)" />
               </columns>
             </TableView>
          </children>

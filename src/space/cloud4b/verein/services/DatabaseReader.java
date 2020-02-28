@@ -1521,7 +1521,7 @@ public abstract class DatabaseReader {
                     + " ORDER BY PositionsNummer ASC";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                belegPositionen.add(new Belegposition(
+                belegPositionen.add(new Belegposition(belegkopf,
                         rs.getInt("BelegpositionId")
                 , rs.getInt("PositionsNummer")
                 , rs.getString("SollHaben").toCharArray()[0]
@@ -1831,17 +1831,41 @@ public abstract class DatabaseReader {
     }
 
     public static boolean belegkopfIsValid(Belegkopf belegkopf){
+        System.out.println("Check Beleg is valid");
         int anzBelegPositionen = getAnzBelegPositionen(belegkopf);
-        Betrag sollBetrag = getSollBetrag(belegkopf);
-        Betrag betragHaben = getHabenBetrag(belegkopf);
+
         if(anzBelegPositionen > 1) {
-            if(sollBetrag.getBetragBuchungsWaehrung().doubleValue() == betragHaben.getBetragBuchungsWaehrung().doubleValue()) {
+            Betrag sollBetrag = getSollBetrag(belegkopf);
+            Betrag betragHaben = getHabenBetrag(belegkopf);
+            System.out.println("Anz. Positionen: " + anzBelegPositionen);
+            System.out.println("SOLL: " + sollBetrag);
+            System.out.println("HABEN: " + betragHaben);
+            System.out.println("DIFF: " + Math.abs(sollBetrag.getBetragBuchungsWaehrung().doubleValue() - betragHaben.getBetragBuchungsWaehrung().doubleValue()));
+            if(Math.abs(sollBetrag.getBetragBuchungsWaehrung().doubleValue() - betragHaben.getBetragBuchungsWaehrung().doubleValue())<0.01) {
+                System.out.println("RETURN ISVALID = TRUE");
                 return true;
             }
         }
         return false;
     }
 
+    public static StatusElement checkBelegkopfStatus(Belegkopf belegkopf, User currentUser) {
+        Status belegkopfStatus = new Status(9);
+        StatusElement neuerStatus = null;
+        int bisherigerStatus = DatabaseReader.getBelegkopfStatus(belegkopf);
+        if(DatabaseReader.belegkopfIsValid(belegkopf)) {
+            if(bisherigerStatus == 1 || bisherigerStatus == 9) {
+                neuerStatus = belegkopfStatus.getStatusElemente().get(2);
+            } else {
+                neuerStatus = belegkopfStatus.getStatusElemente().get(bisherigerStatus);
+            }
+        } else {
+            neuerStatus = belegkopfStatus.getStatusElemente().get(1);
+        }
+        belegkopf.setStatus(neuerStatus);
+
+        return neuerStatus;
+    }
 
     public static int getAnzBelegPositionen(Belegkopf belegkopf) {
         try (Connection conn = new MysqlConnection().getConnection();

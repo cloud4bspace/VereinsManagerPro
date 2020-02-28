@@ -93,46 +93,30 @@ public class PositionViewController {
         kontoComboBox.getSelectionModel().select(position.getKonto().getValue());
         sollHabenComboBox.getSelectionModel().select(position.getSH().getValue());
        // TextFormatter<Double> textFormatter = new TextFormatter<>(converter, 0.00, filter);
-        betragFeld.setText(String.format("%.2f", position.getBetrag().getValue().getBetragBelegWaehrung().doubleValue()));
-        betragCHFFeld.setText(String.format("%.2f", position.getBetrag().getValue().getBetragBuchungsWaehrung().doubleValue()));
+        betragFeld.setText(String.format("%,.2f", position.getBetrag().getValue().getBetragBelegWaehrung().doubleValue()));
+        betragCHFFeld.setText(String.format("%,.2f", position.getBetrag().getValue().getBetragBuchungsWaehrung().doubleValue()));
         kursFeld.setText(String.format("%.4f", position.getBetrag().getValue().getUmrechnungsKurs()));
         betragFeld.textProperty().addListener((obs, oldText, newText) -> {
             handleBetragChanged();
         });
 
-
         if(belegkopf.getBelegStatus().getStatusElementKey() == 3 || belegkopf.getBelegStatus().getStatusElementKey() == 4){
-           // positionTextFeld.setEditable(false);
             positionTextFeld.setDisable(true);
-            // waehrungComboBox.setEditable(false);
             waehrungComboBox.setDisable(true);
-          //  kontoComboBox.setEditable(false);
             kontoComboBox.setDisable(true);
-          //  sollHabenComboBox.setEditable(false);
             sollHabenComboBox.setDisable(true);
             betragFeld.setDisable(true);
-          //  betragFeld.setEditable(false);
-          //  betragCHFFeld.setEditable(false);
             betragCHFFeld.setDisable(true);
-          //  kursFeld.setEditable(false);
             kursFeld.setDisable(true);
             loeschenButton.setDisable(true);
             speichernButton.setDisable(true);
-
         } else {
-           // positionTextFeld.setEditable(true);
             positionTextFeld.setDisable(false);
-          //  waehrungComboBox.setEditable(true);
             waehrungComboBox.setDisable(false);
-           // kontoComboBox.setEditable(true);
             kontoComboBox.setDisable(false);
-           // sollHabenComboBox.setEditable(true);
             sollHabenComboBox.setDisable(false);
             betragFeld.setDisable(false);
-          //  betragFeld.setEditable(true);
-          //  betragCHFFeld.setEditable(true);
             betragCHFFeld.setDisable(false);
-          //  kursFeld.setEditable(true);
             kursFeld.setDisable(false);
             loeschenButton.setDisable(false);
             speichernButton.setDisable(false);
@@ -144,13 +128,13 @@ public class PositionViewController {
     public void handleBetragChanged() {
 
         if(betragFeld.getText().isEmpty()) {
-            betragFeld.setText(String.format("%.2f", 0.00));
+            betragFeld.setText(String.format("%,.2f", 0.00));
         }
-        double kurs = Double.valueOf(kursFeld.getText());
-        double betrag = Double.valueOf(betragFeld.getText());
-        double betragCHF = Double.valueOf(betragCHFFeld.getText());
+        double kurs = Double.valueOf(kursFeld.getText().replace("'", ""));
+        double betrag = Double.valueOf(betragFeld.getText().replace("'", ""));
+        double betragCHF = Double.valueOf(betragCHFFeld.getText().replace("'", ""));
         if(waehrungComboBox.getValue().equals(Currency.getInstance("CHF"))){
-                    betragCHFFeld.setText(String.format("%.2f", Double.valueOf(betragFeld.getText())));
+                    betragCHFFeld.setText(String.format("%,.2f", betrag));
                     kursFeld.setText(String.format("%.4f",1.000));
         } else {
                     betragCHFFeld.setText(String.valueOf(kurs*betrag));
@@ -164,22 +148,29 @@ public class PositionViewController {
         System.out.println("Belegposition löschen");
         this.dialogStage.close();
         belegkopf.getBelegPositionenAsArrayList().remove(position);
-        DatabaseOperation.deleteBelegposision(position, mainApp.getCurrentUser());
+        DatabaseOperation.deleteBelegposision(belegkopf, position, mainApp.getCurrentUser());
 
         mainApp.showBelegkopfEdit(belegkopf);
     }
     public void handleAbbrechen() { this.dialogStage.close(); }
     public void handleSpeichern() {
         if (isValid()) {
-            this.dialogStage.close();
+
             //position.setBelegPositionId();
            // position.setPositionNummer();
             position.setSollHaben(sollHabenComboBox.getValue());
             position.setKonto(kontoComboBox.getValue());
-            position.setBetrag(new Betrag(new BigDecimal(betragFeld.getText()), waehrungComboBox.getValue(), new BigDecimal(betragCHFFeld.getText())));
+            double betrag = new Double(betragFeld.getText().replace("'", ""));
+            double betragCHF = Double.parseDouble(betragCHFFeld.getText().replace("'",""));
+            position.setBetrag(new Betrag(new BigDecimal(betrag), waehrungComboBox.getValue(), new BigDecimal(betragCHF)));
             position.setPositionsText(positionTextFeld.getText());
+
+            if(!belegkopf.getBelegPositionenAsArrayList().contains(position)) {
+                belegkopf.getBelegPositionenAsArrayList().add(position);
+            }
             DatabaseOperation.updateBelegPosition(position, mainApp.getCurrentUser());
             DatabaseOperation.updateBelegKopf(belegkopf, mainApp.getCurrentUser());
+            this.dialogStage.close();
             mainApp.showBelegkopfEdit(belegkopf);
         }
     }
@@ -188,14 +179,14 @@ public class PositionViewController {
         String errorMeldung = null;
         boolean isValid = true;
         if (betragFeld.getText() == null || betragFeld.getText().length() == 0) {
-            errorMeldung += "Ungültige PLZ!";
+            errorMeldung += "Ungültiger Betrag!";
             isValid = false;
         } else {
             // versuchen, die PLZ zu Integer zu parsen
             try {
                 Integer.parseInt(betragFeld.getText());
             } catch (NumberFormatException e) {
-                errorMeldung += "PLZ muss eine Zahl sein!";
+                errorMeldung += "Betrag muss eine Zahl sein!";
             }
         }
         if(kontoComboBox.getValue() == null) {

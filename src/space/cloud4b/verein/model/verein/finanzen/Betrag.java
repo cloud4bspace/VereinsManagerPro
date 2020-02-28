@@ -58,9 +58,9 @@ public class Betrag {
     }
 
     public String getBetragToString() {
-        String string = String.format("%.2f", this.betragBelegWaehrung.doubleValue()) + " " + this.belegWaehrung.getCurrencyCode();
+        String string = String.format("%,.2f", this.betragBelegWaehrung.doubleValue()) + " " + this.belegWaehrung.getCurrencyCode();
         if(!this.belegWaehrung.getCurrencyCode().equals("CHF")) {
-            string += "\n" + String.format("%.2f", this.betragBuchungsWaehrung.doubleValue()) + " CHF";
+            string += "\n" + String.format("%,.2f", this.betragBuchungsWaehrung.doubleValue()) + " CHF";
             string += "\n(" + String.format("%.3f", this.umrechnungsKurs) + ")";
         }
         return string;
@@ -80,16 +80,16 @@ public class Betrag {
     public double getUmrechnungsKurs() { return this.umrechnungsKurs; }
 
     public String toString() {
-        String string = this.belegWaehrung.getCurrencyCode() + ": " + String.format("%.2f", this.betragBelegWaehrung.doubleValue());
+        String string = this.belegWaehrung.getCurrencyCode() + ": " + String.format("%,.2f", this.betragBelegWaehrung.doubleValue());
         if(!this.belegWaehrung.getCurrencyCode().equals("CHF")) {
-            string += " --> CHF: " + String.format("%.2f", this.betragBuchungsWaehrung.doubleValue())
+            string += " --> CHF: " + String.format("%,.2f", this.betragBuchungsWaehrung.doubleValue())
                     + " (Kurs: " + String.format("%.3f", this.umrechnungsKurs) + ")";
         }
      return string;
     }
 
     public ObservableValue<String> toColumnCHFString() {
-        return new SimpleStringProperty(String.format("%.2f", this.betragBuchungsWaehrung.doubleValue()));
+        return new SimpleStringProperty(String.format("%,.2f", this.betragBuchungsWaehrung.doubleValue()));
     }
 
     public void setWaehrung(Currency newValue) {

@@ -5,7 +5,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import space.cloud4b.verein.services.DatabaseReader;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Random;
 
 public class Konto {
@@ -36,6 +38,7 @@ public class Konto {
         this.kontoKlasseText = DatabaseReader.getKontoKlasseText(this.kontoZuordnung);
         this.kontoKlasse = kontoNummer/1000;
         this.buchungsperiode = periode;
+        this.saldo = new Betrag(new BigDecimal(0.00), Currency.getInstance("CHF"), new BigDecimal(0.00));
 
         this.updateSaldo();
     }
@@ -102,14 +105,14 @@ public class Konto {
 
     public void updateSaldo() {
         this.saldo = DatabaseReader.getSaldo(this, buchungsperiode);
-        System.out.println("Saldo Konto " + this + ": " + saldo);
+       // System.out.println("Saldo Konto " + this + ": " + saldo);
     }
 
     public Betrag getSaldo() {
         return this.saldo;
     }
     public String toString() {
-        return kontoNummer + " " + kontoBezeichnung;
+            return kontoNummer + " " + kontoBezeichnung + " (" + saldo.getBetragToShortString() + ")";
     }
     public SimpleIntegerProperty getKontoNummerProperty() {
         return new SimpleIntegerProperty(this.kontoNummer);
@@ -203,5 +206,9 @@ public class Konto {
 
     public Buchungsperiode getBuchungsperiode() {
         return this.buchungsperiode;
+    }
+
+    public ObservableValue<String> toTableString() {
+        return new SimpleStringProperty(kontoNummer + " " + kontoBezeichnung);
     }
 }

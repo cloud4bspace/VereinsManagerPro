@@ -4,11 +4,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.model.verein.status.StatusElement;
+import space.cloud4b.verein.model.verein.user.User;
+import space.cloud4b.verein.services.DatabaseOperation;
 import space.cloud4b.verein.services.DatabaseReader;
 
 import java.sql.Timestamp;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -86,20 +88,14 @@ public class Belegkopf {
     }
 
     public SimpleStringProperty getBelegBetragProperty() {
-        DecimalFormat df = new DecimalFormat("0.00");
-        String formatted = df.format(betrag.getBetragBelegWaehrung());
-        return new SimpleStringProperty(formatted);
+        return new SimpleStringProperty(String.format("%,.2f", betrag.getBetragBelegWaehrung()));
     }
     public SimpleStringProperty getBetragCHFProperty() {
-        DecimalFormat df = new DecimalFormat("#'##0.00");
-        String formatted = df.format(betrag.getBetragBuchungsWaehrung());
-        return new SimpleStringProperty(formatted);
+        return new SimpleStringProperty(String.format("%,.2f", this.betrag.getBetragBuchungsWaehrung()));
     }
 
     public SimpleStringProperty getKursStringProperty() {
-        DecimalFormat df = new DecimalFormat("0.000");
-        String formatted = df.format(betrag.getUmrechnungsKurs());
-        return new SimpleStringProperty(formatted);
+        return new SimpleStringProperty(String.format("%,.3f",betrag.getUmrechnungsKurs()));
     }
 
     public ObservableValue<LocalDate> getBuchungsDatumProperty() {
@@ -206,5 +202,22 @@ public class Belegkopf {
 
     public void setBelegNummer(int i) {
         belegNummer = i;
+    }
+
+    public void updateStatus(int i) {
+        setStatus(new Status(9).getStatusElemente().get(i));
+    }
+
+    public ObservableValue<StatusElement> getBelegStatusObservableValue() {
+        return new SimpleObjectProperty<StatusElement>(this.getBelegStatus());
+    }
+
+    public ObservableValue<Currency> getBelegWaehrungCurrency() {
+        return new SimpleObjectProperty<Currency>(this.betrag.getWaehrung());
+    }
+
+    public void selfUpdateStatus(User currentUser) {
+        StatusElement neuerStatus = DatabaseReader.checkBelegkopfStatus(this, currentUser);
+        DatabaseOperation.updateBelegStatus(this, neuerStatus, currentUser);
     }
 }

@@ -53,6 +53,15 @@ public class KontoAuszugViewController {
 
     }
 
+    /**
+     * Initialisieurng der FXML-Felder (wird automatisch nach dem Konstruktor aufgerufen
+     */
+    @FXML
+    private void initialize() {
+
+
+    }
+
     public void setMainApp(MainApp mainApp) {
         sollBetragCHFColumn.setStyle( "-fx-alignment: CENTER-RIGHT;");
         habenBetragCHFColumn.setStyle( "-fx-alignment: CENTER-RIGHT;");
@@ -108,10 +117,11 @@ public class KontoAuszugViewController {
     }
 
     public void setKontoComboBoxAction() {
-        kontoAuszugTabelle.getItems().clear();
+       // kontoAuszugTabelle.getItems().clear();
         konto = kontoComboBox.getValue();
-        this.fillKontopositionen();
+       // this.fillKontopositionen();
        // setKonto(kontoComboBox.getValue());
+        mainApp.showKontoauszug(konto);
     }
 
 

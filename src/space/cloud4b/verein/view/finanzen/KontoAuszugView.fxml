@@ -9,19 +9,19 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/StylesheetV01.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="space.cloud4b.verein.view.finanzen.KontoAuszugViewController">
    <children>
-      <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefWidth="590.0">
                <children>
-                  <Button mnemonicParsing="false" text="zurück" />
-                  <ComboBox fx:id="kontoComboBox" onAction="#setKontoComboBoxAction" prefWidth="150.0">
+                  <ComboBox fx:id="kontoComboBox" onAction="#setKontoComboBoxAction" prefWidth="289.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </ComboBox>
+                  <TextField />
                </children>
             </HBox>
-            <TableView fx:id="kontoAuszugTabelle" layoutX="106.0" layoutY="72.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="kontoAuszugTabelle" layoutX="106.0" layoutY="72.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn fx:id="belegNummerColumn" editable="false" prefWidth="75.0" sortable="false" text="Beleg#" />
                 <TableColumn fx:id="belegDatumColumn" editable="false" prefWidth="105.0" sortable="false" text="Datum" />

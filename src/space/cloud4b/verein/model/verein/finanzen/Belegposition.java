@@ -17,8 +17,9 @@ public class Belegposition {
     private Konto konto;
     private Betrag betrag;
     private String positionsText;
+    private Belegkopf belegKopf;
 
-    public Belegposition(int belegPositionId, int positionNummer, char sollHaben, Konto konto, Betrag betrag
+    public Belegposition(Belegkopf belegkopf, int belegPositionId, int positionNummer, char sollHaben, Konto konto, Betrag betrag
             , String positionsText) {
         System.out.println(">>>> neue Belegposition wird erstellt ***");
         this.belegPositionId = belegPositionId;
@@ -27,6 +28,7 @@ public class Belegposition {
         this.betrag = betrag;
         this.positionsText = positionsText;
         this.konto = konto;
+        this.belegKopf = belegkopf;
     }
 
     public Belegposition(int newKey, int belegkopfId, int positionsnummer, User currentUser, Timestamp valueOf) {
@@ -120,6 +122,9 @@ public class Belegposition {
     }
 
     public Konto getKontoObject() {
+        if(konto == null) {
+            konto = new Konto("ungültiges Konto", 9999, 9, this.getBelegKopf().getBuchungsPeriode());
+        }
         return konto;
     }
 
@@ -148,4 +153,9 @@ public class Belegposition {
             return Currency.getInstance("CHF");
         }
     }
+
+    public Belegkopf getBelegKopf() {
+        return belegKopf;
+    }
+
 }

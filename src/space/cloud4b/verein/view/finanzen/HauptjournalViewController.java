@@ -9,9 +9,11 @@ import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.model.verein.finanzen.Belegkopf;
 import space.cloud4b.verein.model.verein.finanzen.Buchungsperiode;
 import space.cloud4b.verein.model.verein.finanzen.Konto;
+import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.services.DatabaseOperation;
 
 import java.time.Year;
+import java.util.Currency;
 import java.util.HashMap;
 
 public class HauptjournalViewController {
@@ -26,19 +28,23 @@ public class HauptjournalViewController {
     @FXML
     private TableView<Belegkopf> hauptJournalTabelle;
     @FXML
-    private TableColumn<Belegkopf, String> belegStatusSpalte;
+    private TableColumn<Belegkopf, StatusElement> belegStatusSpalte;
     @FXML
     private TableColumn<Belegkopf, String> belegDatumSpalte;
     @FXML
-    private TableColumn<Belegkopf, Number> belegNummerSpalte;
+    private TableColumn<Belegkopf, String> belegNummerSpalte;
     @FXML
     private TableColumn<Belegkopf, String> belegTextSpalte;
     @FXML
     private TableColumn<Belegkopf, String> buchungsDatumSpalte;
     @FXML
-    private TableColumn<Belegkopf, String> belegBetragStringSpalte;
+    private TableColumn<Belegkopf, String> belegBetragFWStringSpalte;
     @FXML
-    private TableColumn<Belegkopf, String> belegPositionSpalte;
+    private TableColumn<Belegkopf, Currency> belegCurrencySpalte;
+    @FXML
+    private TableColumn<Belegkopf, String> belegBetragCHFStringSpalte;
+    @FXML
+    private TableColumn<Belegkopf, String> belegKursStringSpalte;
 
     public HauptjournalViewController() {
         System.out.println("HauptjournalViewController erzeugt");
@@ -57,19 +63,28 @@ public class HauptjournalViewController {
         hauptJournalTabelle.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> openBeleg(newValue));
         belegStatusSpalte.setCellValueFactory(
-                cellData -> cellData.getValue().getBelegStatusProperty());
+                cellData -> cellData.getValue().getBelegStatusObservableValue());
         belegDatumSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getBelegDatumStringProperty());
         buchungsDatumSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getBuchungsDatumStringProperty());
         belegNummerSpalte.setCellValueFactory(
-                cellData -> cellData.getValue().getBelegNummerProperty());
+                cellData -> cellData.getValue().getBelegNummerStringProperty());
         belegTextSpalte.setCellValueFactory(
                 cellData -> cellData.getValue().getBelegTextProperty());
-        belegBetragStringSpalte.setCellValueFactory(
-                cellData -> cellData.getValue().getBetragStringProperty());
-        belegPositionSpalte.setCellValueFactory(
-                cellData -> cellData.getValue().getBelegPositionen());
+        belegBetragFWStringSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getBelegBetragProperty());
+        belegBetragFWStringSpalte.setStyle( "-fx-alignment: CENTER-RIGHT;");
+        belegCurrencySpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getBelegWaehrungCurrency());
+        belegBetragCHFStringSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getBetragCHFProperty());
+        belegBetragCHFStringSpalte.setStyle( "-fx-alignment: CENTER-RIGHT;");
+        belegKursStringSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getKursStringProperty());
+        belegKursStringSpalte.setStyle( "-fx-alignment: CENTER-RIGHT;");
+      /*  belegPositionSpalte.setCellValueFactory(
+                cellData -> cellData.getValue().getBelegPositionen());*/
     }
 
     public void setMainApp(MainApp mainApp) {

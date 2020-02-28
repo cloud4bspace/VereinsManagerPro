@@ -5,6 +5,7 @@ import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.finanzen.*;
 import space.cloud4b.verein.model.verein.kalender.Termin;
 import space.cloud4b.verein.model.verein.status.Status;
+import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.connection.MysqlConnection;
@@ -540,7 +541,21 @@ public abstract class DatabaseOperation {
         }
     }
 
+    public static void updateBelegStatus(Belegkopf belegkopf, StatusElement neuerStatus, User currentUser) {
+        try (Connection conn = new MysqlConnection().getConnection();
+             Statement st = conn.createStatement()) {
+            String query = "UPDATE bhBelegkopf SET BelegStatus = " + neuerStatus.getStatusElementKey() +
+                    " WHERE BelegkopfId=" + belegkopf.getBelegkopfId();
+            st.executeUpdate(query);
+
+        } catch(SQLException e) {
+            System.out.println(e);
+        }
+    }
+
     public static Belegposition addBelegPosition(Belegkopf belegkopf, User currentUser) {
+        // TODO wenn eine neue Position hinzugefügt wird, muss zuerst der Belegstatus auf 1
+        // gesetzt werden
         Status belegstatus = new Status(9);
         String sollHaben = new String("S");
         double betrag = 0;
@@ -615,12 +630,13 @@ public abstract class DatabaseOperation {
             int logCounter = LogWriter.getLastLogCounterValue();
             LogWriter.setNextLogCounterValue(++logCounter);
        //     LogWriter.writePostNewLog("Buchungsposition", newKey, currentUser, logCounter);
-            belegkopf.setStatus(belegstatus.getStatusElemente().get(1));
+            belegkopf.selfUpdateStatus(currentUser);
         } catch(SQLException e) {
             System.out.println("Fehler " + e);
         } finally {
-            Belegposition belegposition = new Belegposition(newKey, positionsnummer, sollHaben.toCharArray()[0], null, betragObject, null);
-
+            Belegposition belegposition = new Belegposition(belegkopf, newKey, positionsnummer, sollHaben.toCharArray()[0], null, betragObject, null);
+           // belegposition.getBelegKopf().selfUpdateStatus(currentUser); das geht hier nicht
+            // weil noch kein Konto gesetzt wurde..
             return belegposition;
         }
     }
@@ -671,24 +687,24 @@ public abstract class DatabaseOperation {
                 // Schritt 3: neue DB-Werte in Logilfe schreiben
                 LogWriter.writePostUpdateLog(position, currentUser, logCounter);
 
+
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
+            // Schritt 4: Beim Kontoobjekt den Saldo neu berechnen
+            position.getKonto().getValue().updateSaldo();
+
+            // Schritt 5: Status des Belegkopfs überprüfen und aktualisieren
+            position.getBelegKopf().selfUpdateStatus(currentUser);
+
     }
 
-
-
     public static void updateBelegKopf(Belegkopf belegkopf, User currentUser) {
-        int neuerBelegkopfStatus = 0;
-        int belegKopfStatus = DatabaseReader.getBelegkopfStatus(belegkopf);
-        // Schritt 0: Belegstatus ermitteln
-        if(DatabaseReader.belegkopfIsValid(belegkopf) && belegKopfStatus == 1){
-            belegkopf.setStatus(new Status(9).getStatusElemente().get(2));
-            neuerBelegkopfStatus = 2;
-        }  else {
-            neuerBelegkopfStatus = belegKopfStatus;
-        }
+
+        // TODO hier wird irgendwo der Status auf null gesetzt...
+        // TODO der Status des übergebenen Belegs ist bereits null...
         // Schritt 1: alte DB-Werte in Logfile schreiben
         int logCounter = LogWriter.getLastLogCounterValue();
         LogWriter.setNextLogCounterValue(++logCounter);
@@ -703,7 +719,6 @@ public abstract class DatabaseOperation {
                 + " Betrag = ?,"
                 + " BelegWaehrung = ?,"
                 + " BetragCHF = ?,"
-                + " BelegStatus = ?,"
                 + " BelegkopfText = ?,"
                 + " BelegkopfTrackChangeUser = ?,"
                 + " BelegkopfTrackChangeTimestamp = CURRENT_TIMESTAMP"
@@ -722,15 +737,19 @@ public abstract class DatabaseOperation {
             belegkopf.setWaehrung(DatabaseReader.readBelegkopfWaehrung(belegkopf));
             preparedStmt.setDouble(5, DatabaseReader.readBelegkopfBetragCHF(belegkopf));
             //belegkopf.setBetragCHF(DatabaseReader.readBelegkopfBetragCHF(belegkopf));
-            preparedStmt.setInt(6, neuerBelegkopfStatus);
-            preparedStmt.setString(7, belegkopf.getBelegTextProperty().getValue());
-            preparedStmt.setString(8, currentUser.getUserTxt());
-            preparedStmt.setInt(9, belegkopf.getBelegkopfId());
+            preparedStmt.setString(6, belegkopf.getBelegTextProperty().getValue());
+            preparedStmt.setString(7, currentUser.getUserTxt());
+            preparedStmt.setInt(8, belegkopf.getBelegkopfId());
             // execute the java preparedstatement
             System.out.println("Rückmeldung preparedStmt (updateBelegkopf): " + preparedStmt.executeUpdate());
 
+
+            belegkopf.selfUpdateStatus(currentUser);
+
             // Schritt 3: neue DB-Werte in Logilfe schreiben
             LogWriter.writePostUpdateLog(belegkopf, currentUser, logCounter);
+
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -738,7 +757,7 @@ public abstract class DatabaseOperation {
 
     }
 
-    public static void deleteBelegposision(Belegposition position, User currentUser) {
+    public static void deleteBelegposision(Belegkopf beleg, Belegposition position, User currentUser) {
         if (position != null) {
 
             // Schritt 1: alte DB-Werte in Logfile schreiben
@@ -753,6 +772,8 @@ public abstract class DatabaseOperation {
             } catch (SQLException e) {
                 System.out.println("Position konnte nicht gelöscht werden (" + e + ")");
             }
+            position.getBelegKopf().getBelegPositionenAsArrayList().remove(position);
+            position.getBelegKopf().selfUpdateStatus(currentUser);
         }
     }
 
