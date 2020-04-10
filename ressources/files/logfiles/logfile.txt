@@ -4345,3 +4345,52 @@ old values in mysql-db: | BelegkopfId=47 | BelegNummer=0 | Belegdatum=2020-02-01
 Vorgang: Belegkopf #47 UPDATE
 new values in mysql-db: | BelegkopfId=47 | BelegNummer=34 | Belegdatum=2020-02-01 | Buchungsdatum=2020-02-01 | Buchungsperiode=2020-01-01 | BelegkopfText=Test V | Betrag=0.43 | BelegWaehrung=CHF | BetragCHF=0.43 | BelegStatus=3 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-02-26 20:48:58 | 
 ***** Log#900 --> E N D E
+
+***** Log#901 --> 2020-04-04 20:01:36.156 durch User: 64-Muster Felix-Talents | [B@64ba0f5 | Europe/Zurich | 
+Vorgang: Belegkopf #48 UPDATE
+old values in mysql-db: | BelegkopfId=48 | BelegNummer=0 | Belegdatum=2020-01-31 | Buchungsdatum=2020-01-31 | Buchungsperiode=2020-01-01 | BelegkopfText= | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-04-04 20:00:11 | 
+Vorgang: Belegkopf #48 UPDATE
+new values in mysql-db: | BelegkopfId=48 | BelegNummer=0 | Belegdatum=2020-03-02 | Buchungsdatum=2020-02-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Rechnung Nespresse Februar 2020 | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-04-04 20:01:23 | 
+***** Log#901 --> E N D E
+
+***** Log#903 --> 2020-04-04 20:02:12.338 durch User: 64-Muster Felix-Talents | [B@64ba0f5 | Europe/Zurich | 
+Vorgang: Belegposition #150 UPDATE
+old values in mysql-db: | BelegpositionId=150 | BelegkopfId=48 | PositionsNummer=1 | Konto=null | SollHaben=S | Betrag=0.0 | Waehrung=CHF | BetragCHF=0.0 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-04-04 20:01:24 | 
+Vorgang: Belegposition #150 UPDATE
+new values in mysql-db: | BelegpositionId=150 | BelegkopfId=48 | PositionsNummer=1 | Konto=6700 | SollHaben=S | Betrag=122.5 | Waehrung=CHF | BetragCHF=122.5 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-04-04 20:01:59 | 
+***** Log#903 --> E N D E
+
+***** Log#904 --> 2020-04-04 20:02:13.131 durch User: 64-Muster Felix-Talents | [B@64ba0f5 | Europe/Zurich | 
+Vorgang: Belegkopf #48 UPDATE
+old values in mysql-db: | BelegkopfId=48 | BelegNummer=0 | Belegdatum=2020-03-02 | Buchungsdatum=2020-02-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Rechnung Nespresse Februar 2020 | Betrag=0.0 | BelegWaehrung=CHF | BetragCHF=0.0 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-04-04 20:01:23 | 
+Vorgang: Belegkopf #48 UPDATE
+new values in mysql-db: | BelegkopfId=48 | BelegNummer=0 | Belegdatum=2020-03-02 | Buchungsdatum=2020-02-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Rechnung Nespresse Februar 2020 | Betrag=122.5 | BelegWaehrung=CHF | BetragCHF=122.5 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-04-04 20:02:00 | 
+***** Log#904 --> E N D E
+
+***** Log#905 --> 2020-04-04 20:02:25.757 durch User: 64-Muster Felix-Talents | [B@64ba0f5 | Europe/Zurich | 
+Vorgang: Belegkopf #48 UPDATE
+old values in mysql-db: | BelegkopfId=48 | BelegNummer=0 | Belegdatum=2020-03-02 | Buchungsdatum=2020-02-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Rechnung Nespresse Februar 2020 | Betrag=122.5 | BelegWaehrung=CHF | BetragCHF=122.5 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-04-04 20:02:00 | 
+Vorgang: Belegkopf #48 UPDATE
+new values in mysql-db: | BelegkopfId=48 | BelegNummer=0 | Belegdatum=2020-03-02 | Buchungsdatum=2020-02-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Rechnung Nespresse Februar 2020 | Betrag=122.5 | BelegWaehrung=CHF | BetragCHF=122.5 | BelegStatus=1 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-04-04 20:02:19 | 
+***** Log#905 --> E N D E
+
+***** Log#907 --> 2020-04-04 20:02:43.189 durch User: 64-Muster Felix-Talents | [B@64ba0f5 | Europe/Zurich | 
+Vorgang: Belegposition #151 UPDATE
+old values in mysql-db: | BelegpositionId=151 | BelegkopfId=48 | PositionsNummer=2 | Konto=null | SollHaben=H | Betrag=122.5 | Waehrung=CHF | BetragCHF=122.5 | PositionsText=null | BelegpositionTrackChangeUser=Muster Felix | BelegpositionTrackChangeTimestamp=2020-04-04 20:02:20 | 
+Vorgang: Belegposition #151 UPDATE
+new values in mysql-db: | BelegpositionId=151 | BelegkopfId=48 | PositionsNummer=2 | Konto=2000 | SollHaben=H | Betrag=122.5 | Waehrung=CHF | BetragCHF=122.5 | PositionsText=null | BelegpositionTrackChangeUser=64-Muster Felix-Talents | BelegpositionTrackChangeTimestamp=2020-04-04 20:02:30 | 
+***** Log#907 --> E N D E
+
+***** Log#908 --> 2020-04-04 20:02:44.378 durch User: 64-Muster Felix-Talents | [B@64ba0f5 | Europe/Zurich | 
+Vorgang: Belegkopf #48 UPDATE
+old values in mysql-db: | BelegkopfId=48 | BelegNummer=0 | Belegdatum=2020-03-02 | Buchungsdatum=2020-02-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Rechnung Nespresse Februar 2020 | Betrag=122.5 | BelegWaehrung=CHF | BetragCHF=122.5 | BelegStatus=2 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-04-04 20:02:19 | 
+Vorgang: Belegkopf #48 UPDATE
+new values in mysql-db: | BelegkopfId=48 | BelegNummer=0 | Belegdatum=2020-03-02 | Buchungsdatum=2020-02-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Rechnung Nespresse Februar 2020 | Betrag=122.5 | BelegWaehrung=CHF | BetragCHF=122.5 | BelegStatus=2 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-04-04 20:02:32 | 
+***** Log#908 --> E N D E
+
+***** Log#909 --> 2020-04-04 20:03:25.727 durch User: 64-Muster Felix-Talents | [B@64ba0f5 | Europe/Zurich | 
+Vorgang: Belegkopf #48 UPDATE
+old values in mysql-db: | BelegkopfId=48 | BelegNummer=0 | Belegdatum=2020-03-02 | Buchungsdatum=2020-02-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Rechnung Nespresse Februar 2020 | Betrag=122.5 | BelegWaehrung=CHF | BetragCHF=122.5 | BelegStatus=2 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-04-04 20:02:32 | 
+Vorgang: Belegkopf #48 UPDATE
+new values in mysql-db: | BelegkopfId=48 | BelegNummer=35 | Belegdatum=2020-03-02 | Buchungsdatum=2020-02-27 | Buchungsperiode=2020-01-01 | BelegkopfText=Rechnung Nespresse Februar 2020 | Betrag=122.5 | BelegWaehrung=CHF | BetragCHF=122.5 | BelegStatus=3 | BelegkopfTrackChangeUser=64-Muster Felix-Talents | BelegkopfTrackChangeTimestamp=2020-04-04 20:03:13 | 
+***** Log#909 --> E N D E

@@ -28,17 +28,18 @@ public class Termin {
     private StatusElement teilnehmerKatI;
     private StatusElement teilnehmerKatII;
     private String terminOrt;
-    // private String terminDateAsLocalString;
     private String terminText;
     private String terminDetails;
     private String zeitText;
+    private int projektId;
     private String trackChangeUsr;
     private Timestamp trackChangeTimestamp;
 
-    public Termin(int terminId, LocalDate terminDatum, String terminText) {
+    public Termin(int terminId, LocalDate terminDatum, String terminText, int projektId) {
         this.terminId = terminId;
         this.terminDatum = terminDatum;
         this.terminText = terminText;
+        this.projektId = projektId;
     }
 
     public Termin(int terminId, LocalDate terminDatum, String terminText, String terminOrt) {
@@ -203,4 +204,7 @@ public class Termin {
     }
 
 
+    public int getProjektId() {
+        return projektId;
+    }
 }

@@ -50,7 +50,6 @@ public class KontoAuszugViewController {
     @FXML
     private void initializeData() {
 
-
     }
 
     /**
@@ -58,35 +57,29 @@ public class KontoAuszugViewController {
      */
     @FXML
     private void initialize() {
-
-
-    }
-
-    public void setMainApp(MainApp mainApp) {
         sollBetragCHFColumn.setStyle( "-fx-alignment: CENTER-RIGHT;");
         habenBetragCHFColumn.setStyle( "-fx-alignment: CENTER-RIGHT;");
         saldoCHFColumn.setStyle( "-fx-alignment: CENTER-RIGHT;");
-        // setzt die Referenz zur MainApp
+    }
+
+    public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
         buchungsperiode = mainApp.getFinanzController().getBuchhalung().getBuchungsperiode(Year.now().getValue());
-        kontoComboBox.getItems().addAll(mainApp.getFinanzController().getBuchhalung().getBuchungsperiode(buchungsperiode.getJahr()).getKontenplan());
-
+        kontoComboBox.getItems().addAll(mainApp.getFinanzController().getBuchhalung().getBuchungsperiode(buchungsperiode
+                .getJahr()).getKontenplan());
     }
 
     public void fillKontopositionen() {
         double saldo = 0;
-        for(Belegkopf belegkopf : mainApp.getFinanzController().getBuchhalung().getBuchungsperiode(this.buchungsperiode.getJahr()).getHauptjournal()) {
-            System.out.println(belegkopf);
+        for(Belegkopf belegkopf : mainApp.getFinanzController().getBuchhalung().getBuchungsperiode(
+                this.buchungsperiode.getJahr()).getHauptjournal()) {
             for(Belegposition belegposition: belegkopf.getBelegPositionenAsArrayList()) {
-               System.out.println("Belegposition-Konto: " + belegposition.getKontoObject());
-               System.out.println("Konto              : " + konto);
                 if(belegposition.getKontoObject().equals(konto)){
                     if(belegposition.getSH().getValue().equals("S")){
                         saldo += belegposition.getBetrag().getValue().getBetragBuchungsWaehrung().doubleValue();
                     } else {
                         saldo -= belegposition.getBetrag().getValue().getBetragBuchungsWaehrung().doubleValue();
                     }
-
                     kontoPositionen.add(new Kontoposition(belegkopf, belegposition, konto, saldo));
                 }
             }
@@ -98,7 +91,8 @@ public class KontoAuszugViewController {
         belegDatumColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getBelegkopf().getBelegDatumStringProperty());
         belegTextColumn.setCellValueFactory(
-                cellData -> cellData.getValue().getBelegkopf().getBelegTextProperty(cellData.getValue().getBelegposition()));
+                cellData -> cellData.getValue().getBelegkopf().getBelegTextProperty(cellData.getValue()
+                        .getBelegposition()));
         sollHabenColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getBelegposition().getSH());
         sollBetragCHFColumn.setCellValueFactory(

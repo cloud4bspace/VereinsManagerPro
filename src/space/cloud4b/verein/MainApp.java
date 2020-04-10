@@ -37,6 +37,7 @@ import space.cloud4b.verein.view.login.SignupViewController;
 import space.cloud4b.verein.view.mainframe.MainFrameController;
 import space.cloud4b.verein.view.mitglieder.MitgliedNeuViewController;
 import space.cloud4b.verein.view.mitglieder.MitgliedViewController;
+import space.cloud4b.verein.view.projekte.ProjektViewController;
 import space.cloud4b.verein.view.tasks.TaskEditViewController;
 import space.cloud4b.verein.view.tasks.TaskListViewController;
 import space.cloud4b.verein.view.tasks.TaskNeuViewController;
@@ -59,6 +60,7 @@ public class MainApp extends Application {
     private MitgliedViewController mitgliedViewController;
     private RanglisteController ranglisteController;
     private KalenderController kalenderController;
+    private ProjektController projektController;
     private AdressController adressController;
     private TaskController taskController;
     private BenutzerController benutzerController;
@@ -198,12 +200,13 @@ public class MainApp extends Application {
         if (currentUser != null) {
             // wenn bereits ein User angemeldet ist, die benötigten Controller
             // starten und das Hauptfenster öffnen
+            this.statusController = new StatusController();
             this.kalenderController = new KalenderController();
+            this.projektController = new ProjektController(this);
             this.adressController = new AdressController();
             this.taskController = new TaskController();
             this.benutzerController = new BenutzerController();
             this.ranglisteController = new RanglisteController(this);
-            this.statusController = new StatusController();
             this.finanzController = new FinanzController(this);
             this.buchungsperiode = finanzController.getBuchhalung().getBuchungsperiode(Year.now().getValue());
             //finanzController.setMainApp(this);
@@ -261,7 +264,7 @@ public class MainApp extends Application {
         return this.benutzerController;
     }
 
-    public StatusController getStatusElementController() {
+    public StatusController getStatusController() {
         return this.statusController;
     }
 
@@ -938,5 +941,31 @@ public class MainApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void showProjectTableView() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/projekte/ProjektView.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Projekte");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            mainFrame.setCenter(page);
+            ProjektViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ProjektController getProjektController() {
+        return projektController;
     }
 }

@@ -38,6 +38,7 @@ public class KalenderController implements Subject {
 
         System.out.println("Kalendercontroller erzeugt..");
         observerList = new ArrayList<>();
+        updateTerminListen();
         jubilaeumsListe = DatabaseReader.getJubilaeenAsArrayList();
         startKalenderObserver();
         startAnmeldungenObserver();

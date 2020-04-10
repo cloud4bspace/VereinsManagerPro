@@ -1,5 +1,6 @@
 package space.cloud4b.verein.controller;
 
+import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.services.DatabaseReader;
 import space.cloud4b.verein.services.Observer;
@@ -21,13 +22,32 @@ import java.util.ArrayList;
 public class StatusController implements Subject {
 
     private int anzahlStatusElemente;
+    private Status anredeStatus;
+    private Status katIStatus;
+    private Status katIIStatus;
+    private Status jubilaeumsStatus;
+    private Status anmeldungStatus;
+    private Status teilnahmeStatus;
+    private Status prioStatus;
+    private Status statusStatus;
+    private Status belegStatus;
+    private Status projektStatus;
     private Timestamp timestamp = null; // Zeitstempel der letzten Änderung im der Mitglieder-Datenbank
     private ArrayList<Observer> observerList;
     private ArrayList<StatusElement> statusElementListe;
 
     public StatusController() {
-
         System.out.println("Statuscontroller erzeugt..");
+        anredeStatus = new Status(1);
+        katIStatus = new Status(2);
+        katIIStatus = new Status(4);
+        jubilaeumsStatus = new Status(3);
+        anmeldungStatus = new Status(5);
+        teilnahmeStatus = new Status(6);
+        prioStatus = new Status(7);
+        statusStatus = new Status(8);
+        belegStatus = new Status(9);
+        projektStatus = new Status(10);
 
         // Die benötigten Listen werden instanziert
         observerList = new ArrayList<>();
@@ -159,5 +179,57 @@ public class StatusController implements Subject {
         for (Observer observer : observerList) {
             observer.update(this);
         }
+    }
+
+    public Status getAnredeStatus() {
+        return this.anredeStatus;
+    }
+
+    public Status getKatIStatus() {
+        return katIStatus;
+    }
+
+    public Status getKatIIStatus() {
+        return katIIStatus;
+    }
+
+    public Status getJubilaeumsStatus() {
+        return jubilaeumsStatus;
+    }
+
+    public Status getAnmeldungStatus() {
+        return anmeldungStatus;
+    }
+
+    public Status getTeilnahmeStatus() {
+        return teilnahmeStatus;
+    }
+
+    public Status getPrioStatus() {
+        return prioStatus;
+    }
+
+    public Status getStatusStatus() {
+        return statusStatus;
+    }
+
+    public Status getBelegStatus() {
+        return belegStatus;
+    }
+
+    public Status getProjektStatus() {
+        return projektStatus;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public ArrayList<Observer> getObserverList() {
+        return observerList;
+    }
+
+    public ArrayList<StatusElement> getStatusElementListe() {
+        return statusElementListe;
     }
 }

@@ -95,6 +95,8 @@ public class MainFrameController implements Observer {
     @FXML
     private Menu termineMenu;
     @FXML
+    private Menu projekteMenu;
+    @FXML
     private Menu kontrolleMenu;
     @FXML
     private Menu auswertungenMenu;
@@ -164,6 +166,11 @@ public class MainFrameController implements Observer {
         iconTxt.setFill(Color.GRAY);
         termineMenu.setGraphic(iconTxt);
         termineMenu.setText("Termine");
+
+        iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.DASHBOARD, "14px");
+        iconTxt.setFill(Color.GRAY);
+        projekteMenu.setGraphic(iconTxt);
+        projekteMenu.setText("Projekte");
 
         iconTxt = GlyphsDude.createIcon(FontAwesomeIcon.TASKS, "14px");
         iconTxt.setFill(Color.GRAY);
@@ -336,6 +343,16 @@ public class MainFrameController implements Observer {
     @FXML
     private void handleShowLogFile() {
         mainApp.showLogFileView();
+    }
+
+    @FXML
+    private void handleProjektUebersicht() {
+        mainApp.showProjectTableView();
+    }
+
+    @FXML
+    private void handleProjekteVerwalten() {
+        // TODO noch machen
     }
 
     /**

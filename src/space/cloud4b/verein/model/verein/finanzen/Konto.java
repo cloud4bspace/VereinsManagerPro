@@ -39,7 +39,23 @@ public class Konto {
         this.kontoKlasse = kontoNummer/1000;
         this.buchungsperiode = periode;
         this.saldo = new Betrag(new BigDecimal(0.00), Currency.getInstance("CHF"), new BigDecimal(0.00));
+        this.updateSaldo();
+    }
 
+    public Konto(int kontoId, int kontoNummer, int kontoZuordnung, String kontoBezeichnung, Buchungsperiode periode) {
+        System.out.println(">>>> neues Konto wird erstellt *** (" + kontoNummer + ")");
+        this.kontoId = kontoId;
+        this.kontoNummer = kontoNummer;
+        this.kontoZuordnung = kontoZuordnung;
+        this.kontoBezeichnung = kontoBezeichnung;
+        this.kontoHauptgruppeText = DatabaseReader.getKontoHauptgruppeText(this.kontoZuordnung);
+        this.kontoHauptgruppe = kontoNummer/100;
+        this.kontoGruppeText = DatabaseReader.getKontoGruppeText(this.kontoZuordnung);
+        this.kontoGruppe = kontoNummer/10;
+        this.kontoKlasseText = DatabaseReader.getKontoKlasseText(this.kontoZuordnung);
+        this.kontoKlasse = kontoNummer/1000;
+        this.buchungsperiode = periode;
+        this.saldo = new Betrag(new BigDecimal(0.00), Currency.getInstance("CHF"), new BigDecimal(0.00));
         this.updateSaldo();
     }
 

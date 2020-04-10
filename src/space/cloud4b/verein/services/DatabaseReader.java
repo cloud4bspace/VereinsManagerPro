@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import org.apache.commons.codec.digest.DigestUtils;
+import space.cloud4b.verein.MainApp;
 import space.cloud4b.verein.model.verein.adressbuch.Kontakt;
 import space.cloud4b.verein.model.verein.adressbuch.Mitglied;
 import space.cloud4b.verein.model.verein.finanzen.*;
@@ -11,6 +12,7 @@ import space.cloud4b.verein.model.verein.kalender.Jubilaeum;
 import space.cloud4b.verein.model.verein.kalender.Teilnehmer;
 import space.cloud4b.verein.model.verein.kalender.Termin;
 import space.cloud4b.verein.model.verein.kontrolle.rangliste.Position;
+import space.cloud4b.verein.model.verein.projekt.Projekt;
 import space.cloud4b.verein.model.verein.status.Status;
 import space.cloud4b.verein.model.verein.status.StatusElement;
 import space.cloud4b.verein.model.verein.task.Task;
@@ -856,6 +858,7 @@ public abstract class DatabaseReader {
                 LocalDateTime terminZeit;
                 LocalDateTime terminZeitBis = null;
                 int terminId = rs.getInt("TerminId");
+                int projektId = rs.getInt("TerminProjektId");
                 LocalDate terminDatum = Date.valueOf(rs.getString("TerminDatum")).toLocalDate();
 
                 String terminText = rs.getString("TerminText");
@@ -863,7 +866,7 @@ public abstract class DatabaseReader {
                 /**
                  * Objekte werden erzeugt und der Terminliste hinzugefügt
                  */
-                termin = new Termin(terminId, terminDatum, terminText);
+                termin = new Termin(terminId, terminDatum, terminText, projektId);
                 if (rs.getString("TerminZeit") != null) {
                     terminZeit = LocalDateTime.of(terminDatum, Time.valueOf(rs.getString("TerminZeit")).toLocalTime());
                     termin.setZeit(terminZeit);
@@ -1068,12 +1071,13 @@ public abstract class DatabaseReader {
                 LocalDateTime terminZeit = null;
                 LocalDateTime terminZeitBis = null;
                 int terminId = rs.getInt("TerminId");
+                int projektId = rs.getInt("TerminProjektId");
                 LocalDate terminDatum = Date.valueOf(rs.getString("TerminDatum")).toLocalDate();
 
                 String terminText = rs.getString("TerminText");
 
                 // Objekte werden erzeugt und der Terminliste hinzugefügt
-                termin = new Termin(terminId, terminDatum, terminText);
+                termin = new Termin(terminId, terminDatum, terminText, projektId);
                 if(rs.getString("TerminZeit") != null) {
                     terminZeit = LocalDateTime.of(terminDatum, Time.valueOf(rs.getString("TerminZeit")).toLocalTime());
                     termin.setZeit(terminZeit);
@@ -1232,12 +1236,13 @@ public abstract class DatabaseReader {
                 LocalDateTime terminZeit = null;
                 LocalDateTime terminZeitBis = null;
                 int terminId = rs.getInt("TerminId");
+                int projektId = rs.getInt("TerminProjektId");
                 LocalDate terminDatum = Date.valueOf(rs.getString("TerminDatum")).toLocalDate();
 
                 String terminText = rs.getString("TerminText");
 
                 // Objekte werden erzeugt und der Terminliste hinzugefügt
-                termin = new Termin(terminId, terminDatum, terminText);
+                termin = new Termin(terminId, terminDatum, terminText, projektId);
                 if (rs.getString("TerminZeit") != null) {
                     terminZeit = LocalDateTime.of(terminDatum, Time.valueOf(rs.getString("TerminZeit"))
                             .toLocalTime());
@@ -1539,12 +1544,16 @@ public abstract class DatabaseReader {
     public static ArrayList<Konto> getKontenplan(Buchungsperiode periode) {
         ArrayList<Konto> kontenPlan = new ArrayList<>();
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
-
             String query = "SELECT * FROM bhKontenplan WHERE GueltigAb <= '" + periode.getJahr() + "-12-31' " +
                     "AND GueltigBis >= '" + periode.getJahr() + "-01-01' ORDER BY KtoZuordnung ASC";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                kontenPlan.add(new Konto(rs.getInt("Kontonummer"), periode));
+               // kontenPlan.add(new Konto(rs.getInt("Kontonummer"), periode));
+                kontenPlan.add(new Konto(rs.getInt("KontoId")
+                        , rs.getInt("Kontonummer")
+                        , rs.getInt("KtoZuordnung")
+                        , rs.getString("Kontobezeichnung")
+                        , periode));
             }
         } catch(SQLException e) {
             e.printStackTrace();
@@ -2006,5 +2015,54 @@ public abstract class DatabaseReader {
             Betrag newBetrag = new Betrag(new BigDecimal(betrag), Currency.getInstance("CHF"), new BigDecimal(betrag));
             return newBetrag;
         }
+    }
+
+    /**
+     * Erstellt eine ArrayList von Projekten
+     * @return
+     */
+    public static ArrayList<Projekt> getProjekteAsArrayList(MainApp mainApp) {
+        // TODO fertig machen
+
+        Status projektStatus = mainApp.getStatusController().getProjektStatus();
+        Projekt projekt;
+        ArrayList<Projekt> projektArrayListe = new ArrayList<>();
+        ArrayList<Termin> terminListe = new ArrayList<>(mainApp.getKalenderController().getTermineAsArrayList());
+        ArrayList<Termin> projektTerminListe;
+        LocalDate heute = LocalDate.now();
+
+
+        try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
+            String query = "SELECT * from usr_web116_5.projekt ORDER BY ProjektId ASC";
+            ResultSet rs = st.executeQuery(query);
+            LocalDate projektStartDatum;
+            LocalDate projektEndeDatum;
+
+            while (rs.next()) {
+                projektTerminListe = new ArrayList<>();
+                projektStartDatum = LocalDate.of(2999,12,31);
+                projektEndeDatum = LocalDate.of(1900,01,01);
+                for(Termin termin : terminListe) {
+                    if(termin.getProjektId() == rs.getInt("ProjektId")) {
+                        projektTerminListe.add(termin);
+                        if(termin.getDatum().isBefore(projektStartDatum)) {
+                            projektStartDatum = termin.getDatum();
+                        }
+                        if(termin.getDatum().isAfter(projektEndeDatum)) {
+                            projektEndeDatum = termin.getDatum();
+                        }
+                    }
+                }
+                // Objekte werden erzeugt
+                projekt = new Projekt(rs.getInt("ProjektId"), rs.getString("ProjektTitel")
+                        , rs.getString("ProjektDetails"), projektStartDatum, projektEndeDatum
+                        , projektStatus.getStatusElemente().get(rs.getInt("ProjektStatus"))
+                        , projektTerminListe);
+                projektArrayListe.add(projekt);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return projektArrayListe;
     }
 }

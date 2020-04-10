@@ -71,7 +71,7 @@ public class StatusViewController implements Observer {
         ArrayList<TreeItem<StatusElement>> statusTreeItems = new ArrayList<>();
         TreeItem statusTreeItem = null;
 
-        ArrayList<StatusElement> statusElementList = mainApp.getStatusElementController().getStatusElementeListe();
+        ArrayList<StatusElement> statusElementList = mainApp.getStatusController().getStatusElementeListe();
         statusElementTreeTableView.getColumns().setAll(titelSpalte, keySpalte, symbolSpalte);
 
         TreeItem<StatusElement> root = new TreeItem<>(new StatusElement(0, "StatusElemente"));

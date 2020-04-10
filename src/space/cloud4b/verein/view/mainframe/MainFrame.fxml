@@ -91,6 +91,19 @@
                      <Insets top="10.0" />
                  </VBox.margin>
             </MenuBar>
+            <MenuBar id="mBarTermine" layoutX="10.0" layoutY="89.0">
+               <menus>
+                  <Menu fx:id="projekteMenu" mnemonicParsing="false" text="Projekte">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleProjektUebersicht" text="Übersicht" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleProjekteVerwalten" text="Projekte verwalten" />
+                     </items>
+                  </Menu>
+               </menus>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </MenuBar>
              <MenuBar id="mBar03">
                  <menus>
                      <Menu fx:id="kontrolleMenu" mnemonicParsing="false" text="Aufgaben (Tasks)">
