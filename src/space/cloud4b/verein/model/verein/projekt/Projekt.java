@@ -24,18 +24,20 @@ public class Projekt {
     private LocalDate projektStart;
     private LocalDate projektEnde;
     private ArrayList<Termin> terminListe;
-    private StatusElement projektStatus;
+    private StatusElement projektKategorie;
+    private StatusElement projektPhase;
     private String trackChangeUsr;
     private Timestamp trackChangeTimestamp;
 
     public Projekt(int projektId, String projektTitel, String projektText, LocalDate projektStart, LocalDate projektEnde
-            , StatusElement projektStatus, ArrayList<Termin> terminListe) {
+            , StatusElement projektKategorie, StatusElement projektPhase, ArrayList<Termin> terminListe) {
         this.projektId = projektId;
         this.projektTitel = projektTitel;
         this.projektText = projektText;
         this.projektStart = projektStart;
         this.projektEnde = projektEnde;
-        this.projektStatus = projektStatus;
+        this.projektKategorie = projektKategorie;
+        this.projektPhase = projektPhase;
         this.terminListe = terminListe;
     }
 
@@ -81,7 +83,15 @@ public class Projekt {
         return new SimpleObjectProperty<>(projektEnde);
     }
 
-    public ObjectProperty<StatusElement> getProjektStatusProperty() {
-        return new SimpleObjectProperty<>(projektStatus);
+    public ObjectProperty<StatusElement> getProjektPhaseProperty() {
+        return new SimpleObjectProperty<>(projektPhase);
+    }
+
+    public String getDetailsText() {
+        return projektText;
+    }
+
+    public ObjectProperty<StatusElement> getProjektKategorieProperty() {
+        return new SimpleObjectProperty<>(projektKategorie);
     }
 }

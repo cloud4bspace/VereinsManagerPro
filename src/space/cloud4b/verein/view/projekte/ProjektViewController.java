@@ -25,8 +25,8 @@ import java.util.ArrayList;
  * Versorgt die FXML-Objekte (Felder und Tabellen) mit Daten und behandelt die Action-Events
  * Erhält Benachrichtigungen der abonnierten Observer-Klasse(n), wenn Datensätze geändert wurden.
  *
- * @author Bernhard Kämpf und Serge Kaulitz
- * @version 2019-12-17
+ * @author Bernhard Kämpf
+ * @version 2020-04-10
  */
 public class ProjektViewController implements Observer {
 
@@ -47,7 +47,9 @@ public class ProjektViewController implements Observer {
     @FXML
     private TableColumn<Projekt, String> projektDetailsColumn;
     @FXML
-    private TableColumn<Projekt, StatusElement> projektStatusColumn;
+    private TableColumn<Projekt, StatusElement> projektKategorieColumn;
+    @FXML
+    private TableColumn<Projekt, StatusElement> projektPhaseColumn;
     @FXML
     private TableColumn<Projekt, LocalDate> projektStartDatumColumn;
     @FXML
@@ -62,6 +64,7 @@ public class ProjektViewController implements Observer {
      */
     @FXML
     private void initialize() {
+
         // Initialisierung der Mitglieder-Tabelle und der Spalten
         // Bei Änderung der ausgewählten Zeile werden die Mitgliederdetails im Centerpane angezeigt.
         projektTableView.getSelectionModel().selectedItemProperty().addListener(
@@ -70,14 +73,17 @@ public class ProjektViewController implements Observer {
                 cellData -> cellData.getValue().getProjektIdProperty());
         projektTitelColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getTitelProperty());
+        projektTitelColumn.setPrefWidth(200);
         projektDetailsColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getProjektDetailsProperty());
+        projektDetailsColumn.setPrefWidth(400);
 
         /* TODO Problem gelöst mit der Darstellung und Sortierung von Daten
         *   Sortiert wird nach Localdate (2020-01-02) und dargestellt wird ein
         *   anderer String (02.01.2020) */
         projektStartDatumColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getProjektStartDatumProperty());
+        projektStartDatumColumn.setPrefWidth(100);
         projektStartDatumColumn.setCellFactory(column -> {
             return new TableCell<Projekt, LocalDate>() {
                 @Override
@@ -94,6 +100,7 @@ public class ProjektViewController implements Observer {
         });
         projektEndeDatumColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getProjektEndeDatumProperty());
+        projektEndeDatumColumn.setPrefWidth(100);
         projektEndeDatumColumn.setCellFactory(column -> {
             return new TableCell<Projekt, LocalDate>() {
                 @Override
@@ -108,8 +115,14 @@ public class ProjektViewController implements Observer {
                 }
             };
         });
-        projektStatusColumn.setCellValueFactory(
-                cellData -> cellData.getValue().getProjektStatusProperty());
+        projektPhaseColumn.setCellValueFactory(
+                cellData -> cellData.getValue().getProjektPhaseProperty());
+        projektPhaseColumn.setPrefWidth(110);
+
+        projektKategorieColumn.setCellValueFactory(
+                cellData -> cellData.getValue().getProjektKategorieProperty());
+        projektKategorieColumn.setPrefWidth(110);
+
     }
 
     private void setProjekt(Projekt newValue) {
@@ -132,19 +145,19 @@ public class ProjektViewController implements Observer {
         projektTableView.getFocusModel().focus(0);
         // in Obseverliste des/der relevanten Controller eintragen
         mainApp.getProjektController().Attach(this);
+        projektTableView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> openProjekt(newValue, oldValue));
     }
 
     public void setStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
-
-
-
-
-
-
-
+    public void openProjekt(Projekt newProjekt, Projekt oldProjekt) {
+            if(newProjekt != null) {
+                mainApp.showProjektEdit(newProjekt);
+            }
+    }
 
     @Override
     public void update(Object o) {

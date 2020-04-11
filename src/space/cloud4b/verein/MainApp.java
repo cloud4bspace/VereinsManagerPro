@@ -20,6 +20,7 @@ import space.cloud4b.verein.model.verein.finanzen.Belegkopf;
 import space.cloud4b.verein.model.verein.finanzen.Belegposition;
 import space.cloud4b.verein.model.verein.finanzen.Buchungsperiode;
 import space.cloud4b.verein.model.verein.finanzen.Konto;
+import space.cloud4b.verein.model.verein.projekt.Projekt;
 import space.cloud4b.verein.model.verein.task.Task;
 import space.cloud4b.verein.model.verein.user.User;
 import space.cloud4b.verein.services.DatabaseReader;
@@ -37,6 +38,7 @@ import space.cloud4b.verein.view.login.SignupViewController;
 import space.cloud4b.verein.view.mainframe.MainFrameController;
 import space.cloud4b.verein.view.mitglieder.MitgliedNeuViewController;
 import space.cloud4b.verein.view.mitglieder.MitgliedViewController;
+import space.cloud4b.verein.view.projekte.ProjektEditViewController;
 import space.cloud4b.verein.view.projekte.ProjektViewController;
 import space.cloud4b.verein.view.tasks.TaskEditViewController;
 import space.cloud4b.verein.view.tasks.TaskListViewController;
@@ -967,5 +969,30 @@ public class MainApp extends Application {
 
     public ProjektController getProjektController() {
         return projektController;
+    }
+
+    public void showProjektEdit(Projekt projekt) {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/projekte/ProjektEditView.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Projekt ändern");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            ProjektEditViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setProjekt(projekt);
+            controller.setStage(dialogStage);
+
+            dialogStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

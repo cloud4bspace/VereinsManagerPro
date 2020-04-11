@@ -2024,13 +2024,13 @@ public abstract class DatabaseReader {
     public static ArrayList<Projekt> getProjekteAsArrayList(MainApp mainApp) {
         // TODO fertig machen
 
-        Status projektStatus = mainApp.getStatusController().getProjektStatus();
+        Status projektPhase = mainApp.getStatusController().getProjektPhase();
+        Status projektKategorie = mainApp.getStatusController().getProjektKategorie();
         Projekt projekt;
         ArrayList<Projekt> projektArrayListe = new ArrayList<>();
         ArrayList<Termin> terminListe = new ArrayList<>(mainApp.getKalenderController().getTermineAsArrayList());
         ArrayList<Termin> projektTerminListe;
         LocalDate heute = LocalDate.now();
-
 
         try (Connection conn = new MysqlConnection().getConnection(); Statement st = conn.createStatement()) {
             String query = "SELECT * from usr_web116_5.projekt ORDER BY ProjektId ASC";
@@ -2053,10 +2053,15 @@ public abstract class DatabaseReader {
                         }
                     }
                 }
+                if(projektStartDatum == LocalDate.of(2999, 12, 31)) {
+                    projektStartDatum = null;
+                    projektEndeDatum = null;
+                }
                 // Objekte werden erzeugt
                 projekt = new Projekt(rs.getInt("ProjektId"), rs.getString("ProjektTitel")
                         , rs.getString("ProjektDetails"), projektStartDatum, projektEndeDatum
-                        , projektStatus.getStatusElemente().get(rs.getInt("ProjektStatus"))
+                        , projektKategorie.getStatusElemente().get(rs.getInt("ProjektKategorie"))
+                        , projektPhase.getStatusElemente().get(rs.getInt("ProjektPhase"))
                         , projektTerminListe);
                 projektArrayListe.add(projekt);
             }

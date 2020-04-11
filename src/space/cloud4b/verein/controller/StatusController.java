@@ -31,7 +31,8 @@ public class StatusController implements Subject {
     private Status prioStatus;
     private Status statusStatus;
     private Status belegStatus;
-    private Status projektStatus;
+    private Status projektPhase;
+    private Status projektKategorie;
     private Timestamp timestamp = null; // Zeitstempel der letzten Änderung im der Mitglieder-Datenbank
     private ArrayList<Observer> observerList;
     private ArrayList<StatusElement> statusElementListe;
@@ -47,7 +48,8 @@ public class StatusController implements Subject {
         prioStatus = new Status(7);
         statusStatus = new Status(8);
         belegStatus = new Status(9);
-        projektStatus = new Status(10);
+        projektPhase = new Status(10);
+        projektKategorie = new Status(11);
 
         // Die benötigten Listen werden instanziert
         observerList = new ArrayList<>();
@@ -217,8 +219,8 @@ public class StatusController implements Subject {
         return belegStatus;
     }
 
-    public Status getProjektStatus() {
-        return projektStatus;
+    public Status getProjektPhase() {
+        return projektPhase;
     }
 
     public Timestamp getTimestamp() {
@@ -232,4 +234,6 @@ public class StatusController implements Subject {
     public ArrayList<StatusElement> getStatusElementListe() {
         return statusElementListe;
     }
+
+    public Status getProjektKategorie() { return projektKategorie; }
 }
